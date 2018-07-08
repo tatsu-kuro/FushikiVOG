@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8ECDBC0520F08A460009378E /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECDBC0420F08A460009378E /* CircleView.swift */; };
 		8EE77EC620EF742C00517DEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE77EC520EF742C00517DEC /* AppDelegate.swift */; };
 		8EE77EC820EF742C00517DEC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE77EC720EF742C00517DEC /* ViewController.swift */; };
 		8EE77ECB20EF742C00517DEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE77EC920EF742C00517DEC /* Main.storyboard */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8ECDBC0420F08A460009378E /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		8EE77EC220EF742C00517DEC /* Fushiki.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fushiki.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EE77EC520EF742C00517DEC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8EE77EC720EF742C00517DEC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -38,6 +40,7 @@
 		8EE77EB920EF742C00517DEC = {
 			isa = PBXGroup;
 			children = (
+				8ECDBC0420F08A460009378E /* CircleView.swift */,
 				8EE77EC420EF742C00517DEC /* Fushiki */,
 				8EE77EC320EF742C00517DEC /* Products */,
 			);
@@ -135,6 +138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8ECDBC0520F08A460009378E /* CircleView.swift in Sources */,
 				8EE77EC820EF742C00517DEC /* ViewController.swift in Sources */,
 				8EE77EC620EF742C00517DEC /* AppDelegate.swift in Sources */,
 			);
