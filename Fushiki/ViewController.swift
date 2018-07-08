@@ -40,14 +40,16 @@ class ViewController: UIViewController {
         if ettoknMode == 1 {
             if sender.state == .began {
                 panFlag=true
-                if sender.location(in: self.view).y>self.view.bounds.height/2{
-                    if timer?.isValid == true{
-                        timer.invalidate()
-                    }
-                }else{
-                }
+//                if sender.location(in: self.view).y>self.view.bounds.height/2{
+//                    if timer?.isValid == true{
+//                        timer.invalidate()
+//                    }
+//                }else{
+//                }
             } else if sender.state == .changed {
-                if timer?.isValid != true{
+                if sender.location(in: self.view).y>self.view.bounds.height/2{
+
+ //               if timer?.isValid != true{
                     var pos = sender.location(in: self.view)
                     view.layer.sublayers?.removeLast()
                     pos.y = self.view.bounds.height/2
@@ -59,10 +61,10 @@ class ViewController: UIViewController {
                     textIroiro.text = "\(ettSpeed)Hz"
                 }
             }else if sender.state == .ended{
-                if timer?.isValid != true{
-                    view.layer.sublayers?.removeLast()
-                    startETT(0)
-                }
+//                if timer?.isValid != true{
+//                    view.layer.sublayers?.removeLast()
+//                    startETT(0)
+//                }
                 textIroiro.text = " "
                 panFlag=false
             }
@@ -163,7 +165,7 @@ class ViewController: UIViewController {
         OKNbutton.isHidden=true
     }
     @objc func update(tm: Timer) {
-        if ettoknMode == 1 {
+        if ettoknMode == 1 && panFlag == false{
             if tcount > 0{
                 view.layer.sublayers?.removeLast()
             }
