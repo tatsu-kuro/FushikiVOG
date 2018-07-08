@@ -19,11 +19,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S68-fh-yHQ">
-                                <rect key="frame" x="30" y="314" width="50" height="30"/>
+                                <rect key="frame" x="40" y="334" width="80" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="Mor-Hq-0Z3"/>
-                                    <constraint firstAttribute="height" constant="30" id="cC9-gx-grK"/>
+                                    <constraint firstAttribute="width" constant="80" id="7Yb-dM-ZPJ"/>
+                                    <constraint firstAttribute="height" constant="40" id="m4m-nj-PxK"/>
                                 </constraints>
                                 <state key="normal" title="ETT" backgroundImage="btn">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -33,10 +33,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FrZ-rl-Lx9">
-                                <rect key="frame" x="30" y="364" width="50" height="30"/>
+                                <rect key="frame" x="160" y="334" width="80" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="Wwr-a9-ZC8"/>
-                                    <constraint firstAttribute="height" constant="30" id="uLT-R1-1cv"/>
+                                    <constraint firstAttribute="height" constant="40" id="giN-Ze-1xX"/>
+                                    <constraint firstAttribute="width" constant="80" id="yC6-gm-g4l"/>
                                 </constraints>
                                 <state key="normal" title="OKN" backgroundImage="btn">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -55,16 +55,32 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLh-4u-MgC">
+                                <rect key="frame" x="40" y="70" width="656" height="224"/>
+                                <string key="text">Double tap to return from the ETT, OKN.
+
+ETT: Pan the upper screen area to change the speed.
+ETT: Pan the lower screen area to change the wave amplituer.
+
+OKN: Pan the screen to change the speed.       </string>
+                                <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="FrZ-rl-Lx9" firstAttribute="leading" secondItem="S68-fh-yHQ" secondAttribute="trailing" constant="40" id="7qj-Yh-yzA"/>
+                            <constraint firstItem="S68-fh-yHQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="8k9-Is-UfF"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="S68-fh-yHQ" secondAttribute="bottom" constant="40" id="DZv-ST-7mT"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dLh-4u-MgC" secondAttribute="trailing" constant="40" id="EZV-Wy-1cp"/>
                             <constraint firstItem="fGb-CL-fnV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="GSA-4d-QwW"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="FrZ-rl-Lx9" secondAttribute="bottom" constant="20" id="GYE-pg-Pi9"/>
-                            <constraint firstItem="S68-fh-yHQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="KGo-71-tue"/>
-                            <constraint firstItem="FrZ-rl-Lx9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="LZh-so-lnN"/>
+                            <constraint firstItem="S68-fh-yHQ" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="LO1-w6-xmf"/>
+                            <constraint firstItem="dLh-4u-MgC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="MID-Gr-kT1"/>
                             <constraint firstItem="fGb-CL-fnV" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="cjm-3Q-t8U"/>
-                            <constraint firstItem="FrZ-rl-Lx9" firstAttribute="top" secondItem="S68-fh-yHQ" secondAttribute="bottom" constant="20" id="kRI-Nn-8G7"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="FrZ-rl-Lx9" secondAttribute="bottom" constant="40" id="iSD-9I-kWY"/>
+                            <constraint firstItem="dLh-4u-MgC" firstAttribute="top" secondItem="fGb-CL-fnV" secondAttribute="bottom" constant="20" id="okq-Ik-a8s"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <connections>
@@ -75,6 +91,7 @@
                     <connections>
                         <outlet property="ETTbutton" destination="S68-fh-yHQ" id="0TQ-Cr-cZB"/>
                         <outlet property="OKNbutton" destination="FrZ-rl-Lx9" id="aeb-HD-kEd"/>
+                        <outlet property="helpText" destination="dLh-4u-MgC" id="goG-L2-R0l"/>
                         <outlet property="textIroiro" destination="fGb-CL-fnV" id="wej-La-jWT"/>
                     </connections>
                 </viewController>
@@ -90,7 +107,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="99.400299850074973" y="117.59999999999999"/>
+            <point key="canvasLocation" x="-88.043478260869577" y="126.08695652173914"/>
         </scene>
     </scenes>
     <resources>

@@ -19,6 +19,7 @@ class ViewController: UIViewController {
     var oknSpeed:CGFloat = 5.0
     var panFlag:Bool = false
     var ettoknMode:Int = 0 //0:off 1:ett 2:okn
+    @IBOutlet weak var helpText: UILabel!
     @IBOutlet weak var textIroiro: UITextField!
     @IBOutlet weak var OKNbutton: UIButton!
     @IBOutlet weak var ETTbutton: UIButton!
@@ -101,6 +102,7 @@ class ViewController: UIViewController {
             ETTbutton.isHidden=false
             OKNbutton.isEnabled=true
             OKNbutton.isHidden=false
+            helpText.isHidden=false
             ettoknMode = 0
         }
     }
@@ -112,6 +114,7 @@ class ViewController: UIViewController {
         ETTbutton.isHidden=true
         OKNbutton.isEnabled=false
         OKNbutton.isHidden=true
+        helpText.isHidden=true
     }
     func drawBands(startP:CGFloat){
         for i  in 0..<7 {
@@ -163,6 +166,7 @@ class ViewController: UIViewController {
         ETTbutton.isHidden=true
         OKNbutton.isEnabled=false
         OKNbutton.isHidden=true
+        helpText.isHidden=true
     }
     @objc func update(tm: Timer) {
         if ettoknMode == 1 && panFlag == false{
