@@ -74,7 +74,7 @@ class ViewController: UIViewController {
                 }
                 drawBands(startP: bandWidth)
             }else if sender.state == .changed{
-                let speed = sender.location(in:self.view).x*5/self.view.bounds.width
+                let speed = sender.location(in:self.view).x*10/self.view.bounds.width
                 oknSpeed=speed
                 textIroiro.text = "\(Int(oknSpeed+1))"
             }else if sender.state == .ended{

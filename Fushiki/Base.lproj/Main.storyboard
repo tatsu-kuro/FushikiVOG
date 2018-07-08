@@ -79,7 +79,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="gzc-A7-dWm">
+                <tapGestureRecognizer numberOfTapsRequired="2" id="gzc-A7-dWm">
                     <connections>
                         <action selector="tapGes:" destination="BYZ-38-t0r" id="uMU-Yf-EJf"/>
                     </connections>
