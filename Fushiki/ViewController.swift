@@ -14,36 +14,54 @@ class ViewController: UIViewController {
     var bandWidth:CGFloat = 0
     var timer: Timer!
     var tcount: Int = 0
-    var ettWidth:CGFloat = 200
-    var ettSpeed:CGFloat = 20
+    var ettWidth:CGFloat = 200.0
+    var ettSpeed:CGFloat = 0.3
+    @IBOutlet weak var textIroiro: UITextField!
     @IBOutlet weak var OKNbutton: UIButton!
     @IBOutlet weak var ETTbutton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         bandWidth = self.view.bounds.width/12
         cirDiameter = self.view.bounds.width/12/3
+        textIroiro.text = " "
     }
 
-   
     @IBAction func panGes(_ sender: UIPanGestureRecognizer) {
+        if ETTbutton.isHidden != true{
+            return
+        }
         if sender.state == .began {
-            if timer?.isValid == true{
-                timer.invalidate()
+            if sender.location(in: self.view).y>self.view.bounds.height/2{
+                if timer?.isValid == true{
+                    timer.invalidate()
+                }
+            }else{
             }
         } else if sender.state == .changed {
-            var pos = sender.location(in: self.view)
-            view.layer.sublayers?.removeLast()
-            pos.y = self.view.bounds.height/2
-            drawCircle(cPoint: pos)
-            ettWidth = abs(pos.x - self.view.bounds.width/2)
+            if timer?.isValid != true{
+                var pos = sender.location(in: self.view)
+                view.layer.sublayers?.removeLast()
+                pos.y = self.view.bounds.height/2
+                drawCircle(cPoint: pos)
+                ettWidth = abs(pos.x - self.view.bounds.width/2)
+            }else{
+                let speed = sender.location(in: self.view).x*10/self.view.bounds.width
+                ettSpeed = CGFloat(Int(speed+2))/10.0
+                textIroiro.text = "\(ettSpeed)"
+ //               print(ettSpeed)
+            }
         }else if sender.state == .ended{
-            view.layer.sublayers?.removeLast()
-            startETT(0)
+            if timer?.isValid != true{
+                view.layer.sublayers?.removeLast()
+                startETT(0)
+            }
+            textIroiro.text = " "
         }
     }
 
     @IBAction func tapGes(_ sender: Any) {
-        if timer?.isValid == true {
+        
+        if timer?.isValid == true && ETTbutton.isHidden == true{
             timer.invalidate()
             view.layer.sublayers?.removeLast()
             ETTbutton.isEnabled=true
@@ -56,10 +74,10 @@ class ViewController: UIViewController {
 
     }
 
-    func drawCircle(cPoint:CGPoint){
+     func drawCircle(cPoint:CGPoint){
         /* --- 円を描画 --- */
         let circleLayer = CAShapeLayer.init()
-        let circleFrame = CGRect.init(x:cPoint.x,y:cPoint.y,width:cirDiameter,height:cirDiameter)//circleFrame
+        let circleFrame = CGRect.init(x:cPoint.x-cirDiameter/2,y:cPoint.y-cirDiameter/2,width:cirDiameter,height:cirDiameter)//circleFrame
         circleLayer.frame = circleFrame//CGRect.init(x:0,y:0,width:cirDiameter,height:cirDiameter)//circleFrame
         // 輪郭の色
         //circleLayer.strokeColor = UIColor.white.cgColor
@@ -79,7 +97,7 @@ class ViewController: UIViewController {
         if timer?.isValid == true {
             timer.invalidate()
         }else{
-            timer = Timer.scheduledTimer(timeInterval: 0.02, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+            timer = Timer.scheduledTimer(timeInterval: 1.0/100.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
             tcount=0
             ETTbutton.isEnabled=false
             ETTbutton.isHidden=true
@@ -92,8 +110,13 @@ class ViewController: UIViewController {
             view.layer.sublayers?.removeLast()
         }
         tcount += 1
-        let cPoint = CGPoint(x:view.bounds.width/2 + sin(CGFloat(tcount)/ettSpeed)*ettWidth, y: view.bounds.height/2)
+        //3.1415*5 -> 50回で１周、50回ps
+        let cPoint = CGPoint(x:view.bounds.width/2 + sin(CGFloat(tcount)*ettSpeed/(3.1415*5.0))*ettWidth, y: view.bounds.height/2)
         drawCircle(cPoint:cPoint)
+//        if tcount%10 == 0{
+//            textIroiro.text = "\(ettSpeed)"
+//        }
+//        print(tcount,ettSpeed,sin(CGFloat(tcount)/ettSpeed))
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

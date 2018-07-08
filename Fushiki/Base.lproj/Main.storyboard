@@ -45,13 +45,25 @@
                                     <action selector="startOKN:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DFo-ih-ESC"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fGb-CL-fnV">
+                                <rect key="frame" x="20" y="20" width="200" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="lah-NV-qF0"/>
+                                    <constraint firstAttribute="width" constant="200" id="urg-fs-4v1"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="fGb-CL-fnV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="GSA-4d-QwW"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="FrZ-rl-Lx9" secondAttribute="bottom" constant="20" id="GYE-pg-Pi9"/>
                             <constraint firstItem="S68-fh-yHQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="KGo-71-tue"/>
                             <constraint firstItem="FrZ-rl-Lx9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="LZh-so-lnN"/>
+                            <constraint firstItem="fGb-CL-fnV" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="cjm-3Q-t8U"/>
                             <constraint firstItem="FrZ-rl-Lx9" firstAttribute="top" secondItem="S68-fh-yHQ" secondAttribute="bottom" constant="20" id="kRI-Nn-8G7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -63,6 +75,7 @@
                     <connections>
                         <outlet property="ETTbutton" destination="S68-fh-yHQ" id="0TQ-Cr-cZB"/>
                         <outlet property="OKNbutton" destination="FrZ-rl-Lx9" id="aeb-HD-kEd"/>
+                        <outlet property="textIroiro" destination="fGb-CL-fnV" id="wej-La-jWT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -77,6 +90,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
+            <point key="canvasLocation" x="99.400299850074973" y="117.59999999999999"/>
         </scene>
     </scenes>
     <resources>
