@@ -27,28 +27,29 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         bandWidth = self.view.bounds.width/10
         cirDiameter = self.view.bounds.width/26
-        getUserDefaults()
+ //       getUserDefaults()
+        print("ettS:",ettSpeed,"  ettW:",ettWidth," oknS:",oknSpeed)
         textIroiro.text = " "
     }
-    func getUserDefault(str:String,ret:CGFloat) -> CGFloat{//getUserDefault_one
-        if (UserDefaults.standard.object(forKey: str) != nil){//keyが設定してなければretをセット
-            return CGFloat(UserDefaults.standard.integer(forKey:str))
-            //return UserDefaults.standard.integer(forKey:str)
-        }else{
-            UserDefaults.standard.set(ret, forKey: str)
-            return ret
-        }
-    }
-    func getUserDefaults(){
-        ettSpeed = getUserDefault(str: "ettSpeed", ret:0.3)
-        ettWidth = getUserDefault(str: "ettWidth", ret:200.0)
-        oknSpeed = getUserDefault(str: "oknSpeed", ret: 5.0)
-    }
-    func setUserDefaults(){//default値をセットするんじゃなく、defaultというものに値を設定するという意味
-        UserDefaults.standard.set(ettSpeed, forKey: "ettSpeed")
-        UserDefaults.standard.set(ettWidth, forKey: "ettWidth")
-        UserDefaults.standard.set(oknSpeed, forKey: "oknSpeed")
-    }
+//    func getUserDefault(str:String,ret:CGFloat) -> CGFloat{//getUserDefault_one
+//        if (UserDefaults.standard.object(forKey: str) != nil){//keyが設定してなければretをセット
+//            return CGFloat(UserDefaults.standard.integer(forKey:str))
+//            //return UserDefaults.standard.integer(forKey:str)
+//        }else{
+//            UserDefaults.standard.set(ret, forKey: str)
+//            return ret
+//        }
+//    }
+//    func getUserDefaults(){
+//        ettSpeed = getUserDefault(str: "ettSpeed", ret:0.3)
+//        ettWidth = getUserDefault(str: "ettWidth", ret:200.0)
+//        oknSpeed = getUserDefault(str: "oknSpeed", ret: 5.0)
+//    }
+//    func setUserDefaults(){//default値をセットするんじゃなく、defaultというものに値を設定するという意味
+//        UserDefaults.standard.set(ettSpeed, forKey: "ettSpeed")
+//        UserDefaults.standard.set(ettWidth, forKey: "ettWidth")
+//        UserDefaults.standard.set(oknSpeed, forKey: "oknSpeed")
+//    }
     @IBAction func panGes(_ sender: UIPanGestureRecognizer) {
         if ETTbutton.isHidden != true{
             return
@@ -80,7 +81,6 @@ class ViewController: UIViewController {
                     ettSpeed = CGFloat(Int(speed+2))/10.0
                     textIroiro.text = "\(ettSpeed)Hz"
                 }
-                setUserDefaults()
             }else if sender.state == .ended{
 //                if timer?.isValid != true{
 //                    view.layer.sublayers?.removeLast()
@@ -88,6 +88,7 @@ class ViewController: UIViewController {
 //                }
                 textIroiro.text = " "
                 panFlag=false
+ //               setUserDefaults()
             }
         }else if ettoknMode == 2{
             if sender.state == .began{
@@ -105,10 +106,10 @@ class ViewController: UIViewController {
                     oknSpeed = speed - 10 - 1
                     textIroiro.text = "\(Int(abs(oknSpeed)))"
                 }
-                setUserDefaults()
              }else if sender.state == .ended{
                 panFlag=false
                 textIroiro.text = " "
+//                setUserDefaults()
             }
             
         }
