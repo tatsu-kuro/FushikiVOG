@@ -27,9 +27,28 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         bandWidth = self.view.bounds.width/10
         cirDiameter = self.view.bounds.width/26
+        getUserDefaults()
         textIroiro.text = " "
     }
-
+    func getUserDefault(str:String,ret:CGFloat) -> CGFloat{//getUserDefault_one
+        if (UserDefaults.standard.object(forKey: str) != nil){//keyが設定してなければretをセット
+            return CGFloat(UserDefaults.standard.integer(forKey:str))
+            //return UserDefaults.standard.integer(forKey:str)
+        }else{
+            UserDefaults.standard.set(ret, forKey: str)
+            return ret
+        }
+    }
+    func getUserDefaults(){
+        ettSpeed = getUserDefault(str: "ettSpeed", ret:0.3)
+        ettWidth = getUserDefault(str: "ettWidth", ret:200.0)
+        oknSpeed = getUserDefault(str: "oknSpeed", ret: 5.0)
+    }
+    func setUserDefaults(){//default値をセットするんじゃなく、defaultというものに値を設定するという意味
+        UserDefaults.standard.set(ettSpeed, forKey: "ettSpeed")
+        UserDefaults.standard.set(ettWidth, forKey: "ettWidth")
+        UserDefaults.standard.set(oknSpeed, forKey: "oknSpeed")
+    }
     @IBAction func panGes(_ sender: UIPanGestureRecognizer) {
         if ETTbutton.isHidden != true{
             return
@@ -61,6 +80,7 @@ class ViewController: UIViewController {
                     ettSpeed = CGFloat(Int(speed+2))/10.0
                     textIroiro.text = "\(ettSpeed)Hz"
                 }
+                setUserDefaults()
             }else if sender.state == .ended{
 //                if timer?.isValid != true{
 //                    view.layer.sublayers?.removeLast()
@@ -77,10 +97,16 @@ class ViewController: UIViewController {
                 }
                 drawBands(startP: bandWidth)
             }else if sender.state == .changed{
-                let speed = sender.location(in:self.view).x*10/self.view.bounds.width
-                oknSpeed=speed
-                textIroiro.text = "\(Int(oknSpeed+1))"
-            }else if sender.state == .ended{
+                 let speed = sender.location(in:self.view).x*20/self.view.bounds.width
+                 if speed > 10 {
+                    oknSpeed = speed - 10 + 1
+                    textIroiro.text = "\(Int(oknSpeed))"
+                }else{
+                    oknSpeed = speed - 10 - 1
+                    textIroiro.text = "\(Int(abs(oknSpeed)))"
+                }
+                setUserDefaults()
+             }else if sender.state == .ended{
                 panFlag=false
                 textIroiro.text = " "
             }
@@ -104,6 +130,7 @@ class ViewController: UIViewController {
             OKNbutton.isHidden=false
             helpText.isHidden=false
             ettoknMode = 0
+            UIApplication.shared.isIdleTimerDisabled = false//スリープ状態へ移行する時間を監視しているIdleTimerをon
         }
     }
     @IBAction func startOKN(_ sender: Any) {
@@ -115,6 +142,7 @@ class ViewController: UIViewController {
         OKNbutton.isEnabled=false
         OKNbutton.isHidden=true
         helpText.isHidden=true
+        UIApplication.shared.isIdleTimerDisabled = true//スリープしない
     }
     func drawBands(startP:CGFloat){
         for i  in 0..<7 {
@@ -167,6 +195,7 @@ class ViewController: UIViewController {
         OKNbutton.isEnabled=false
         OKNbutton.isHidden=true
         helpText.isHidden=true
+        UIApplication.shared.isIdleTimerDisabled = true//スリープしない
     }
     @objc func update(tm: Timer) {
         if ettoknMode == 1 && panFlag == false{
@@ -187,6 +216,11 @@ class ViewController: UIViewController {
             let sp:CGFloat = CGFloat(tcount)*oknSpeed
             drawBands(startP: CGFloat(Int(sp) % (2*Int(bandWidth))))
 
+        }
+        if ettoknMode > 0{
+            if tcount > 100*60*5 {
+                UIApplication.shared.isIdleTimerDisabled = false//5分たったら監視する
+            }
         }
     }
     override func didReceiveMemoryWarning() {
