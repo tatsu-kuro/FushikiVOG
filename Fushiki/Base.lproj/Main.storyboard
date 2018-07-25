@@ -27,7 +27,7 @@
                                     <constraint firstAttribute="height" constant="70" id="mJB-cf-XZA"/>
                                 </constraints>
                                 <connections>
-                                    <action selector="showEttmodeButtons:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OCV-e1-YYJ"/>
+                                    <action selector="showEttmodeButtons:" destination="BYZ-38-t0r" eventType="touchDown" id="wiN-h6-N5S"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S68-fh-yHQ">
@@ -75,7 +75,7 @@
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="9" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLh-4u-MgC">
                                 <rect key="frame" x="40" y="66" width="587" height="189"/>
-                                <mutableString key="text">Fushiki Version 1.2 by 96da
+                                <string key="text">Fushiki Version 1.2 by 96da
 
 ETT: Pan the upper screen area to change the speed.
 ETT: Pan the lower screen area to change the wave amplitude.
@@ -83,7 +83,7 @@ ETT: Tap the lowest screen area to show the buttons.
 
 OKN: Pan the screen to change the speed.       
 
-Double tap to return from the ETT, OKN</mutableString>
+Double tap to return from the ETT, OKN</string>
                                 <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>

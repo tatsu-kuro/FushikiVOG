@@ -161,7 +161,9 @@ class ViewController: UIViewController {
     }
     var ettmodeButtonsflag:Bool = false
     @IBOutlet weak var showEttmodeButton: UIButton!
+
     @IBAction func showEttmodeButtons(_ sender: Any) {
+   
         if ettmodeButtonsflag == false{
             leftButton.isHidden=false
             if ettMode==0{
