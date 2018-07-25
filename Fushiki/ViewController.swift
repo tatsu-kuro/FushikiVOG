@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     var oknSpeed:CGFloat = 5.0
     var panFlag:Bool = false
     var ettoknMode:Int = 0 //0:off 1:ett 2:okn
+    var ettMode:Int = 0 //0:pen 1:left 2:both 2:right
     @IBOutlet weak var leftButton: UIButton!
     @IBOutlet weak var bothButton: UIButton!
     @IBOutlet weak var rightButton: UIButton!
@@ -76,12 +77,22 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var both1Button: UIButton!
     @IBAction func rightETT(_ sender: Any) {
+        ettMode=3
     }
     
+    @IBAction func both1ETT(_ sender: Any) {
+        ettMode=0
+        both1Button.isHidden=true
+        bothButton.isHidden=false
+    }
     @IBAction func bothETT(_ sender: Any) {
+        ettMode=2
+        both1Button.isHidden=false
+        bothButton.isHidden=true
     }
     
     @IBAction func leftETT(_ sender: Any) {
+        ettMode=1
     }
     @IBAction func panGes(_ sender: UIPanGestureRecognizer) {
         if ETTbutton.isHidden != true{
@@ -239,7 +250,11 @@ class ViewController: UIViewController {
     @IBAction func startETT(_ sender: Any) {
         ettoknMode = 1
         textIroiro.isHidden=true
-        both1Button.isHidden=false
+        if ettMode==0{
+            both1Button.isHidden=false
+        }else{
+            bothButton.isHidden=false
+        }
         leftButton.isHidden=false
         rightButton.isHidden=false
         timer = Timer.scheduledTimer(timeInterval: 1.0/100.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
