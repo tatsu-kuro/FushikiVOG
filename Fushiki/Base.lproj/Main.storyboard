@@ -21,6 +21,15 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checker1" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Di-TH-bfd">
                                 <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N8C-YV-V5n">
+                                <rect key="frame" x="0.0" y="305" width="667" height="70"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="mJB-cf-XZA"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="showEttmodeButtons:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OCV-e1-YYJ"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S68-fh-yHQ">
                                 <rect key="frame" x="40" y="295" width="80" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -64,16 +73,17 @@
                                     <action selector="startOKN:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DFo-ih-ESC"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLh-4u-MgC">
-                                <rect key="frame" x="40" y="87" width="587" height="168"/>
-                                <string key="text">Fushiki Version 1.1 by 96da
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="9" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLh-4u-MgC">
+                                <rect key="frame" x="40" y="66" width="587" height="189"/>
+                                <mutableString key="text">Fushiki Version 1.2 by 96da
 
 ETT: Pan the upper screen area to change the speed.
 ETT: Pan the lower screen area to change the wave amplitude.
+ETT: Tap the lowest screen area to show the buttons.
 
 OKN: Pan the screen to change the speed.       
 
-Double tap to return from the ETT, OKN</string>
+Double tap to return from the ETT, OKN</mutableString>
                                 <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -142,6 +152,7 @@ Double tap to return from the ETT, OKN</string>
                             <constraint firstItem="3Di-TH-bfd" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="7sV-6t-jWs"/>
                             <constraint firstItem="FrZ-rl-Lx9" firstAttribute="leading" secondItem="uQ1-87-BgY" secondAttribute="trailing" constant="20" id="8iw-0z-i4v"/>
                             <constraint firstItem="S68-fh-yHQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="8k9-Is-UfF"/>
+                            <constraint firstItem="N8C-YV-V5n" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="9U5-vD-E8x"/>
                             <constraint firstItem="3Di-TH-bfd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="BIg-aK-hid"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="S68-fh-yHQ" secondAttribute="bottom" constant="40" id="DZv-ST-7mT"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dLh-4u-MgC" secondAttribute="trailing" constant="40" id="EZV-Wy-1cp"/>
@@ -150,11 +161,13 @@ Double tap to return from the ETT, OKN</string>
                             <constraint firstItem="dLh-4u-MgC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="MID-Gr-kT1"/>
                             <constraint firstItem="FrZ-rl-Lx9" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="MgL-DL-tbU"/>
                             <constraint firstItem="mMM-4k-wYF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="NDu-I9-7Ah"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="N8C-YV-V5n" secondAttribute="trailing" id="Rnc-85-ZuD"/>
                             <constraint firstItem="nWo-di-apu" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="To1-nz-s15"/>
                             <constraint firstItem="3Di-TH-bfd" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="XN9-2e-jdw"/>
                             <constraint firstItem="mMM-4k-wYF" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="aRK-7D-Rv9"/>
                             <constraint firstItem="wJ3-gm-H2z" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="cH6-mW-DBI"/>
                             <constraint firstItem="mMM-4k-wYF" firstAttribute="leading" secondItem="wJ3-gm-H2z" secondAttribute="trailing" constant="30" id="eri-QX-nap"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="N8C-YV-V5n" secondAttribute="bottom" id="ikS-QF-PUA"/>
                             <constraint firstItem="3Di-TH-bfd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="kF6-Om-O0a"/>
                             <constraint firstItem="uQ1-87-BgY" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="tV4-fc-RQp"/>
                             <constraint firstItem="uQ1-87-BgY" firstAttribute="leading" secondItem="S68-fh-yHQ" secondAttribute="trailing" constant="20" id="tXX-0L-s0f"/>
@@ -177,13 +190,14 @@ Double tap to return from the ETT, OKN</string>
                         <outlet property="helpText" destination="dLh-4u-MgC" id="goG-L2-R0l"/>
                         <outlet property="leftButton" destination="wJ3-gm-H2z" id="0u7-HC-2Sz"/>
                         <outlet property="rightButton" destination="nWo-di-apu" id="hSZ-3I-u9S"/>
+                        <outlet property="showEttmodeButton" destination="N8C-YV-V5n" id="T14-17-Wjh"/>
                         <outlet property="textIroiro" destination="fGb-CL-fnV" id="wej-La-jWT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer numberOfTapsRequired="2" id="gzc-A7-dWm">
                     <connections>
-                        <action selector="tapGes:" destination="BYZ-38-t0r" id="uMU-Yf-EJf"/>
+                        <action selector="tapGes:" destination="BYZ-38-t0r" id="A9z-g8-Oqw"/>
                     </connections>
                 </tapGestureRecognizer>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="rLK-u6-hwE">

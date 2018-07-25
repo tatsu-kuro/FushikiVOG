@@ -159,8 +159,32 @@ class ViewController: UIViewController {
             
         }
     }
-
-    @IBAction func tapGes(_ sender: Any) {
+    var ettmodeButtonsflag:Bool = false
+    @IBOutlet weak var showEttmodeButton: UIButton!
+    @IBAction func showEttmodeButtons(_ sender: Any) {
+        if ettmodeButtonsflag == false{
+            leftButton.isHidden=false
+            if ettMode==0{
+                both1Button.isHidden=false
+            }else{
+                bothButton.isHidden=false
+            }
+            rightButton.isHidden=false
+            ettmodeButtonsflag = true
+        }else{
+            leftButton.isHidden=true
+            //          if ettMode==0{
+            both1Button.isHidden=true
+            //              if ettMode==0{
+            bothButton.isHidden=true
+            //            }
+            rightButton.isHidden=true
+            ettmodeButtonsflag = false
+        }
+    }
+    
+    @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
+        print("doubletap")
         if ettoknMode != 0 {
             timer.invalidate()
             if ettoknMode == 1{
@@ -181,7 +205,7 @@ class ViewController: UIViewController {
             both1Button.isHidden=true
             rightButton.isHidden=true
             leftButton.isHidden=true
-            
+
             ettoknMode = 0
             checkerView.isHidden=true
             UIApplication.shared.isIdleTimerDisabled = false//スリープ状態へ移行する時間を監視しているIdleTimerをon
@@ -250,13 +274,19 @@ class ViewController: UIViewController {
     @IBAction func startETT(_ sender: Any) {
         ettoknMode = 1
         textIroiro.isHidden=true
-        if ettMode==0{
-            both1Button.isHidden=false
-        }else{
-            bothButton.isHidden=false
-        }
-        leftButton.isHidden=false
-        rightButton.isHidden=false
+//        if ettMode==0{
+//            bothButton.isHidden=false
+//        }else{
+//            both1Button.isHidden=false
+//        }
+//        leftButton.isHidden=false
+//        rightButton.isHidden=false
+ 
+        bothButton.isHidden=true
+        both1Button.isHidden=true
+        leftButton.isHidden=true
+        rightButton.isHidden=true
+        ettmodeButtonsflag=false
         timer = Timer.scheduledTimer(timeInterval: 1.0/100.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         tcount=0
         ETTbutton.isEnabled=false
