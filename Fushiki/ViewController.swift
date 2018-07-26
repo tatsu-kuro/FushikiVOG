@@ -67,17 +67,26 @@ class ViewController: UIViewController {
 //    @IBOutlet weak var both1Button: UIButton!
     @IBAction func rightETT(_ sender: Any) {
         saccadeMode=2
-  //      tcount=0
+        tcount=1
+        if UIApplication.shared.isIdleTimerDisabled == false{
+            UIApplication.shared.isIdleTimerDisabled = true//スリープしない
+        }
      }
  
     @IBAction func bothETT(_ sender: Any) {
         saccadeMode=1
-   //     tcount=0
+        tcount=1
+        if UIApplication.shared.isIdleTimerDisabled == false{
+            UIApplication.shared.isIdleTimerDisabled = true//スリープしない
+        }
     }
     
     @IBAction func leftETT(_ sender: Any) {
         saccadeMode=0
-   //     tcount=0
+        tcount=1
+        if UIApplication.shared.isIdleTimerDisabled == false{
+            UIApplication.shared.isIdleTimerDisabled = true//スリープしない
+        }
     }
     @IBAction func panGes(_ sender: UIPanGestureRecognizer) {
         if ETTbutton.isHidden != true{
@@ -237,25 +246,25 @@ class ViewController: UIViewController {
         
         self.view.layer.addSublayer(rectangleLayer)
     }
-    func eraseCircles(){
-        /* --- 四角形を描画 --- */
-        let rectangleLayer = CAShapeLayer.init()
-        let rectangleFrame = CGRect.init(x: 0, y: self.view.bounds.height/2-cirDiameter, width: self.view.bounds.width, height: cirDiameter*2)
-        rectangleLayer.frame = rectangleFrame
-        
-        // 輪郭の色
-        rectangleLayer.strokeColor = UIColor.white.cgColor
-        // 四角形の中の色
-        rectangleLayer.fillColor = UIColor.white.cgColor
-        // 輪郭の太さ
-        // rectangleLayer.lineWidth = 2.5
-        
-        // 四角形を描画
-        rectangleLayer.path = UIBezierPath.init(rect: CGRect.init(x: 0, y: 0, width: rectangleFrame.size.width, height: rectangleFrame.size.height)).cgPath
-        
-        self.view.layer.addSublayer(rectangleLayer)
-
-    }
+//    func eraseCircles(){
+//        /* --- 四角形を描画 --- */
+//        let rectangleLayer = CAShapeLayer.init()
+//        let rectangleFrame = CGRect.init(x: 0, y: self.view.bounds.height/2-cirDiameter, width: self.view.bounds.width, height: cirDiameter*2)
+//        rectangleLayer.frame = rectangleFrame
+//
+//        // 輪郭の色
+//        rectangleLayer.strokeColor = UIColor.white.cgColor
+//        // 四角形の中の色
+//        rectangleLayer.fillColor = UIColor.white.cgColor
+//        // 輪郭の太さ
+//        // rectangleLayer.lineWidth = 2.5
+//
+//        // 四角形を描画
+//        rectangleLayer.path = UIBezierPath.init(rect: CGRect.init(x: 0, y: 0, width: rectangleFrame.size.width, height: rectangleFrame.size.height)).cgPath
+//
+//        self.view.layer.addSublayer(rectangleLayer)
+//
+//    }
     func drawCircle(cPoint:CGPoint){
         /* --- 円を描画 --- */
         let circleLayer = CAShapeLayer.init()
@@ -329,6 +338,14 @@ class ViewController: UIViewController {
             cPoint = CGPoint(x:view.bounds.width*CGFloat(9 - (tcount%5)*2)/10,y:view.bounds.height/2)
         }
         drawCircle(cPoint:cPoint)
+        if ettoknMode > 0{
+            if tcount > 60*5 {
+                if UIApplication.shared.isIdleTimerDisabled == true{
+                    UIApplication.shared.isIdleTimerDisabled = false//5分たったら監視する
+                }
+            }
+        }
+
     }
     @objc func update(tm: Timer) {
         if ettoknMode == 1 && panFlag == false{
