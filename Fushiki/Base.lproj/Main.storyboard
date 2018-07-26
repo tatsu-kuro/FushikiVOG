@@ -22,9 +22,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N8C-YV-V5n">
-                                <rect key="frame" x="0.0" y="305" width="667" height="70"/>
+                                <rect key="frame" x="0.0" y="225" width="667" height="150"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="70" id="mJB-cf-XZA"/>
+                                    <constraint firstAttribute="height" constant="150" id="FOo-5x-gMC"/>
                                 </constraints>
                                 <connections>
                                     <action selector="showEttmodeButtons:" destination="BYZ-38-t0r" eventType="touchDown" id="wiN-h6-N5S"/>
@@ -37,7 +37,7 @@
                                     <constraint firstAttribute="width" constant="80" id="7Yb-dM-ZPJ"/>
                                     <constraint firstAttribute="height" constant="40" id="m4m-nj-PxK"/>
                                 </constraints>
-                                <state key="normal" title="ETT" backgroundImage="btn">
+                                <state key="normal" title="ETTp" backgroundImage="btn">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -53,7 +53,7 @@
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="ndt-pS-Idv"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="vvD-Hg-X3Y"/>
                                 </constraints>
-                                <state key="normal" title="ETTc" backgroundImage="btn">
+                                <state key="normal" title="ETTs" backgroundImage="btn">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -73,13 +73,14 @@
                                     <action selector="startOKN:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DFo-ih-ESC"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="9" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLh-4u-MgC">
-                                <rect key="frame" x="40" y="66" width="587" height="189"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="11" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLh-4u-MgC">
+                                <rect key="frame" x="40" y="45" width="587" height="210"/>
                                 <string key="text">Fushiki Version 1.2 by 96da
 
 ETT: Pan the upper screen area to change the speed.
 ETT: Pan the lower screen area to change the wave amplitude.
-ETT: Tap the lowest screen area to show the buttons.
+ETT: Tap the upper screen area to show the checkers.
+ETTs: Tap the lowest screen area to show the buttons.
 
 OKN: Pan the screen to change the speed.       
 
@@ -132,15 +133,13 @@ Double tap to return from the ETT, OKN</string>
                                     <action selector="rightETT:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Fb1-qV-IWz"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JGh-Tg-eJH">
-                                <rect key="frame" x="313" y="295" width="40" height="40"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WrH-ag-Gzv">
+                                <rect key="frame" x="0.0" y="0.0" width="667" height="150"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="4fh-rk-HAd"/>
-                                    <constraint firstAttribute="height" constant="40" id="glP-hB-3j3"/>
+                                    <constraint firstAttribute="height" constant="150" id="481-Ym-M1C"/>
                                 </constraints>
-                                <state key="normal" backgroundImage="both1"/>
                                 <connections>
-                                    <action selector="both1ETT:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6oH-qa-hfl"/>
+                                    <action selector="showCheck:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gh5-zY-VPd"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -152,26 +151,27 @@ Double tap to return from the ETT, OKN</string>
                             <constraint firstItem="3Di-TH-bfd" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="7sV-6t-jWs"/>
                             <constraint firstItem="FrZ-rl-Lx9" firstAttribute="leading" secondItem="uQ1-87-BgY" secondAttribute="trailing" constant="20" id="8iw-0z-i4v"/>
                             <constraint firstItem="S68-fh-yHQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="8k9-Is-UfF"/>
-                            <constraint firstItem="N8C-YV-V5n" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="9U5-vD-E8x"/>
                             <constraint firstItem="3Di-TH-bfd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="BIg-aK-hid"/>
+                            <constraint firstItem="WrH-ag-Gzv" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Cgl-u6-e14"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="S68-fh-yHQ" secondAttribute="bottom" constant="40" id="DZv-ST-7mT"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dLh-4u-MgC" secondAttribute="trailing" constant="40" id="EZV-Wy-1cp"/>
-                            <constraint firstItem="JGh-Tg-eJH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ISV-Uf-7YU"/>
+                            <constraint firstItem="N8C-YV-V5n" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="HVu-mc-diJ"/>
                             <constraint firstItem="S68-fh-yHQ" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="LO1-w6-xmf"/>
                             <constraint firstItem="dLh-4u-MgC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="MID-Gr-kT1"/>
                             <constraint firstItem="FrZ-rl-Lx9" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="MgL-DL-tbU"/>
                             <constraint firstItem="mMM-4k-wYF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="NDu-I9-7Ah"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="N8C-YV-V5n" secondAttribute="trailing" id="Rnc-85-ZuD"/>
                             <constraint firstItem="nWo-di-apu" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="To1-nz-s15"/>
                             <constraint firstItem="3Di-TH-bfd" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="XN9-2e-jdw"/>
+                            <constraint firstItem="N8C-YV-V5n" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ZGy-MX-RyK"/>
                             <constraint firstItem="mMM-4k-wYF" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="aRK-7D-Rv9"/>
+                            <constraint firstItem="N8C-YV-V5n" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="bxy-fs-xYR"/>
                             <constraint firstItem="wJ3-gm-H2z" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="cH6-mW-DBI"/>
                             <constraint firstItem="mMM-4k-wYF" firstAttribute="leading" secondItem="wJ3-gm-H2z" secondAttribute="trailing" constant="30" id="eri-QX-nap"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="N8C-YV-V5n" secondAttribute="bottom" id="ikS-QF-PUA"/>
+                            <constraint firstItem="WrH-ag-Gzv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="izC-jw-tae"/>
                             <constraint firstItem="3Di-TH-bfd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="kF6-Om-O0a"/>
                             <constraint firstItem="uQ1-87-BgY" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="tV4-fc-RQp"/>
                             <constraint firstItem="uQ1-87-BgY" firstAttribute="leading" secondItem="S68-fh-yHQ" secondAttribute="trailing" constant="20" id="tXX-0L-s0f"/>
-                            <constraint firstItem="JGh-Tg-eJH" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="yTu-GQ-HZB"/>
+                            <constraint firstItem="WrH-ag-Gzv" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="yyi-ZD-ED1"/>
                             <constraint firstItem="nWo-di-apu" firstAttribute="leading" secondItem="mMM-4k-wYF" secondAttribute="trailing" constant="30" id="zcf-b2-18J"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -184,7 +184,6 @@ Double tap to return from the ETT, OKN</string>
                         <outlet property="ETTCbutton" destination="uQ1-87-BgY" id="rO5-Ik-fBS"/>
                         <outlet property="ETTbutton" destination="S68-fh-yHQ" id="0TQ-Cr-cZB"/>
                         <outlet property="OKNbutton" destination="FrZ-rl-Lx9" id="aeb-HD-kEd"/>
-                        <outlet property="both1Button" destination="JGh-Tg-eJH" id="pmY-72-PeP"/>
                         <outlet property="bothButton" destination="mMM-4k-wYF" id="h98-am-IHa"/>
                         <outlet property="checkerView" destination="3Di-TH-bfd" id="hB5-hT-sad"/>
                         <outlet property="helpText" destination="dLh-4u-MgC" id="goG-L2-R0l"/>
@@ -211,7 +210,6 @@ Double tap to return from the ETT, OKN</string>
     </scenes>
     <resources>
         <image name="both" width="512" height="512"/>
-        <image name="both1" width="512" height="512"/>
         <image name="btn" width="300" height="40"/>
         <image name="checker1" width="1600" height="900"/>
         <image name="left" width="512" height="512"/>

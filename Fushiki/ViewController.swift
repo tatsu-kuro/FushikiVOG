@@ -14,13 +14,14 @@ class ViewController: UIViewController {
     var cirDiameter:CGFloat = 0
     var bandWidth:CGFloat = 0
     var timer: Timer!
+    var timer1: Timer!
     var tcount: Int = 0
     var ettWidth:CGFloat = 200.0
     var ettSpeed:CGFloat = 0.3
     var oknSpeed:CGFloat = 5.0
     var panFlag:Bool = false
-    var ettoknMode:Int = 0 //0:off 1:ett 2:okn
-    var ettMode:Int = 0 //0:pen 1:left 2:both 2:right
+    var ettoknMode:Int = 0 //0:off 1:ettpursuits 2:ettsaccade 3:okn
+    var saccadeMode:Int = 0 //0:left 1:both 2:right
     @IBOutlet weak var leftButton: UIButton!
     @IBOutlet weak var bothButton: UIButton!
     @IBOutlet weak var rightButton: UIButton!
@@ -46,53 +47,37 @@ class ViewController: UIViewController {
         
         bandWidth = self.view.bounds.width/10
         cirDiameter = self.view.bounds.width/26
- //       getUserDefaults()
-//        print("ettS:",ettSpeed,"  ettW:",ettWidth," oknS:",oknSpeed)
         textIroiro.text = " "
         checkerView.isHidden=true
         leftButton.isHidden=true
         rightButton.isHidden=true
         bothButton.isHidden=true
-        both1Button.isHidden=true
     }
-//    func getUserDefault(str:String,ret:CGFloat) -> CGFloat{//getUserDefault_one
-//        if (UserDefaults.standard.object(forKey: str) != nil){//keyが設定してなければretをセット
-//            return CGFloat(UserDefaults.standard.integer(forKey:str))
-//            //return UserDefaults.standard.integer(forKey:str)
-//        }else{
-//            UserDefaults.standard.set(ret, forKey: str)
-//            return ret
-//        }
-//    }
-//    func getUserDefaults(){
-//        ettSpeed = getUserDefault(str: "ettSpeed", ret:0.3)
-//        ettWidth = getUserDefault(str: "ettWidth", ret:200.0)
-//        oknSpeed = getUserDefault(str: "oknSpeed", ret: 5.0)
-//    }
-//    func setUserDefaults(){//default値をセットするんじゃなく、defaultというものに値を設定するという意味
-//        UserDefaults.standard.set(ettSpeed, forKey: "ettSpeed")
-//        UserDefaults.standard.set(ettWidth, forKey: "ettWidth")
-//        UserDefaults.standard.set(oknSpeed, forKey: "oknSpeed")
-//    }
+
     
-    @IBOutlet weak var both1Button: UIButton!
+    @IBAction func showCheck(_ sender: Any) {
+        if ettoknMode == 1 || ettoknMode == 2{
+        if checkerView.isHidden == true{
+            checkerView.isHidden = false
+        }else{
+            checkerView.isHidden = true
+        }
+        }
+    }
+//    @IBOutlet weak var both1Button: UIButton!
     @IBAction func rightETT(_ sender: Any) {
-        ettMode=3
-    }
-    
-    @IBAction func both1ETT(_ sender: Any) {
-        ettMode=0
-        both1Button.isHidden=true
-        bothButton.isHidden=false
-    }
+        saccadeMode=2
+  //      tcount=0
+     }
+ 
     @IBAction func bothETT(_ sender: Any) {
-        ettMode=2
-        both1Button.isHidden=false
-        bothButton.isHidden=true
+        saccadeMode=1
+   //     tcount=0
     }
     
     @IBAction func leftETT(_ sender: Any) {
-        ettMode=1
+        saccadeMode=0
+   //     tcount=0
     }
     @IBAction func panGes(_ sender: UIPanGestureRecognizer) {
         if ETTbutton.isHidden != true{
@@ -132,7 +117,7 @@ class ViewController: UIViewController {
  //               setUserDefaults()
                 textIroiro.isHidden=true
             }
-        }else if ettoknMode == 2{
+        }else if ettoknMode == 3{
             if sender.state == .began{
  //               textIroiro.isHidden=false
                 panFlag=true
@@ -163,35 +148,34 @@ class ViewController: UIViewController {
     @IBOutlet weak var showEttmodeButton: UIButton!
 
     @IBAction func showEttmodeButtons(_ sender: Any) {
-   
+        if ettoknMode == 2{
+
         if ettmodeButtonsflag == false{
             leftButton.isHidden=false
-            if ettMode==0{
-                both1Button.isHidden=false
-            }else{
-                bothButton.isHidden=false
-            }
+            bothButton.isHidden=false
             rightButton.isHidden=false
             ettmodeButtonsflag = true
         }else{
             leftButton.isHidden=true
-            //          if ettMode==0{
-            both1Button.isHidden=true
-            //              if ettMode==0{
             bothButton.isHidden=true
-            //            }
             rightButton.isHidden=true
             ettmodeButtonsflag = false
+        }
         }
     }
     
     @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
-        print("doubletap")
+        //print("doubletap",ettoknMode,"doubletap")
         if ettoknMode != 0 {
-            timer.invalidate()
-            if ettoknMode == 1{
+            if timer?.isValid == true{
+                timer.invalidate()
+            }
+            if timer1?.isValid == true{
+                timer1.invalidate()
+            }
+            if ettoknMode == 1 || ettoknMode == 2{
                 view.layer.sublayers?.removeLast()
-            }else{
+             }else if ettoknMode == 3{
                 for _ in 0..<7{
                     view.layer.sublayers?.removeLast()
                 }
@@ -204,7 +188,6 @@ class ViewController: UIViewController {
             OKNbutton.isHidden=false
             helpText.isHidden=false
             bothButton.isHidden=true
-            both1Button.isHidden=true
             rightButton.isHidden=true
             leftButton.isHidden=true
 
@@ -214,7 +197,7 @@ class ViewController: UIViewController {
         }
     }
     @IBAction func startOKN(_ sender: Any) {
-        ettoknMode=2
+        ettoknMode=3
         textIroiro.isHidden=false
         timer = Timer.scheduledTimer(timeInterval: 1.0/100.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         tcount=0
@@ -254,6 +237,25 @@ class ViewController: UIViewController {
         
         self.view.layer.addSublayer(rectangleLayer)
     }
+    func eraseCircles(){
+        /* --- 四角形を描画 --- */
+        let rectangleLayer = CAShapeLayer.init()
+        let rectangleFrame = CGRect.init(x: 0, y: self.view.bounds.height/2-cirDiameter, width: self.view.bounds.width, height: cirDiameter*2)
+        rectangleLayer.frame = rectangleFrame
+        
+        // 輪郭の色
+        rectangleLayer.strokeColor = UIColor.white.cgColor
+        // 四角形の中の色
+        rectangleLayer.fillColor = UIColor.white.cgColor
+        // 輪郭の太さ
+        // rectangleLayer.lineWidth = 2.5
+        
+        // 四角形を描画
+        rectangleLayer.path = UIBezierPath.init(rect: CGRect.init(x: 0, y: 0, width: rectangleFrame.size.width, height: rectangleFrame.size.height)).cgPath
+        
+        self.view.layer.addSublayer(rectangleLayer)
+
+    }
     func drawCircle(cPoint:CGPoint){
         /* --- 円を描画 --- */
         let circleLayer = CAShapeLayer.init()
@@ -270,22 +272,28 @@ class ViewController: UIViewController {
         self.view.layer.addSublayer(circleLayer)
     }
     @IBAction func startETTC(_ sender: Any) {
-         checkerView.isHidden=false
-        startETT(0)
+        ettoknMode=2
+        textIroiro.isHidden=true
+        
+        bothButton.isHidden=true
+        leftButton.isHidden=true
+        rightButton.isHidden=true
+        ettmodeButtonsflag=false
+        timer1 = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.update1), userInfo: nil, repeats: true)
+        tcount=0
+        ETTbutton.isEnabled=false
+        ETTbutton.isHidden=true
+        ETTCbutton.isEnabled=false
+        ETTCbutton.isHidden=true
+        OKNbutton.isEnabled=false
+        OKNbutton.isHidden=true
+        helpText.isHidden=true
+        UIApplication.shared.isIdleTimerDisabled = true//スリープしない
     }
     @IBAction func startETT(_ sender: Any) {
         ettoknMode = 1
         textIroiro.isHidden=true
-//        if ettMode==0{
-//            bothButton.isHidden=false
-//        }else{
-//            both1Button.isHidden=false
-//        }
-//        leftButton.isHidden=false
-//        rightButton.isHidden=false
- 
         bothButton.isHidden=true
-        both1Button.isHidden=true
         leftButton.isHidden=true
         rightButton.isHidden=true
         ettmodeButtonsflag=false
@@ -300,6 +308,28 @@ class ViewController: UIViewController {
         helpText.isHidden=true
         UIApplication.shared.isIdleTimerDisabled = true//スリープしない
     }
+    @objc func update1(tm: Timer) {
+        //print(tcount)
+        var cPoint = CGPoint(x:0,y:0)
+        if tcount > 0{
+            view.layer.sublayers?.removeLast()
+        }
+        tcount += 1
+        if saccadeMode == 1{
+            cPoint = CGPoint(x:view.bounds.width/10,y:view.bounds.height/2)
+            if tcount%4 == 1 || tcount%4 == 3{
+                cPoint = CGPoint(x:view.bounds.width/2,y:view.bounds.height/2)
+
+            }else if tcount%4 == 2{
+                cPoint = CGPoint(x:view.bounds.width*9/10,y:view.bounds.height/2)
+            }
+        }else if saccadeMode == 2{
+            cPoint = CGPoint(x:view.bounds.width*CGFloat((tcount%5)*2+1)/10,y:view.bounds.height/2)
+        }else{
+            cPoint = CGPoint(x:view.bounds.width*CGFloat(9 - (tcount%5)*2)/10,y:view.bounds.height/2)
+        }
+        drawCircle(cPoint:cPoint)
+    }
     @objc func update(tm: Timer) {
         if ettoknMode == 1 && panFlag == false{
             if tcount > 0{
@@ -309,7 +339,7 @@ class ViewController: UIViewController {
             //3.1415*5 -> 100回で１周、100回ps
             let cPoint = CGPoint(x:view.bounds.width/2 + sin(CGFloat(tcount)*ettSpeed/(3.1415*5.0))*ettWidth, y: view.bounds.height/2)
             drawCircle(cPoint:cPoint)
-        }else if ettoknMode == 2 && panFlag == false{
+        }else if ettoknMode == 3 && panFlag == false{
             if tcount > 0{
                 for _ in 0..<7{
                     view.layer.sublayers?.removeLast()
@@ -322,7 +352,9 @@ class ViewController: UIViewController {
         }
         if ettoknMode > 0{
             if tcount > 100*60*5 {
-                UIApplication.shared.isIdleTimerDisabled = false//5分たったら監視する
+                if UIApplication.shared.isIdleTimerDisabled == true{
+                    UIApplication.shared.isIdleTimerDisabled = false//5分たったら監視する
+                }
             }
         }
     }
