@@ -29,6 +29,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var textIroiro: UITextField!
     @IBOutlet weak var OKNbutton: UIButton!
     @IBOutlet weak var ETTbutton: UIButton!
+    @IBOutlet weak var showCeckbutton: UIButton!
     @IBOutlet weak var ETTCbutton:
     UIButton!
     @IBOutlet weak var checkerView: UIImageView!
@@ -52,6 +53,9 @@ class ViewController: UIViewController {
         leftButton.isHidden=true
         rightButton.isHidden=true
         bothButton.isHidden=true
+//        showCeckbutton.frame.size.height=self.view.bounds.height/2
+//        showEttmodeButton.frame.origin.y=self.view.bounds.height/2
+//        showEttmodeButton.frame.size.height=self.view.bounds.height/2
     }
 
     

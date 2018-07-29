@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,15 +22,34 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checker1" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Di-TH-bfd">
                                 <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N8C-YV-V5n">
-                                <rect key="frame" x="0.0" y="225" width="667" height="150"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0.3Hz" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fGb-CL-fnV">
+                                <rect key="frame" x="20" y="20" width="110" height="38"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="150" id="FOo-5x-gMC"/>
+                                    <constraint firstAttribute="height" constant="38" id="Sie-nY-dHF"/>
+                                    <constraint firstAttribute="width" constant="110" id="pRp-we-7PG"/>
                                 </constraints>
-                                <connections>
-                                    <action selector="showEttmodeButtons:" destination="BYZ-38-t0r" eventType="touchDown" id="wiN-h6-N5S"/>
-                                </connections>
-                            </button>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="77y-h9-TZr">
+                                <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WrH-ag-Gzv">
+                                        <rect key="frame" x="0.0" y="0.0" width="667" height="187.5"/>
+                                        <connections>
+                                            <action selector="showCheck:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gh5-zY-VPd"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N8C-YV-V5n">
+                                        <rect key="frame" x="0.0" y="187.5" width="667" height="187.5"/>
+                                        <connections>
+                                            <action selector="showEttmodeButtons:" destination="BYZ-38-t0r" eventType="touchDown" id="wiN-h6-N5S"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S68-fh-yHQ">
                                 <rect key="frame" x="40" y="295" width="80" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -80,7 +100,7 @@
 ETT: Pan the upper screen area to change the speed.
 ETT: Pan the lower screen area to change the wave amplitude.
 ETT: Tap the upper screen area to show the checkers.
-ETTs: Tap the lowest screen area to show the buttons.
+ETTs: Tap the lower screen area to show the buttons.
 
 OKN: Pan the screen to change the speed.       
 
@@ -89,17 +109,6 @@ Double tap to return from the ETT, OKN</string>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0.3Hz" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fGb-CL-fnV">
-                                <rect key="frame" x="20" y="20" width="110" height="38"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="38" id="Sie-nY-dHF"/>
-                                    <constraint firstAttribute="width" constant="110" id="pRp-we-7PG"/>
-                                </constraints>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wJ3-gm-H2z">
                                 <rect key="frame" x="243" y="295" width="40" height="40"/>
                                 <constraints>
@@ -133,45 +142,34 @@ Double tap to return from the ETT, OKN</string>
                                     <action selector="rightETT:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Fb1-qV-IWz"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WrH-ag-Gzv">
-                                <rect key="frame" x="0.0" y="0.0" width="667" height="150"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="150" id="481-Ym-M1C"/>
-                                </constraints>
-                                <connections>
-                                    <action selector="showCheck:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gh5-zY-VPd"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="fGb-CL-fnV" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="1xj-LU-6hn"/>
+                            <constraint firstItem="3Di-TH-bfd" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="34W-7f-vAB"/>
                             <constraint firstItem="fGb-CL-fnV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="4aJ-xM-jfH"/>
-                            <constraint firstItem="3Di-TH-bfd" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="7sV-6t-jWs"/>
                             <constraint firstItem="FrZ-rl-Lx9" firstAttribute="leading" secondItem="uQ1-87-BgY" secondAttribute="trailing" constant="20" id="8iw-0z-i4v"/>
                             <constraint firstItem="S68-fh-yHQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="8k9-Is-UfF"/>
-                            <constraint firstItem="3Di-TH-bfd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="BIg-aK-hid"/>
-                            <constraint firstItem="WrH-ag-Gzv" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Cgl-u6-e14"/>
+                            <constraint firstItem="77y-h9-TZr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="9v4-I0-YEK"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="S68-fh-yHQ" secondAttribute="bottom" constant="40" id="DZv-ST-7mT"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dLh-4u-MgC" secondAttribute="trailing" constant="40" id="EZV-Wy-1cp"/>
-                            <constraint firstItem="N8C-YV-V5n" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="HVu-mc-diJ"/>
                             <constraint firstItem="S68-fh-yHQ" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="LO1-w6-xmf"/>
                             <constraint firstItem="dLh-4u-MgC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="MID-Gr-kT1"/>
                             <constraint firstItem="FrZ-rl-Lx9" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="MgL-DL-tbU"/>
                             <constraint firstItem="mMM-4k-wYF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="NDu-I9-7Ah"/>
+                            <constraint firstItem="3Di-TH-bfd" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="REi-cL-kha"/>
+                            <constraint firstItem="77y-h9-TZr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Rhn-Mb-JHe"/>
                             <constraint firstItem="nWo-di-apu" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="To1-nz-s15"/>
-                            <constraint firstItem="3Di-TH-bfd" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="XN9-2e-jdw"/>
-                            <constraint firstItem="N8C-YV-V5n" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ZGy-MX-RyK"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="77y-h9-TZr" secondAttribute="bottom" id="YdX-Uu-eiB"/>
+                            <constraint firstItem="3Di-TH-bfd" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="a4n-4U-cvC"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="77y-h9-TZr" secondAttribute="trailing" id="a7B-C1-dpl"/>
                             <constraint firstItem="mMM-4k-wYF" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="aRK-7D-Rv9"/>
-                            <constraint firstItem="N8C-YV-V5n" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="bxy-fs-xYR"/>
                             <constraint firstItem="wJ3-gm-H2z" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="cH6-mW-DBI"/>
                             <constraint firstItem="mMM-4k-wYF" firstAttribute="leading" secondItem="wJ3-gm-H2z" secondAttribute="trailing" constant="30" id="eri-QX-nap"/>
-                            <constraint firstItem="WrH-ag-Gzv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="izC-jw-tae"/>
-                            <constraint firstItem="3Di-TH-bfd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="kF6-Om-O0a"/>
+                            <constraint firstItem="3Di-TH-bfd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="lIG-AI-Vrq"/>
                             <constraint firstItem="uQ1-87-BgY" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="tV4-fc-RQp"/>
                             <constraint firstItem="uQ1-87-BgY" firstAttribute="leading" secondItem="S68-fh-yHQ" secondAttribute="trailing" constant="20" id="tXX-0L-s0f"/>
-                            <constraint firstItem="WrH-ag-Gzv" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="yyi-ZD-ED1"/>
                             <constraint firstItem="nWo-di-apu" firstAttribute="leading" secondItem="mMM-4k-wYF" secondAttribute="trailing" constant="30" id="zcf-b2-18J"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -189,6 +187,7 @@ Double tap to return from the ETT, OKN</string>
                         <outlet property="helpText" destination="dLh-4u-MgC" id="goG-L2-R0l"/>
                         <outlet property="leftButton" destination="wJ3-gm-H2z" id="0u7-HC-2Sz"/>
                         <outlet property="rightButton" destination="nWo-di-apu" id="hSZ-3I-u9S"/>
+                        <outlet property="showCeckbutton" destination="WrH-ag-Gzv" id="EzI-e7-Oz8"/>
                         <outlet property="showEttmodeButton" destination="N8C-YV-V5n" id="T14-17-Wjh"/>
                         <outlet property="textIroiro" destination="fGb-CL-fnV" id="wej-La-jWT"/>
                     </connections>
