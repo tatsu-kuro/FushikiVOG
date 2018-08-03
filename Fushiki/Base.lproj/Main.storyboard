@@ -95,7 +95,7 @@
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="11" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLh-4u-MgC">
                                 <rect key="frame" x="40" y="45" width="587" height="210"/>
-                                <string key="text">Fushiki Version 1.3 by 96da
+                                <string key="text">Fushiki Version 1.4 by 96da
 
 ETT: Pan the upper screen area to change the speed.
 ETT: Pan the lower screen area to change the wave amplitude.
@@ -142,6 +142,22 @@ Double tap to return from the ETT, OKN</string>
                                     <action selector="rightETT:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Fb1-qV-IWz"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="puK-Fh-H56">
+                                <rect key="frame" x="453" y="295" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="0VX-IG-9LB"/>
+                                    <constraint firstAttribute="width" constant="40" id="8sb-mg-uu0"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="time05"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hC7-yb-7qX">
+                                <rect key="frame" x="523" y="295" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="KTn-Xk-gvd"/>
+                                    <constraint firstAttribute="width" constant="40" id="bBf-bh-ZRb"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="time10"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
@@ -151,9 +167,11 @@ Double tap to return from the ETT, OKN</string>
                             <constraint firstItem="fGb-CL-fnV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="4aJ-xM-jfH"/>
                             <constraint firstItem="FrZ-rl-Lx9" firstAttribute="leading" secondItem="uQ1-87-BgY" secondAttribute="trailing" constant="20" id="8iw-0z-i4v"/>
                             <constraint firstItem="S68-fh-yHQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="8k9-Is-UfF"/>
+                            <constraint firstItem="hC7-yb-7qX" firstAttribute="leading" secondItem="puK-Fh-H56" secondAttribute="trailing" constant="30" id="8qj-h2-Gsj"/>
                             <constraint firstItem="77y-h9-TZr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="9v4-I0-YEK"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="S68-fh-yHQ" secondAttribute="bottom" constant="40" id="DZv-ST-7mT"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dLh-4u-MgC" secondAttribute="trailing" constant="40" id="EZV-Wy-1cp"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="hC7-yb-7qX" secondAttribute="bottom" constant="40" id="Gnu-q8-xEi"/>
                             <constraint firstItem="S68-fh-yHQ" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="LO1-w6-xmf"/>
                             <constraint firstItem="dLh-4u-MgC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="MID-Gr-kT1"/>
                             <constraint firstItem="FrZ-rl-Lx9" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="MgL-DL-tbU"/>
@@ -161,10 +179,12 @@ Double tap to return from the ETT, OKN</string>
                             <constraint firstItem="3Di-TH-bfd" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="REi-cL-kha"/>
                             <constraint firstItem="77y-h9-TZr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Rhn-Mb-JHe"/>
                             <constraint firstItem="nWo-di-apu" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="To1-nz-s15"/>
+                            <constraint firstItem="puK-Fh-H56" firstAttribute="leading" secondItem="nWo-di-apu" secondAttribute="trailing" constant="30" id="Y83-6V-YnZ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="77y-h9-TZr" secondAttribute="bottom" id="YdX-Uu-eiB"/>
                             <constraint firstItem="3Di-TH-bfd" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="a4n-4U-cvC"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="77y-h9-TZr" secondAttribute="trailing" id="a7B-C1-dpl"/>
                             <constraint firstItem="mMM-4k-wYF" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="aRK-7D-Rv9"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="puK-Fh-H56" secondAttribute="bottom" constant="40" id="aXG-vw-eZq"/>
                             <constraint firstItem="wJ3-gm-H2z" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="cH6-mW-DBI"/>
                             <constraint firstItem="mMM-4k-wYF" firstAttribute="leading" secondItem="wJ3-gm-H2z" secondAttribute="trailing" constant="30" id="eri-QX-nap"/>
                             <constraint firstItem="3Di-TH-bfd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="lIG-AI-Vrq"/>
@@ -204,7 +224,7 @@ Double tap to return from the ETT, OKN</string>
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-88.605697151424295" y="125.59999999999999"/>
+            <point key="canvasLocation" x="-165.96701649175412" y="-82.400000000000006"/>
         </scene>
     </scenes>
     <resources>
@@ -213,5 +233,7 @@ Double tap to return from the ETT, OKN</string>
         <image name="checker1" width="1600" height="900"/>
         <image name="left" width="512" height="512"/>
         <image name="right" width="512" height="512"/>
+        <image name="time05" width="512" height="512"/>
+        <image name="time10" width="512" height="512"/>
     </resources>
 </document>
