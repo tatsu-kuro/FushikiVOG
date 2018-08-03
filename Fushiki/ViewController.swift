@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     var bandWidth:CGFloat = 0
     var timer: Timer!
     var timer1: Timer!
+    var timer1Interval:Int = 1
     var tcount: Int = 0
     var ettWidth:CGFloat = 200.0
     var ettSpeed:CGFloat = 0.3
@@ -25,6 +26,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var leftButton: UIButton!
     @IBOutlet weak var bothButton: UIButton!
     @IBOutlet weak var rightButton: UIButton!
+    @IBOutlet weak var time05Button: UIButton!
+    
+    @IBOutlet weak var time10Button: UIButton!
+    
     @IBOutlet weak var helpText: UILabel!
     @IBOutlet weak var textIroiro: UITextField!
     @IBOutlet weak var OKNbutton: UIButton!
@@ -53,12 +58,20 @@ class ViewController: UIViewController {
         leftButton.isHidden=true
         rightButton.isHidden=true
         bothButton.isHidden=true
+        time05Button.isHidden=true
+        time10Button.isHidden=true
 //        showCeckbutton.frame.size.height=self.view.bounds.height/2
 //        showEttmodeButton.frame.origin.y=self.view.bounds.height/2
 //        showEttmodeButton.frame.size.height=self.view.bounds.height/2
     }
 
+    @IBAction func setTimer05(_ sender: Any) {
+        timer1Interval=1
+    }
     
+    @IBAction func setTimer10(_ sender: Any) {
+        timer1Interval=2
+    }
     @IBAction func showCheck(_ sender: Any) {
         if ettoknMode == 1 || ettoknMode == 2{
         if checkerView.isHidden == true{
@@ -167,11 +180,17 @@ class ViewController: UIViewController {
             leftButton.isHidden=false
             bothButton.isHidden=false
             rightButton.isHidden=false
+            time05Button.isHidden=false
+            time10Button.isHidden=false
+
             ettmodeButtonsflag = true
         }else{
             leftButton.isHidden=true
             bothButton.isHidden=true
             rightButton.isHidden=true
+            time05Button.isHidden=true
+            time10Button.isHidden=true
+
             ettmodeButtonsflag = false
         }
         }
@@ -203,6 +222,8 @@ class ViewController: UIViewController {
             bothButton.isHidden=true
             rightButton.isHidden=true
             leftButton.isHidden=true
+            time05Button.isHidden=true
+            time10Button.isHidden=true
 
             ettoknMode = 0
             checkerView.isHidden=true
@@ -291,8 +312,11 @@ class ViewController: UIViewController {
         bothButton.isHidden=true
         leftButton.isHidden=true
         rightButton.isHidden=true
+        time05Button.isHidden=true
+        time10Button.isHidden=true
+
         ettmodeButtonsflag=false
-        timer1 = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.update1), userInfo: nil, repeats: true)
+        timer1 = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.update1), userInfo: nil, repeats: true)
         tcount=0
         ETTbutton.isEnabled=false
         ETTbutton.isHidden=true
@@ -309,6 +333,9 @@ class ViewController: UIViewController {
         bothButton.isHidden=true
         leftButton.isHidden=true
         rightButton.isHidden=true
+        time05Button.isHidden=true
+        time10Button.isHidden=true
+
         ettmodeButtonsflag=false
         timer = Timer.scheduledTimer(timeInterval: 1.0/100.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         tcount=0
@@ -321,13 +348,21 @@ class ViewController: UIViewController {
         helpText.isHidden=true
         UIApplication.shared.isIdleTimerDisabled = true//スリープしない
     }
+    var tcnt:Int = 0
     @objc func update1(tm: Timer) {
         //print(tcount)
+        tcnt += 1
+        if timer1Interval==2{
+            if tcnt%2 == 0 {
+                return
+            }
+        }
         var cPoint = CGPoint(x:0,y:0)
         if tcount > 0{
             view.layer.sublayers?.removeLast()
         }
         tcount += 1
+        
         if saccadeMode == 1{
             cPoint = CGPoint(x:view.bounds.width/10,y:view.bounds.height/2)
             if tcount%4 == 1 || tcount%4 == 3{

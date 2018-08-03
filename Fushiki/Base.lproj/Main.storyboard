@@ -110,10 +110,10 @@ Double tap to return from the ETT, OKN</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wJ3-gm-H2z">
-                                <rect key="frame" x="243" y="295" width="40" height="40"/>
+                                <rect key="frame" x="170" y="295" width="40" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="fAF-ne-pXL"/>
-                                    <constraint firstAttribute="height" constant="40" id="kuZ-kJ-f3T"/>
+                                    <constraint firstAttribute="width" constant="40" id="Nw6-ea-IXN"/>
+                                    <constraint firstAttribute="height" constant="40" id="Ubf-c8-O3m"/>
                                 </constraints>
                                 <state key="normal" backgroundImage="left"/>
                                 <connections>
@@ -123,40 +123,46 @@ Double tap to return from the ETT, OKN</string>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mMM-4k-wYF">
                                 <rect key="frame" x="313" y="295" width="40" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="H80-ZV-7Vi"/>
-                                    <constraint firstAttribute="width" constant="40" id="a5B-Rs-ZnD"/>
+                                    <constraint firstAttribute="height" constant="40" id="YCI-KE-jRZ"/>
+                                    <constraint firstAttribute="width" constant="40" id="vy7-y1-4xQ"/>
                                 </constraints>
                                 <state key="normal" backgroundImage="both"/>
                                 <connections>
                                     <action selector="bothETT:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ayR-pB-wQX"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nWo-di-apu">
-                                <rect key="frame" x="383" y="295" width="40" height="40"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="puK-Fh-H56">
+                                <rect key="frame" x="453" y="295" width="40" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="NrJ-cA-7jd"/>
-                                    <constraint firstAttribute="height" constant="40" id="YbE-jD-lv3"/>
+                                    <constraint firstAttribute="height" constant="40" id="7zb-wp-QqN"/>
+                                    <constraint firstAttribute="width" constant="40" id="87F-0M-mBw"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="time05"/>
+                                <connections>
+                                    <action selector="setTimer05:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mFt-0h-Bbt"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nWo-di-apu">
+                                <rect key="frame" x="243" y="295" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="RJR-Cl-hkD"/>
+                                    <constraint firstAttribute="width" constant="40" id="UZx-n7-ESW"/>
                                 </constraints>
                                 <state key="normal" backgroundImage="right"/>
                                 <connections>
                                     <action selector="rightETT:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Fb1-qV-IWz"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="puK-Fh-H56">
-                                <rect key="frame" x="453" y="295" width="40" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="0VX-IG-9LB"/>
-                                    <constraint firstAttribute="width" constant="40" id="8sb-mg-uu0"/>
-                                </constraints>
-                                <state key="normal" backgroundImage="time05"/>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hC7-yb-7qX">
-                                <rect key="frame" x="523" y="295" width="40" height="40"/>
+                                <rect key="frame" x="383" y="295" width="40" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="KTn-Xk-gvd"/>
-                                    <constraint firstAttribute="width" constant="40" id="bBf-bh-ZRb"/>
+                                    <constraint firstAttribute="width" constant="40" id="2za-hQ-P0o"/>
+                                    <constraint firstAttribute="height" constant="40" id="bze-ta-ifc"/>
                                 </constraints>
                                 <state key="normal" backgroundImage="time10"/>
+                                <connections>
+                                    <action selector="setTimer10:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uMu-3r-R0Z"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -165,32 +171,32 @@ Double tap to return from the ETT, OKN</string>
                             <constraint firstItem="fGb-CL-fnV" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="1xj-LU-6hn"/>
                             <constraint firstItem="3Di-TH-bfd" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="34W-7f-vAB"/>
                             <constraint firstItem="fGb-CL-fnV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="4aJ-xM-jfH"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="puK-Fh-H56" secondAttribute="bottom" constant="40" id="5ai-2m-2Wo"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="mMM-4k-wYF" secondAttribute="bottom" constant="40" id="8Z4-1k-O4T"/>
                             <constraint firstItem="FrZ-rl-Lx9" firstAttribute="leading" secondItem="uQ1-87-BgY" secondAttribute="trailing" constant="20" id="8iw-0z-i4v"/>
                             <constraint firstItem="S68-fh-yHQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="8k9-Is-UfF"/>
-                            <constraint firstItem="hC7-yb-7qX" firstAttribute="leading" secondItem="puK-Fh-H56" secondAttribute="trailing" constant="30" id="8qj-h2-Gsj"/>
                             <constraint firstItem="77y-h9-TZr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="9v4-I0-YEK"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="S68-fh-yHQ" secondAttribute="bottom" constant="40" id="DZv-ST-7mT"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dLh-4u-MgC" secondAttribute="trailing" constant="40" id="EZV-Wy-1cp"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="hC7-yb-7qX" secondAttribute="bottom" constant="40" id="Gnu-q8-xEi"/>
+                            <constraint firstItem="puK-Fh-H56" firstAttribute="leading" secondItem="hC7-yb-7qX" secondAttribute="trailing" constant="30" id="HdE-dL-5dq"/>
+                            <constraint firstItem="mMM-4k-wYF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Kbq-dW-8vH"/>
                             <constraint firstItem="S68-fh-yHQ" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="LO1-w6-xmf"/>
                             <constraint firstItem="dLh-4u-MgC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="MID-Gr-kT1"/>
                             <constraint firstItem="FrZ-rl-Lx9" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="MgL-DL-tbU"/>
-                            <constraint firstItem="mMM-4k-wYF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="NDu-I9-7Ah"/>
                             <constraint firstItem="3Di-TH-bfd" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="REi-cL-kha"/>
                             <constraint firstItem="77y-h9-TZr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Rhn-Mb-JHe"/>
-                            <constraint firstItem="nWo-di-apu" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="To1-nz-s15"/>
-                            <constraint firstItem="puK-Fh-H56" firstAttribute="leading" secondItem="nWo-di-apu" secondAttribute="trailing" constant="30" id="Y83-6V-YnZ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="77y-h9-TZr" secondAttribute="bottom" id="YdX-Uu-eiB"/>
                             <constraint firstItem="3Di-TH-bfd" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="a4n-4U-cvC"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="77y-h9-TZr" secondAttribute="trailing" id="a7B-C1-dpl"/>
-                            <constraint firstItem="mMM-4k-wYF" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="aRK-7D-Rv9"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="puK-Fh-H56" secondAttribute="bottom" constant="40" id="aXG-vw-eZq"/>
-                            <constraint firstItem="wJ3-gm-H2z" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="cH6-mW-DBI"/>
-                            <constraint firstItem="mMM-4k-wYF" firstAttribute="leading" secondItem="wJ3-gm-H2z" secondAttribute="trailing" constant="30" id="eri-QX-nap"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="nWo-di-apu" secondAttribute="bottom" constant="40" id="dag-tO-bE7"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="hC7-yb-7qX" secondAttribute="bottom" constant="40" id="fHA-Ic-PKa"/>
+                            <constraint firstItem="mMM-4k-wYF" firstAttribute="leading" secondItem="nWo-di-apu" secondAttribute="trailing" constant="30" id="fHo-kL-ocf"/>
+                            <constraint firstItem="FrZ-rl-Lx9" firstAttribute="leading" secondItem="wJ3-gm-H2z" secondAttribute="trailing" constant="30" id="fXf-Vj-NMX"/>
+                            <constraint firstItem="hC7-yb-7qX" firstAttribute="leading" secondItem="mMM-4k-wYF" secondAttribute="trailing" constant="30" id="icx-ge-ata"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="wJ3-gm-H2z" secondAttribute="bottom" constant="40" id="kVE-4N-V93"/>
                             <constraint firstItem="3Di-TH-bfd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="lIG-AI-Vrq"/>
                             <constraint firstItem="uQ1-87-BgY" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="tV4-fc-RQp"/>
                             <constraint firstItem="uQ1-87-BgY" firstAttribute="leading" secondItem="S68-fh-yHQ" secondAttribute="trailing" constant="20" id="tXX-0L-s0f"/>
-                            <constraint firstItem="nWo-di-apu" firstAttribute="leading" secondItem="mMM-4k-wYF" secondAttribute="trailing" constant="30" id="zcf-b2-18J"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <connections>
@@ -210,6 +216,8 @@ Double tap to return from the ETT, OKN</string>
                         <outlet property="showCeckbutton" destination="WrH-ag-Gzv" id="EzI-e7-Oz8"/>
                         <outlet property="showEttmodeButton" destination="N8C-YV-V5n" id="T14-17-Wjh"/>
                         <outlet property="textIroiro" destination="fGb-CL-fnV" id="wej-La-jWT"/>
+                        <outlet property="time05Button" destination="puK-Fh-H56" id="8zf-4B-TTk"/>
+                        <outlet property="time10Button" destination="hC7-yb-7qX" id="yMG-gf-bSF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
