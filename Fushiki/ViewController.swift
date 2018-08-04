@@ -140,24 +140,15 @@ class ViewController: UIViewController {
     }
 
     @IBAction func showCheck(_ sender: Any) {
+        if ettoknMode == 3 {
+            return
+        }
         backMode += 1
         if backMode>2{
             backMode=0
         }
         setBack()
-
-//
-//
-//
-//        if ettoknMode == 1 || ettoknMode == 2{
-//        if checkerView.isHidden == true{
-//            checkerView.isHidden = false
-//        }else{
-//            checkerView.isHidden = true
-//        }
-//        }
     }
-//    @IBOutlet weak var both1Button: UIButton!
     @IBAction func rightETT(_ sender: Any) {
         saccadeMode=2
         tcount=1

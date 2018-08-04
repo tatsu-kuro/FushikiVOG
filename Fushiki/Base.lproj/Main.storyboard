@@ -86,7 +86,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ElT-qS-sVB">
-                                <rect key="frame" x="0.0" y="0.0" width="667" height="295"/>
+                                <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checker1" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Di-TH-bfd">
                                 <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
@@ -177,7 +177,7 @@
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="11" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLh-4u-MgC">
                                 <rect key="frame" x="40" y="45" width="587" height="210"/>
-                                <string key="text">Fushiki Version 1.4 by 96da
+                                <string key="text">Fushiki Version 1.5 by 96da
 
 ETT: Pan the upper screen area to change the speed.
 ETT: Pan the lower screen area to change the wave amplitude.
@@ -258,18 +258,19 @@ Double tap to return from the ETT, OKN</string>
                             <constraint firstItem="S68-fh-yHQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="8k9-Is-UfF"/>
                             <constraint firstItem="ESR-xF-9Ui" firstAttribute="leading" secondItem="uQ1-87-BgY" secondAttribute="trailing" constant="20" id="9Gd-XV-hfU"/>
                             <constraint firstItem="77y-h9-TZr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="9v4-I0-YEK"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ElT-qS-sVB" secondAttribute="trailing" id="DPa-yh-nPm"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="S68-fh-yHQ" secondAttribute="bottom" constant="40" id="DZv-ST-7mT"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dLh-4u-MgC" secondAttribute="trailing" constant="40" id="EZV-Wy-1cp"/>
                             <constraint firstItem="puK-Fh-H56" firstAttribute="leading" secondItem="hC7-yb-7qX" secondAttribute="trailing" constant="30" id="HdE-dL-5dq"/>
+                            <constraint firstItem="ElT-qS-sVB" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="IsO-gg-0wN"/>
                             <constraint firstItem="mMM-4k-wYF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Kbq-dW-8vH"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="FrZ-rl-Lx9" secondAttribute="bottom" constant="40" id="Ky3-uR-Wjd"/>
                             <constraint firstItem="S68-fh-yHQ" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="LO1-w6-xmf"/>
                             <constraint firstItem="dLh-4u-MgC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="MID-Gr-kT1"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="wJ3-gm-H2z" secondAttribute="bottom" constant="40" id="Mhq-qx-yMa"/>
-                            <constraint firstItem="uQ1-87-BgY" firstAttribute="top" secondItem="ElT-qS-sVB" secondAttribute="bottom" id="P6v-Z5-M1J"/>
                             <constraint firstItem="3Di-TH-bfd" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="REi-cL-kha"/>
                             <constraint firstItem="77y-h9-TZr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Rhn-Mb-JHe"/>
+                            <constraint firstAttribute="trailing" secondItem="ElT-qS-sVB" secondAttribute="trailing" id="UKT-t3-nYf"/>
+                            <constraint firstItem="ElT-qS-sVB" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="Ua0-lJ-HgA"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ESR-xF-9Ui" secondAttribute="bottom" constant="40" id="X90-8f-xN3"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="77y-h9-TZr" secondAttribute="bottom" id="YdX-Uu-eiB"/>
                             <constraint firstItem="3Di-TH-bfd" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="a4n-4U-cvC"/>
@@ -279,10 +280,9 @@ Double tap to return from the ETT, OKN</string>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="nWo-di-apu" secondAttribute="bottom" constant="40" id="dag-tO-bE7"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="hC7-yb-7qX" secondAttribute="bottom" constant="40" id="fHA-Ic-PKa"/>
                             <constraint firstItem="mMM-4k-wYF" firstAttribute="leading" secondItem="nWo-di-apu" secondAttribute="trailing" constant="30" id="fHo-kL-ocf"/>
-                            <constraint firstItem="ElT-qS-sVB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="gpL-3h-X22"/>
+                            <constraint firstItem="ElT-qS-sVB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="hgL-In-OHK"/>
                             <constraint firstItem="hC7-yb-7qX" firstAttribute="leading" secondItem="mMM-4k-wYF" secondAttribute="trailing" constant="30" id="icx-ge-ata"/>
                             <constraint firstItem="3Di-TH-bfd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="lIG-AI-Vrq"/>
-                            <constraint firstItem="ElT-qS-sVB" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="nLm-wi-niq"/>
                             <constraint firstItem="uQ1-87-BgY" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="tV4-fc-RQp"/>
                             <constraint firstItem="uQ1-87-BgY" firstAttribute="leading" secondItem="S68-fh-yHQ" secondAttribute="trailing" constant="20" id="tXX-0L-s0f"/>
                         </constraints>
