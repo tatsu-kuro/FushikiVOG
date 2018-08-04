@@ -140,7 +140,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func showCheck(_ sender: Any) {
-        if ettoknMode == 3 {
+        if ettoknMode == 3 || ettoknMode == 0{
             return
         }
         backMode += 1
