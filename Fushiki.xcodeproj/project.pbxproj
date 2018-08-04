@@ -13,6 +13,7 @@
 		8EE77ECB20EF742C00517DEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE77EC920EF742C00517DEC /* Main.storyboard */; };
 		8EE77ECD20EF742E00517DEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8EE77ECC20EF742E00517DEC /* Assets.xcassets */; };
 		8EE77ED020EF742E00517DEC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE77ECE20EF742E00517DEC /* LaunchScreen.storyboard */; };
+		8EFCACD921147FF500F0FA4F /* StillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFCACD821147FF500F0FA4F /* StillViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		8EE77ECC20EF742E00517DEC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8EE77ECF20EF742E00517DEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8EE77ED120EF742E00517DEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8EFCACD821147FF500F0FA4F /* StillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 			children = (
 				8EE77EC520EF742C00517DEC /* AppDelegate.swift */,
 				8EE77EC720EF742C00517DEC /* ViewController.swift */,
+				8EFCACD821147FF500F0FA4F /* StillViewController.swift */,
 				8EE77EC920EF742C00517DEC /* Main.storyboard */,
 				8EE77ECC20EF742E00517DEC /* Assets.xcassets */,
 				8EE77ECE20EF742E00517DEC /* LaunchScreen.storyboard */,
@@ -141,6 +144,7 @@
 				8ECDBC0520F08A460009378E /* CircleView.swift in Sources */,
 				8EE77EC820EF742C00517DEC /* ViewController.swift in Sources */,
 				8EE77EC620EF742C00517DEC /* AppDelegate.swift in Sources */,
+				8EFCACD921147FF500F0FA4F /* StillViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
