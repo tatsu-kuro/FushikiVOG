@@ -7,15 +7,20 @@
 //
 
 import UIKit
-import Foundation
+//import Foundation
 //import SpriteKit
-
+import AVFoundation
 class ViewController: UIViewController {
+    var previewLayer:AVCaptureVideoPreviewLayer!//(session: session)
+    var device: AVCaptureDevice!
+    var session: AVCaptureSession!
+
+    var backMode:Int = 0
     var cirDiameter:CGFloat = 0
     var bandWidth:CGFloat = 0
     var timer: Timer!
     var timer1: Timer!
-    var timer1Interval:Int = 1
+    var timer1Interval:Int = 2
     var tcount: Int = 0
     var ettWidth:CGFloat = 200.0
     var ettSpeed:CGFloat = 0.3
@@ -34,23 +39,20 @@ class ViewController: UIViewController {
     @IBOutlet weak var textIroiro: UITextField!
     @IBOutlet weak var OKNbutton: UIButton!
     @IBOutlet weak var ETTbutton: UIButton!
+    
+    @IBOutlet weak var stillButton: UIButton!
+    
     @IBOutlet weak var showCeckbutton: UIButton!
     @IBOutlet weak var ETTCbutton:
     UIButton!
     @IBOutlet weak var checkerView: UIImageView!
+    
+    @IBOutlet weak var prevView: UIImageView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        let skView = self.view as! SKView
-//        // FPSを表示する
-//        skView.showsFPS = true
-//        // ノードの数を表示する
-//        skView.showsNodeCount = true
-//        // ビューと同じサイズでシーンを作成する
-//        let scene = SKScene(size:skView.frame.size)
-//        // ビューにシーンを表示する
-//        skView.presentScene(scene)
-        
+        session = AVCaptureSession()
         bandWidth = self.view.bounds.width/10
         cirDiameter = self.view.bounds.width/26
         textIroiro.text = " "
@@ -60,11 +62,63 @@ class ViewController: UIViewController {
         bothButton.isHidden=true
         time05Button.isHidden=true
         time10Button.isHidden=true
-//        showCeckbutton.frame.size.height=self.view.bounds.height/2
-//        showEttmodeButton.frame.origin.y=self.view.bounds.height/2
-//        showEttmodeButton.frame.size.height=self.view.bounds.height/2
-    }
+        for d in AVCaptureDevice.devices() {
+            if (d as AnyObject).position == AVCaptureDevice.Position.back {
+                device = d as AVCaptureDevice
+                print("\(device!.localizedName) found.")
+            }
+        }
+        guard let input = try? AVCaptureDeviceInput(device: device) else {
+            print("Caught exception!")
+            return
+        }
+        session.addInput(input)
+        previewLayer = AVCaptureVideoPreviewLayer(session: session)
+        previewLayer.frame = view.bounds
+        previewLayer.videoGravity=AVLayerVideoGravity.resizeAspectFill
+     
+        //■■■向きを教える。
+        if let orientation = self.convertUIOrientation2VideoOrientation(f: {return self.appOrientation()}) {
+            previewLayer.connection?.videoOrientation = orientation
+        }
 
+        prevView.layer.addSublayer(previewLayer)
+        //     view.layer.addSublayer(previewLayer)
+        session.startRunning()
+        setBack()
+
+    }
+    func appOrientation() -> UIInterfaceOrientation {
+        return UIApplication.shared.statusBarOrientation
+    }
+    
+    func convertUIOrientation2VideoOrientation(f: () -> UIInterfaceOrientation) -> AVCaptureVideoOrientation? {
+        let v = f()
+        switch v {
+        case UIInterfaceOrientation.unknown:
+            return nil
+        default:
+            return ([
+                UIInterfaceOrientation.portrait: AVCaptureVideoOrientation.portrait,
+                UIInterfaceOrientation.portraitUpsideDown: AVCaptureVideoOrientation.portraitUpsideDown,
+                UIInterfaceOrientation.landscapeLeft: AVCaptureVideoOrientation.landscapeLeft,
+                UIInterfaceOrientation.landscapeRight: AVCaptureVideoOrientation.landscapeRight
+                ])[v]
+        }
+    }
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        coordinator.animate(
+            alongsideTransition: nil,
+            completion: {(UIViewControllerTransitionCoordinatorContext) in
+                //画面の回転後に向きを教える。
+                if let orientation = self.convertUIOrientation2VideoOrientation(f: {return self.appOrientation()}) {
+                    self.previewLayer?.connection?.videoOrientation = orientation
+                }
+        }
+        )
+    }
     @IBAction func setTimer05(_ sender: Any) {
         timer1Interval=1
     }
@@ -72,14 +126,36 @@ class ViewController: UIViewController {
     @IBAction func setTimer10(_ sender: Any) {
         timer1Interval=2
     }
-    @IBAction func showCheck(_ sender: Any) {
-        if ettoknMode == 1 || ettoknMode == 2{
-        if checkerView.isHidden == true{
-            checkerView.isHidden = false
+    func setBack(){
+        if backMode==0{
+            checkerView.isHidden=true
+            prevView.isHidden=true
+        }else if backMode==1{
+            checkerView.isHidden=false
+            prevView.isHidden=true
         }else{
-            checkerView.isHidden = true
+            checkerView.isHidden=true
+            prevView.isHidden=false
         }
+    }
+
+    @IBAction func showCheck(_ sender: Any) {
+        backMode += 1
+        if backMode>2{
+            backMode=0
         }
+        setBack()
+
+//
+//
+//
+//        if ettoknMode == 1 || ettoknMode == 2{
+//        if checkerView.isHidden == true{
+//            checkerView.isHidden = false
+//        }else{
+//            checkerView.isHidden = true
+//        }
+//        }
     }
 //    @IBOutlet weak var both1Button: UIButton!
     @IBAction func rightETT(_ sender: Any) {
@@ -175,24 +251,24 @@ class ViewController: UIViewController {
 
     @IBAction func showEttmodeButtons(_ sender: Any) {
         if ettoknMode == 2{
-
-        if ettmodeButtonsflag == false{
-            leftButton.isHidden=false
-            bothButton.isHidden=false
-            rightButton.isHidden=false
-            time05Button.isHidden=false
-            time10Button.isHidden=false
-
-            ettmodeButtonsflag = true
-        }else{
-            leftButton.isHidden=true
-            bothButton.isHidden=true
-            rightButton.isHidden=true
-            time05Button.isHidden=true
-            time10Button.isHidden=true
-
-            ettmodeButtonsflag = false
-        }
+            
+            if ettmodeButtonsflag == false{
+                leftButton.isHidden=false
+                bothButton.isHidden=false
+                rightButton.isHidden=false
+                time05Button.isHidden=false
+                time10Button.isHidden=false
+                
+                ettmodeButtonsflag = true
+            }else{
+                leftButton.isHidden=true
+                bothButton.isHidden=true
+                rightButton.isHidden=true
+                time05Button.isHidden=true
+                time10Button.isHidden=true
+                
+                ettmodeButtonsflag = false
+            }
         }
     }
     
@@ -212,11 +288,12 @@ class ViewController: UIViewController {
                     view.layer.sublayers?.removeLast()
                 }
             }
-            ETTbutton.isEnabled=true
+ //           ETTbutton.isEnabled=true
             ETTbutton.isHidden=false
-            ETTCbutton.isEnabled=true
+            stillButton.isHidden=false
+ //           ETTCbutton.isEnabled=true
             ETTCbutton.isHidden=false
-            OKNbutton.isEnabled=true
+   //         OKNbutton.isEnabled=true
             OKNbutton.isHidden=false
             helpText.isHidden=false
             bothButton.isHidden=true
@@ -227,6 +304,7 @@ class ViewController: UIViewController {
 
             ettoknMode = 0
             checkerView.isHidden=true
+            prevView.isHidden=true
             UIApplication.shared.isIdleTimerDisabled = false//スリープ状態へ移行する時間を監視しているIdleTimerをon
         }
     }
@@ -235,11 +313,12 @@ class ViewController: UIViewController {
         textIroiro.isHidden=false
         timer = Timer.scheduledTimer(timeInterval: 1.0/100.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         tcount=0
-        ETTbutton.isEnabled=false
+ //       ETTbutton.isEnabled=false
         ETTbutton.isHidden=true
-        ETTCbutton.isEnabled=false
+        stillButton.isHidden=true
+   //     ETTCbutton.isEnabled=false
         ETTCbutton.isHidden=true
-        OKNbutton.isEnabled=false
+     //   OKNbutton.isEnabled=false
         OKNbutton.isHidden=true
         helpText.isHidden=true
         UIApplication.shared.isIdleTimerDisabled = true//スリープしない
@@ -318,11 +397,12 @@ class ViewController: UIViewController {
         ettmodeButtonsflag=false
         timer1 = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.update1), userInfo: nil, repeats: true)
         tcount=0
-        ETTbutton.isEnabled=false
+ //       ETTbutton.isEnabled=false
         ETTbutton.isHidden=true
-        ETTCbutton.isEnabled=false
+        stillButton.isHidden=true
+   //     ETTCbutton.isEnabled=false
         ETTCbutton.isHidden=true
-        OKNbutton.isEnabled=false
+     //   OKNbutton.isEnabled=false
         OKNbutton.isHidden=true
         helpText.isHidden=true
         UIApplication.shared.isIdleTimerDisabled = true//スリープしない
@@ -339,11 +419,12 @@ class ViewController: UIViewController {
         ettmodeButtonsflag=false
         timer = Timer.scheduledTimer(timeInterval: 1.0/100.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         tcount=0
-        ETTbutton.isEnabled=false
+//        ETTbutton.isEnabled=false
         ETTbutton.isHidden=true
-        ETTCbutton.isEnabled=false
+        stillButton.isHidden=true
+  //      ETTCbutton.isEnabled=false
         ETTCbutton.isHidden=true
-        OKNbutton.isEnabled=false
+    //    OKNbutton.isEnabled=false
         OKNbutton.isHidden=true
         helpText.isHidden=true
         UIApplication.shared.isIdleTimerDisabled = true//スリープしない
