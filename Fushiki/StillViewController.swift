@@ -9,10 +9,9 @@
 import UIKit
 import AVFoundation
 class StillViewController: UIViewController{
-    var previewLayer:AVCaptureVideoPreviewLayer!//(session: session)
+    var previewLayer:AVCaptureVideoPreviewLayer!
     var device: AVCaptureDevice!
     var session: AVCaptureSession!
- //   var output: AVCapturePhotoOutput!
     var cirDiameter:CGFloat = 0
     var backMode:Int = 0
     @IBOutlet weak var checkerView: UIImageView!
@@ -74,10 +73,6 @@ class StillViewController: UIViewController{
     }
     @IBAction func doSomething(_ sender: Any) {
      }
-    @IBAction func tapGes2(_ sender: UITapGestureRecognizer) {
- //       print("tap2")
-        self.dismiss(animated:true,completion:nil)
-    }
     @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
    //     print("tap")
         backMode += 1

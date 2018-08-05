@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E1FFFB121167865004F61B1 /* OKNViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1FFFB021167865004F61B1 /* OKNViewController.swift */; };
+		8ECD87C02116865C0084CDB1 /* ETTsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECD87BF2116865C0084CDB1 /* ETTsViewController.swift */; };
+		8ECD87C22116875E0084CDB1 /* ETTcViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECD87C12116875E0084CDB1 /* ETTcViewController.swift */; };
 		8ECDBC0520F08A460009378E /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECDBC0420F08A460009378E /* CircleView.swift */; };
 		8EE77EC620EF742C00517DEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE77EC520EF742C00517DEC /* AppDelegate.swift */; };
 		8EE77EC820EF742C00517DEC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE77EC720EF742C00517DEC /* ViewController.swift */; };
@@ -17,6 +20,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8E1FFFB021167865004F61B1 /* OKNViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OKNViewController.swift; sourceTree = "<group>"; };
+		8ECD87BF2116865C0084CDB1 /* ETTsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETTsViewController.swift; sourceTree = "<group>"; };
+		8ECD87C12116875E0084CDB1 /* ETTcViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETTcViewController.swift; sourceTree = "<group>"; };
 		8ECDBC0420F08A460009378E /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		8EE77EC220EF742C00517DEC /* Fushiki.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fushiki.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EE77EC520EF742C00517DEC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -60,8 +66,11 @@
 			isa = PBXGroup;
 			children = (
 				8EE77EC520EF742C00517DEC /* AppDelegate.swift */,
+				8E1FFFB021167865004F61B1 /* OKNViewController.swift */,
 				8EE77EC720EF742C00517DEC /* ViewController.swift */,
 				8EFCACD821147FF500F0FA4F /* StillViewController.swift */,
+				8ECD87BF2116865C0084CDB1 /* ETTsViewController.swift */,
+				8ECD87C12116875E0084CDB1 /* ETTcViewController.swift */,
 				8EE77EC920EF742C00517DEC /* Main.storyboard */,
 				8EE77ECC20EF742E00517DEC /* Assets.xcassets */,
 				8EE77ECE20EF742E00517DEC /* LaunchScreen.storyboard */,
@@ -144,6 +153,9 @@
 				8ECDBC0520F08A460009378E /* CircleView.swift in Sources */,
 				8EE77EC820EF742C00517DEC /* ViewController.swift in Sources */,
 				8EE77EC620EF742C00517DEC /* AppDelegate.swift in Sources */,
+				8E1FFFB121167865004F61B1 /* OKNViewController.swift in Sources */,
+				8ECD87C02116865C0084CDB1 /* ETTsViewController.swift in Sources */,
+				8ECD87C22116875E0084CDB1 /* ETTcViewController.swift in Sources */,
 				8EFCACD921147FF500F0FA4F /* StillViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
