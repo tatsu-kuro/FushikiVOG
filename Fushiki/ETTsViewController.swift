@@ -58,7 +58,7 @@ class ETTsViewController: UIViewController {
     }
 
     @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
-        print("tap")
+ //       print("tap")
         let pos = sender.location(in: self.view)
         if pos.y < view.bounds.height/2{
             backMode += 1

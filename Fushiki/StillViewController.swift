@@ -14,6 +14,8 @@ class StillViewController: UIViewController{
     var session: AVCaptureSession!
     var cirDiameter:CGFloat = 0
     var backMode:Int = 0
+    var timer: Timer!
+
     @IBOutlet weak var checkerView: UIImageView!
     @IBOutlet weak var cameraView: UIImageView!
     @IBOutlet weak var redButton: UIButton!
@@ -50,11 +52,17 @@ class StillViewController: UIViewController{
             previewLayer.connection?.videoOrientation = orientation
         }
         cameraView.layer.addSublayer(previewLayer)
-        //     view.layer.addSublayer(previewLayer)
         session.startRunning()
         setBack()
+        timer = Timer.scheduledTimer(timeInterval: 60*5, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+        UIApplication.shared.isIdleTimerDisabled = true//スリープしない
+
      }
-    
+    @objc func update(tm: Timer) {
+        if UIApplication.shared.isIdleTimerDisabled == true{
+            UIApplication.shared.isIdleTimerDisabled = false//5分たったら監視する
+        }
+    }
     func setBack(){
         if backMode==0{
             checkerView.isHidden=true

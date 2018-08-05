@@ -14,7 +14,7 @@ class OKNViewController: UIViewController {
     var oknSpeed:CGFloat = 5.0
     var bandWidth:CGFloat = 0
     var panFlag:Bool = false
-     @IBOutlet weak var textIroiro: UITextField!
+    @IBOutlet weak var textIroiro: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
         bandWidth = self.view.bounds.width/10
@@ -23,52 +23,50 @@ class OKNViewController: UIViewController {
         tcount=0
         UIApplication.shared.isIdleTimerDisabled = true//スリープしない
     }
- @IBAction func panGes(_ sender: UIPanGestureRecognizer) {
-    if sender.state == .began{
-        //               textIroiro.isHidden=false
-        panFlag=true
-        for _ in 0..<7{
-            view.layer.sublayers?.removeLast()
+    @IBAction func panGes(_ sender: UIPanGestureRecognizer) {
+        if sender.state == .began{
+            //               textIroiro.isHidden=false
+            panFlag=true
+            for _ in 0..<7{
+                view.layer.sublayers?.removeLast()
+            }
+            drawBands(startP: bandWidth)
+        }else if sender.state == .changed{
+            textIroiro.isHidden=false
+            //       checkerView.isHidden=true
+            let speed = sender.location(in:self.view).x*20/self.view.bounds.width
+            if speed > 10 {
+                oknSpeed = speed - 10 + 1
+                textIroiro.text = "\(Int(oknSpeed))"
+            }else{
+                oknSpeed = speed - 10 - 1
+                textIroiro.text = "\(Int(abs(oknSpeed)))"
+            }
+        }else if sender.state == .ended{
+            panFlag=false
+            textIroiro.text = " "
+            //                setUserDefaults()
         }
-        drawBands(startP: bandWidth)
-    }else if sender.state == .changed{
-        textIroiro.isHidden=false
- //       checkerView.isHidden=true
-        let speed = sender.location(in:self.view).x*20/self.view.bounds.width
-        if speed > 10 {
-            oknSpeed = speed - 10 + 1
-            textIroiro.text = "\(Int(oknSpeed))"
-        }else{
-            oknSpeed = speed - 10 - 1
-            textIroiro.text = "\(Int(abs(oknSpeed)))"
-        }
-    }else if sender.state == .ended{
-        panFlag=false
-        textIroiro.text = " "
-        //                setUserDefaults()
-    }
-
+        
     }
     
-@objc func update(tm: Timer) {
-    if panFlag==true{
-        return
-    }
-    if tcount > 0{
-        for _ in 0..<7{
-            view.layer.sublayers?.removeLast()
+    @objc func update(tm: Timer) {
+        if panFlag==true{
+            return
         }
-    }
-    tcount += 1
-    let sp:CGFloat = CGFloat(tcount)*oknSpeed
-    drawBands(startP: CGFloat(Int(sp) % (2*Int(bandWidth))))
-    if tcount > 100*60*5 {
-        if UIApplication.shared.isIdleTimerDisabled == true{
-            UIApplication.shared.isIdleTimerDisabled = false//5分たったら監視する
+        if tcount > 0{
+            for _ in 0..<7{
+                view.layer.sublayers?.removeLast()
+            }
         }
-    }
-
-
+        tcount += 1
+        let sp:CGFloat = CGFloat(tcount)*oknSpeed
+        drawBands(startP: CGFloat(Int(sp) % (2*Int(bandWidth))))
+        if tcount > 100*60*5 {
+            if UIApplication.shared.isIdleTimerDisabled == true{
+                UIApplication.shared.isIdleTimerDisabled = false//5分たったら監視する
+            }
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -102,3 +100,4 @@ class OKNViewController: UIViewController {
         self.view.layer.addSublayer(rectangleLayer)
     }
 }
+
