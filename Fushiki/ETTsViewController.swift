@@ -19,6 +19,9 @@ class ETTsViewController: UIViewController {
     var timer1Interval:Int = 2
 
     var tcount: Int = 0
+    @IBOutlet var doubleRec:UITapGestureRecognizer!
+    @IBOutlet var singleRec:UITapGestureRecognizer!
+
     @IBOutlet weak var leftButton: UIButton!
     @IBOutlet weak var bothButton: UIButton!
     @IBOutlet weak var rightButton: UIButton!
@@ -29,25 +32,16 @@ class ETTsViewController: UIViewController {
     @IBAction func rightETT(_ sender: Any) {
         saccadeMode=2
         tcount=1
-        if UIApplication.shared.isIdleTimerDisabled == false{
-            UIApplication.shared.isIdleTimerDisabled = true//スリープしない
-        }
-    }
+     }
     
     @IBAction func bothETT(_ sender: Any) {
         saccadeMode=1
         tcount=1
-        if UIApplication.shared.isIdleTimerDisabled == false{
-            UIApplication.shared.isIdleTimerDisabled = true//スリープしない
-        }
-    }
+      }
     
     @IBAction func leftETT(_ sender: Any) {
         saccadeMode=0
         tcount=1
-        if UIApplication.shared.isIdleTimerDisabled == false{
-            UIApplication.shared.isIdleTimerDisabled = true//スリープしない
-        }
     }
     @IBAction func setTimer05(_ sender: Any) {
         timer1Interval=1
@@ -128,7 +122,7 @@ class ETTsViewController: UIViewController {
         //     view.layer.addSublayer(previewLayer)
         session.startRunning()
         setBack()
-        
+        singleRec.require(toFail: doubleRec)
         
 //        @IBAction func startETTC(_ sender: //Any) {
   //           textIroiro.isHidden=true
@@ -136,7 +130,9 @@ class ETTsViewController: UIViewController {
              timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
             tcount=0
             //       ETTbutton.isEnabled=false
-              UIApplication.shared.isIdleTimerDisabled = true//スリープしない
+        if UIApplication.shared.isIdleTimerDisabled == false{
+            UIApplication.shared.isIdleTimerDisabled = true//スリープしない
+        }
         leftButton.isHidden=true
         bothButton.isHidden=true
         rightButton.isHidden=true
@@ -173,11 +169,11 @@ class ETTsViewController: UIViewController {
         }
         drawCircle(cPoint:cPoint)
       
-        if tcnt > 60*5 {
-            if UIApplication.shared.isIdleTimerDisabled == true{
-                UIApplication.shared.isIdleTimerDisabled = false//5分たったら監視する
-            }
-        }
+//        if tcount > 60*5 {
+// //           if UIApplication.shared.isIdleTimerDisabled == true{
+//                UIApplication.shared.isIdleTimerDisabled = false//5分たったら監視する
+// //           }
+//        }
 
     }
     func drawCircle(cPoint:CGPoint){

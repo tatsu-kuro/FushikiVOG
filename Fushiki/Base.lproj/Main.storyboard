@@ -39,16 +39,16 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="1g8-XE-BOP" firstAttribute="leading" secondItem="nlh-Ie-aPR" secondAttribute="leading" id="APO-dr-GwT"/>
-                            <constraint firstItem="WVz-Vb-Esb" firstAttribute="top" secondItem="nlh-Ie-aPR" secondAttribute="top" id="AZ7-69-OT1"/>
-                            <constraint firstItem="1g8-XE-BOP" firstAttribute="top" secondItem="nlh-Ie-aPR" secondAttribute="top" id="OCO-l9-WL1"/>
-                            <constraint firstItem="WVz-Vb-Esb" firstAttribute="trailing" secondItem="nlh-Ie-aPR" secondAttribute="trailing" id="V6G-Gv-onn"/>
+                            <constraint firstItem="1g8-XE-BOP" firstAttribute="bottom" secondItem="nlh-Ie-aPR" secondAttribute="bottom" id="51k-Le-Hfo"/>
+                            <constraint firstItem="WVz-Vb-Esb" firstAttribute="bottom" secondItem="nlh-Ie-aPR" secondAttribute="bottom" id="GTN-mO-hP9"/>
+                            <constraint firstItem="WVz-Vb-Esb" firstAttribute="top" secondItem="nlh-Ie-aPR" secondAttribute="top" id="Mqw-Fh-dMh"/>
+                            <constraint firstItem="WVz-Vb-Esb" firstAttribute="trailing" secondItem="nlh-Ie-aPR" secondAttribute="trailing" id="Pyz-Vo-1Sz"/>
+                            <constraint firstItem="1g8-XE-BOP" firstAttribute="trailing" secondItem="nlh-Ie-aPR" secondAttribute="trailing" id="SyE-69-yxf"/>
                             <constraint firstItem="EzK-UW-oEb" firstAttribute="centerX" secondItem="QIB-4x-mCt" secondAttribute="centerX" id="W0l-0B-R2q"/>
-                            <constraint firstItem="1g8-XE-BOP" firstAttribute="bottom" secondItem="nlh-Ie-aPR" secondAttribute="bottom" id="c4r-74-qI8"/>
-                            <constraint firstItem="1g8-XE-BOP" firstAttribute="trailing" secondItem="nlh-Ie-aPR" secondAttribute="trailing" id="nFH-tf-6Jy"/>
+                            <constraint firstItem="1g8-XE-BOP" firstAttribute="leading" secondItem="nlh-Ie-aPR" secondAttribute="leading" id="pQK-rZ-Gih"/>
+                            <constraint firstItem="WVz-Vb-Esb" firstAttribute="leading" secondItem="nlh-Ie-aPR" secondAttribute="leading" id="sa6-6p-x9I"/>
+                            <constraint firstItem="1g8-XE-BOP" firstAttribute="top" secondItem="nlh-Ie-aPR" secondAttribute="top" id="tGH-d4-5pt"/>
                             <constraint firstItem="EzK-UW-oEb" firstAttribute="centerY" secondItem="QIB-4x-mCt" secondAttribute="centerY" id="y5a-fh-LOR"/>
-                            <constraint firstItem="WVz-Vb-Esb" firstAttribute="leading" secondItem="nlh-Ie-aPR" secondAttribute="leading" id="zrN-go-Yu5"/>
-                            <constraint firstItem="WVz-Vb-Esb" firstAttribute="bottom" secondItem="nlh-Ie-aPR" secondAttribute="bottom" id="zvO-4b-x44"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nlh-Ie-aPR"/>
                         <connections>
@@ -59,7 +59,9 @@
                     <connections>
                         <outlet property="cameraView" destination="1g8-XE-BOP" id="UMv-bh-M2L"/>
                         <outlet property="checkerView" destination="WVz-Vb-Esb" id="Ivy-ct-JH5"/>
+                        <outlet property="doubleRec" destination="sE7-69-DQO" id="8pm-gn-LWa"/>
                         <outlet property="redButton" destination="EzK-UW-oEb" id="LI9-gi-kq2"/>
+                        <outlet property="singleRec" destination="Y5g-qh-Rej" id="DSz-GV-amJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3ag-2o-mIx" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -87,6 +89,10 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checker1" translatesAutoresizingMaskIntoConstraints="NO" id="yPG-aS-qFl">
                                 <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ryv-pi-E5I">
+                                <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                                <gestureRecognizers/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sru-Ld-etH">
                                 <rect key="frame" x="313" y="295" width="40" height="40"/>
@@ -143,31 +149,27 @@
                                     <action selector="leftETT:" destination="41X-WK-AtZ" eventType="touchUpInside" id="Eos-Ak-Stw"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ryv-pi-E5I">
-                                <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
-                                <gestureRecognizers/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="ryv-pi-E5I" firstAttribute="leading" secondItem="TeQ-fF-YWK" secondAttribute="leading" id="0B6-CY-qvO"/>
-                            <constraint firstItem="yPG-aS-qFl" firstAttribute="trailing" secondItem="TeQ-fF-YWK" secondAttribute="trailing" id="0mF-MH-bGg"/>
-                            <constraint firstItem="ryv-pi-E5I" firstAttribute="top" secondItem="TeQ-fF-YWK" secondAttribute="top" id="2Qk-OL-a0x"/>
+                            <constraint firstItem="yPG-aS-qFl" firstAttribute="leading" secondItem="TeQ-fF-YWK" secondAttribute="leading" id="7dC-az-JuS"/>
                             <constraint firstItem="TeQ-fF-YWK" firstAttribute="bottom" secondItem="hdG-Wh-JfA" secondAttribute="bottom" constant="40" id="FOL-Ec-1eG"/>
+                            <constraint firstItem="yPG-aS-qFl" firstAttribute="trailing" secondItem="TeQ-fF-YWK" secondAttribute="trailing" id="GTo-80-gnt"/>
                             <constraint firstItem="Qgo-AW-3NH" firstAttribute="leading" secondItem="bW7-Kz-Acz" secondAttribute="trailing" constant="30" id="Km4-R0-KsE"/>
-                            <constraint firstItem="yPG-aS-qFl" firstAttribute="leading" secondItem="TeQ-fF-YWK" secondAttribute="leading" id="MbJ-gV-b9f"/>
                             <constraint firstItem="hdG-Wh-JfA" firstAttribute="leading" secondItem="CmU-sk-FOY" secondAttribute="trailing" constant="30" id="P23-XO-PYi"/>
                             <constraint firstItem="sru-Ld-etH" firstAttribute="leading" secondItem="Qgo-AW-3NH" secondAttribute="trailing" constant="30" id="R6r-RN-R05"/>
+                            <constraint firstItem="ryv-pi-E5I" firstAttribute="top" secondItem="TeQ-fF-YWK" secondAttribute="top" id="SOx-ml-CZE"/>
                             <constraint firstItem="TeQ-fF-YWK" firstAttribute="bottom" secondItem="sru-Ld-etH" secondAttribute="bottom" constant="40" id="TFO-Ki-Tvi"/>
-                            <constraint firstItem="TeQ-fF-YWK" firstAttribute="bottom" secondItem="ryv-pi-E5I" secondAttribute="bottom" id="XRV-Ed-ZzC"/>
                             <constraint firstItem="TeQ-fF-YWK" firstAttribute="bottom" secondItem="Qgo-AW-3NH" secondAttribute="bottom" constant="40" id="cgN-bX-h1f"/>
                             <constraint firstItem="sru-Ld-etH" firstAttribute="centerX" secondItem="RRo-5E-Plm" secondAttribute="centerX" id="g5Q-MO-nRU"/>
                             <constraint firstItem="TeQ-fF-YWK" firstAttribute="bottom" secondItem="CmU-sk-FOY" secondAttribute="bottom" constant="40" id="hnw-os-HcN"/>
+                            <constraint firstItem="ryv-pi-E5I" firstAttribute="leading" secondItem="TeQ-fF-YWK" secondAttribute="leading" id="hxR-6s-kI7"/>
+                            <constraint firstItem="yPG-aS-qFl" firstAttribute="top" secondItem="TeQ-fF-YWK" secondAttribute="top" id="hyM-pH-gF2"/>
+                            <constraint firstItem="yPG-aS-qFl" firstAttribute="bottom" secondItem="TeQ-fF-YWK" secondAttribute="bottom" id="i7U-QN-17F"/>
                             <constraint firstItem="TeQ-fF-YWK" firstAttribute="bottom" secondItem="bW7-Kz-Acz" secondAttribute="bottom" constant="40" id="iqO-UE-dEY"/>
-                            <constraint firstItem="yPG-aS-qFl" firstAttribute="top" secondItem="TeQ-fF-YWK" secondAttribute="top" id="k1q-3a-Uz7"/>
-                            <constraint firstItem="TeQ-fF-YWK" firstAttribute="trailing" secondItem="ryv-pi-E5I" secondAttribute="trailing" id="nLv-Pd-HJj"/>
-                            <constraint firstItem="TeQ-fF-YWK" firstAttribute="bottom" secondItem="yPG-aS-qFl" secondAttribute="bottom" id="yCX-p8-I6U"/>
+                            <constraint firstItem="ryv-pi-E5I" firstAttribute="trailing" secondItem="TeQ-fF-YWK" secondAttribute="trailing" id="vKs-T0-LOM"/>
+                            <constraint firstItem="ryv-pi-E5I" firstAttribute="bottom" secondItem="TeQ-fF-YWK" secondAttribute="bottom" id="xF9-az-zZY"/>
                             <constraint firstItem="CmU-sk-FOY" firstAttribute="leading" secondItem="sru-Ld-etH" secondAttribute="trailing" constant="30" id="z7s-bc-dZS"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="TeQ-fF-YWK"/>
@@ -180,8 +182,10 @@
                         <outlet property="bothButton" destination="sru-Ld-etH" id="YPd-BH-34d"/>
                         <outlet property="cameraView" destination="ryv-pi-E5I" id="Fob-CX-BbY"/>
                         <outlet property="checkerView" destination="yPG-aS-qFl" id="Oq4-Id-TGk"/>
+                        <outlet property="doubleRec" destination="EO2-mQ-Oyi" id="vaL-IU-0nT"/>
                         <outlet property="leftButton" destination="bW7-Kz-Acz" id="66S-he-G2c"/>
                         <outlet property="rightButton" destination="Qgo-AW-3NH" id="VQX-7r-Krc"/>
+                        <outlet property="singleRec" destination="azR-l1-wgg" id="cAj-Ym-8WS"/>
                         <outlet property="time05Button" destination="hdG-Wh-JfA" id="Cbs-4w-Kts"/>
                         <outlet property="time10Button" destination="CmU-sk-FOY" id="Jlz-eP-ZKo"/>
                     </connections>
@@ -190,7 +194,7 @@
                 <exit id="y07-S2-HuN" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer numberOfTapsRequired="2" id="EO2-mQ-Oyi">
                     <connections>
-                        <segue destination="y07-S2-HuN" kind="unwind" unwindAction="unwind:" id="StQ-s6-wXG"/>
+                        <segue destination="y07-S2-HuN" kind="unwind" identifier="saccadeSegue" unwindAction="unwind:" id="StQ-s6-wXG"/>
                     </connections>
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="azR-l1-wgg">
@@ -259,11 +263,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="checker1" translatesAutoresizingMaskIntoConstraints="NO" id="oYg-oD-WzN">
-                                <rect key="frame" x="0.0" y="0.0" width="647" height="355"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checker1" translatesAutoresizingMaskIntoConstraints="NO" id="oYg-oD-WzN">
+                                <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LMn-sy-EFF">
-                                <rect key="frame" x="0.0" y="0.0" width="647" height="375"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LMn-sy-EFF">
+                                <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                                 <gestureRecognizers/>
                             </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yoW-GF-NXS">
@@ -280,16 +284,16 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="LMn-sy-EFF" firstAttribute="top" secondItem="Bqo-QN-y3H" secondAttribute="top" id="2je-Nd-O6d"/>
-                            <constraint firstItem="Bqo-QN-y3H" firstAttribute="bottom" secondItem="oYg-oD-WzN" secondAttribute="bottom" id="IzR-KB-6rA"/>
-                            <constraint firstItem="Bqo-QN-y3H" firstAttribute="trailing" secondItem="LMn-sy-EFF" secondAttribute="trailing" id="Tkp-Hf-Zpd"/>
-                            <constraint firstItem="LMn-sy-EFF" firstAttribute="leading" secondItem="Bqo-QN-y3H" secondAttribute="leading" id="VAR-LP-5fl"/>
-                            <constraint firstItem="oYg-oD-WzN" firstAttribute="top" secondItem="Bqo-QN-y3H" secondAttribute="top" id="a3z-A0-Csr"/>
-                            <constraint firstItem="Bqo-QN-y3H" firstAttribute="trailing" secondItem="oYg-oD-WzN" secondAttribute="trailing" id="aGN-jx-Ban"/>
-                            <constraint firstItem="oYg-oD-WzN" firstAttribute="leading" secondItem="Bqo-QN-y3H" secondAttribute="leading" id="jfb-6l-qP0"/>
+                            <constraint firstItem="oYg-oD-WzN" firstAttribute="trailing" secondItem="Bqo-QN-y3H" secondAttribute="trailing" id="6CK-el-R3D"/>
+                            <constraint firstItem="oYg-oD-WzN" firstAttribute="bottom" secondItem="Bqo-QN-y3H" secondAttribute="bottom" id="I3R-oc-1EF"/>
+                            <constraint firstItem="oYg-oD-WzN" firstAttribute="top" secondItem="Bqo-QN-y3H" secondAttribute="top" id="Jor-X8-Ywb"/>
+                            <constraint firstItem="LMn-sy-EFF" firstAttribute="top" secondItem="Bqo-QN-y3H" secondAttribute="top" id="N8U-B7-Hl6"/>
+                            <constraint firstItem="oYg-oD-WzN" firstAttribute="leading" secondItem="Bqo-QN-y3H" secondAttribute="leading" id="NAt-bx-T4Y"/>
+                            <constraint firstItem="LMn-sy-EFF" firstAttribute="bottom" secondItem="Bqo-QN-y3H" secondAttribute="bottom" id="RIW-hc-HS4"/>
+                            <constraint firstItem="LMn-sy-EFF" firstAttribute="trailing" secondItem="Bqo-QN-y3H" secondAttribute="trailing" id="eJ7-It-4uk"/>
+                            <constraint firstItem="LMn-sy-EFF" firstAttribute="leading" secondItem="Bqo-QN-y3H" secondAttribute="leading" id="ipR-sC-jM9"/>
                             <constraint firstItem="yoW-GF-NXS" firstAttribute="leading" secondItem="Bqo-QN-y3H" secondAttribute="leading" constant="20" id="lK9-DI-6VD"/>
                             <constraint firstItem="yoW-GF-NXS" firstAttribute="top" secondItem="Bqo-QN-y3H" secondAttribute="top" constant="20" id="m9l-Ar-6Ci"/>
-                            <constraint firstItem="Bqo-QN-y3H" firstAttribute="bottom" secondItem="LMn-sy-EFF" secondAttribute="bottom" id="mwG-gr-jQO"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Bqo-QN-y3H"/>
                         <connections>
@@ -301,6 +305,8 @@
                     <connections>
                         <outlet property="cameraView" destination="LMn-sy-EFF" id="Bha-Ga-sKp"/>
                         <outlet property="checkerView" destination="oYg-oD-WzN" id="lxS-vD-RP1"/>
+                        <outlet property="doubleRec" destination="3Kq-u1-RVL" id="Y30-t0-1vU"/>
+                        <outlet property="singleRec" destination="jrQ-W8-Nbk" id="dOe-Qz-Qme"/>
                         <outlet property="textIroiro" destination="yoW-GF-NXS" id="2GI-RC-Wj1"/>
                     </connections>
                 </viewController>
@@ -308,7 +314,7 @@
                 <exit id="bPl-YN-aw7" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer numberOfTapsRequired="2" id="3Kq-u1-RVL">
                     <connections>
-                        <segue destination="bPl-YN-aw7" kind="unwind" unwindAction="unwind:" id="8Rk-3q-R0V"/>
+                        <segue destination="bPl-YN-aw7" kind="unwind" identifier="pursuitSegue" unwindAction="unwind:" id="8Rk-3q-R0V"/>
                     </connections>
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="jrQ-W8-Nbk">
@@ -390,7 +396,7 @@
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="11" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLh-4u-MgC">
                                 <rect key="frame" x="40" y="45" width="587" height="210"/>
-                                <string key="text">Fushiki Version 1.6 by 96da
+                                <string key="text">Fushiki Version 1.5 by 96da
 
 ETTp: Pan the upper screen area to change the speed.
 ETTp: Pan the lower screen area to change the wave amplitude.

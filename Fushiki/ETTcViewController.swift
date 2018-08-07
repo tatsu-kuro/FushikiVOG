@@ -19,6 +19,8 @@ class ETTcViewController: UIViewController {
     var panFlag:Bool = false
     var ettWidth:CGFloat = 200.0
     var ettSpeed:CGFloat = 0.3
+    @IBOutlet var doubleRec:UITapGestureRecognizer!
+    @IBOutlet var singleRec:UITapGestureRecognizer!
 
     @IBOutlet weak var checkerView: UIImageView!
     
@@ -66,7 +68,8 @@ class ETTcViewController: UIViewController {
         //     view.layer.addSublayer(previewLayer)
         session.startRunning()
         setBack()
-        
+        singleRec.require(toFail: doubleRec)
+
         
         //        @IBAction func startETTC(_ sender: //Any) {
         textIroiro.isHidden=true
@@ -74,8 +77,9 @@ class ETTcViewController: UIViewController {
            timer = Timer.scheduledTimer(timeInterval: 1.0/100.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         tcount=0
         //       ETTbutton.isEnabled=false
-        UIApplication.shared.isIdleTimerDisabled = true//スリープしない
-
+        if UIApplication.shared.isIdleTimerDisabled == false{
+            UIApplication.shared.isIdleTimerDisabled = true//スリープしない
+        }
         // Do any additional setup after loading the view.
     }
     @objc func update(tm: Timer) {
@@ -89,11 +93,11 @@ class ETTcViewController: UIViewController {
             drawCircle(cPoint:cPoint)
         }
         
-            if tcount > 100*60*5 {
-                if UIApplication.shared.isIdleTimerDisabled == true{
-                    UIApplication.shared.isIdleTimerDisabled = false//5分たったら監視する
-                }
-            }
+//            if tcount > 100*60*5 {
+//   //             if UIApplication.shared.isIdleTimerDisabled == true{
+//                    UIApplication.shared.isIdleTimerDisabled = false//5分たったら監視する
+//     //           }
+//            }
 
     }
     override func didReceiveMemoryWarning() {

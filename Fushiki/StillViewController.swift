@@ -14,8 +14,9 @@ class StillViewController: UIViewController{
     var session: AVCaptureSession!
     var cirDiameter:CGFloat = 0
     var backMode:Int = 0
-    var timer: Timer!
-
+ //   var timer: Timer!
+    @IBOutlet var doubleRec:UITapGestureRecognizer!
+    @IBOutlet var singleRec:UITapGestureRecognizer!
     @IBOutlet weak var checkerView: UIImageView!
     @IBOutlet weak var cameraView: UIImageView!
     @IBOutlet weak var redButton: UIButton!
@@ -54,15 +55,21 @@ class StillViewController: UIViewController{
         cameraView.layer.addSublayer(previewLayer)
         session.startRunning()
         setBack()
-        timer = Timer.scheduledTimer(timeInterval: 60*5, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
-        UIApplication.shared.isIdleTimerDisabled = true//スリープしない
+        if UIApplication.shared.isIdleTimerDisabled == false{
+            UIApplication.shared.isIdleTimerDisabled = true//スリープしない
+            
+        }
+        singleRec.require(toFail: doubleRec)
+//        timer = Timer.scheduledTimer(timeInterval: 60*5, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+//        UIApplication.shared.isIdleTimerDisabled = true//スリープしない
 
      }
-    @objc func update(tm: Timer) {
-        if UIApplication.shared.isIdleTimerDisabled == true{
-            UIApplication.shared.isIdleTimerDisabled = false//5分たったら監視する
-        }
-    }
+//    @objc func update(tm: Timer) {
+//        if UIApplication.shared.isIdleTimerDisabled == true{
+//            UIApplication.shared.isIdleTimerDisabled = false//5分たったら監視する
+//        }
+//  //      print("****still timer")
+//    }
     func setBack(){
         if backMode==0{
             checkerView.isHidden=true

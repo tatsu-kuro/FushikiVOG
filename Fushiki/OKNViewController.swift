@@ -21,7 +21,10 @@ class OKNViewController: UIViewController {
         textIroiro.isHidden=false
         timer = Timer.scheduledTimer(timeInterval: 1.0/100.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         tcount=0
-        UIApplication.shared.isIdleTimerDisabled = true//スリープしない
+        if UIApplication.shared.isIdleTimerDisabled == false{
+            UIApplication.shared.isIdleTimerDisabled = true//スリープしない
+        }
+        
     }
     @IBAction func panGes(_ sender: UIPanGestureRecognizer) {
         if sender.state == .began{
@@ -62,11 +65,11 @@ class OKNViewController: UIViewController {
         tcount += 1
         let sp:CGFloat = CGFloat(tcount)*oknSpeed
         drawBands(startP: CGFloat(Int(sp) % (2*Int(bandWidth))))
-        if tcount > 100*60*5 {
-            if UIApplication.shared.isIdleTimerDisabled == true{
-                UIApplication.shared.isIdleTimerDisabled = false//5分たったら監視する
-            }
-        }
+//        if tcount > 100*60*5 {
+//    //        if UIApplication.shared.isIdleTimerDisabled == true{
+//                UIApplication.shared.isIdleTimerDisabled = false//5分たったら監視する
+//    //        }
+//        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
