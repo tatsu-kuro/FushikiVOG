@@ -40,12 +40,18 @@ class ETTsViewController: UIViewController {
         saccadeMode=21
         tcount=1
     }
-    
+    @IBAction func bothETT(_ sender: Any) {
+        saccadeMode=12
+        tcount=1
+    }
     @IBAction func both1ETT(_ sender: Any) {
         saccadeMode=11
         tcount=1
     }
-    
+    @IBAction func both2ETT(_ sender: Any) {
+        saccadeMode=10
+        tcount=1
+    }
     @IBAction func left1ETT(_ sender: Any) {
         saccadeMode=01
         tcount=1
@@ -55,10 +61,7 @@ class ETTsViewController: UIViewController {
         tcount=1
     }
     
-    @IBAction func both2ETT(_ sender: Any) {
-        saccadeMode=12
-        tcount=1
-    }
+
     
     @IBAction func left2ETT(_ sender: Any) {
         saccadeMode=0
@@ -70,10 +73,7 @@ class ETTsViewController: UIViewController {
         tcount=1
      }
     
-    @IBAction func bothETT(_ sender: Any) {
-        saccadeMode=10
-        tcount=1
-      }
+
     
     @IBAction func leftETT(_ sender: Any) {
         saccadeMode=02
@@ -310,6 +310,5 @@ class ETTsViewController: UIViewController {
         if timer?.isValid == true {
             timer.invalidate()
         }
-        
     }
 }

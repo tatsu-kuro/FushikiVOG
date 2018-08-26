@@ -45,13 +45,13 @@ class StillViewController: UIViewController{
    }
     @IBAction func redAction(_ sender: Any) {
         ballColor=1
-        cirDiameter=view.bounds.width*CGFloat(ballSize)/52
+//        cirDiameter=view.bounds.width*CGFloat(ballSize)/52
         view.layer.sublayers?.removeLast()
         drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2))
     }
     @IBAction func blackAction(_ sender: Any) {
         ballColor=2
-        cirDiameter=view.bounds.width*CGFloat(ballSize)/52
+//        cirDiameter=view.bounds.width*CGFloat(ballSize)/52
         view.layer.sublayers?.removeLast()
         drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2))
 
@@ -66,12 +66,7 @@ class StillViewController: UIViewController{
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-       session = AVCaptureSession()
- //       if view.bounds.width>view.bounds.height{
- //           cirDiameter=view.bounds.width*CGFloat(ballSize)/52
- //       }else{
- //           cirDiameter = view.bounds.height/26
- //       }
+        session = AVCaptureSession()
         halfButton.isHidden=true
         sameButton.isHidden=true
         twiceButton.isHidden=true
@@ -108,9 +103,7 @@ class StillViewController: UIViewController{
      }
 
     func setBack(){
-        let ra=view.bounds.height/view.bounds.width
-
-        if backMode==0{
+         if backMode==0{
             checkerView.isHidden=true
             dotsView.isHidden=true
             dotsWideView.isHidden=true
@@ -220,15 +213,15 @@ class StillViewController: UIViewController{
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-    
+        
         coordinator.animate(
             alongsideTransition: nil,
-                completion: {(UIViewControllerTransitionCoordinatorContext) in
-                    //画面の回転後に向きを教える。
-                    if let orientation = self.convertUIOrientation2VideoOrientation(f: {return self.appOrientation()}) {
-                        self.previewLayer?.connection?.videoOrientation = orientation
-                    }
-            }
-            )
+            completion: {(UIViewControllerTransitionCoordinatorContext) in
+                //画面の回転後に向きを教える。
+                if let orientation = self.convertUIOrientation2VideoOrientation(f: {return self.appOrientation()}) {
+                    self.previewLayer?.connection?.videoOrientation = orientation
+                }
         }
+        )
+    }
 }

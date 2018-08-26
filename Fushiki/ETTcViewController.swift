@@ -92,13 +92,7 @@ class ETTcViewController: UIViewController {
             let cPoint = CGPoint(x:view.bounds.width/2 + sin(CGFloat(tcount)*ettSpeed/(3.1415*5.0))*ettWidth, y: view.bounds.height/2)
             drawCircle(cPoint:cPoint)
         }
-        
-//            if tcount > 100*60*5 {
-//   //             if UIApplication.shared.isIdleTimerDisabled == true{
-//                    UIApplication.shared.isIdleTimerDisabled = false//5分たったら監視する
-//     //           }
-//            }
-
+        print("timer",tcount)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -159,37 +153,41 @@ class ETTcViewController: UIViewController {
         setBack()
     }
     @IBAction func panGes(_ sender: UIPanGestureRecognizer) {
-     
- 
-            if sender.state == .began {
-                textIroiro.isHidden=false
-                panFlag=true
-            } else if sender.state == .changed {
-                if sender.location(in: self.view).y>self.view.bounds.height/2{
-                    
-                    //               if timer?.isValid != true{
-                    var pos = sender.location(in: self.view)
-                    view.layer.sublayers?.removeLast()
-                    pos.y = self.view.bounds.height/2
-                    drawCircle(cPoint: pos)
-                    ettWidth = abs(pos.x - self.view.bounds.width/2)
-                    textIroiro.text = "\(ettSpeed)Hz"
-                    
-                }else{
-                    let speed = sender.location(in: self.view).x*10/self.view.bounds.width
-                    ettSpeed = CGFloat(Int(speed+2))/10.0
-                    textIroiro.text = "\(ettSpeed)Hz"
-                }
-            }else if sender.state == .ended{
-                //                if timer?.isValid != true{
-                //                    view.layer.sublayers?.removeLast()
-                //                    startETT(0)
-                //                }
-                textIroiro.text = " "
-                panFlag=false
-                //               setUserDefaults()
-                textIroiro.isHidden=true
+        
+        if sender.state == .began {
+            textIroiro.isHidden=false
+            panFlag=true
+        } else if sender.state == .changed {
+            if sender.location(in: self.view).y>self.view.bounds.height/2{
+                
+                //               if timer?.isValid != true{
+                var pos = sender.location(in: self.view)
+                view.layer.sublayers?.removeLast()
+                pos.y = self.view.bounds.height/2
+                drawCircle(cPoint: pos)
+                ettWidth = abs(pos.x - self.view.bounds.width/2)
+                textIroiro.text = "\(ettSpeed)Hz"
+                
+            }else{
+                let speed = sender.location(in: self.view).x*10/self.view.bounds.width
+                ettSpeed = CGFloat(Int(speed+2))/10.0
+                textIroiro.text = "\(ettSpeed)Hz"
             }
+        }else if sender.state == .ended{
+            //                if timer?.isValid != true{
+            //                    view.layer.sublayers?.removeLast()
+            //                    startETT(0)
+            //                }
+            textIroiro.text = " "
+            panFlag=false
+            //               setUserDefaults()
+            textIroiro.isHidden=true
         }
-
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if timer?.isValid == true {
+            timer.invalidate()
+        }
+    }
 }

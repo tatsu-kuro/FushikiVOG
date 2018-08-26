@@ -550,7 +550,7 @@
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="11" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLh-4u-MgC">
                                 <rect key="frame" x="40" y="45" width="587" height="210"/>
-                                <string key="text">Fushiki Version 1.5 by 96da
+                                <string key="text">Fushiki Version 1.7 by 96da
 
 ETTp: Pan the upper screen area to change the speed.
 ETTp: Pan the lower screen area to change the wave amplitude.
