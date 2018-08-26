@@ -13,6 +13,8 @@ class ViewController: UIViewController {
     var backModeETTp:Int = 0
     var backModeETTs:Int = 0
     var backModeStill:Int = 0
+    var ballSizeStill:Int = 2
+    var ballColorStill:Int = 1
     var cirDiameter:CGFloat = 0
     var bandWidth:CGFloat = 0
     var timer1Interval:Int = 2
@@ -51,6 +53,8 @@ class ViewController: UIViewController {
         }else if let vc = segue.destination as? StillViewController{
             let Controller:StillViewController = vc
             Controller.backMode=backModeStill
+            Controller.ballSize=ballSizeStill
+            Controller.ballColor=ballColorStill
         }else if let vc = segue.destination as? ETTsViewController{
             let Controller:ETTsViewController = vc
             Controller.backMode=backModeETTs
@@ -76,6 +80,8 @@ class ViewController: UIViewController {
         }else if let vc = segue.source as? StillViewController{
             let Controller:StillViewController = vc
             backModeStill=Controller.backMode
+            ballSizeStill=Controller.ballSize
+            ballColorStill=Controller.ballColor
         }else if let vc = segue.source as? ETTsViewController{
             let Controller:ETTsViewController = vc
             saccadeMode=Controller.saccadeMode

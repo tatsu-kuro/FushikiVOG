@@ -14,26 +14,70 @@ class StillViewController: UIViewController{
     var session: AVCaptureSession!
     var cirDiameter:CGFloat = 0
     var backMode:Int = 0
+    var ballSize:Int = 2
+    var ballColor:Int = 0
  //   var timer: Timer!
     @IBOutlet var doubleRec:UITapGestureRecognizer!
     @IBOutlet var singleRec:UITapGestureRecognizer!
     @IBOutlet weak var checkerView: UIImageView!
-    @IBOutlet weak var cameraView: UIImageView!
+    @IBOutlet weak var dotsView: UIImageView!
+    @IBOutlet weak var dotsWideView: UIImageView!
+    @IBOutlet weak var halfButton: UIButton!
+    @IBOutlet weak var sameButton: UIButton!
+    @IBOutlet weak var twiceButton: UIButton!
     @IBOutlet weak var redButton: UIButton!
+    @IBOutlet weak var blackButton: UIButton!
+    @IBOutlet weak var cameraView: UIImageView!
+    @IBAction func halfAction(_ sender: Any) {
+        ballSize=1
+        view.layer.sublayers?.removeLast()
+        drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2))
+    }
+    @IBAction func sameAction(_ sender: Any) {
+        ballSize=2
+        view.layer.sublayers?.removeLast()
+        drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2))
+    }
+    @IBAction func twiceAction(_ sender: Any) {
+        ballSize=4
+        view.layer.sublayers?.removeLast()
+        drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2))
+   }
+    @IBAction func redAction(_ sender: Any) {
+        ballColor=1
+        cirDiameter=view.bounds.width*CGFloat(ballSize)/52
+        view.layer.sublayers?.removeLast()
+        drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2))
+    }
+    @IBAction func blackAction(_ sender: Any) {
+        ballColor=2
+        cirDiameter=view.bounds.width*CGFloat(ballSize)/52
+        view.layer.sublayers?.removeLast()
+        drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2))
+
+    }
     override func viewDidAppear(_ animated: Bool) {
-        redButton.frame.size.width=cirDiameter
-        redButton.frame.size.height=cirDiameter
-        redButton.frame.origin.x=view.bounds.width/2-cirDiameter/2
-        redButton.frame.origin.y=view.bounds.height/2-cirDiameter/2
+//        drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2))
+
+//        redButton.frame.size.width=cirDiameter
+//        redButton.frame.size.height=cirDiameter
+//        redButton.frame.origin.x=view.bounds.width/2-cirDiameter/2
+//        redButton.frame.origin.y=view.bounds.height/2-cirDiameter/2
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        session = AVCaptureSession()
+       session = AVCaptureSession()
  //       if view.bounds.width>view.bounds.height{
-            cirDiameter=view.bounds.width/26
+ //           cirDiameter=view.bounds.width*CGFloat(ballSize)/52
  //       }else{
  //           cirDiameter = view.bounds.height/26
  //       }
+        halfButton.isHidden=true
+        sameButton.isHidden=true
+        twiceButton.isHidden=true
+        redButton.isHidden=true
+        blackButton.isHidden=true
+
         for d in AVCaptureDevice.devices() {
             if (d as AnyObject).position == AVCaptureDevice.Position.back {
                 device = d as AVCaptureDevice
@@ -47,7 +91,7 @@ class StillViewController: UIViewController{
         session.addInput(input)
         previewLayer = AVCaptureVideoPreviewLayer(session: session)
         previewLayer.frame = view.bounds
-    previewLayer.videoGravity=AVLayerVideoGravity.resizeAspectFill
+        previewLayer.videoGravity=AVLayerVideoGravity.resizeAspectFill
         //■■■向きを教える。
         if let orientation = self.convertUIOrientation2VideoOrientation(f: {return self.appOrientation()}) {
             previewLayer.connection?.videoOrientation = orientation
@@ -60,42 +104,100 @@ class StillViewController: UIViewController{
             
         }
         singleRec.require(toFail: doubleRec)
-//        timer = Timer.scheduledTimer(timeInterval: 60*5, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
-//        UIApplication.shared.isIdleTimerDisabled = true//スリープしない
-
+        drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2))
      }
-//    @objc func update(tm: Timer) {
-//        if UIApplication.shared.isIdleTimerDisabled == true{
-//            UIApplication.shared.isIdleTimerDisabled = false//5分たったら監視する
-//        }
-//  //      print("****still timer")
-//    }
+
     func setBack(){
+        let ra=view.bounds.height/view.bounds.width
+
         if backMode==0{
             checkerView.isHidden=true
+            dotsView.isHidden=true
+            dotsWideView.isHidden=true
             cameraView.isHidden=true
         }else if backMode==1{
             checkerView.isHidden=false
+            dotsView.isHidden=true
+            dotsWideView.isHidden=true
+            cameraView.isHidden=true
+        }else if backMode==2{
+            checkerView.isHidden=true
+            if view.bounds.height/view.bounds.width>0.65{
+                dotsView.isHidden=false
+                dotsView.frame.origin.x=0
+                dotsView.frame.origin.y=0
+                dotsView.frame.size.width=view.bounds.width
+                dotsView.frame.size.height=view.bounds.height
+                dotsWideView.isHidden=true
+            }else{//iPhone
+                dotsView.isHidden=true
+                dotsWideView.isHidden=false
+                dotsWideView.frame.origin.x=0
+                dotsWideView.frame.origin.y=0
+                dotsWideView.frame.size.width=view.bounds.width
+                dotsWideView.frame.size.height=view.bounds.height
+
+            }
             cameraView.isHidden=true
         }else{
             checkerView.isHidden=true
+            dotsView.isHidden=true
+            dotsWideView.isHidden=true
             cameraView.isHidden=false
         }
      }
+    func drawCircle(cPoint:CGPoint){
+        /* --- 円を描画 --- */
+        let cirDiameter=view.bounds.width*CGFloat(ballSize)/52.0
+        let circleLayer = CAShapeLayer.init()
+        let circleFrame = CGRect.init(x:cPoint.x-cirDiameter/2,y:cPoint.y-cirDiameter/2,width:cirDiameter,height:cirDiameter)
+        circleLayer.frame = circleFrame
+        // 輪郭の色
+        circleLayer.strokeColor = UIColor.white.cgColor
+        // 円の中の色
+        if ballColor==2{
+        circleLayer.fillColor = UIColor.black.cgColor
+        }else{
+            circleLayer.fillColor = UIColor.red.cgColor
+
+        }
+        // 輪郭の太さ
+        circleLayer.lineWidth = 0.5
+        // 円形を描画
+        circleLayer.path = UIBezierPath.init(ovalIn: CGRect.init(x: 0, y: 0, width: circleFrame.size.width, height: circleFrame.size.height)).cgPath
+        self.view.layer.addSublayer(circleLayer)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    @IBAction func doSomething(_ sender: Any) {
-     }
+    
     @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
    //     print("tap")
-        backMode += 1
-        if backMode>2{
-            backMode=0
+        let pos = sender.location(in: self.view)
+        if pos.y < view.bounds.height/2{
+            backMode += 1
+            if backMode>3{
+                backMode=0
+            }
+            setBack()
+        }else{
+            if halfButton.isHidden == true{
+                halfButton.isHidden=false
+                sameButton.isHidden=false
+                twiceButton.isHidden=false
+                redButton.isHidden=false
+                blackButton.isHidden=false
+            }else{
+                halfButton.isHidden=true
+                sameButton.isHidden=true
+                twiceButton.isHidden=true
+                redButton.isHidden=true
+                blackButton.isHidden=true
+            }
+            
         }
-        setBack()
-     }
+    }
     
     func appOrientation() -> UIInterfaceOrientation {
         return UIApplication.shared.statusBarOrientation
