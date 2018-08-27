@@ -24,6 +24,10 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checker1" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WVz-Vb-Esb">
                                 <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="checkn1" translatesAutoresizingMaskIntoConstraints="NO" id="5FT-5c-Nz4">
+                                <rect key="frame" x="427" y="136" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="dots_wide" translatesAutoresizingMaskIntoConstraints="NO" id="ScL-sl-Tdz">
                                 <rect key="frame" x="427" y="0.0" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -120,6 +124,7 @@
                         <outlet property="blackButton" destination="Bkj-xZ-kI9" id="sca-3u-odl"/>
                         <outlet property="cameraView" destination="1g8-XE-BOP" id="UMv-bh-M2L"/>
                         <outlet property="checkerView" destination="WVz-Vb-Esb" id="Ivy-ct-JH5"/>
+                        <outlet property="checknView" destination="5FT-5c-Nz4" id="FZb-Wj-RoF"/>
                         <outlet property="dotsView" destination="fdE-V1-7BD" id="OgH-p3-lqY"/>
                         <outlet property="dotsWideView" destination="ScL-sl-Tdz" id="UMh-cR-3SW"/>
                         <outlet property="doubleRec" destination="sE7-69-DQO" id="8pm-gn-LWa"/>
@@ -144,6 +149,40 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-181.25937031484258" y="-970.39999999999998"/>
+        </scene>
+        <!--Nrotate View Controller-->
+        <scene sceneID="g5B-W1-Ehd">
+            <objects>
+                <viewController id="fl3-2K-fNm" customClass="OKNrotateViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CNm-l8-Sua">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bands" translatesAutoresizingMaskIntoConstraints="NO" id="e1w-H6-FjL">
+                                <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
+                        <viewLayoutGuide key="safeArea" id="gvg-Wd-BnG"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Kr3-VB-541" appends="YES" id="zET-rx-EWr"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <outlet property="bandsView" destination="e1w-H6-FjL" id="wFX-Oa-YVd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BCE-Hz-4mh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="F6s-uz-TAS" userLabel="Exit" sceneMemberID="exit"/>
+                <tapGestureRecognizer numberOfTapsRequired="2" id="Kr3-VB-541">
+                    <connections>
+                        <segue destination="F6s-uz-TAS" kind="unwind" unwindAction="unwind:" id="OQ4-7R-4f6"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="-166.8665667166417" y="-1868"/>
         </scene>
         <!--Ts View Controller-->
         <scene sceneID="VIV-hu-Fjj">
@@ -575,12 +614,26 @@ Double tap the screen to return from the ETT, STILL, OKN</string>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cTd-rF-Jk7">
+                                <rect key="frame" x="440" y="295" width="80" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="UhO-FF-KWh"/>
+                                    <constraint firstAttribute="height" constant="40" id="Z3x-CR-uha"/>
+                                </constraints>
+                                <state key="normal" title="OKNr" backgroundImage="btn">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="fl3-2K-fNm" kind="show" id="UsS-gR-dfw"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="S68-fh-yHQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="8k9-Is-UfF"/>
                             <constraint firstItem="ESR-xF-9Ui" firstAttribute="leading" secondItem="uQ1-87-BgY" secondAttribute="trailing" constant="20" id="9Gd-XV-hfU"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="cTd-rF-Jk7" secondAttribute="bottom" constant="40" id="BYb-7D-tfc"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="S68-fh-yHQ" secondAttribute="bottom" constant="40" id="DZv-ST-7mT"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dLh-4u-MgC" secondAttribute="trailing" constant="40" id="EZV-Wy-1cp"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="FrZ-rl-Lx9" secondAttribute="bottom" constant="40" id="Ky3-uR-Wjd"/>
@@ -588,6 +641,7 @@ Double tap the screen to return from the ETT, STILL, OKN</string>
                             <constraint firstItem="dLh-4u-MgC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="MID-Gr-kT1"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ESR-xF-9Ui" secondAttribute="bottom" constant="40" id="X90-8f-xN3"/>
                             <constraint firstItem="FrZ-rl-Lx9" firstAttribute="leading" secondItem="ESR-xF-9Ui" secondAttribute="trailing" constant="20" id="c5b-QD-PSA"/>
+                            <constraint firstItem="cTd-rF-Jk7" firstAttribute="leading" secondItem="FrZ-rl-Lx9" secondAttribute="trailing" constant="20" id="nVb-tc-35L"/>
                             <constraint firstItem="uQ1-87-BgY" firstAttribute="top" secondItem="dLh-4u-MgC" secondAttribute="bottom" constant="40" id="tV4-fc-RQp"/>
                             <constraint firstItem="uQ1-87-BgY" firstAttribute="leading" secondItem="S68-fh-yHQ" secondAttribute="trailing" constant="20" id="tXX-0L-s0f"/>
                         </constraints>
@@ -605,6 +659,7 @@ Double tap the screen to return from the ETT, STILL, OKN</string>
         </scene>
     </scenes>
     <resources>
+        <image name="bands" width="3452" height="2112"/>
         <image name="black" width="512" height="512"/>
         <image name="both" width="512" height="512"/>
         <image name="both1" width="512" height="512"/>

@@ -20,6 +20,7 @@ class StillViewController: UIViewController{
     @IBOutlet var doubleRec:UITapGestureRecognizer!
     @IBOutlet var singleRec:UITapGestureRecognizer!
     @IBOutlet weak var checkerView: UIImageView!
+    @IBOutlet weak var checknView: UIImageView!
     @IBOutlet weak var dotsView: UIImageView!
     @IBOutlet weak var dotsWideView: UIImageView!
     @IBOutlet weak var halfButton: UIButton!
@@ -105,16 +106,32 @@ class StillViewController: UIViewController{
     func setBack(){
          if backMode==0{
             checkerView.isHidden=true
+            checknView.isHidden=true
             dotsView.isHidden=true
             dotsWideView.isHidden=true
             cameraView.isHidden=true
         }else if backMode==1{
-            checkerView.isHidden=false
+            if view.bounds.height/view.bounds.width>0.65{//iPad
+                checkerView.isHidden=true
+                checknView.isHidden=false
+                checknView.frame.origin.x=0
+                checknView.frame.origin.y=0
+                checknView.frame.size.width=view.bounds.width
+                checknView.frame.size.height=view.bounds.height
+            }else{
+                checkerView.isHidden=false
+                checknView.isHidden=true
+                checkerView.frame.origin.x=0
+                checkerView.frame.origin.y=0
+                checkerView.frame.size.width=view.bounds.width
+                checkerView.frame.size.height=view.bounds.height
+            }
             dotsView.isHidden=true
             dotsWideView.isHidden=true
             cameraView.isHidden=true
         }else if backMode==2{
             checkerView.isHidden=true
+            checknView.isHidden=true
             if view.bounds.height/view.bounds.width>0.65{
                 dotsView.isHidden=false
                 dotsView.frame.origin.x=0
@@ -133,6 +150,7 @@ class StillViewController: UIViewController{
             }
             cameraView.isHidden=true
         }else{
+            checknView.isHidden=true
             checkerView.isHidden=true
             dotsView.isHidden=true
             dotsWideView.isHidden=true
