@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -152,8 +153,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="checkn1" translatesAutoresizingMaskIntoConstraints="NO" id="SNs-82-4LJ">
+                                <rect key="frame" x="427" y="0.0" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checker1" translatesAutoresizingMaskIntoConstraints="NO" id="yPG-aS-qFl">
                                 <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="checkn4" translatesAutoresizingMaskIntoConstraints="NO" id="6rV-QK-2aK">
+                                <rect key="frame" x="427" y="137" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="checker4" translatesAutoresizingMaskIntoConstraints="NO" id="kjK-vm-cy9">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -332,6 +341,8 @@
                         <outlet property="cameraView" destination="ryv-pi-E5I" id="Fob-CX-BbY"/>
                         <outlet property="checker4View" destination="kjK-vm-cy9" id="osP-Gt-40u"/>
                         <outlet property="checkerView" destination="yPG-aS-qFl" id="Oq4-Id-TGk"/>
+                        <outlet property="checkn4View" destination="6rV-QK-2aK" id="eod-E9-mdV"/>
+                        <outlet property="checknView" destination="SNs-82-4LJ" id="VpA-ug-4jX"/>
                         <outlet property="doubleRec" destination="EO2-mQ-Oyi" id="vaL-IU-0nT"/>
                         <outlet property="left1Button" destination="Bnx-to-SUR" id="vrF-MZ-LVS"/>
                         <outlet property="left2Button" destination="eHR-gr-Vgw" id="FNH-XI-IgO"/>
@@ -599,10 +610,12 @@ Double tap the screen to return from the ETT, STILL, OKN</string>
         <image name="both1" width="512" height="512"/>
         <image name="both2" width="512" height="512"/>
         <image name="btn" width="300" height="40"/>
-        <image name="checker1" width="1600" height="900"/>
+        <image name="checker1" width="1418" height="790"/>
         <image name="checker4" width="709" height="394"/>
+        <image name="checkn1" width="1103" height="790"/>
+        <image name="checkn4" width="552" height="394"/>
         <image name="dots" width="960" height="720"/>
-        <image name="dots_wide" width="960" height="574"/>
+        <image name="dots_wide" width="960" height="564"/>
         <image name="half" width="512" height="512"/>
         <image name="left" width="512" height="512"/>
         <image name="left1" width="512" height="512"/>

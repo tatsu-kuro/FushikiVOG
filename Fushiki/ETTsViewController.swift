@@ -35,11 +35,10 @@ class ETTsViewController: UIViewController {
     @IBOutlet weak var time10Button: UIButton!
     @IBOutlet weak var checkerView: UIImageView!
     @IBOutlet weak var checker4View: UIImageView!
+    @IBOutlet weak var checknView: UIImageView!
+    @IBOutlet weak var checkn4View: UIImageView!
     @IBOutlet weak var cameraView: UIImageView!
-    @IBAction func right1ETT(_ sender: Any) {
-        saccadeMode=21
-        tcount=1
-    }
+ 
     @IBAction func bothETT(_ sender: Any) {
         saccadeMode=12
         tcount=1
@@ -52,34 +51,33 @@ class ETTsViewController: UIViewController {
         saccadeMode=10
         tcount=1
     }
-    @IBAction func left1ETT(_ sender: Any) {
-        saccadeMode=01
+    @IBAction func rightETT(_ sender: Any) {
+        saccadeMode=20
         tcount=1
     }
+    @IBAction func right1ETT(_ sender: Any) {
+        saccadeMode=21
+        tcount=1
+    }
+
     @IBAction func right2ETT(_ sender: Any) {
         saccadeMode=22
         tcount=1
     }
-    
-
-    
-    @IBAction func left2ETT(_ sender: Any) {
-        saccadeMode=0
-        tcount=1
-    }
-
-    @IBAction func rightETT(_ sender: Any) {
-        saccadeMode=20
-        tcount=1
-     }
-    
-
-    
     @IBAction func leftETT(_ sender: Any) {
         saccadeMode=02
         tcount=1
     }
-    @IBAction func setTimer05(_ sender: Any) {
+    @IBAction func left1ETT(_ sender: Any) {
+        saccadeMode=01
+        tcount=1
+    }
+    @IBAction func left2ETT(_ sender: Any) {
+        saccadeMode=0
+        tcount=1
+    }
+ 
+     @IBAction func setTimer05(_ sender: Any) {
         timer1Interval=1
     }
     
@@ -129,18 +127,40 @@ class ETTsViewController: UIViewController {
         if backMode==0{
             checkerView.isHidden=true
             checker4View.isHidden=true
+            checknView.isHidden=true
+            checkn4View.isHidden=true
             cameraView.isHidden=true
-        }else if backMode==1{
-            checkerView.isHidden=false
+        }else if backMode==1{//checker
             checker4View.isHidden=true
+            checkn4View.isHidden=true
+            if view.bounds.height/view.bounds.width>0.65{//iPad
+                checknView.isHidden=false
+                checknView.frame.origin.x=0
+                checknView.frame.origin.y=0
+                checknView.frame.size.width=view.bounds.width
+                checknView.frame.size.height=view.bounds.height
+                checkerView.isHidden=true
+            }else{//iPhone
+                checkerView.isHidden=false
+                checknView.isHidden=true
+            }
             cameraView.isHidden=true
-        }else if backMode==2{
+        }else if backMode==2{//checker 1/4 random
             checkerView.isHidden=true
-            checker4View.isHidden=false
+            checknView.isHidden=true
+            if view.bounds.height/view.bounds.width>0.65{//iPad
+                checkn4View.isHidden=false
+                checker4View.isHidden=true
+            }else{
+                checkn4View.isHidden=true
+                checker4View.isHidden=false
+            }
             cameraView.isHidden=true
         }else{
             checkerView.isHidden=true
             checker4View.isHidden=true
+            checknView.isHidden=true
+            checkn4View.isHidden=true
             cameraView.isHidden=false
         }
     }
@@ -233,26 +253,38 @@ class ETTsViewController: UIViewController {
         drawCircle(cPoint:cPoint)
         var random = Int(arc4random_uniform(4))
         if random == lastRandom{
-            random = Int(arc4random_uniform(4))
+            random += 1//Int(arc4random_uniform(4))
+            if random>3{
+                random=0
+            }
         }
         lastRandom = random
- //       print(random)
         checker4View.frame.size.width=view.bounds.width/2
         checker4View.frame.size.height=view.bounds.height/2
-        if random == 0{
+        checkn4View.frame.size.width=view.bounds.width/2
+        checkn4View.frame.size.height=view.bounds.height/2
+       if random == 0{
             checker4View.frame.origin.x=0
             checker4View.frame.origin.y=0
-        }else if random == 1{
-            checker4View.frame.origin.x=view.bounds.width/2
-            checker4View.frame.origin.y=0
-        }else if random == 1{
-            checker4View.frame.origin.x=view.bounds.width/2
-            checker4View.frame.origin.y=view.bounds.height/2
-        }else{
-            checker4View.frame.origin.x=0
-            checker4View.frame.origin.y=view.bounds.height/2
-        }
+            checkn4View.frame.origin.x=0
+            checkn4View.frame.origin.y=0
 
+        }else if random == 1{
+            checker4View.frame.origin.x=view.bounds.width/2
+            checker4View.frame.origin.y=0
+            checkn4View.frame.origin.x=view.bounds.width/2
+            checkn4View.frame.origin.y=0
+       }else if random == 2{
+            checker4View.frame.origin.x=view.bounds.width/2
+            checker4View.frame.origin.y=view.bounds.height/2
+            checkn4View.frame.origin.x=view.bounds.width/2
+            checkn4View.frame.origin.y=view.bounds.height/2
+       }else{
+            checker4View.frame.origin.x=0
+            checker4View.frame.origin.y=view.bounds.height/2
+            checkn4View.frame.origin.x=0
+            checkn4View.frame.origin.y=view.bounds.height/2
+        }
     }
     func drawCircle(cPoint:CGPoint){
         /* --- 円を描画 --- */
