@@ -23,18 +23,33 @@ class ETTcViewController: UIViewController {
     @IBOutlet var singleRec:UITapGestureRecognizer!
 
     @IBOutlet weak var checkerView: UIImageView!
+    @IBOutlet weak var checknView: UIImageView!
     
     @IBOutlet weak var cameraView: UIImageView!
       @IBOutlet weak var textIroiro: UITextField!
     func setBack(){
         if backMode==0{
             checkerView.isHidden=true
+            checknView.isHidden=true
             cameraView.isHidden=true
         }else if backMode==1{
-            checkerView.isHidden=false
+            
+            if view.bounds.height/view.bounds.width>0.65{//iPad
+                checknView.isHidden=false
+                checknView.frame.origin.x=0
+                checknView.frame.origin.y=0
+                checknView.frame.size.width=view.bounds.width
+                checknView.frame.size.height=view.bounds.height
+                checkerView.isHidden=true
+            }else{//iPhone
+                checkerView.isHidden=false
+                checknView.isHidden=true
+            }
+            //checkerView.isHidden=false
             cameraView.isHidden=true
         }else{
             checkerView.isHidden=true
+            checknView.isHidden=true
             cameraView.isHidden=false
         }
     }
@@ -92,7 +107,7 @@ class ETTcViewController: UIViewController {
             let cPoint = CGPoint(x:view.bounds.width/2 + sin(CGFloat(tcount)*ettSpeed/(3.1415*5.0))*ettWidth, y: view.bounds.height/2)
             drawCircle(cPoint:cPoint)
         }
-        print("timer",tcount)
+  //      print("timer",tcount)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

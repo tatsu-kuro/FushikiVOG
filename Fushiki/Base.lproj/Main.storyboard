@@ -470,6 +470,10 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checker1" translatesAutoresizingMaskIntoConstraints="NO" id="oYg-oD-WzN">
                                 <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="checkn1" translatesAutoresizingMaskIntoConstraints="NO" id="49Q-wI-bGh">
+                                <rect key="frame" x="427" y="0.0" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LMn-sy-EFF">
                                 <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                                 <gestureRecognizers/>
@@ -509,6 +513,7 @@
                     <connections>
                         <outlet property="cameraView" destination="LMn-sy-EFF" id="Bha-Ga-sKp"/>
                         <outlet property="checkerView" destination="oYg-oD-WzN" id="lxS-vD-RP1"/>
+                        <outlet property="checknView" destination="49Q-wI-bGh" id="EJa-5N-dwW"/>
                         <outlet property="doubleRec" destination="3Kq-u1-RVL" id="Y30-t0-1vU"/>
                         <outlet property="singleRec" destination="jrQ-W8-Nbk" id="dOe-Qz-Qme"/>
                         <outlet property="textIroiro" destination="yoW-GF-NXS" id="2GI-RC-Wj1"/>
