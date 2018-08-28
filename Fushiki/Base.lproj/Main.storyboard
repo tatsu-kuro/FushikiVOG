@@ -162,9 +162,121 @@
                                 <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EyM-xo-LXe">
+                                <rect key="frame" x="328.5" y="155" width="10" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="A81-4x-s8d"/>
+                                    <constraint firstAttribute="width" constant="10" id="hzT-EY-323"/>
+                                </constraints>
+                                <state key="normal" title="dammy"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1oq-NZ-gQT">
+                                <rect key="frame" x="348.5" y="315" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="UQp-Kn-Re4"/>
+                                    <constraint firstAttribute="width" constant="40" id="V2W-Ts-hsF"/>
+                                </constraints>
+                                <state key="normal" image="width3"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nn4-vv-vce">
+                                <rect key="frame" x="418.5" y="315" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="57q-0a-fyl"/>
+                                    <constraint firstAttribute="width" constant="40" id="UbB-EP-AQn"/>
+                                </constraints>
+                                <state key="normal" image="gyro"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sWw-td-kdU">
+                                <rect key="frame" x="278.5" y="315" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="U0q-hY-cdC"/>
+                                    <constraint firstAttribute="height" constant="40" id="ku8-S2-ZNw"/>
+                                </constraints>
+                                <state key="normal" image="speed1"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yCP-9c-VJe">
+                                <rect key="frame" x="208.5" y="315" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="cgn-bY-TKE"/>
+                                    <constraint firstAttribute="height" constant="40" id="cul-bu-s6f"/>
+                                </constraints>
+                                <state key="normal" image="left"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8x9-il-Q7A">
+                                <rect key="frame" x="278.5" y="265" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="RZz-Qh-BK2"/>
+                                    <constraint firstAttribute="width" constant="40" id="lfk-QP-R2Q"/>
+                                </constraints>
+                                <state key="normal" image="speed2"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EEh-4B-ebI">
+                                <rect key="frame" x="278.5" y="215" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="JO5-wr-AXb"/>
+                                    <constraint firstAttribute="width" constant="40" id="V6E-Ub-9M5"/>
+                                </constraints>
+                                <state key="normal" image="speed3"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qrN-hD-ngc">
+                                <rect key="frame" x="348.5" y="265" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="4Xb-eW-4kS"/>
+                                    <constraint firstAttribute="width" constant="40" id="BBT-0m-zDT"/>
+                                </constraints>
+                                <state key="normal" image="width2"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0O0-hi-y4o">
+                                <rect key="frame" x="418.5" y="265" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="3Ws-qc-xLI"/>
+                                    <constraint firstAttribute="height" constant="40" id="xJM-QI-fHc"/>
+                                </constraints>
+                                <state key="normal" image="gyrooff1"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nhr-rm-02c">
+                                <rect key="frame" x="348.5" y="215" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="3vN-D1-9Nl"/>
+                                    <constraint firstAttribute="height" constant="40" id="tFQ-I5-qt0"/>
+                                </constraints>
+                                <state key="normal" image="width1"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GYg-kn-4nL">
+                                <rect key="frame" x="208.5" y="265" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="Fi8-Pc-rms"/>
+                                    <constraint firstAttribute="height" constant="40" id="eFl-Tf-Gi1"/>
+                                </constraints>
+                                <state key="normal" image="right"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="qrN-hD-ngc" firstAttribute="top" secondItem="nhr-rm-02c" secondAttribute="bottom" constant="10" id="1b1-6G-Dhk"/>
+                            <constraint firstItem="0O0-hi-y4o" firstAttribute="leading" secondItem="qrN-hD-ngc" secondAttribute="trailing" constant="30" id="1bv-8q-TXM"/>
+                            <constraint firstItem="EyM-xo-LXe" firstAttribute="centerX" secondItem="CNm-l8-Sua" secondAttribute="centerX" id="2dj-Ha-DE2"/>
+                            <constraint firstItem="EyM-xo-LXe" firstAttribute="leading" secondItem="8x9-il-Q7A" secondAttribute="trailing" constant="10" id="4vB-4i-T1v"/>
+                            <constraint firstItem="EyM-xo-LXe" firstAttribute="leading" secondItem="sWw-td-kdU" secondAttribute="trailing" constant="10" id="HbB-ri-GCK"/>
+                            <constraint firstItem="1oq-NZ-gQT" firstAttribute="top" secondItem="qrN-hD-ngc" secondAttribute="bottom" constant="10" id="Lyu-iL-A3h"/>
+                            <constraint firstItem="gvg-Wd-BnG" firstAttribute="bottom" secondItem="yCP-9c-VJe" secondAttribute="bottom" constant="20" id="Lz7-Zi-ayM"/>
+                            <constraint firstItem="sWw-td-kdU" firstAttribute="leading" secondItem="yCP-9c-VJe" secondAttribute="trailing" constant="30" id="N8g-p8-gYG"/>
+                            <constraint firstItem="nhr-rm-02c" firstAttribute="leading" secondItem="EyM-xo-LXe" secondAttribute="trailing" constant="10" id="SSo-K2-0z0"/>
+                            <constraint firstItem="gvg-Wd-BnG" firstAttribute="bottom" secondItem="EyM-xo-LXe" secondAttribute="bottom" constant="20" id="VJr-42-T0d"/>
+                            <constraint firstItem="yCP-9c-VJe" firstAttribute="top" secondItem="GYg-kn-4nL" secondAttribute="bottom" constant="10" id="Xka-wc-Dke"/>
+                            <constraint firstItem="qrN-hD-ngc" firstAttribute="leading" secondItem="EyM-xo-LXe" secondAttribute="trailing" constant="10" id="Yev-78-NPH"/>
+                            <constraint firstItem="gvg-Wd-BnG" firstAttribute="bottom" secondItem="nn4-vv-vce" secondAttribute="bottom" constant="20" id="ZJZ-Sq-tIz"/>
+                            <constraint firstItem="nn4-vv-vce" firstAttribute="top" secondItem="0O0-hi-y4o" secondAttribute="bottom" constant="10" id="Zsz-q2-PVI"/>
+                            <constraint firstItem="gvg-Wd-BnG" firstAttribute="bottom" secondItem="1oq-NZ-gQT" secondAttribute="bottom" constant="20" id="bkj-1k-h4h"/>
+                            <constraint firstItem="EyM-xo-LXe" firstAttribute="leading" secondItem="EEh-4B-ebI" secondAttribute="trailing" constant="10" id="fWz-3W-mRL"/>
+                            <constraint firstItem="sWw-td-kdU" firstAttribute="top" secondItem="8x9-il-Q7A" secondAttribute="bottom" constant="10" id="gtT-8b-j74"/>
+                            <constraint firstItem="1oq-NZ-gQT" firstAttribute="leading" secondItem="EyM-xo-LXe" secondAttribute="trailing" constant="10" id="kRZ-hX-1R5"/>
+                            <constraint firstItem="gvg-Wd-BnG" firstAttribute="bottom" secondItem="sWw-td-kdU" secondAttribute="bottom" constant="20" id="nUZ-dm-es8"/>
+                            <constraint firstItem="8x9-il-Q7A" firstAttribute="leading" secondItem="GYg-kn-4nL" secondAttribute="trailing" constant="30" id="ozu-RH-DxS"/>
+                            <constraint firstItem="8x9-il-Q7A" firstAttribute="top" secondItem="EEh-4B-ebI" secondAttribute="bottom" constant="10" id="sRi-6e-Efm"/>
+                            <constraint firstItem="nn4-vv-vce" firstAttribute="leading" secondItem="1oq-NZ-gQT" secondAttribute="trailing" constant="30" id="vOy-XK-adE"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="gvg-Wd-BnG"/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Kr3-VB-541" appends="YES" id="zET-rx-EWr"/>
@@ -676,6 +788,8 @@ Double tap the screen to return from the ETT, STILL, OKN</string>
         <image name="checkn4" width="552" height="394"/>
         <image name="dots" width="960" height="720"/>
         <image name="dots_wide" width="960" height="564"/>
+        <image name="gyro" width="512" height="512"/>
+        <image name="gyrooff1" width="512" height="512"/>
         <image name="half" width="512" height="512"/>
         <image name="left" width="512" height="512"/>
         <image name="left1" width="512" height="512"/>
@@ -685,8 +799,14 @@ Double tap the screen to return from the ETT, STILL, OKN</string>
         <image name="right1" width="512" height="512"/>
         <image name="right2" width="512" height="512"/>
         <image name="same" width="512" height="512"/>
+        <image name="speed1" width="512" height="512"/>
+        <image name="speed2" width="512" height="512"/>
+        <image name="speed3" width="512" height="512"/>
         <image name="time05" width="512" height="512"/>
         <image name="time10" width="512" height="512"/>
         <image name="twice" width="512" height="512"/>
+        <image name="width1" width="512" height="512"/>
+        <image name="width2" width="512" height="512"/>
+        <image name="width3" width="512" height="512"/>
     </resources>
 </document>
