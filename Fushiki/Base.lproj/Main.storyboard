@@ -158,8 +158,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bands" translatesAutoresizingMaskIntoConstraints="NO" id="e1w-H6-FjL">
-                                <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bandsquart2" translatesAutoresizingMaskIntoConstraints="NO" id="3fb-lw-U4B">
+                                <rect key="frame" x="0.0" y="58" width="389" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bandsquart" translatesAutoresizingMaskIntoConstraints="NO" id="rpC-5Q-VuI">
+                                <rect key="frame" x="0.0" y="102" width="389" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bandsorig2" translatesAutoresizingMaskIntoConstraints="NO" id="Kvs-lq-L8W">
+                                <rect key="frame" x="0.0" y="155" width="389" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e1w-H6-FjL">
+                                <rect key="frame" x="0.0" y="0.0" width="389" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <gestureRecognizers/>
                             </imageView>
@@ -316,6 +328,9 @@
                     </view>
                     <connections>
                         <outlet property="bandsView" destination="e1w-H6-FjL" id="wFX-Oa-YVd"/>
+                        <outlet property="bandsView1" destination="Kvs-lq-L8W" id="1jK-e1-yyN"/>
+                        <outlet property="bandsView2" destination="rpC-5Q-VuI" id="3kF-gt-Heq"/>
+                        <outlet property="bandsView3" destination="3fb-lw-U4B" id="C2Q-VH-830"/>
                         <outlet property="doubleRec" destination="Kr3-VB-541" id="ep9-cn-Krz"/>
                         <outlet property="gyroButton" destination="nn4-vv-vce" id="mgi-yX-IOp"/>
                         <outlet property="gyrooffButton" destination="0O0-hi-y4o" id="bYF-3l-bCx"/>
@@ -831,7 +846,9 @@ Double tap the screen to return from the ETT, STILL, OKN</string>
         </scene>
     </scenes>
     <resources>
-        <image name="bands" width="6712" height="1000"/>
+        <image name="bandsorig2" width="5008" height="100"/>
+        <image name="bandsquart" width="1680" height="100"/>
+        <image name="bandsquart2" width="886" height="100"/>
         <image name="black" width="512" height="512"/>
         <image name="both" width="512" height="512"/>
         <image name="both1" width="512" height="512"/>

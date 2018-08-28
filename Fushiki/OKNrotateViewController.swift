@@ -17,6 +17,9 @@ class OKNrotateViewController: UIViewController {
     var oknrDirection:Int = 0
     var oknrWidth:CGFloat = 1.0
     var oknrMode:Int = 0
+    @IBOutlet weak var bandsView3: UIImageView!
+    @IBOutlet weak var bandsView2: UIImageView!
+    @IBOutlet weak var bandsView1: UIImageView!
     @IBOutlet weak var bandsView: UIImageView!
 //    @IBOutlet weak var twiceButton: UIButton!
     @IBOutlet weak var gyroButton: UIButton!
@@ -138,16 +141,26 @@ class OKNrotateViewController: UIViewController {
     }
     func setBand(){
         if oknrWidth == 1{
-          bandsView.frame.origin.x = 0 - view.bounds.width/2
-        }else if oknrWidth == 2{
-         bandsView.frame.origin.x = 0 - view.bounds.width*1.5
+            bandsView.image=bandsView1.image
+         }else if oknrWidth == 2 {
+            bandsView.image=bandsView2.image
         }else{
-           bandsView.frame.origin.x = 0 - view.bounds.width*2.5
+            bandsView.image=bandsView3.image
         }
-        
+    }
+    func initBands(){
+        bandsView.frame.origin.x = 0 - view.bounds.width/2
         bandsView.frame.origin.y = 0 - view.bounds.height*2
-        bandsView.frame.size.width=view.bounds.width*oknrWidth*2
-        bandsView.frame.size.height=view.bounds.height*oknrWidth*5
+        bandsView.frame.size.width=view.bounds.width*2
+        bandsView.frame.size.height=view.bounds.height*5
+        bandsView2.frame.origin.x = 0 - view.bounds.width/2
+        bandsView2.frame.origin.y = 0 - view.bounds.height*2
+        bandsView2.frame.size.width=view.bounds.width*2
+        bandsView2.frame.size.height=view.bounds.height*5
+        bandsView3.frame.origin.x = 0 - view.bounds.width/2
+        bandsView3.frame.origin.y = 0 - view.bounds.height*2
+        bandsView3.frame.size.width=view.bounds.width*2
+        bandsView3.frame.size.height=view.bounds.height*5
     }
     func stopTimer(){
         if timer?.isValid == true {
@@ -156,31 +169,23 @@ class OKNrotateViewController: UIViewController {
         tcount=0
    }
     func setTimer(){
-        timer = Timer.scheduledTimer(timeInterval: 1.0/100.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1.0/60.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         tcount=0
     }
-   override func viewDidLoad() {
-        super.viewDidLoad()
-        motionManager = CMMotionManager()
-        motionManager?.deviceMotionUpdateInterval = 0.03
-        setBand()
-        singleRec.require(toFail: doubleRec)
-        setTimer()
-        hideButtons(hide: true)
-          // Do any additional setup after loading the view.
-        if UIApplication.shared.isIdleTimerDisabled == false{
-            UIApplication.shared.isIdleTimerDisabled = true//スリープしない
-        }
-    }
+
     @objc func update(tm: Timer) {
         var dist:CGFloat=0
         tcount += 1
         if oknrDirection==0{
-            dist=CGFloat(tcount*oknrSpeed)*1.5
+            dist=CGFloat(tcount*oknrSpeed%45)*6
         }else{
-            dist = -CGFloat(tcount*oknrSpeed)*1.5
+            dist = -CGFloat(tcount*oknrSpeed%45)*6
         }
-        attitude()
+        if oknrMode == 1{
+            attitude()
+        }else{
+            pitch=0
+        }
         let t1:CGAffineTransform = CGAffineTransform(rotationAngle: -pitch)
         let t2:CGAffineTransform = CGAffineTransform(translationX: dist*cos(-pitch),y: dist*sin(-pitch))
         let t:CGAffineTransform = t1.concatenating(t2)
@@ -189,6 +194,20 @@ class OKNrotateViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        motionManager = CMMotionManager()
+        motionManager?.deviceMotionUpdateInterval = 0.03
+        initBands()
+        setBand()
+        singleRec.require(toFail: doubleRec)
+        setTimer()
+        hideButtons(hide: true)
+        // Do any additional setup after loading the view.
+        if UIApplication.shared.isIdleTimerDisabled == false{
+            UIApplication.shared.isIdleTimerDisabled = true//スリープしない
+        }
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
