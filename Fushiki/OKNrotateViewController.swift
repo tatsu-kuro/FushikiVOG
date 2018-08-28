@@ -14,8 +14,40 @@ class OKNrotateViewController: UIViewController {
     var tcount:Int = 0
     var motionManager: CMMotionManager?
     
-   @IBOutlet weak var bandsView: UIImageView!
-
+    @IBOutlet weak var bandsView: UIImageView!
+//    @IBOutlet weak var twiceButton: UIButton!
+    @IBOutlet weak var gyroButton: UIButton!
+    @IBOutlet weak var gyrooffButton: UIButton!
+    @IBOutlet weak var width1Button: UIButton!
+    @IBOutlet weak var width2Button: UIButton!
+    @IBOutlet weak var width3Button: UIButton!
+    @IBOutlet weak var speed1Button: UIButton!
+    @IBOutlet weak var speed2Button: UIButton!
+    @IBOutlet weak var speed3Button: UIButton!
+    @IBOutlet weak var rightButton: UIButton!
+    @IBOutlet weak var leftButton: UIButton!
+    @IBAction func gyrooffAction(_ sender: Any) {
+        print("gyreooff")
+    }
+    @IBAction func gyroAction(_ sender: Any) {
+    }
+    @IBAction func width3Action(_ sender: Any) {
+    }
+    @IBAction func width2Action(_ sender: Any) {
+    }
+    @IBAction func width1Action(_ sender: Any) {
+    }
+    @IBAction func speed3Action(_ sender: Any) {
+    }
+    @IBAction func speed2Action(_ sender: Any) {
+    }
+    @IBAction func speed1Action(_ sender: Any) {
+    }
+    @IBAction func rightAction(_ sender: Any) {
+    }
+    @IBAction func leftAction(_ sender: Any) {
+    }
+    
     var pitch:CGFloat=0
     func attitude() {
         guard let _ = motionManager?.isDeviceMotionAvailable,
