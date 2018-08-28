@@ -26,6 +26,10 @@ class OKNViewController: UIViewController {
         }
         
     }
+    @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
+        print("tap")
+        
+    }
     @IBAction func panGes(_ sender: UIPanGestureRecognizer) {
         if sender.state == .began{
             //               textIroiro.isHidden=false

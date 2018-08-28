@@ -21,6 +21,10 @@ class ViewController: UIViewController {
     var ettWidth:CGFloat = 200.0
     var ettSpeed:CGFloat = 0.3
     var oknSpeed:CGFloat = 1.0
+    var oknrSpeed:Int = 1
+    var oknrDirection:Int = 0
+    var oknrWidth:CGFloat = 1.0
+    var oknrMode:Int = 0
     var saccadeMode:Int = 0 //0:left 1:both 2:right
      @IBOutlet weak var helpText: UILabel!
      @IBOutlet weak var OKNbutton: UIButton!
@@ -50,6 +54,12 @@ class ViewController: UIViewController {
         if let vc = segue.destination as? OKNViewController {
             let Controller:OKNViewController = vc
             Controller.oknSpeed=oknSpeed
+        }else if let vc = segue.destination as? OKNrotateViewController{
+            let Controller:OKNrotateViewController = vc
+            Controller.oknrSpeed=oknrSpeed
+            Controller.oknrDirection=oknrDirection
+            Controller.oknrWidth=oknrWidth
+            Controller.oknrMode=oknrMode
         }else if let vc = segue.destination as? StillViewController{
             let Controller:StillViewController = vc
             Controller.backMode=backModeStill
@@ -77,6 +87,12 @@ class ViewController: UIViewController {
         if let vc = segue.source as? OKNViewController {
             let Controller:OKNViewController = vc
             oknSpeed=Controller.oknSpeed
+        }else if let vc = segue.source as? OKNrotateViewController{
+            let Controller:OKNrotateViewController = vc
+            oknrSpeed=Controller.oknrSpeed
+            oknrDirection=Controller.oknrDirection
+            oknrWidth=Controller.oknrWidth
+            oknrMode=Controller.oknrMode
         }else if let vc = segue.source as? StillViewController{
             let Controller:StillViewController = vc
             backModeStill=Controller.backMode

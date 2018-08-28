@@ -11,7 +11,6 @@
 		8E2604122134237D00714C67 /* OKNrotateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2604112134237D00714C67 /* OKNrotateViewController.swift */; };
 		8ECD87C02116865C0084CDB1 /* ETTsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECD87BF2116865C0084CDB1 /* ETTsViewController.swift */; };
 		8ECD87C22116875E0084CDB1 /* ETTcViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECD87C12116875E0084CDB1 /* ETTcViewController.swift */; };
-		8ECDBC0520F08A460009378E /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECDBC0420F08A460009378E /* CircleView.swift */; };
 		8EE77EC620EF742C00517DEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE77EC520EF742C00517DEC /* AppDelegate.swift */; };
 		8EE77EC820EF742C00517DEC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE77EC720EF742C00517DEC /* ViewController.swift */; };
 		8EE77ECB20EF742C00517DEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE77EC920EF742C00517DEC /* Main.storyboard */; };
@@ -25,7 +24,6 @@
 		8E2604112134237D00714C67 /* OKNrotateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OKNrotateViewController.swift; sourceTree = "<group>"; };
 		8ECD87BF2116865C0084CDB1 /* ETTsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETTsViewController.swift; sourceTree = "<group>"; };
 		8ECD87C12116875E0084CDB1 /* ETTcViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETTcViewController.swift; sourceTree = "<group>"; };
-		8ECDBC0420F08A460009378E /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		8EE77EC220EF742C00517DEC /* Fushiki.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fushiki.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EE77EC520EF742C00517DEC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8EE77EC720EF742C00517DEC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -50,7 +48,6 @@
 		8EE77EB920EF742C00517DEC = {
 			isa = PBXGroup;
 			children = (
-				8ECDBC0420F08A460009378E /* CircleView.swift */,
 				8EE77EC420EF742C00517DEC /* Fushiki */,
 				8EE77EC320EF742C00517DEC /* Products */,
 			);
@@ -153,7 +150,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8ECDBC0520F08A460009378E /* CircleView.swift in Sources */,
 				8EE77EC820EF742C00517DEC /* ViewController.swift in Sources */,
 				8EE77EC620EF742C00517DEC /* AppDelegate.swift in Sources */,
 				8E1FFFB121167865004F61B1 /* OKNViewController.swift in Sources */,

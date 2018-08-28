@@ -161,6 +161,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bands" translatesAutoresizingMaskIntoConstraints="NO" id="e1w-H6-FjL">
                                 <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
                             </imageView>
                             <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EyM-xo-LXe">
                                 <rect key="frame" x="328.5" y="155" width="10" height="200"/>
@@ -310,14 +311,17 @@
                         <viewLayoutGuide key="safeArea" id="gvg-Wd-BnG"/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Kr3-VB-541" appends="YES" id="zET-rx-EWr"/>
+                            <outletCollection property="gestureRecognizers" destination="9L2-Im-JMU" appends="YES" id="wfC-vd-Ghf"/>
                         </connections>
                     </view>
                     <connections>
                         <outlet property="bandsView" destination="e1w-H6-FjL" id="wFX-Oa-YVd"/>
+                        <outlet property="doubleRec" destination="Kr3-VB-541" id="ep9-cn-Krz"/>
                         <outlet property="gyroButton" destination="nn4-vv-vce" id="mgi-yX-IOp"/>
                         <outlet property="gyrooffButton" destination="0O0-hi-y4o" id="bYF-3l-bCx"/>
                         <outlet property="leftButton" destination="yCP-9c-VJe" id="MoO-lf-BXJ"/>
                         <outlet property="rightButton" destination="GYg-kn-4nL" id="SyJ-Wq-LEb"/>
+                        <outlet property="singleRec" destination="9L2-Im-JMU" id="O0v-UP-oia"/>
                         <outlet property="speed1Button" destination="sWw-td-kdU" id="ZeP-dL-afp"/>
                         <outlet property="speed2Button" destination="8x9-il-Q7A" id="EAd-Zb-bzy"/>
                         <outlet property="speed3Button" destination="EEh-4B-ebI" id="JoS-BT-Byq"/>
@@ -331,6 +335,11 @@
                 <tapGestureRecognizer numberOfTapsRequired="2" id="Kr3-VB-541">
                     <connections>
                         <segue destination="F6s-uz-TAS" kind="unwind" unwindAction="unwind:" id="OQ4-7R-4f6"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="9L2-Im-JMU">
+                    <connections>
+                        <action selector="tapGes:" destination="fl3-2K-fNm" id="M69-eJ-G5p"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -590,6 +599,7 @@
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="JW7-Nx-PJf" appends="YES" id="buT-p8-EtZ"/>
                             <outletCollection property="gestureRecognizers" destination="gMQ-IP-Jx7" appends="YES" id="Olx-6G-PJy"/>
+                            <outletCollection property="gestureRecognizers" destination="c98-72-W7V" appends="YES" id="dA1-sU-em9"/>
                         </connections>
                     </view>
                     <connections>
@@ -608,6 +618,11 @@
                         <action selector="panGes:" destination="Y21-hx-21T" id="dCh-9I-Xvr"/>
                     </connections>
                 </panGestureRecognizer>
+                <tapGestureRecognizer id="c98-72-W7V">
+                    <connections>
+                        <action selector="tapGes:" destination="Y21-hx-21T" id="hBk-js-yEC"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="585" y="-970"/>
         </scene>
@@ -816,7 +831,7 @@ Double tap the screen to return from the ETT, STILL, OKN</string>
         </scene>
     </scenes>
     <resources>
-        <image name="bands" width="3452" height="2112"/>
+        <image name="bands" width="6712" height="1000"/>
         <image name="black" width="512" height="512"/>
         <image name="both" width="512" height="512"/>
         <image name="both1" width="512" height="512"/>
