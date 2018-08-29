@@ -21,6 +21,7 @@ class OKNrotateViewController: UIViewController {
     @IBOutlet weak var bandsView2: UIImageView!
     @IBOutlet weak var bandsView1: UIImageView!
     @IBOutlet weak var bandsView: UIImageView!
+    @IBOutlet weak var bandsViewtemp: UIImageView!
 //    @IBOutlet weak var twiceButton: UIButton!
     @IBOutlet weak var gyroButton: UIButton!
     @IBOutlet weak var gyrooffButton: UIButton!
@@ -46,19 +47,25 @@ class OKNrotateViewController: UIViewController {
         speed2Button.isHidden=hide
         speed3Button.isHidden=hide
     }
+    //       iPhone iPad
+    //oowaru:40     61
+    //chwaru:42     64
+    //kowaru:52     53
     @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
-//        print("tap")
-
         let pos = sender.location(in: self.view)
         if pos.y < view.bounds.height/2{
-            
+            if pos.x < 50{
+                waru += 1
+            }
         }else{
-            if gyroButton.isHidden == true{
-                print("false")
-                hideButtons(hide: false)
+            if pos.x < 50{
+                waru -= 1
             }else{
-                print("true")
-                hideButtons(hide: true)
+                if gyroButton.isHidden == true{
+                    hideButtons(hide: false)
+                }else{
+                     hideButtons(hide: true)
+                }
             }
         }
     }
@@ -149,6 +156,10 @@ class OKNrotateViewController: UIViewController {
         }
     }
     func initBands(){
+        bandsViewtemp.frame.origin.x = 0 - view.bounds.width/2
+        bandsViewtemp.frame.origin.y = 0 - view.bounds.height*2
+        bandsViewtemp.frame.size.width=view.bounds.width*2
+        bandsViewtemp.frame.size.height=view.bounds.height*5
         bandsView.frame.origin.x = 0 - view.bounds.width/2
         bandsView.frame.origin.y = 0 - view.bounds.height*2
         bandsView.frame.size.width=view.bounds.width*2
@@ -172,15 +183,39 @@ class OKNrotateViewController: UIViewController {
         timer = Timer.scheduledTimer(timeInterval: 1.0/60.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         tcount=0
     }
+    var waru:Int = 0
+    //       iPhone iPad
+    //oowaru:40     61
+    //chwaru:42     64
+    //kowaru:52     53
 
     @objc func update(tm: Timer) {
         var dist:CGFloat=0
         tcount += 1
-        if oknrDirection==0{
-            dist=CGFloat(tcount*oknrSpeed%45)*6
-        }else{
-            dist = -CGFloat(tcount*oknrSpeed%45)*6
+        if view.bounds.height/view.bounds.width>0.65{//iPad
+            if oknrWidth==3{
+                waru=61
+            }else if oknrWidth==2{
+                waru=64
+            }else{
+                waru=53
+            }
+        }else{//iPhone
+            if oknrWidth==3{
+                waru=40
+            }else if oknrWidth==2{
+                waru=42
+            }else{
+                waru=52
+            }
+
         }
+        if oknrDirection==0{
+            dist=CGFloat(tcount*oknrSpeed%waru)*6
+        }else{
+            dist = -CGFloat(tcount*oknrSpeed%waru)*6
+        }
+        print("**waru**",waru)
         if oknrMode == 1{
             attitude()
         }else{
@@ -190,6 +225,7 @@ class OKNrotateViewController: UIViewController {
         let t2:CGAffineTransform = CGAffineTransform(translationX: dist*cos(-pitch),y: dist*sin(-pitch))
         let t:CGAffineTransform = t1.concatenating(t2)
         bandsView.transform=t
+  //      bandsView.image=bandsViewtemp.image
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -202,6 +238,7 @@ class OKNrotateViewController: UIViewController {
         initBands()
         setBand()
         singleRec.require(toFail: doubleRec)
+        waru=50
         setTimer()
         hideButtons(hide: true)
         // Do any additional setup after loading the view.
