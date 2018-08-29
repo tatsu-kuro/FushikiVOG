@@ -184,36 +184,40 @@ class OKNrotateViewController: UIViewController {
         tcount=0
     }
     var waru:Int = 0
-    //       iPhone iPad
-    //oowaru:40     61
-    //chwaru:42     64
-    //kowaru:52     53
+    //       6s iPad 7plus
+    //oowaru:40     61   44
+    //chwaru:42     64   69(46)
+    //kowaru:52     53   57(38)
 
     @objc func update(tm: Timer) {
         var dist:CGFloat=0
+        var warun:Int=0
         tcount += 1
         if view.bounds.height/view.bounds.width>0.65{//iPad
             if oknrWidth==3{
-                waru=61
+                warun=61
             }else if oknrWidth==2{
-                waru=64
+                warun=64
             }else{
-                waru=53
+                warun=53
             }
         }else{//iPhone
             if oknrWidth==3{
-                waru=40
+                warun=40
             }else if oknrWidth==2{
-                waru=42
+                warun=42
             }else{
-                waru=52
+                warun=52
             }
 
         }
+        if waru != 50{
+            warun=waru
+        }
         if oknrDirection==0{
-            dist=CGFloat(tcount*oknrSpeed%waru)*6
+            dist=CGFloat(tcount*oknrSpeed%warun)*6
         }else{
-            dist = -CGFloat(tcount*oknrSpeed%waru)*6
+            dist = -CGFloat(tcount*oknrSpeed%warun)*6
         }
         print("**waru**",waru)
         if oknrMode == 1{

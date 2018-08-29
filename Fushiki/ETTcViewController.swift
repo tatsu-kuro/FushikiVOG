@@ -26,7 +26,41 @@ class ETTcViewController: UIViewController {
     @IBOutlet weak var checknView: UIImageView!
     
     @IBOutlet weak var cameraView: UIImageView!
-      @IBOutlet weak var textIroiro: UITextField!
+    @IBOutlet weak var textIroiro: UITextField!
+    @IBOutlet weak var furi1Button: UIButton!
+    @IBOutlet weak var furi2Button: UIButton!
+    @IBOutlet weak var furi3Button: UIButton!
+    @IBOutlet weak var herz1Button: UIButton!
+    @IBOutlet weak var herz2Button: UIButton!
+    @IBOutlet weak var herz3Button: UIButton!
+    
+    @IBAction func furi1Action(_ sender: Any) {
+        ettWidth=view.bounds.width/8
+    }
+    @IBAction func furi2Action(_ sender: Any) {
+        ettWidth=view.bounds.width/4
+    }
+    @IBAction func furi3Action(_ sender: Any) {
+        ettWidth=view.bounds.width/2 - 30
+    }
+    @IBAction func herz1Action(_ sender: Any) {
+        ettSpeed=0.3
+    }
+    @IBAction func herz2Action(_ sender: Any) {
+        ettSpeed=0.6
+    }
+    @IBAction func herz3Action(_ sender: Any) {
+        ettSpeed=0.9
+    }
+
+    func hideButtons(hide:Bool){
+        furi1Button.isHidden=hide
+        furi2Button.isHidden=hide
+        furi3Button.isHidden=hide
+        herz1Button.isHidden=hide
+        herz2Button.isHidden=hide
+        herz3Button.isHidden=hide
+     }
     func setBack(){
         if backMode==0{
             checkerView.isHidden=true
@@ -36,14 +70,10 @@ class ETTcViewController: UIViewController {
             
             if view.bounds.height/view.bounds.width>0.65{//iPad
                 checknView.isHidden=false
-                checknView.frame.origin.x=0
-                checknView.frame.origin.y=0
-                checknView.frame.size.width=view.bounds.width
-                checknView.frame.size.height=view.bounds.height
-                checkerView.isHidden=true
+                   checkerView.isHidden=true
             }else{//iPhone
                 checkerView.isHidden=false
-                checknView.isHidden=true
+                  checknView.isHidden=true
             }
             //checkerView.isHidden=false
             cameraView.isHidden=true
@@ -53,8 +83,23 @@ class ETTcViewController: UIViewController {
             cameraView.isHidden=false
         }
     }
+    func setViews(){
+        checknView.frame.origin.x=0
+        checknView.frame.origin.y=0
+        checknView.frame.size.width=view.bounds.width
+        checknView.frame.size.height=view.bounds.height
+        checkerView.frame.origin.x=0
+        checkerView.frame.origin.y=0
+        checkerView.frame.size.width=view.bounds.width
+        checkerView.frame.size.height=view.bounds.height
+        cameraView.frame.origin.x=0
+        cameraView.frame.origin.y=0
+        cameraView.frame.size.width=view.bounds.width
+        cameraView.frame.size.height=view.bounds.height
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        setViews()
         session = AVCaptureSession()
         //       if view.bounds.width>view.bounds.height{
         cirDiameter=view.bounds.width/26
@@ -66,6 +111,7 @@ class ETTcViewController: UIViewController {
                 device = d as AVCaptureDevice
                 print("\(device!.localizedName) found.")
             }
+            
         }
         guard let input = try? AVCaptureDeviceInput(device: device) else {
             print("Caught exception!")
@@ -96,6 +142,7 @@ class ETTcViewController: UIViewController {
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
         }
         // Do any additional setup after loading the view.
+        hideButtons(hide: true)
     }
     @objc func update(tm: Timer) {
         if panFlag == false{
@@ -161,11 +208,20 @@ class ETTcViewController: UIViewController {
     }
     @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
         //     print("tap")
+        let pos = sender.location(in: self.view)
+        if pos.y < view.bounds.height/2{
         backMode += 1
         if backMode>2{
             backMode=0
         }
         setBack()
+        }else{
+            if furi1Button.isHidden == true{
+                hideButtons(hide: false)
+            }else{
+                hideButtons(hide: true)
+            }
+        }
     }
     @IBAction func panGes(_ sender: UIPanGestureRecognizer) {
         
@@ -188,6 +244,8 @@ class ETTcViewController: UIViewController {
                 ettSpeed = CGFloat(Int(speed+2))/10.0
                 textIroiro.text = "\(ettSpeed)Hz"
             }
+            //print(ettSpeed,ettWidth,view.bounds.width)
+            //79,200,343/width=736
         }else if sender.state == .ended{
             //                if timer?.isValid != true{
             //                    view.layer.sublayers?.removeLast()
