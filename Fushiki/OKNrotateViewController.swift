@@ -13,6 +13,33 @@ class OKNrotateViewController: UIViewController {
     var timer:Timer!
     var tcount:Int = 0
     var motionManager: CMMotionManager?
+    var oknrSpeed:Int = 1
+    var oknrDirection:Int = 0
+    var oknrWidth:CGFloat = 1.0
+    var oknrMode:Int = 0
+    @IBOutlet weak var timerPara: UILabel!
+    @IBOutlet weak var bandsView3: UIImageView!
+    @IBOutlet weak var bandsView2: UIImageView!
+    @IBOutlet weak var bandsView1: UIImageView!
+    @IBOutlet weak var bandsView: UIImageView!
+    @IBOutlet weak var bandsViewtemp: UIImageView!
+    //    @IBOutlet weak var twiceButton: UIButton!
+    @IBOutlet weak var gyroButton: UIButton!
+    @IBOutlet weak var gyrooffButton: UIButton!
+    @IBOutlet weak var width1Button: UIButton!
+    @IBOutlet weak var width2Button: UIButton!
+    @IBOutlet weak var width3Button: UIButton!
+    @IBOutlet weak var speed1Button: UIButton!
+    @IBOutlet weak var speed2Button: UIButton!
+    @IBOutlet weak var speed3Button: UIButton!
+    @IBOutlet weak var rightButton: UIButton!
+    @IBOutlet weak var leftButton: UIButton!
+    @IBOutlet var doubleRec:UITapGestureRecognizer!
+    @IBOutlet var singleRec:UITapGestureRecognizer!
+  /*
+    var timer:Timer!
+    var tcount:Int = 0
+    var motionManager: CMMotionManager?
     var oknrSpeed:Int = 0
     var oknrDirection:Int = 0
     var oknrWidth:CGFloat = 1.0
@@ -35,6 +62,7 @@ class OKNrotateViewController: UIViewController {
     @IBOutlet weak var leftButton: UIButton!
     @IBOutlet var doubleRec:UITapGestureRecognizer!
     @IBOutlet var singleRec:UITapGestureRecognizer!
+ */
     func hideButtons(hide:Bool){
         gyroButton.isHidden=hide
         gyrooffButton.isHidden=hide
