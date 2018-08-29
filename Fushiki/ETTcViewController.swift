@@ -166,11 +166,11 @@ class ETTcViewController: UIViewController {
         let circleFrame = CGRect.init(x:cPoint.x-cirDiameter/2,y:cPoint.y-cirDiameter/2,width:cirDiameter,height:cirDiameter)
         circleLayer.frame = circleFrame
         // 輪郭の色
-        //circleLayer.strokeColor =
+        circleLayer.strokeColor = UIColor.white.cgColor
         // 円の中の色
         circleLayer.fillColor = UIColor.red.cgColor
         // 輪郭の太さ
-        //circleLayer.lineWidth = 0.5
+        circleLayer.lineWidth = 0.5
         // 円形を描画
         circleLayer.path = UIBezierPath.init(ovalIn: CGRect.init(x: 0, y: 0, width: circleFrame.size.width, height: circleFrame.size.height)).cgPath
         self.view.layer.addSublayer(circleLayer)

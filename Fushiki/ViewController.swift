@@ -26,12 +26,12 @@ class ViewController: UIViewController {
     var oknrWidth:CGFloat = 1.0
     var oknrMode:Int = 0
     var saccadeMode:Int = 0 //0:left 1:both 2:right
-     @IBOutlet weak var helpText: UILabel!
-     @IBOutlet weak var OKNbutton: UIButton!
-     @IBOutlet weak var stillButton: UIButton!
+  //   @IBOutlet weak var helpText: UILabel!
+  //   @IBOutlet weak var OKNbutton: UIButton!
+  //   @IBOutlet weak var stillButton: UIButton!
     
-    @IBOutlet weak var showCeckbutton: UIButton!
-    @IBOutlet weak var ETTCbutton: UIButton!
+  //  @IBOutlet weak var showCeckbutton: UIButton!
+ //   @IBOutlet weak var ETTCbutton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()

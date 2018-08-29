@@ -14,15 +14,15 @@
         <scene sceneID="hAM-J1-DLO">
             <objects>
                 <viewController id="Aaw-14-9QU" customClass="StillViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="QIB-4x-mCt" userLabel="Image View" customClass="Sti">
+                    <view key="view" contentMode="scaleToFill" misplaced="YES" id="QIB-4x-mCt" userLabel="Image View" customClass="Sti">
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1g8-XE-BOP" userLabel="prevView">
-                                <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checker1" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WVz-Vb-Esb">
-                                <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="checkn1" translatesAutoresizingMaskIntoConstraints="NO" id="5FT-5c-Nz4">
                                 <rect key="frame" x="427" y="136" width="240" height="128"/>
@@ -37,7 +37,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZWF-zJ-BoK">
-                                <rect key="frame" x="193" y="315" width="40" height="40"/>
+                                <rect key="frame" x="47" y="607" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="6Ko-fw-lGd"/>
                                     <constraint firstAttribute="width" constant="40" id="bJh-Tj-dlm"/>
@@ -48,7 +48,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w0E-Wg-ogT">
-                                <rect key="frame" x="253" y="315" width="40" height="40"/>
+                                <rect key="frame" x="107" y="607" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="eW4-H0-ZDN"/>
                                     <constraint firstAttribute="width" constant="40" id="lJd-xx-PVw"/>
@@ -59,7 +59,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oNx-PW-y4r">
-                                <rect key="frame" x="313" y="315" width="40" height="40"/>
+                                <rect key="frame" x="167" y="607" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="ihu-1I-VQP"/>
                                     <constraint firstAttribute="width" constant="40" id="ysA-cy-lKW"/>
@@ -70,7 +70,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MgA-NM-h9A">
-                                <rect key="frame" x="373" y="315" width="40" height="40"/>
+                                <rect key="frame" x="227" y="607" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="6cI-p1-UQf"/>
                                     <constraint firstAttribute="height" constant="40" id="QRg-Jn-P6I"/>
@@ -81,7 +81,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bkj-xZ-kI9">
-                                <rect key="frame" x="433" y="315" width="40" height="40"/>
+                                <rect key="frame" x="287" y="607" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="8Dr-3N-vD9"/>
                                     <constraint firstAttribute="height" constant="40" id="mdI-Jj-EaR"/>
@@ -657,6 +657,14 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="checker1" translatesAutoresizingMaskIntoConstraints="NO" id="oYg-oD-WzN">
                                 <rect key="frame" x="425" y="189" width="242" height="89"/>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="checkn1" translatesAutoresizingMaskIntoConstraints="NO" id="49Q-wI-bGh">
+                                <rect key="frame" x="427" y="0.0" width="240" height="85"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LMn-sy-EFF">
+                                <rect key="frame" x="427" y="93" width="240" height="88"/>
+                                <gestureRecognizers/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E9d-mq-kog">
                                 <rect key="frame" x="348.5" y="315" width="40" height="40"/>
                                 <constraints>
@@ -723,14 +731,6 @@
                                     <action selector="furi3Action:" destination="uZP-sJ-vGG" eventType="touchUpInside" id="sU2-6I-yMN"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="checkn1" translatesAutoresizingMaskIntoConstraints="NO" id="49Q-wI-bGh">
-                                <rect key="frame" x="427" y="0.0" width="240" height="85"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LMn-sy-EFF">
-                                <rect key="frame" x="427" y="93" width="240" height="88"/>
-                                <gestureRecognizers/>
-                            </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yoW-GF-NXS">
                                 <rect key="frame" x="20" y="20" width="120" height="38"/>
                                 <constraints>
@@ -918,10 +918,6 @@ Double tap the screen to return from the ETT, STILL, OKN</string>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <connections>
-                        <outlet property="helpText" destination="dLh-4u-MgC" id="goG-L2-R0l"/>
-                        <outlet property="stillButton" destination="ESR-xF-9Ui" id="puN-9v-xsB"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
