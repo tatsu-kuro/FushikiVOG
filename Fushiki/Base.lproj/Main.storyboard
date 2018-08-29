@@ -885,17 +885,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="11" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLh-4u-MgC">
-                                <rect key="frame" x="40" y="45" width="587" height="210"/>
+                                <rect key="frame" x="40" y="129" width="587" height="126"/>
                                 <string key="text">Fushiki Version 1.7 by 96da
 
-ETTp: Pan the upper screen area to change the speed.
-ETTp: Pan the lower screen area to change the wave amplitude.
-ETTs: Tap the lower screen area to show the buttons.
-OKN: Pan the screen to change the speed.       
 
-Single tap the screen to change the background image.
-
-Double tap the screen to return from the ETT, STILL, OKN</string>
+double tap the screen: return to this top page
+tap the screen on upper area: change the back image
+tap the screen on lower area: show or hide the buttons</string>
                                 <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
