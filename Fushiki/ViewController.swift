@@ -51,10 +51,7 @@ class ViewController: UIViewController {
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
         }
         
-        if let vc = segue.destination as? OKNViewController {
-            let Controller:OKNViewController = vc
-            Controller.oknSpeed=oknSpeed
-        }else if let vc = segue.destination as? OKNrotateViewController{
+        if let vc = segue.destination as? OKNrotateViewController{
             let Controller:OKNrotateViewController = vc
             Controller.oknrSpeed=oknrSpeed
             Controller.oknrDirection=oknrDirection
@@ -84,10 +81,7 @@ class ViewController: UIViewController {
         if timer?.isValid == true {
             timer.invalidate()
         }
-        if let vc = segue.source as? OKNViewController {
-            let Controller:OKNViewController = vc
-            oknSpeed=Controller.oknSpeed
-        }else if let vc = segue.source as? OKNrotateViewController{
+        if let vc = segue.source as? OKNrotateViewController{
             let Controller:OKNrotateViewController = vc
             oknrSpeed=Controller.oknrSpeed
             oknrDirection=Controller.oknrDirection

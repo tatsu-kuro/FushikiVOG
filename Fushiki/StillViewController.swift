@@ -58,13 +58,9 @@ class StillViewController: UIViewController{
 
     }
     override func viewDidAppear(_ animated: Bool) {
-//        drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2))
-
-//        redButton.frame.size.width=cirDiameter
-//        redButton.frame.size.height=cirDiameter
-//        redButton.frame.origin.x=view.bounds.width/2-cirDiameter/2
-//        redButton.frame.origin.y=view.bounds.height/2-cirDiameter/2
+        initViews()
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         session = AVCaptureSession()
@@ -114,17 +110,9 @@ class StillViewController: UIViewController{
             if view.bounds.height/view.bounds.width>0.65{//iPad
                 checkerView.isHidden=true
                 checknView.isHidden=false
-                checknView.frame.origin.x=0
-                checknView.frame.origin.y=0
-                checknView.frame.size.width=view.bounds.width
-                checknView.frame.size.height=view.bounds.height
             }else{
                 checkerView.isHidden=false
                 checknView.isHidden=true
-                checkerView.frame.origin.x=0
-                checkerView.frame.origin.y=0
-                checkerView.frame.size.width=view.bounds.width
-                checkerView.frame.size.height=view.bounds.height
             }
             dotsView.isHidden=true
             dotsWideView.isHidden=true
@@ -134,19 +122,10 @@ class StillViewController: UIViewController{
             checknView.isHidden=true
             if view.bounds.height/view.bounds.width>0.65{
                 dotsView.isHidden=false
-                dotsView.frame.origin.x=0
-                dotsView.frame.origin.y=0
-                dotsView.frame.size.width=view.bounds.width
-                dotsView.frame.size.height=view.bounds.height
                 dotsWideView.isHidden=true
             }else{//iPhone
                 dotsView.isHidden=true
                 dotsWideView.isHidden=false
-                dotsWideView.frame.origin.x=0
-                dotsWideView.frame.origin.y=0
-                dotsWideView.frame.size.width=view.bounds.width
-                dotsWideView.frame.size.height=view.bounds.height
-
             }
             cameraView.isHidden=true
         }else{
@@ -182,7 +161,28 @@ class StillViewController: UIViewController{
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+    func initViews(){
+        checknView.frame.origin.x=0
+        checknView.frame.origin.y=0
+        checknView.frame.size.width=view.bounds.width
+        checknView.frame.size.height=view.bounds.height
+        checkerView.frame.origin.x=0
+        checkerView.frame.origin.y=0
+        checkerView.frame.size.width=view.bounds.width
+        checkerView.frame.size.height=view.bounds.height
+        cameraView.frame.origin.x=0
+        cameraView.frame.origin.y=0
+        cameraView.frame.size.width=view.bounds.width
+        cameraView.frame.size.height=view.bounds.height
+        dotsView.frame.origin.x=0
+        dotsView.frame.origin.y=0
+        dotsView.frame.size.width=view.bounds.width
+        dotsView.frame.size.height=view.bounds.height
+        dotsWideView.frame.origin.x=0
+        dotsWideView.frame.origin.y=0
+        dotsWideView.frame.size.width=view.bounds.width
+        dotsWideView.frame.size.height=view.bounds.height
+    }
     @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
    //     print("tap")
         let pos = sender.location(in: self.view)

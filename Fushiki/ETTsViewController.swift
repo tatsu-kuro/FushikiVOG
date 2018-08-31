@@ -135,10 +135,6 @@ class ETTsViewController: UIViewController {
             checkn4View.isHidden=true
             if view.bounds.height/view.bounds.width>0.65{//iPad
                 checknView.isHidden=false
-                checknView.frame.origin.x=0
-                checknView.frame.origin.y=0
-                checknView.frame.size.width=view.bounds.width
-                checknView.frame.size.height=view.bounds.height
                 checkerView.isHidden=true
             }else{//iPhone
                 checkerView.isHidden=false
@@ -164,7 +160,23 @@ class ETTsViewController: UIViewController {
             cameraView.isHidden=false
         }
     }
-
+    func initViews(){
+        checknView.frame.origin.x=0
+        checknView.frame.origin.y=0
+        checknView.frame.size.width=view.bounds.width
+        checknView.frame.size.height=view.bounds.height
+        checkerView.frame.origin.x=0
+        checkerView.frame.origin.y=0
+        checkerView.frame.size.width=view.bounds.width
+        checkerView.frame.size.height=view.bounds.height
+        cameraView.frame.origin.x=0
+        cameraView.frame.origin.y=0
+        cameraView.frame.size.width=view.bounds.width
+        cameraView.frame.size.height=view.bounds.height
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        initViews()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         session = AVCaptureSession()
@@ -197,6 +209,7 @@ class ETTsViewController: UIViewController {
         cameraView.layer.addSublayer(previewLayer)
         //     view.layer.addSublayer(previewLayer)
         session.startRunning()
+   //     initViews()
         setBack()
         singleRec.require(toFail: doubleRec)
         timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)

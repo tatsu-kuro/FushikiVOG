@@ -83,7 +83,7 @@ class ETTcViewController: UIViewController {
             cameraView.isHidden=false
         }
     }
-    func setViews(){
+    func initViews(){
         checknView.frame.origin.x=0
         checknView.frame.origin.y=0
         checknView.frame.size.width=view.bounds.width
@@ -97,9 +97,12 @@ class ETTcViewController: UIViewController {
         cameraView.frame.size.width=view.bounds.width
         cameraView.frame.size.height=view.bounds.height
     }
+    override func viewDidAppear(_ animated: Bool) {
+        initViews()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        setViews()
+ //       initViews()
         session = AVCaptureSession()
         //       if view.bounds.width>view.bounds.height{
         cirDiameter=view.bounds.width/26
