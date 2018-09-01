@@ -395,6 +395,33 @@ class OKNrotateViewController: UIViewController {
         super.viewWillDisappear(animated)
         stopTimer()
     }
+    func drawBands(startP:CGFloat){
+        for i  in 0..<7 {
+            drawBand1(bandS: startP + bandWidth*2.0*CGFloat(i),bandW:bandWidth)
+        }
+        if startP>bandWidth{
+            view.layer.sublayers?.removeLast()
+            drawBand1(bandS:0,bandW:startP-bandWidth)
+        }
+    }
+    func drawBand1(bandS:CGFloat,bandW:CGFloat){
+        /* --- 四角形を描画 --- */
+        let rectangleLayer = CAShapeLayer.init()
+        let rectangleFrame = CGRect.init(x: bandS, y: 0, width: bandW , height: self.view.bounds.height)
+        rectangleLayer.frame = rectangleFrame
+        
+        // 輪郭の色
+        rectangleLayer.strokeColor = UIColor.black.cgColor
+        // 四角形の中の色
+        rectangleLayer.fillColor = UIColor.black.cgColor
+        // 輪郭の太さ
+        // rectangleLayer.lineWidth = 2.5
+        
+        // 四角形を描画
+        rectangleLayer.path = UIBezierPath.init(rect: CGRect.init(x: 0, y: 0, width: rectangleFrame.size.width, height: rectangleFrame.size.height)).cgPath
+        
+        self.view.layer.addSublayer(rectangleLayer)
+    }
 }
 
 
