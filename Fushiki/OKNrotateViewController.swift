@@ -22,8 +22,6 @@ class OKNrotateViewController: UIViewController {
     @IBOutlet weak var bandsView2: UIImageView!
     @IBOutlet weak var bandsView1: UIImageView!
     @IBOutlet weak var bandsView: UIImageView!
-    @IBOutlet weak var bandsViewtemp: UIImageView!
-    //    @IBOutlet weak var twiceButton: UIButton!
     @IBOutlet weak var gyroButton: UIButton!
     @IBOutlet weak var gyrooffButton: UIButton!
     @IBOutlet weak var width1Button: UIButton!
@@ -36,33 +34,7 @@ class OKNrotateViewController: UIViewController {
     @IBOutlet weak var leftButton: UIButton!
     @IBOutlet var doubleRec:UITapGestureRecognizer!
     @IBOutlet var singleRec:UITapGestureRecognizer!
-  /*
-    var timer:Timer!
-    var tcount:Int = 0
-    var motionManager: CMMotionManager?
-    var oknrSpeed:Int = 0
-    var oknrDirection:Int = 0
-    var oknrWidth:CGFloat = 1.0
-    var oknrMode:Int = 0
-    @IBOutlet weak var bandsView3: UIImageView!
-    @IBOutlet weak var bandsView2: UIImageView!
-    @IBOutlet weak var bandsView1: UIImageView!
-    @IBOutlet weak var bandsView: UIImageView!
-    @IBOutlet weak var bandsViewtemp: UIImageView!
-//    @IBOutlet weak var twiceButton: UIButton!
-    @IBOutlet weak var gyroButton: UIButton!
-    @IBOutlet weak var gyrooffButton: UIButton!
-    @IBOutlet weak var width1Button: UIButton!
-    @IBOutlet weak var width2Button: UIButton!
-    @IBOutlet weak var width3Button: UIButton!
-    @IBOutlet weak var speed1Button: UIButton!
-    @IBOutlet weak var speed2Button: UIButton!
-    @IBOutlet weak var speed3Button: UIButton!
-    @IBOutlet weak var rightButton: UIButton!
-    @IBOutlet weak var leftButton: UIButton!
-    @IBOutlet var doubleRec:UITapGestureRecognizer!
-    @IBOutlet var singleRec:UITapGestureRecognizer!
- */
+  
     func hideButtons(hide:Bool){
         gyroButton.isHidden=hide
         gyrooffButton.isHidden=hide
@@ -75,17 +47,7 @@ class OKNrotateViewController: UIViewController {
         speed2Button.isHidden=hide
         speed3Button.isHidden=hide
     }
-    /*
-     //se:640(568) 6s:750(667) 7plus:1080(736) x:1125(812)
-     self.keyDown.frame.origin.x = view.bounds.width*2/3
-     //print(view.bounds.height)
-     if view.bounds.height>810 {//X
-     self.keyDown.frame.origin.y = view.bounds.height - 255 - 75
-     }else if view.bounds.height>730 {
-     self.keyDown.frame.origin.y = view.bounds.height - 255 - 10
-     }else{
-     self.keyDown.frame.origin.y = view.bounds.height - 255
-     }*/
+    
     //       iPhone iPad
     //oowaru:40     61
     //chwaru:42     64
@@ -205,33 +167,7 @@ class OKNrotateViewController: UIViewController {
             }
         })
     }
-    func setBand(){
-        if oknrWidth == 1{
-            bandsView.image=bandsView1.image
-        }else if oknrWidth == 2 {
-            bandsView.image=bandsView2.image
-        }else{
-            bandsView.image=bandsView3.image
-        }
-    }
-    func initBands(){
-        bandsViewtemp.frame.origin.x = 0 - view.bounds.width/2
-        bandsViewtemp.frame.origin.y = 0 - view.bounds.height*2
-        bandsViewtemp.frame.size.width=view.bounds.width*2
-        bandsViewtemp.frame.size.height=view.bounds.height*5
-        bandsView.frame.origin.x = 0 - view.bounds.width/2
-        bandsView.frame.origin.y = 0 - view.bounds.height*2
-        bandsView.frame.size.width=view.bounds.width*2
-        bandsView.frame.size.height=view.bounds.height*5
-        bandsView2.frame.origin.x = 0 - view.bounds.width/2
-        bandsView2.frame.origin.y = 0 - view.bounds.height*2
-        bandsView2.frame.size.width=view.bounds.width*2
-        bandsView2.frame.size.height=view.bounds.height*5
-        bandsView3.frame.origin.x = 0 - view.bounds.width/2
-        bandsView3.frame.origin.y = 0 - view.bounds.height*2
-        bandsView3.frame.size.width=view.bounds.width*2
-        bandsView3.frame.size.height=view.bounds.height*5
-    }
+
     func stopTimer(){
         if timer?.isValid == true {
             timer.invalidate()
@@ -252,7 +188,7 @@ class OKNrotateViewController: UIViewController {
             h=view.bounds.width
             w=view.bounds.height
         }
-        if h/w > 0.7{//ipadは0.75の様
+         if h/w > 0.7{//ipadは0.75の様
             if w>1020 && w<1030{
                 devNum=10
             }else if w>1110 && w<1120{
@@ -267,9 +203,10 @@ class OKNrotateViewController: UIViewController {
                 devNum=2
             }else if w>560 && w<570{//568 se
                 devNum=3
-            }else if w>810 && w<820{//X
+            }else if w>810 && w<820{//X 812
                 devNum=4
             }
+//            print(devNum)
         }
         //       print(view.bounds.width,view.bounds.height)
         if devNum==10{//iPad
@@ -367,7 +304,6 @@ class OKNrotateViewController: UIViewController {
         let t2:CGAffineTransform = CGAffineTransform(translationX: dist*cos(-pitch),y: dist*sin(-pitch))
         let t:CGAffineTransform = t1.concatenating(t2)
         bandsView.transform=t
-        //      bandsView.image=bandsViewtemp.image
    //     bandsView.setNeedsDisplay()
     }
     override func didReceiveMemoryWarning() {
@@ -378,36 +314,93 @@ class OKNrotateViewController: UIViewController {
         super.viewDidLoad()
         motionManager = CMMotionManager()
         motionManager?.deviceMotionUpdateInterval = 0.03
-        initBands()
-        setBand()
-        getDevice()
+//        initBands()
+//        setBand()
+//        getDevice()
         timerPara.isHidden=true
         singleRec.require(toFail: doubleRec)
 //        waru=80
-        setTimer()
+ //       setTimer()
         hideButtons(hide: true)
         // Do any additional setup after loading the view.
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
         }
+        
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         stopTimer()
     }
-    func drawBands(startP:CGFloat){
-        for i  in 0..<7 {
-            drawBand1(bandS: startP + bandWidth*2.0*CGFloat(i),bandW:bandWidth)
-        }
-        if startP>bandWidth{
-            view.layer.sublayers?.removeLast()
-            drawBand1(bandS:0,bandW:startP-bandWidth)
+    func setBand(){
+        if oknrWidth == 1{
+            bandsView.image=bandsView1.image
+        }else if oknrWidth == 2 {
+            bandsView.image=bandsView2.image
+        }else{
+            bandsView.image=bandsView3.image
         }
     }
-    func drawBand1(bandS:CGFloat,bandW:CGFloat){
-        /* --- 四角形を描画 --- */
+    func initBands(){
+        bandsView.frame.origin.x = 0 - view.bounds.width/2
+        bandsView.frame.origin.y = 0 - view.bounds.height*2
+        bandsView.frame.size.width=view.bounds.width*2
+        bandsView.frame.size.height=view.bounds.height*5
+        bandsView1.frame.origin.x = 0 - view.bounds.width/2
+        bandsView1.frame.origin.y = 0 - view.bounds.height*2
+        bandsView1.frame.size.width=view.bounds.width*2
+        bandsView1.frame.size.height=view.bounds.height*5
+        bandsView2.frame.origin.x = 0 - view.bounds.width/2
+        bandsView2.frame.origin.y = 0 - view.bounds.height*2
+        bandsView2.frame.size.width=view.bounds.width*2
+        bandsView2.frame.size.height=view.bounds.height*5
+        bandsView3.frame.origin.x = 0 - view.bounds.width/2
+        bandsView3.frame.origin.y = 0 - view.bounds.height*2
+        bandsView3.frame.size.width=view.bounds.width*2
+        bandsView3.frame.size.height=view.bounds.height*5
+        bandsView1.isHidden=true
+        bandsView2.isHidden=true
+        bandsView3.isHidden=true
+        bandsView.isHidden=false
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        initBands()//3viewsのサイズをセット
+        getDevice()
+  //      initViews()
+        setBand()//
+        setTimer()
+    }
+    func initViews(){
+        //bandview1 - orig3
+        drawBands(widthNum: 1, bandV: bandsView1)
+        drawBands(widthNum: 2, bandV: bandsView2)
+        drawBands(widthNum: 3, bandV: bandsView3)
+    }
+    func drawBands(widthNum:Int,bandV:UIImageView){
+        var width:CGFloat=0
+        let vwidth:CGFloat = getBig(w: bandV.bounds.width, h: bandV.bounds.height)
+   
+        if widthNum == 1{
+            width=vwidth/30
+            for i  in 0..<30 {
+                drawBand1(bandS:width*CGFloat(i),bandW:width/2,bandV:bandV)
+  //              print(width*CGFloat(i),width/2)
+            }
+        }else if widthNum == 2{
+            width=vwidth/20
+            for i  in 0..<30 {
+                drawBand1(bandS:width*CGFloat(i),bandW:width/2,bandV:bandV)
+            }
+        }else{//} if widthNum == 3{
+            width=vwidth/10
+            for i  in 0..<30 {
+                drawBand1(bandS:width*CGFloat(i),bandW:width/2,bandV:bandV)
+            }
+        }
+    }
+    func drawBand1(bandS:CGFloat,bandW:CGFloat,bandV:UIImageView){
         let rectangleLayer = CAShapeLayer.init()
-        let rectangleFrame = CGRect.init(x: bandS, y: 0, width: bandW , height: self.view.bounds.height)
+        let rectangleFrame = CGRect.init(x: bandS, y: 0, width: bandW , height: bandV.bounds.height)
         rectangleLayer.frame = rectangleFrame
         
         // 輪郭の色
@@ -420,8 +413,154 @@ class OKNrotateViewController: UIViewController {
         // 四角形を描画
         rectangleLayer.path = UIBezierPath.init(rect: CGRect.init(x: 0, y: 0, width: rectangleFrame.size.width, height: rectangleFrame.size.height)).cgPath
         
-        self.view.layer.addSublayer(rectangleLayer)
+        //self.view.layer.addSublayer(rectangleLayer)
+        //bandV.layer.addSublayer(rectangleLayer)
+        //bandV.layer.addSublayer(rectangleLayer)
+        //bandV.image=self.view.image
+//        bandV.viewWithTag(0)?.layer.addSublayer(rectangleLayer)
+        //
+        bandV.superview?.layer.addSublayer(rectangleLayer)
     }
+    func getBig(w:CGFloat,h:CGFloat)->CGFloat{
+        if w>h{
+            return w
+        }
+        return h
+    }
+    /*
+     import UIKit
+     
+     class OKNViewController: UIViewController {
+     var timer: Timer!
+     var tcount: Int = 0
+     var oknSpeed:CGFloat = 5.0
+     var bandWidth:CGFloat = 0
+     var panFlag:Bool = false
+     @IBOutlet weak var textIroiro: UITextField!
+     override func viewDidLoad() {
+     super.viewDidLoad()
+     bandWidth = self.view.bounds.width/10
+     textIroiro.isHidden=false
+     timer = Timer.scheduledTimer(timeInterval: 1.0/100.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+     tcount=0
+     if UIApplication.shared.isIdleTimerDisabled == false{
+     UIApplication.shared.isIdleTimerDisabled = true//スリープしない
+     }
+     
+     }
+     @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
+     print("tap")
+     
+     }
+     @IBAction func panGes(_ sender: UIPanGestureRecognizer) {
+     if sender.state == .began{
+     //               textIroiro.isHidden=false
+     panFlag=true
+     for _ in 0..<7{
+     view.layer.sublayers?.removeLast()
+     }
+     drawBands(startP: bandWidth)
+     }else if sender.state == .changed{
+     textIroiro.isHidden=false
+     //       checkerView.isHidden=true
+     let speed = sender.location(in:self.view).x*20/self.view.bounds.width
+     if speed > 10 {
+     oknSpeed = speed - 10 + 1
+     textIroiro.text = "\(Int(oknSpeed))"
+     }else{
+     oknSpeed = speed - 10 - 1
+     textIroiro.text = "\(Int(abs(oknSpeed)))"
+     }
+     }else if sender.state == .ended{
+     panFlag=false
+     textIroiro.text = " "
+     //                setUserDefaults()
+     }
+     
+     }
+     
+     @objc func update(tm: Timer) {
+     if panFlag==true{
+     return
+     }
+     if tcount > 0{
+     for _ in 0..<7{
+     view.layer.sublayers?.removeLast()
+     }
+     }
+     tcount += 1
+     let sp:CGFloat = CGFloat(tcount)*oknSpeed
+     drawBands(startP: CGFloat(Int(sp) % (2*Int(bandWidth))))
+     //        if tcount > 100*60*5 {
+     //    //        if UIApplication.shared.isIdleTimerDisabled == true{
+     //                UIApplication.shared.isIdleTimerDisabled = false//5分たったら監視する
+     //    //        }
+     //        }
+     }
+     override func didReceiveMemoryWarning() {
+     super.didReceiveMemoryWarning()
+     // Dispose of any resources that can be recreated.
+     }
+     func drawBands(startP:CGFloat){
+     for i  in 0..<7 {
+     drawBand1(bandS: startP + bandWidth*2.0*CGFloat(i),bandW:bandWidth)
+     }
+     if startP>bandWidth{
+     view.layer.sublayers?.removeLast()
+     drawBand1(bandS:0,bandW:startP-bandWidth)
+     }
+     }
+     func drawBand1(bandS:CGFloat,bandW:CGFloat){
+     /* --- 四角形を描画 --- */
+     let rectangleLayer = CAShapeLayer.init()
+     let rectangleFrame = CGRect.init(x: bandS, y: 0, width: bandW , height: self.view.bounds.height)
+     rectangleLayer.frame = rectangleFrame
+     
+     // 輪郭の色
+     rectangleLayer.strokeColor = UIColor.black.cgColor
+     // 四角形の中の色
+     rectangleLayer.fillColor = UIColor.black.cgColor
+     // 輪郭の太さ
+     // rectangleLayer.lineWidth = 2.5
+     
+     // 四角形を描画
+     rectangleLayer.path = UIBezierPath.init(rect: CGRect.init(x: 0, y: 0, width: rectangleFrame.size.width, height: rectangleFrame.size.height)).cgPath
+     
+     self.view.layer.addSublayer(rectangleLayer)
+     }
+     }
+     
+
+     */
+//    func drawBands(startP:CGFloat){
+//        for i  in 0..<7 {
+//            drawBand1(bandS: startP + bandWidth*2.0*CGFloat(i),bandW:bandWidth)
+//        }
+//        if startP>bandWidth{
+//            view.layer.sublayers?.removeLast()
+//            drawBand1(bandS:0,bandW:startP-bandWidth)
+//        }
+//    }
+
+//    func drawBand1(bandS:CGFloat,bandW:CGFloat){
+//        /* --- 四角形を描画 --- */
+//        let rectangleLayer = CAShapeLayer.init()
+//        let rectangleFrame = CGRect.init(x: bandS, y: 0, width: bandW , height: self.view.bounds.height)
+//        rectangleLayer.frame = rectangleFrame
+//
+//        // 輪郭の色
+//        rectangleLayer.strokeColor = UIColor.black.cgColor
+//        // 四角形の中の色
+//        rectangleLayer.fillColor = UIColor.black.cgColor
+//        // 輪郭の太さ
+//        // rectangleLayer.lineWidth = 2.5
+//
+//        // 四角形を描画
+//        rectangleLayer.path = UIBezierPath.init(rect: CGRect.init(x: 0, y: 0, width: rectangleFrame.size.width, height: rectangleFrame.size.height)).cgPath
+//
+//        //self.view.layer.addSublayer(rectangleLayer)
+//        bandsView1.layer.addSublayer(rectangleLayer)
+//    }
 }
 
 
