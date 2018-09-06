@@ -45,12 +45,15 @@ class ETTcViewController: UIViewController {
     }
     @IBAction func herz1Action(_ sender: Any) {
         ettSpeed=0.3
+        textIroiro.text = "\(ettSpeed)Hz"
     }
     @IBAction func herz2Action(_ sender: Any) {
         ettSpeed=0.6
+        textIroiro.text = "\(ettSpeed)Hz"
     }
     @IBAction func herz3Action(_ sender: Any) {
         ettSpeed=0.9
+        textIroiro.text = "\(ettSpeed)Hz"
     }
 
     func hideButtons(hide:Bool){
@@ -60,6 +63,7 @@ class ETTcViewController: UIViewController {
         herz1Button.isHidden=hide
         herz2Button.isHidden=hide
         herz3Button.isHidden=hide
+        textIroiro.isHidden=hide
      }
     func setBack(){
         if backMode==0{
@@ -221,6 +225,7 @@ class ETTcViewController: UIViewController {
         }else{
             if furi1Button.isHidden == true{
                 hideButtons(hide: false)
+                textIroiro.text = "\(ettSpeed)Hz"
             }else{
                 hideButtons(hide: true)
             }
@@ -250,14 +255,11 @@ class ETTcViewController: UIViewController {
             //print(ettSpeed,ettWidth,view.bounds.width)
             //79,200,343/width=736
         }else if sender.state == .ended{
-            //                if timer?.isValid != true{
-            //                    view.layer.sublayers?.removeLast()
-            //                    startETT(0)
-            //                }
-            textIroiro.text = " "
             panFlag=false
-            //               setUserDefaults()
-            textIroiro.isHidden=true
+             if herz1Button.isHidden == true {
+                textIroiro.isHidden=true
+                textIroiro.text = " "
+           }
         }
     }
     override func viewWillDisappear(_ animated: Bool) {

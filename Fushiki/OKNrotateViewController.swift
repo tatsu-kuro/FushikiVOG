@@ -11,6 +11,7 @@ import CoreMotion
 
 class OKNrotateViewController: UIViewController {
     var timer:Timer!
+    var timerokp:Timer!
     var tcount:Int = 0
     var motionManager: CMMotionManager?
     var oknrSpeed:Int = 1
@@ -32,6 +33,7 @@ class OKNrotateViewController: UIViewController {
     @IBOutlet weak var speed3Button: UIButton!
     @IBOutlet weak var rightButton: UIButton!
     @IBOutlet weak var leftButton: UIButton!
+    @IBOutlet weak var okpButton: UIButton!
     @IBOutlet var doubleRec:UITapGestureRecognizer!
     @IBOutlet var singleRec:UITapGestureRecognizer!
   
@@ -46,6 +48,7 @@ class OKNrotateViewController: UIViewController {
         speed1Button.isHidden=hide
         speed2Button.isHidden=hide
         speed3Button.isHidden=hide
+        okpButton.isHidden=hide
     }
     
     //       iPhone iPad
@@ -91,6 +94,10 @@ class OKNrotateViewController: UIViewController {
         stopTimer()
         oknrMode=0
         setTimer()
+    }
+    @IBAction func okpAction(_ sender: Any) {
+        stopTimer()
+        setTimerokp()
     }
     @IBAction func gyroAction(_ sender: Any) {
         stopTimer()
@@ -172,10 +179,17 @@ class OKNrotateViewController: UIViewController {
         if timer?.isValid == true {
             timer.invalidate()
         }
+        if timerokp?.isValid == true{
+            timerokp.invalidate()
+        }
         tcount=0
     }
     func setTimer(){
         timer = Timer.scheduledTimer(timeInterval: 1.0/60.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+        tcount=0
+    }
+    func setTimerokp(){
+        timerokp = Timer.scheduledTimer(timeInterval: 1.0/60.0, target: self, selector: #selector(self.updateokp), userInfo: nil, repeats: true)
         tcount=0
     }
     var waru:Int = 0
@@ -281,6 +295,9 @@ class OKNrotateViewController: UIViewController {
     //6 plus 736*414(7plus,8plus)
     //x 812*375
     //se 568*320
+    @objc func updateokp(tm: Timer){
+        
+    }
     @objc func update(tm: Timer) {
         var dist:CGFloat=0
          tcount += 1
