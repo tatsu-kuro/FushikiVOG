@@ -69,7 +69,7 @@ class StillViewController: UIViewController{
         twiceButton.isHidden=true
         redButton.isHidden=true
         blackButton.isHidden=true
-
+        initViews()//見える前？
         for d in AVCaptureDevice.devices() {
             if (d as AnyObject).position == AVCaptureDevice.Position.back {
                 device = d as AVCaptureDevice

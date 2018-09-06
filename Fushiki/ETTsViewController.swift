@@ -209,7 +209,7 @@ class ETTsViewController: UIViewController {
         cameraView.layer.addSublayer(previewLayer)
         //     view.layer.addSublayer(previewLayer)
         session.startRunning()
-   //     initViews()
+        initViews()//見える前にも
         setBack()
         singleRec.require(toFail: doubleRec)
         timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)

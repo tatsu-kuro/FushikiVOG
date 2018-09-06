@@ -106,7 +106,7 @@ class ETTcViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
- //       initViews()
+        initViews()//見える前にも
         session = AVCaptureSession()
         //       if view.bounds.width>view.bounds.height{
         cirDiameter=view.bounds.width/26
