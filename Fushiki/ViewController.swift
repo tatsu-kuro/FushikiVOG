@@ -9,6 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
+    var freeCounter:Int = 0
     var timer: Timer!
     var backModeETTp:Int = 0
     var backModeETTs:Int = 0
@@ -26,17 +27,59 @@ class ViewController: UIViewController {
     var oknrWidth:CGFloat = 1.0
     var oknrMode:Int = 0
     var saccadeMode:Int = 0 //0:left 1:both 2:right
-  //   @IBOutlet weak var helpText: UILabel!
-  //   @IBOutlet weak var OKNbutton: UIButton!
-  //   @IBOutlet weak var stillButton: UIButton!
+    @IBOutlet weak var counterText: UILabel!
+    @IBOutlet weak var ETTpbutton: UIButton!
+    @IBOutlet weak var ETTsButton: UIButton!
+    @IBOutlet weak var stillButton: UIButton!
     
   //  @IBOutlet weak var showCeckbutton: UIButton!
  //   @IBOutlet weak var ETTCbutton: UIButton!
-
+    func getUserDefault(str:String,ret:Int) -> Int{//getUserDefault_one
+        if (UserDefaults.standard.object(forKey: str) != nil){//keyが設定してなければretをセット
+            return UserDefaults.standard.integer(forKey:str)
+        }else{
+            UserDefaults.standard.set(ret, forKey: str)
+            return ret
+        }
+    }
+    func CounterAlert(){
+        
+        counterText.text="\(freeCounter)/50"
+        
+        if freeCounter>50{
+            ETTpbutton.isEnabled=false
+            ETTsButton.isEnabled=false
+            // アラートを作成
+            let alert = UIAlertController(
+                title: "over 50 trials !",
+                message: "from now, some exercises are not available.",
+                preferredStyle: .alert)
+            // アラートにボタンをつける
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                //self.vHITcalc_pre()
+            }))
+            // アラート表示
+            self.present(alert, animated: true, completion: nil)
+            //          return
+        }
+    }
+    @objc func viewWillEnterForeground(_ notification: Notification?) {
+        freeCounter = getUserDefault(str: "freeCounter", ret:0)//50回以上になるとその由のアラームを出す
+        freeCounter += 1
+        UserDefaults.standard.set(freeCounter, forKey: "freeCounter")
+        CounterAlert()
+     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.viewWillEnterForeground(_:)), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        stillButton.titleLabel?.numberOfLines = 2
+        stillButton.titleLabel!.textAlignment = NSTextAlignment.center
         bandWidth = self.view.bounds.width/10
         cirDiameter = self.view.bounds.width/26
+        freeCounter = getUserDefault(str: "freeCounter", ret:0)//50回以上になるとその由のアラームを出す
+        freeCounter += 1
+        UserDefaults.standard.set(freeCounter, forKey: "freeCounter")
+        CounterAlert()
     }
     @objc func update(tm: Timer) {
         if UIApplication.shared.isIdleTimerDisabled == true{
