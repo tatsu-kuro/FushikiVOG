@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8E2604122134237D00714C67 /* OKNrotateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2604112134237D00714C67 /* OKNrotateViewController.swift */; };
+		8ECCEF5F2143339C009F804F /* HelpjViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECCEF5E2143339C009F804F /* HelpjViewController.swift */; };
+		8ECCEF6121433423009F804F /* HelpeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECCEF6021433423009F804F /* HelpeViewController.swift */; };
 		8ECD87C02116865C0084CDB1 /* ETTsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECD87BF2116865C0084CDB1 /* ETTsViewController.swift */; };
 		8ECD87C22116875E0084CDB1 /* ETTcViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECD87C12116875E0084CDB1 /* ETTcViewController.swift */; };
 		8EE77EC620EF742C00517DEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE77EC520EF742C00517DEC /* AppDelegate.swift */; };
@@ -20,6 +22,8 @@
 
 /* Begin PBXFileReference section */
 		8E2604112134237D00714C67 /* OKNrotateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OKNrotateViewController.swift; sourceTree = "<group>"; };
+		8ECCEF5E2143339C009F804F /* HelpjViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpjViewController.swift; sourceTree = "<group>"; };
+		8ECCEF6021433423009F804F /* HelpeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpeViewController.swift; sourceTree = "<group>"; };
 		8ECD87BF2116865C0084CDB1 /* ETTsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETTsViewController.swift; sourceTree = "<group>"; };
 		8ECD87C12116875E0084CDB1 /* ETTcViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETTcViewController.swift; sourceTree = "<group>"; };
 		8EE77EC220EF742C00517DEC /* Fushiki.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fushiki.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,6 +67,8 @@
 			isa = PBXGroup;
 			children = (
 				8EE77EC520EF742C00517DEC /* AppDelegate.swift */,
+				8ECCEF5E2143339C009F804F /* HelpjViewController.swift */,
+				8ECCEF6021433423009F804F /* HelpeViewController.swift */,
 				8E2604112134237D00714C67 /* OKNrotateViewController.swift */,
 				8EE77EC720EF742C00517DEC /* ViewController.swift */,
 				8EFCACD821147FF500F0FA4F /* StillViewController.swift */,
@@ -148,9 +154,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				8EE77EC820EF742C00517DEC /* ViewController.swift in Sources */,
+				8ECCEF6121433423009F804F /* HelpeViewController.swift in Sources */,
 				8EE77EC620EF742C00517DEC /* AppDelegate.swift in Sources */,
 				8ECD87C02116865C0084CDB1 /* ETTsViewController.swift in Sources */,
 				8ECD87C22116875E0084CDB1 /* ETTcViewController.swift in Sources */,
+				8ECCEF5F2143339C009F804F /* HelpjViewController.swift in Sources */,
 				8E2604122134237D00714C67 /* OKNrotateViewController.swift in Sources */,
 				8EFCACD921147FF500F0FA4F /* StillViewController.swift in Sources */,
 			);

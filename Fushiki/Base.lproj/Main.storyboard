@@ -786,6 +786,121 @@
             </objects>
             <point key="canvasLocation" x="585" y="-1121"/>
         </scene>
+        <!--Helpj View Controller-->
+        <scene sceneID="F62-FY-83b">
+            <objects>
+                <viewController id="oQH-ik-m9X" customClass="HelpjViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="uLZ-OF-s5q">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="helpj" translatesAutoresizingMaskIntoConstraints="NO" id="OT8-My-XCG">
+                                <rect key="frame" x="0.0" y="0.0" width="251" height="94"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h3p-Ad-CZe">
+                                <rect key="frame" x="597" y="325" width="50" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="wpe-1Z-PoX"/>
+                                    <constraint firstAttribute="width" constant="50" id="zKN-MB-mVx"/>
+                                </constraints>
+                                <state key="normal" title="Exit" backgroundImage="btn">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="ftv-Id-nQA" kind="unwind" unwindAction="unwind:" id="XDr-Xx-biP"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="h3p-Ad-CZe" secondAttribute="bottom" constant="20" id="bAD-t9-lbS"/>
+                            <constraint firstItem="Est-TL-Q8J" firstAttribute="trailing" secondItem="h3p-Ad-CZe" secondAttribute="trailing" constant="20" id="kWn-3i-TFb"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Est-TL-Q8J"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="FXL-IL-vQN" appends="YES" id="7dM-5G-eys"/>
+                            <outletCollection property="gestureRecognizers" destination="RaG-RN-gPh" appends="YES" id="QnN-KL-NVy"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <outlet property="helpView" destination="OT8-My-XCG" id="u6W-xr-C3T"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bjn-WK-cGN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="ftv-Id-nQA" userLabel="Exit" sceneMemberID="exit"/>
+                <tapGestureRecognizer numberOfTapsRequired="2" id="FXL-IL-vQN">
+                    <connections>
+                        <segue destination="ftv-Id-nQA" kind="unwind" unwindAction="unwind:" id="O9C-uv-hDK"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="RaG-RN-gPh">
+                    <connections>
+                        <action selector="panGes:" destination="oQH-ik-m9X" id="RMs-wL-KFU"/>
+                    </connections>
+                </panGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="582.45877061469275" y="-402.39999999999998"/>
+        </scene>
+        <!--Helpe View Controller-->
+        <scene sceneID="xAn-yr-bl4">
+            <objects>
+                <viewController id="vTq-74-qd1" customClass="HelpeViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="df2-5A-lsz">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="helpe" translatesAutoresizingMaskIntoConstraints="NO" id="5eH-oJ-uST">
+                                <rect key="frame" x="0.0" y="0.0" width="303" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0jC-nS-iVv">
+                                <rect key="frame" x="597" y="325" width="50" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Y4b-2L-0vc"/>
+                                    <constraint firstAttribute="width" constant="50" id="nz4-YC-pfv"/>
+                                </constraints>
+                                <state key="normal" title="Exit" backgroundImage="btn">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="jG0-Vg-2Xk" kind="unwind" unwindAction="unwind:" id="xOO-Ho-Cpc"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="thg-SO-E6a" firstAttribute="trailing" secondItem="0jC-nS-iVv" secondAttribute="trailing" constant="20" id="SvL-5r-M0l"/>
+                            <constraint firstItem="thg-SO-E6a" firstAttribute="bottom" secondItem="0jC-nS-iVv" secondAttribute="bottom" constant="20" id="n8h-u7-UUg"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="thg-SO-E6a"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Ego-gf-L3l" appends="YES" id="QYS-Sp-wH4"/>
+                            <outletCollection property="gestureRecognizers" destination="lsX-DC-v3K" appends="YES" id="J3N-R4-dDI"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <outlet property="helpeView" destination="5eH-oJ-uST" id="EM9-oQ-eIz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="D6W-9Y-NFa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="jG0-Vg-2Xk" userLabel="Exit" sceneMemberID="exit"/>
+                <tapGestureRecognizer numberOfTapsRequired="2" id="Ego-gf-L3l">
+                    <connections>
+                        <segue destination="jG0-Vg-2Xk" kind="unwind" unwindAction="unwind:" id="bct-lt-JUV"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="lsX-DC-v3K">
+                    <connections>
+                        <action selector="panGes:" destination="vTq-74-qd1" id="dho-pa-p81"/>
+                    </connections>
+                </panGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="580.65967016491754" y="296.80000000000001"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -845,9 +960,9 @@ VOR cancellation</string>
                                 </constraints>
                                 <string key="text">Fushiki Version 1.9 by 96da
 
-double tap the screen: return to this top page
-tap the screen on upper area: change the back image
-tap the screen on lower area: show or hide the buttons</string>
+double tap the screen: return to this page from each page.
+tap the screen on upper area: change the back image.
+tap the screen on lower area: show or hide the buttons.</string>
                                 <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -882,6 +997,9 @@ tap the screen on lower area: show or hide the buttons</string>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="説明とエクササイズのポイント（日本語）"/>
+                                <connections>
+                                    <segue destination="oQH-ik-m9X" kind="show" id="zEk-Cu-a0q"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="skD-n9-OHI">
                                 <rect key="frame" x="40" y="205" width="587" height="30"/>
@@ -890,6 +1008,9 @@ tap the screen on lower area: show or hide the buttons</string>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Explanatory notes in English"/>
+                                <connections>
+                                    <segue destination="vTq-74-qd1" kind="show" id="FZs-eF-L1k"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -950,6 +1071,8 @@ tap the screen on lower area: show or hide the buttons</string>
         <image name="gyro" width="512" height="512"/>
         <image name="gyrooff1" width="512" height="512"/>
         <image name="half" width="512" height="512"/>
+        <image name="helpe" width="1956" height="2548"/>
+        <image name="helpj" width="2004" height="3596"/>
         <image name="herz3" width="512" height="512"/>
         <image name="herz6" width="512" height="512"/>
         <image name="herz9" width="512" height="512"/>

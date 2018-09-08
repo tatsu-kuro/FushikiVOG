@@ -12,7 +12,8 @@ import CoreMotion
 class OKNrotateViewController: UIViewController {
     var timer:Timer!
     var timerokp:Timer!
-    var tcount:Int = 0
+    var cnt:Int = 0
+    var cntOkp:Int = 0
     var motionManager: CMMotionManager?
     var oknrSpeed:Int = 1
     var oknrDirection:Int = 0
@@ -90,16 +91,20 @@ class OKNrotateViewController: UIViewController {
             }
         }
     }
+    @IBAction func okpAction(_ sender: Any) {
+        stopTimer()
+        oknrWidth=3
+        oknrSpeed=2
+        getDevice()
+        setBand()
+        setTimerokp()
+    }
     @IBAction func gyrooffAction(_ sender: Any) {
         stopTimer()
         oknrMode=0
         setTimer()
     }
-    @IBAction func okpAction(_ sender: Any) {
-        stopTimer()
-        setTimerokp()
-    }
-    @IBAction func gyroAction(_ sender: Any) {
+     @IBAction func gyroAction(_ sender: Any) {
         stopTimer()
         oknrMode=1
         setTimer()
@@ -182,15 +187,16 @@ class OKNrotateViewController: UIViewController {
         if timerokp?.isValid == true{
             timerokp.invalidate()
         }
-        tcount=0
+        cnt=0
+        cntOkp=0
     }
     func setTimer(){
         timer = Timer.scheduledTimer(timeInterval: 1.0/60.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
-        tcount=0
+        cnt=0
     }
     func setTimerokp(){
         timerokp = Timer.scheduledTimer(timeInterval: 1.0/60.0, target: self, selector: #selector(self.updateokp), userInfo: nil, repeats: true)
-        tcount=0
+        cntOkp=0
     }
     var waru:Int = 0
     var warutemp:Int=80
@@ -295,12 +301,38 @@ class OKNrotateViewController: UIViewController {
     //6 plus 736*414(7plus,8plus)
     //x 812*375
     //se 568*320
+    func moveBand(){
+        cntOkp += 1
+        var dist:CGFloat=0
+        if oknrDirection==0{
+            dist = CGFloat((cntOkp*oknrSpeed*3)%waru)*6
+        }else{
+            dist = -CGFloat((cntOkp*oknrSpeed*3)%waru)*6
+        }
+        let t:CGAffineTransform = CGAffineTransform(translationX: dist,y:0)
+        bandsView.transform=t
+    }
     @objc func updateokp(tm: Timer){
-        
+//        var dist:CGFloat=0
+        cnt += 1
+//        if cnt<60*2 {
+//            return
+//        }else if cnt<60*3{
+//            if cnt%10 != 0{
+//                return
+//            }
+//        }else if cnt<60*4{
+//            if cnt%20 != 0{
+//                return
+//            }
+//        }
+
+        moveBand()
+
     }
     @objc func update(tm: Timer) {
         var dist:CGFloat=0
-         tcount += 1
+         cnt += 1
         //未登録のdeviceならpanで変更できるwarutempを設定する
         if devNum == 0{
             waru = warutemp
@@ -308,19 +340,20 @@ class OKNrotateViewController: UIViewController {
             timerPara.text="\(waru)"
         }
         if oknrDirection==0{
-            dist=CGFloat(tcount*oknrSpeed%waru)*6
+            dist=CGFloat(cnt*oknrSpeed%waru)*6
         }else{
-            dist = -CGFloat(tcount*oknrSpeed%waru)*6
+            dist = -CGFloat(cnt*oknrSpeed%waru)*6
         }
         if oknrMode == 1{
             attitude()
+            let t1:CGAffineTransform = CGAffineTransform(rotationAngle: -pitch)
+            let t2:CGAffineTransform = CGAffineTransform(translationX: dist*cos(-pitch),y: dist*sin(-pitch))
+            let t:CGAffineTransform = t1.concatenating(t2)
+            bandsView.transform=t
         }else{
-            pitch=0
+            let t:CGAffineTransform = CGAffineTransform(translationX: dist,y:0)
+            bandsView.transform=t
         }
-        let t1:CGAffineTransform = CGAffineTransform(rotationAngle: -pitch)
-        let t2:CGAffineTransform = CGAffineTransform(translationX: dist*cos(-pitch),y: dist*sin(-pitch))
-        let t:CGAffineTransform = t1.concatenating(t2)
-        bandsView.transform=t
    //     bandsView.setNeedsDisplay()
     }
     override func didReceiveMemoryWarning() {
@@ -387,6 +420,7 @@ class OKNrotateViewController: UIViewController {
         setBand()//
         setTimer()
     }
+/*
     func initViews(){
         //bandview1 - orig3
         drawBands(widthNum: 1, bandV: bandsView1)
@@ -416,6 +450,7 @@ class OKNrotateViewController: UIViewController {
         }
     }
     func drawBand1(bandS:CGFloat,bandW:CGFloat,bandV:UIImageView){
+       
         let rectangleLayer = CAShapeLayer.init()
         let rectangleFrame = CGRect.init(x: bandS, y: 0, width: bandW , height: bandV.bounds.height)
         rectangleLayer.frame = rectangleFrame
@@ -430,12 +465,6 @@ class OKNrotateViewController: UIViewController {
         // 四角形を描画
         rectangleLayer.path = UIBezierPath.init(rect: CGRect.init(x: 0, y: 0, width: rectangleFrame.size.width, height: rectangleFrame.size.height)).cgPath
         
-        //self.view.layer.addSublayer(rectangleLayer)
-        //bandV.layer.addSublayer(rectangleLayer)
-        //bandV.layer.addSublayer(rectangleLayer)
-        //bandV.image=self.view.image
-//        bandV.viewWithTag(0)?.layer.addSublayer(rectangleLayer)
-        //
         bandV.superview?.layer.addSublayer(rectangleLayer)
     }
     func getBig(w:CGFloat,h:CGFloat)->CGFloat{
@@ -444,140 +473,7 @@ class OKNrotateViewController: UIViewController {
         }
         return h
     }
-    /*
-     import UIKit
-     
-     class OKNViewController: UIViewController {
-     var timer: Timer!
-     var tcount: Int = 0
-     var oknSpeed:CGFloat = 5.0
-     var bandWidth:CGFloat = 0
-     var panFlag:Bool = false
-     @IBOutlet weak var textIroiro: UITextField!
-     override func viewDidLoad() {
-     super.viewDidLoad()
-     bandWidth = self.view.bounds.width/10
-     textIroiro.isHidden=false
-     timer = Timer.scheduledTimer(timeInterval: 1.0/100.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
-     tcount=0
-     if UIApplication.shared.isIdleTimerDisabled == false{
-     UIApplication.shared.isIdleTimerDisabled = true//スリープしない
-     }
-     
-     }
-     @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
-     print("tap")
-     
-     }
-     @IBAction func panGes(_ sender: UIPanGestureRecognizer) {
-     if sender.state == .began{
-     //               textIroiro.isHidden=false
-     panFlag=true
-     for _ in 0..<7{
-     view.layer.sublayers?.removeLast()
-     }
-     drawBands(startP: bandWidth)
-     }else if sender.state == .changed{
-     textIroiro.isHidden=false
-     //       checkerView.isHidden=true
-     let speed = sender.location(in:self.view).x*20/self.view.bounds.width
-     if speed > 10 {
-     oknSpeed = speed - 10 + 1
-     textIroiro.text = "\(Int(oknSpeed))"
-     }else{
-     oknSpeed = speed - 10 - 1
-     textIroiro.text = "\(Int(abs(oknSpeed)))"
-     }
-     }else if sender.state == .ended{
-     panFlag=false
-     textIroiro.text = " "
-     //                setUserDefaults()
-     }
-     
-     }
-     
-     @objc func update(tm: Timer) {
-     if panFlag==true{
-     return
-     }
-     if tcount > 0{
-     for _ in 0..<7{
-     view.layer.sublayers?.removeLast()
-     }
-     }
-     tcount += 1
-     let sp:CGFloat = CGFloat(tcount)*oknSpeed
-     drawBands(startP: CGFloat(Int(sp) % (2*Int(bandWidth))))
-     //        if tcount > 100*60*5 {
-     //    //        if UIApplication.shared.isIdleTimerDisabled == true{
-     //                UIApplication.shared.isIdleTimerDisabled = false//5分たったら監視する
-     //    //        }
-     //        }
-     }
-     override func didReceiveMemoryWarning() {
-     super.didReceiveMemoryWarning()
-     // Dispose of any resources that can be recreated.
-     }
-     func drawBands(startP:CGFloat){
-     for i  in 0..<7 {
-     drawBand1(bandS: startP + bandWidth*2.0*CGFloat(i),bandW:bandWidth)
-     }
-     if startP>bandWidth{
-     view.layer.sublayers?.removeLast()
-     drawBand1(bandS:0,bandW:startP-bandWidth)
-     }
-     }
-     func drawBand1(bandS:CGFloat,bandW:CGFloat){
-     /* --- 四角形を描画 --- */
-     let rectangleLayer = CAShapeLayer.init()
-     let rectangleFrame = CGRect.init(x: bandS, y: 0, width: bandW , height: self.view.bounds.height)
-     rectangleLayer.frame = rectangleFrame
-     
-     // 輪郭の色
-     rectangleLayer.strokeColor = UIColor.black.cgColor
-     // 四角形の中の色
-     rectangleLayer.fillColor = UIColor.black.cgColor
-     // 輪郭の太さ
-     // rectangleLayer.lineWidth = 2.5
-     
-     // 四角形を描画
-     rectangleLayer.path = UIBezierPath.init(rect: CGRect.init(x: 0, y: 0, width: rectangleFrame.size.width, height: rectangleFrame.size.height)).cgPath
-     
-     self.view.layer.addSublayer(rectangleLayer)
-     }
-     }
-     
-
-     */
-//    func drawBands(startP:CGFloat){
-//        for i  in 0..<7 {
-//            drawBand1(bandS: startP + bandWidth*2.0*CGFloat(i),bandW:bandWidth)
-//        }
-//        if startP>bandWidth{
-//            view.layer.sublayers?.removeLast()
-//            drawBand1(bandS:0,bandW:startP-bandWidth)
-//        }
-//    }
-
-//    func drawBand1(bandS:CGFloat,bandW:CGFloat){
-//        /* --- 四角形を描画 --- */
-//        let rectangleLayer = CAShapeLayer.init()
-//        let rectangleFrame = CGRect.init(x: bandS, y: 0, width: bandW , height: self.view.bounds.height)
-//        rectangleLayer.frame = rectangleFrame
-//
-//        // 輪郭の色
-//        rectangleLayer.strokeColor = UIColor.black.cgColor
-//        // 四角形の中の色
-//        rectangleLayer.fillColor = UIColor.black.cgColor
-//        // 輪郭の太さ
-//        // rectangleLayer.lineWidth = 2.5
-//
-//        // 四角形を描画
-//        rectangleLayer.path = UIBezierPath.init(rect: CGRect.init(x: 0, y: 0, width: rectangleFrame.size.width, height: rectangleFrame.size.height)).cgPath
-//
-//        //self.view.layer.addSublayer(rectangleLayer)
-//        bandsView1.layer.addSublayer(rectangleLayer)
-//    }
+*/
 }
 
 
