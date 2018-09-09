@@ -20,6 +20,9 @@ class HelpjViewController: UIViewController {
         helpView.frame.size.width=w
         helpView.frame.size.height=w*1.79
         helpHlimit=view.bounds.height-w*1.79 - 50
+        if UIApplication.shared.isIdleTimerDisabled == true{
+            UIApplication.shared.isIdleTimerDisabled = false//監視する
+        }
     }
 
     override func didReceiveMemoryWarning() {

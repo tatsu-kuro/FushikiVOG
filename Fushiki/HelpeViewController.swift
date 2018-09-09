@@ -20,6 +20,9 @@ class HelpeViewController: UIViewController {
         helpeView.frame.size.width=w
         helpeView.frame.size.height=w*1.30
         helpHlimit=view.bounds.height-w*1.30 - 50
+        if UIApplication.shared.isIdleTimerDisabled == true{
+            UIApplication.shared.isIdleTimerDisabled = false//監視する
+        }
     }
 
     override func didReceiveMemoryWarning() {
