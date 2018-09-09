@@ -25,7 +25,8 @@ class ViewController: UIViewController {
     var oknrSpeed:Int = 1
     var oknrDirection:Int = 0
     var oknrWidth:CGFloat = 1.0
-    var oknrMode:Int = 0
+    var gyroMode:Int = 0
+    var okpMode:Int = 0
     var saccadeMode:Int = 0 //0:left 1:both 2:right
     @IBOutlet weak var counterText: UILabel!
     @IBOutlet weak var ETTpbutton: UIButton!
@@ -99,7 +100,8 @@ class ViewController: UIViewController {
             Controller.oknrSpeed=oknrSpeed
             Controller.oknrDirection=oknrDirection
             Controller.oknrWidth=oknrWidth
-            Controller.oknrMode=oknrMode
+            Controller.gyroMode=gyroMode
+            Controller.okpMode=okpMode
         }else if let vc = segue.destination as? StillViewController{
             let Controller:StillViewController = vc
             Controller.backMode=backModeStill
@@ -129,7 +131,8 @@ class ViewController: UIViewController {
             oknrSpeed=Controller.oknrSpeed
             oknrDirection=Controller.oknrDirection
             oknrWidth=Controller.oknrWidth
-            oknrMode=Controller.oknrMode
+            gyroMode=Controller.gyroMode
+            okpMode=Controller.okpMode
         }else if let vc = segue.source as? StillViewController{
             let Controller:StillViewController = vc
             backModeStill=Controller.backMode

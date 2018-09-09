@@ -18,7 +18,8 @@ class OKNrotateViewController: UIViewController {
     var oknrSpeed:Int = 1
     var oknrDirection:Int = 0
     var oknrWidth:CGFloat = 1.0
-    var oknrMode:Int = 0
+    var gyroMode:Int = 0//gyro off:0 on:1
+    var okpMode:Int = 0//notOKP:0 OKP:1
     @IBOutlet weak var timerPara: UILabel!
     @IBOutlet weak var bandsView3: UIImageView!
     @IBOutlet weak var bandsView2: UIImageView!
@@ -34,7 +35,10 @@ class OKNrotateViewController: UIViewController {
     @IBOutlet weak var speed3Button: UIButton!
     @IBOutlet weak var rightButton: UIButton!
     @IBOutlet weak var leftButton: UIButton!
-    @IBOutlet weak var okpButton: UIButton!
+    
+    
+    @IBOutlet weak var okpLButton: UIButton!
+    @IBOutlet weak var okpRButton: UIButton!
     @IBOutlet var doubleRec:UITapGestureRecognizer!
     @IBOutlet var singleRec:UITapGestureRecognizer!
   
@@ -49,7 +53,8 @@ class OKNrotateViewController: UIViewController {
         speed1Button.isHidden=hide
         speed2Button.isHidden=hide
         speed3Button.isHidden=hide
-        okpButton.isHidden=hide
+        okpRButton.isHidden=hide
+        okpLButton.isHidden=hide
     }
     
     //       iPhone iPad
@@ -93,25 +98,40 @@ class OKNrotateViewController: UIViewController {
         }
 //        print(warutemp)
     }
-    @IBAction func okpAction(_ sender: Any) {
+    @IBAction func okpRAction(_ sender: Any) {
         stopTimer()
         oknrWidth=3
-        oknrSpeed=2
+        //oknrSpeed=2
+        okpMode=1
+        oknrDirection=0
+        getDevice()
+        setBand()
+        setTimerokp()
+    }
+    @IBAction func okpLAction(_ sender: Any) {
+        stopTimer()
+        oknrWidth=3
+        //oknrSpeed=2
+        okpMode=1
+        oknrDirection=1
         getDevice()
         setBand()
         setTimerokp()
     }
     @IBAction func gyrooffAction(_ sender: Any) {
+        okpMode=0
         stopTimer()
-        oknrMode=0
+        gyroMode=0
         setTimer()
     }
      @IBAction func gyroAction(_ sender: Any) {
+        okpMode=0
         stopTimer()
-        oknrMode=1
+        gyroMode=1
         setTimer()
     }
     @IBAction func width3Action(_ sender: Any) {
+        okpMode=0
         stopTimer()
         oknrWidth=3
         getDevice()
@@ -119,6 +139,7 @@ class OKNrotateViewController: UIViewController {
         setTimer()
     }
     @IBAction func width2Action(_ sender: Any) {
+        okpMode=0
         stopTimer()
         oknrWidth=2
         getDevice()
@@ -126,6 +147,7 @@ class OKNrotateViewController: UIViewController {
         setTimer()
     }
     @IBAction func width1Action(_ sender: Any) {
+        okpMode=0
         stopTimer()
         oknrWidth=1
         getDevice()
@@ -133,30 +155,35 @@ class OKNrotateViewController: UIViewController {
         setTimer()
     }
     @IBAction func speed3Action(_ sender: Any) {
+        okpMode=0
         stopTimer()
         oknrSpeed=3
         setBand()
         setTimer()
     }
     @IBAction func speed2Action(_ sender: Any) {
+        okpMode=0
         stopTimer()
         oknrSpeed=2
         setBand()
         setTimer()
     }
     @IBAction func speed1Action(_ sender: Any) {
+        okpMode=0
         stopTimer()
         oknrSpeed=1
         setBand()
         setTimer()
     }
     @IBAction func rightAction(_ sender: Any) {
+        okpMode=0
         stopTimer()
         oknrDirection=0
         setBand()
         setTimer()
     }
     @IBAction func leftAction(_ sender: Any) {
+        okpMode=0
         stopTimer()
         oknrDirection=1
         setBand()
@@ -201,6 +228,7 @@ class OKNrotateViewController: UIViewController {
     func setTimerokp(){
         timerokp = Timer.scheduledTimer(timeInterval: 1.0/60.0, target: self, selector: #selector(self.updateokp), userInfo: nil, repeats: true)
         cntOkp=0
+        cnt = -60*2//no action for 2sec
     }
     var waru:Int = 0
     var modoru:Int = 0
@@ -328,31 +356,29 @@ class OKNrotateViewController: UIViewController {
     var lastCnt:Int = 0
     var initFlag:Bool = false
     @objc func updateokp(tm: Timer){
-        let wa:Int = 100
-        var c:Int = 0
+        let wa:Int = 95
         cnt += 1
-        if cnt < 60*3{
+        if cnt < 0{//timer startでcnt=-60*2としている
             moveBand(move:0)
             return
-        }else{
-            c = cnt - 60*3
         }
-        if c < 60*40{
-            moveBand(move:lastMove+c/wa)
-            lastMove += c/wa
-        }else if c < 60*40*2{
+        if cnt < 60*40{
+            moveBand(move:lastMove+cnt/wa)
+            lastMove += cnt/wa
+        }else if cnt < 60*40*2{
             if initFlag == false{
-                lastCnt = c
+                lastCnt = cnt
                 initFlag = true
              }
-            moveBand(move:lastMove+(lastCnt+(lastCnt-c))/wa)
-            lastMove += (lastCnt+(lastCnt-c))/wa
+            moveBand(move:lastMove+(lastCnt+(lastCnt-cnt))/wa)
+            lastMove += (lastCnt+(lastCnt-cnt))/wa
          }
 //        moveBand(move: lastMove + 2)
 //        lastMove += 2
         if lastMove > modoru{
             lastMove -= modoru
         }
+  //      print(cnt/60)
     }
     @objc func update(tm: Timer) {
         var dist:CGFloat=0
@@ -368,7 +394,7 @@ class OKNrotateViewController: UIViewController {
         }else{
             dist = -CGFloat(cnt*oknrSpeed%waru)*6
         }
-        if oknrMode == 1{
+        if gyroMode == 1{
             attitude()
             let t1:CGAffineTransform = CGAffineTransform(rotationAngle: -pitch)
             let t2:CGAffineTransform = CGAffineTransform(translationX: dist*cos(-pitch),y: dist*sin(-pitch))
@@ -388,19 +414,13 @@ class OKNrotateViewController: UIViewController {
         super.viewDidLoad()
         motionManager = CMMotionManager()
         motionManager?.deviceMotionUpdateInterval = 0.03
-//        initBands()
-//        setBand()
-//        getDevice()
         timerPara.isHidden=true
         singleRec.require(toFail: doubleRec)
-//        waru=80
- //       setTimer()
         hideButtons(hide: true)
         // Do any additional setup after loading the view.
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
         }
-        
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -441,8 +461,16 @@ class OKNrotateViewController: UIViewController {
         initBands()//3viewsのサイズをセット
         getDevice()
   //      initViews()
-        setBand()//
-        setTimer()
+        setBand()
+        if okpMode == 1{
+            if oknrDirection == 0{
+                okpRAction(0)
+            }else{
+                okpLAction(0)
+            }
+        }else{
+            setTimer()
+        }
     }
 /*
     func initViews(){

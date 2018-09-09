@@ -309,9 +309,20 @@
                                     <constraint firstAttribute="width" constant="40" id="5H1-1h-9y4"/>
                                     <constraint firstAttribute="height" constant="40" id="rfV-XW-xzd"/>
                                 </constraints>
-                                <state key="normal" image="okp"/>
+                                <state key="normal" image="okpr"/>
                                 <connections>
-                                    <action selector="okpAction:" destination="fl3-2K-fNm" eventType="touchUpInside" id="vTN-A1-utc"/>
+                                    <action selector="okpLAction:" destination="fl3-2K-fNm" eventType="touchUpInside" id="2HX-t4-FMV"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yfM-C0-udY">
+                                <rect key="frame" x="607" y="270" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="AL8-8I-7wj"/>
+                                    <constraint firstAttribute="height" constant="40" id="aEn-5D-QJK"/>
+                                </constraints>
+                                <state key="normal" image="okpl"/>
+                                <connections>
+                                    <action selector="okpRAction:" destination="fl3-2K-fNm" eventType="touchUpInside" id="WLf-Yf-8bf"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -324,11 +335,13 @@
                             <constraint firstItem="EyM-xo-LXe" firstAttribute="leading" secondItem="8x9-il-Q7A" secondAttribute="trailing" constant="10" id="4vB-4i-T1v"/>
                             <constraint firstItem="gvg-Wd-BnG" firstAttribute="trailing" secondItem="40X-aS-YyY" secondAttribute="trailing" constant="20" id="8HL-jv-ies"/>
                             <constraint firstItem="gvg-Wd-BnG" firstAttribute="bottom" secondItem="Apl-Lh-1R8" secondAttribute="bottom" constant="20" id="Cht-BJ-beh"/>
+                            <constraint firstItem="Apl-Lh-1R8" firstAttribute="top" secondItem="yfM-C0-udY" secondAttribute="bottom" constant="5" id="EUY-pM-1U5"/>
                             <constraint firstItem="40X-aS-YyY" firstAttribute="top" secondItem="gvg-Wd-BnG" secondAttribute="top" constant="20" id="Gme-JI-d5c"/>
                             <constraint firstItem="EyM-xo-LXe" firstAttribute="leading" secondItem="sWw-td-kdU" secondAttribute="trailing" constant="10" id="HbB-ri-GCK"/>
                             <constraint firstItem="1oq-NZ-gQT" firstAttribute="top" secondItem="qrN-hD-ngc" secondAttribute="bottom" constant="5" id="Lyu-iL-A3h"/>
                             <constraint firstItem="gvg-Wd-BnG" firstAttribute="bottom" secondItem="yCP-9c-VJe" secondAttribute="bottom" constant="20" id="Lz7-Zi-ayM"/>
                             <constraint firstItem="sWw-td-kdU" firstAttribute="leading" secondItem="yCP-9c-VJe" secondAttribute="trailing" constant="30" id="N8g-p8-gYG"/>
+                            <constraint firstItem="gvg-Wd-BnG" firstAttribute="trailing" secondItem="yfM-C0-udY" secondAttribute="trailing" constant="20" id="PpH-rU-Ayq"/>
                             <constraint firstItem="nhr-rm-02c" firstAttribute="leading" secondItem="EyM-xo-LXe" secondAttribute="trailing" constant="10" id="SSo-K2-0z0"/>
                             <constraint firstItem="gvg-Wd-BnG" firstAttribute="bottom" secondItem="EyM-xo-LXe" secondAttribute="bottom" constant="20" id="VJr-42-T0d"/>
                             <constraint firstItem="gvg-Wd-BnG" firstAttribute="trailing" secondItem="Apl-Lh-1R8" secondAttribute="trailing" constant="20" id="XKD-YH-SXA"/>
@@ -360,7 +373,8 @@
                         <outlet property="gyroButton" destination="nn4-vv-vce" id="mgi-yX-IOp"/>
                         <outlet property="gyrooffButton" destination="0O0-hi-y4o" id="bYF-3l-bCx"/>
                         <outlet property="leftButton" destination="yCP-9c-VJe" id="MoO-lf-BXJ"/>
-                        <outlet property="okpButton" destination="Apl-Lh-1R8" id="G8h-A3-gGh"/>
+                        <outlet property="okpLButton" destination="Apl-Lh-1R8" id="F6h-IE-1qZ"/>
+                        <outlet property="okpRButton" destination="yfM-C0-udY" id="xOH-Pg-afd"/>
                         <outlet property="rightButton" destination="GYg-kn-4nL" id="SyJ-Wq-LEb"/>
                         <outlet property="singleRec" destination="9L2-Im-JMU" id="O0v-UP-oia"/>
                         <outlet property="speed1Button" destination="sWw-td-kdU" id="ZeP-dL-afp"/>
@@ -1079,7 +1093,8 @@ tap the screen on lower area: show or hide the buttons.</string>
         <image name="left" width="512" height="512"/>
         <image name="left1" width="512" height="512"/>
         <image name="left2" width="512" height="512"/>
-        <image name="okp" width="512" height="512"/>
+        <image name="okpl" width="512" height="512"/>
+        <image name="okpr" width="512" height="512"/>
         <image name="redmaru" width="579" height="579"/>
         <image name="right" width="512" height="512"/>
         <image name="right1" width="512" height="512"/>
