@@ -57,39 +57,41 @@ class OKNrotateViewController: UIViewController {
     //chwaru:42     64
     //kowaru:52     53
     @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
+
         let pos = sender.location(in: self.view)
         if pos.y < view.bounds.height/2{
-            if pos.x < 50{
-                warutemp += 1
-            }else if pos.x<100{
-                warutemp += 10
-            }else{
+//            if pos.x < 50{
+//                warutemp += 1
+//            }else if pos.x<100{
+//                warutemp += 10
+//            }else{
                 if gyroButton.isHidden == true{
                     hideButtons(hide: false)
                 }else{
                     hideButtons(hide: true)
                 }
-            }
-            if warutemp>100{
-                warutemp=100
-            }
+//            }
+//            if warutemp>500{
+//                warutemp=500
+//            }
             
         }else{
-            if pos.x < 50{
-                warutemp -= 1
-            }else if pos.x < 100{
-                warutemp -= 10
-            }else{
+//            if pos.x < 50{
+//                warutemp -= 1
+//            }else if pos.x < 100{
+//                warutemp -= 10
+//            }else{
                 if gyroButton.isHidden == true{
                     hideButtons(hide: false)
                 }else{
                     hideButtons(hide: true)
                 }
-            }
-            if warutemp<30{
-                warutemp=30
-            }
+//            }
+//            if warutemp<30{
+//                warutemp=30
+//            }
         }
+//        print(warutemp)
     }
     @IBAction func okpAction(_ sender: Any) {
         stopTimer()
@@ -189,6 +191,8 @@ class OKNrotateViewController: UIViewController {
         }
         cnt=0
         cntOkp=0
+        lastMove=0
+        initFlag=false
     }
     func setTimer(){
         timer = Timer.scheduledTimer(timeInterval: 1.0/60.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
@@ -199,7 +203,8 @@ class OKNrotateViewController: UIViewController {
         cntOkp=0
     }
     var waru:Int = 0
-    var warutemp:Int=80
+    var modoru:Int = 0
+    var warutemp:Int=380
     var devNum:Int = 0
     func getDevice(){
         var w=view.bounds.width
@@ -230,6 +235,7 @@ class OKNrotateViewController: UIViewController {
         }
         //       print(view.bounds.width,view.bounds.height)
         if devNum==10{//iPad
+            modoru=360
             if oknrWidth==3{
                 waru=61
             }else if oknrWidth==2{
@@ -238,6 +244,7 @@ class OKNrotateViewController: UIViewController {
                 waru=53
             }
         }else if devNum==11{//10.5inch
+            modoru = 394
             if oknrWidth==3{
                 waru=66
             }else if oknrWidth==2{
@@ -246,6 +253,7 @@ class OKNrotateViewController: UIViewController {
                 waru=43
             }
         }else if devNum==12{//12inch
+            modoru = 490
             if oknrWidth==3{
                 waru=81
             }else if oknrWidth==2{
@@ -254,6 +262,7 @@ class OKNrotateViewController: UIViewController {
                 waru=53
             }
         }else if devNum==1{//6s 7 8
+            modoru=237
             if oknrWidth==3{
                 waru=40
             }else if oknrWidth==2{
@@ -262,6 +271,7 @@ class OKNrotateViewController: UIViewController {
                 waru=52
             }
         }else if devNum==2{//6splus 7plus 8plus
+            modoru=256
             if oknrWidth==3{
                 waru=44
             }else if oknrWidth==2{
@@ -270,6 +280,7 @@ class OKNrotateViewController: UIViewController {
                 waru=38
             }
         }else if devNum==4{//X
+            modoru = 285
             if oknrWidth==3{
                 waru=49
             }else if oknrWidth==2{
@@ -278,6 +289,7 @@ class OKNrotateViewController: UIViewController {
                 waru=53
             }
         }else if devNum==3{//se
+            modoru = 200
             if oknrWidth==3{
                 waru=34
             }else if oknrWidth==2{
@@ -301,34 +313,46 @@ class OKNrotateViewController: UIViewController {
     //6 plus 736*414(7plus,8plus)
     //x 812*375
     //se 568*320
-    func moveBand(){
+    func moveBand(move:Int){
         cntOkp += 1
         var dist:CGFloat=0
         if oknrDirection==0{
-            dist = CGFloat((cntOkp*oknrSpeed*3)%waru)*6
+            dist = CGFloat(move)
         }else{
-            dist = -CGFloat((cntOkp*oknrSpeed*3)%waru)*6
+            dist = -CGFloat(move)
         }
         let t:CGAffineTransform = CGAffineTransform(translationX: dist,y:0)
         bandsView.transform=t
     }
+    var lastMove:Int = 0
+    var lastCnt:Int = 0
+    var initFlag:Bool = false
     @objc func updateokp(tm: Timer){
-//        var dist:CGFloat=0
+        let wa:Int = 100
+        var c:Int = 0
         cnt += 1
-//        if cnt<60*2 {
-//            return
-//        }else if cnt<60*3{
-//            if cnt%10 != 0{
-//                return
-//            }
-//        }else if cnt<60*4{
-//            if cnt%20 != 0{
-//                return
-//            }
-//        }
-
-        moveBand()
-
+        if cnt < 60*3{
+            moveBand(move:0)
+            return
+        }else{
+            c = cnt - 60*3
+        }
+        if c < 60*40{
+            moveBand(move:lastMove+c/wa)
+            lastMove += c/wa
+        }else if c < 60*40*2{
+            if initFlag == false{
+                lastCnt = c
+                initFlag = true
+             }
+            moveBand(move:lastMove+(lastCnt+(lastCnt-c))/wa)
+            lastMove += (lastCnt+(lastCnt-c))/wa
+         }
+//        moveBand(move: lastMove + 2)
+//        lastMove += 2
+        if lastMove > modoru{
+            lastMove -= modoru
+        }
     }
     @objc func update(tm: Timer) {
         var dist:CGFloat=0
