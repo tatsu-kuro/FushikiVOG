@@ -15,11 +15,15 @@ class OKNrotateViewController: UIViewController {
     var cnt:Int = 0
     var cntOkp:Int = 0
     var motionManager: CMMotionManager?
-    var oknrSpeed:Int = 1
-    var oknrDirection:Int = 0
-    var oknrWidth:CGFloat = 1.0
+    var oknSpeed:Int = 1
+    var oknSpeedsub:Int = 2
+    var okpSpeedsub:Int = 2
+    var oknSp:Int = 3
+    var oknDirection:Int = 0
+    var oknWidth:CGFloat = 1.0
     var gyroMode:Int = 0//gyro off:0 on:1
     var okpMode:Int = 0//notOKP:0 OKP:1
+    var panFlag:Bool = false
     @IBOutlet weak var timerPara: UILabel!
     @IBOutlet weak var bandsView3: UIImageView!
     @IBOutlet weak var bandsView2: UIImageView!
@@ -36,7 +40,7 @@ class OKNrotateViewController: UIViewController {
     @IBOutlet weak var rightButton: UIButton!
     @IBOutlet weak var leftButton: UIButton!
     
-    
+    @IBOutlet weak var speedText: UITextField!
     @IBOutlet weak var okpLButton: UIButton!
     @IBOutlet weak var okpRButton: UIButton!
     @IBOutlet var doubleRec:UITapGestureRecognizer!
@@ -55,6 +59,7 @@ class OKNrotateViewController: UIViewController {
         speed3Button.isHidden=hide
         okpRButton.isHidden=hide
         okpLButton.isHidden=hide
+        speedText.isHidden=true
     }
     
     //       iPhone iPad
@@ -65,55 +70,45 @@ class OKNrotateViewController: UIViewController {
 
         let pos = sender.location(in: self.view)
         if pos.y < view.bounds.height/2{
-//            if pos.x < 50{
-//                warutemp += 1
-//            }else if pos.x<100{
-//                warutemp += 10
-//            }else{
+            if pos.x < 150{
+                modoru += 1
+                print("modoru",modoru)
+            }else{
                 if gyroButton.isHidden == true{
                     hideButtons(hide: false)
                 }else{
                     hideButtons(hide: true)
                 }
-//            }
-//            if warutemp>500{
-//                warutemp=500
-//            }
-            
+            }
         }else{
-//            if pos.x < 50{
-//                warutemp -= 1
-//            }else if pos.x < 100{
-//                warutemp -= 10
-//            }else{
+           if pos.x < 150{
+                modoru -= 1
+            print("modoru",modoru)
+           }else{
                 if gyroButton.isHidden == true{
                     hideButtons(hide: false)
                 }else{
                     hideButtons(hide: true)
                 }
-//            }
-//            if warutemp<30{
-//                warutemp=30
-//            }
+            }
         }
-//        print(warutemp)
     }
     @IBAction func okpRAction(_ sender: Any) {
         stopTimer()
-        oknrWidth=3
+        oknWidth=3
         //oknrSpeed=2
         okpMode=1
-        oknrDirection=0
+        oknDirection=0
         getDevice()
         setBand()
         setTimerokp()
     }
     @IBAction func okpLAction(_ sender: Any) {
         stopTimer()
-        oknrWidth=3
+        oknWidth=3
         //oknrSpeed=2
         okpMode=1
-        oknrDirection=1
+        oknDirection=1
         getDevice()
         setBand()
         setTimerokp()
@@ -133,7 +128,7 @@ class OKNrotateViewController: UIViewController {
     @IBAction func width3Action(_ sender: Any) {
         okpMode=0
         stopTimer()
-        oknrWidth=3
+        oknWidth=3
         getDevice()
         setBand()
         setTimer()
@@ -141,7 +136,7 @@ class OKNrotateViewController: UIViewController {
     @IBAction func width2Action(_ sender: Any) {
         okpMode=0
         stopTimer()
-        oknrWidth=2
+        oknWidth=2
         getDevice()
         setBand()
         setTimer()
@@ -149,7 +144,7 @@ class OKNrotateViewController: UIViewController {
     @IBAction func width1Action(_ sender: Any) {
         okpMode=0
         stopTimer()
-        oknrWidth=1
+        oknWidth=1
         getDevice()
         setBand()
         setTimer()
@@ -157,35 +152,35 @@ class OKNrotateViewController: UIViewController {
     @IBAction func speed3Action(_ sender: Any) {
         okpMode=0
         stopTimer()
-        oknrSpeed=3
+        oknSpeed=3
         setBand()
         setTimer()
     }
     @IBAction func speed2Action(_ sender: Any) {
         okpMode=0
         stopTimer()
-        oknrSpeed=2
+        oknSpeed=2
         setBand()
         setTimer()
     }
     @IBAction func speed1Action(_ sender: Any) {
         okpMode=0
         stopTimer()
-        oknrSpeed=1
+        oknSpeed=1
         setBand()
         setTimer()
     }
     @IBAction func rightAction(_ sender: Any) {
         okpMode=0
         stopTimer()
-        oknrDirection=0
+        oknDirection=0
         setBand()
         setTimer()
     }
     @IBAction func leftAction(_ sender: Any) {
         okpMode=0
         stopTimer()
-        oknrDirection=1
+        oknDirection=1
         setBand()
         setTimer()
     }
@@ -230,9 +225,9 @@ class OKNrotateViewController: UIViewController {
         cntOkp=0
         cnt = -60*2//no action for 2sec
     }
-    var waru:Int = 0
+  //  var waru:Int = 0
     var modoru:Int = 0
-    var warutemp:Int=380
+ //   var warutemp:Int=380
     var devNum:Int = 0
     func getDevice(){
         var w=view.bounds.width
@@ -263,67 +258,60 @@ class OKNrotateViewController: UIViewController {
         }
         //       print(view.bounds.width,view.bounds.height)
         if devNum==10{//iPad
-            modoru=360
-            if oknrWidth==3{
-                waru=61
-            }else if oknrWidth==2{
-                waru=64
+             if oknWidth==3{
+                modoru=362
+            }else if oknWidth==2{
+                modoru=383
             }else{
-                waru=53
+                modoru=318
             }
         }else if devNum==11{//10.5inch
-            modoru = 394
-            if oknrWidth==3{
-                waru=66
-            }else if oknrWidth==2{
-                waru=35
+            if oknWidth==3{
+                modoru = 394
+            }else if oknWidth==2{
+                modoru=209
             }else{
-                waru=43
+                modoru=258
             }
         }else if devNum==12{//12inch
-            modoru = 490
-            if oknrWidth==3{
-                waru=81
-            }else if oknrWidth==2{
-                waru=43
+            if oknWidth==3{
+                modoru = 488
+            }else if oknWidth==2{
+                modoru=259
             }else{
-                waru=53
+                modoru=321
             }
         }else if devNum==1{//6s 7 8
-            modoru=237
-            if oknrWidth==3{
-                waru=40
-            }else if oknrWidth==2{
-                waru=42
+            if oknWidth==3{
+                modoru=238
+            }else if oknWidth==2{
+                modoru=250
             }else{
-                waru=52
+                modoru=309
             }
         }else if devNum==2{//6splus 7plus 8plus
-            modoru=256
-            if oknrWidth==3{
-                waru=44
-            }else if oknrWidth==2{
-                waru=46
+            if oknWidth==3{
+                modoru=261
+            }else if oknWidth==2{
+                modoru=274
             }else{
-                waru=38
+                modoru=228
             }
         }else if devNum==4{//X
-            modoru = 285
-            if oknrWidth==3{
-                waru=49
-            }else if oknrWidth==2{
-                waru=51
+            if oknWidth==3{
+                modoru = 286
+            }else if oknWidth==2{
+                modoru=300
             }else{
-                waru=53
+                modoru=315
             }
         }else if devNum==3{//se
-            modoru = 200
-            if oknrWidth==3{
-                waru=34
-            }else if oknrWidth==2{
-                waru=53
+             if oknWidth==3{
+                modoru = 202
+            }else if oknWidth==2{
+                modoru = 319
             }else{
-                waru=44
+                modoru=266
             }
         }
     }
@@ -341,71 +329,101 @@ class OKNrotateViewController: UIViewController {
     //6 plus 736*414(7plus,8plus)
     //x 812*375
     //se 568*320
-    func moveBand(move:Int){
+//    func moveBand(move:Int){
+//        cntOkp += 1
+//        var dist:CGFloat=0
+//        if oknrDirection==0{
+//            dist = CGFloat(move)
+//        }else{
+//            dist = -CGFloat(move)
+//        }
+//        let t:CGAffineTransform = CGAffineTransform(translationX: dist,y:0)
+//        bandsView.transform=t
+//    }
+    func moveBandDir(move:Int,dir:Int,gyro:Int){
         cntOkp += 1
         var dist:CGFloat=0
-        if oknrDirection==0{
+        if dir==0{
             dist = CGFloat(move)
         }else{
             dist = -CGFloat(move)
         }
-        let t:CGAffineTransform = CGAffineTransform(translationX: dist,y:0)
-        bandsView.transform=t
-    }
-    var lastMove:Int = 0
-    var lastCnt:Int = 0
-    var initFlag:Bool = false
-    @objc func updateokp(tm: Timer){
-        let wa:Int = 95
-        cnt += 1
-        if cnt < 0{//timer startでcnt=-60*2としている
-            moveBand(move:0)
-            return
-        }
-        if cnt < 60*40{
-            moveBand(move:lastMove+cnt/wa)
-            lastMove += cnt/wa
-        }else if cnt < 60*40*2{
-            if initFlag == false{
-                lastCnt = cnt
-                initFlag = true
-             }
-            moveBand(move:lastMove+(lastCnt+(lastCnt-cnt))/wa)
-            lastMove += (lastCnt+(lastCnt-cnt))/wa
-         }
-//        moveBand(move: lastMove + 2)
-//        lastMove += 2
-        if lastMove > modoru{
-            lastMove -= modoru
-        }
-  //      print(cnt/60)
-    }
-    @objc func update(tm: Timer) {
-        var dist:CGFloat=0
-         cnt += 1
-        //未登録のdeviceならpanで変更できるwarutempを設定する
-        if devNum == 0{
-            waru = warutemp
-            timerPara.isHidden=false
-            timerPara.text="\(waru)"
-        }
-        if oknrDirection==0{
-            dist=CGFloat(cnt*oknrSpeed%waru)*6
+        if gyro==0{
+            let t:CGAffineTransform = CGAffineTransform(translationX: dist,y:0)
+            bandsView.transform=t
         }else{
-            dist = -CGFloat(cnt*oknrSpeed%waru)*6
-        }
-        if gyroMode == 1{
             attitude()
             let t1:CGAffineTransform = CGAffineTransform(rotationAngle: -pitch)
             let t2:CGAffineTransform = CGAffineTransform(translationX: dist*cos(-pitch),y: dist*sin(-pitch))
             let t:CGAffineTransform = t1.concatenating(t2)
             bandsView.transform=t
-        }else{
-            let t:CGAffineTransform = CGAffineTransform(translationX: dist,y:0)
-            bandsView.transform=t
         }
-   //     bandsView.setNeedsDisplay()
     }
+    var lastMove:Int = 0
+    var lastCnt:Int = 0
+    var initFlag:Bool = false
+    @objc func updateokp(tm: Timer){
+        let wa:Int = 85 - okpSpeedsub*3
+        cnt += 1
+        if cnt < 0{//timer startでcnt=-60*2としている
+            moveBandDir(move:0,dir:0,gyro:0)
+            return
+        }
+        if cnt < 60*40{
+            moveBandDir(move:lastMove+cnt/wa,dir:oknDirection,gyro:0)
+            lastMove += cnt/wa
+        }else if cnt < 60*40*2{
+            if initFlag == false{
+                lastCnt = cnt
+                initFlag = true
+            }
+            moveBandDir(move:lastMove+(lastCnt+(lastCnt-cnt))/wa,dir:oknDirection,gyro:0)
+            lastMove += (lastCnt+(lastCnt-cnt))/wa
+        }
+        if lastMove > modoru{
+            lastMove -= modoru
+        }
+        if cnt > 60*40*2+60{
+            speedText.text="OKP DONE"
+            speedText.isHidden=false
+            stopTimer()
+        }
+     }
+    @objc func update(tm: Timer) {
+        cnt += 1
+        moveBandDir(move:lastMove+oknSpeed*(oknSpeedsub+1),dir:oknDirection,gyro:gyroMode)
+        lastMove += oknSpeed*(oknSpeedsub+1)
+        if lastMove > modoru{
+            lastMove -= modoru
+        }
+    }
+
+//    @objc func update2(tm: Timer) {
+//        var dist:CGFloat=0
+//         cnt += 1
+//        //未登録のdeviceならpanで変更できるwarutempを設定する
+//        if devNum == 0{
+//            waru = warutemp
+//            timerPara.isHidden=false
+//            timerPara.text="\(waru)"
+//        }
+//        if oknDirection==0{
+//            dist = CGFloat(cnt*oknSpeed%waru)*1
+//        }else{
+//            dist = -CGFloat(cnt*oknSpeed%waru)*1
+//        }
+//        if gyroMode == 1{
+//            attitude()
+//            let t1:CGAffineTransform = CGAffineTransform(rotationAngle: -pitch)
+//            let t2:CGAffineTransform = CGAffineTransform(translationX: dist*cos(-pitch),y: dist*sin(-pitch))
+//            let t:CGAffineTransform = t1.concatenating(t2)
+//            bandsView.transform=t
+//        }else{
+//            let t:CGAffineTransform = CGAffineTransform(translationX: dist,y:0)
+//            bandsView.transform=t
+//        }
+//   //     bandsView.setNeedsDisplay()
+//    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -427,12 +445,54 @@ class OKNrotateViewController: UIViewController {
         stopTimer()
     }
     func setBand(){
-        if oknrWidth == 1{
+        if oknWidth == 1{
             bandsView.image=bandsView1.image
-        }else if oknrWidth == 2 {
+        }else if oknWidth == 2 {
             bandsView.image=bandsView2.image
         }else{
             bandsView.image=bandsView3.image
+        }
+    }
+    var startX:CGFloat = 0
+    var startSp:Int = 0
+    var tempSp:Int = 0
+    @IBAction func panGes(_ sender: UIPanGestureRecognizer) {
+       
+        if sender.state == .began {
+            if sender.location(in: self.view).y<self.view.bounds.height/10{
+           speedText.isHidden=false
+            panFlag=true
+            startX=sender.location(in: self.view).x
+             if okpMode==1 {
+                startSp=okpSpeedsub
+             }else{
+                startSp=oknSpeedsub
+            }
+            }
+        } else if sender.state == .changed {
+            if sender.location(in: self.view).y<self.view.bounds.height/10{
+            tempSp = startSp + Int(sender.location(in: self.view).x - startX)/20
+            print(tempSp)
+            if tempSp<1{
+                tempSp=1
+                startX=sender.location(in: self.view).x
+                startSp=tempSp
+            }else if tempSp>5{
+                tempSp=5
+                startX=sender.location(in: self.view).x
+                startSp=tempSp
+            }
+            if okpMode==1{
+                speedText.text = "OKP Top Speed : " + "\(tempSp)"
+                okpSpeedsub=tempSp
+            }else{
+                speedText.text = "OKN Speed : " + "\(tempSp)"
+                oknSpeedsub=tempSp
+            }
+            }
+        }else if sender.state == .ended{
+            panFlag=false
+            speedText.isHidden=true
         }
     }
     func initBands(){
@@ -463,7 +523,7 @@ class OKNrotateViewController: UIViewController {
   //      initViews()
         setBand()
         if okpMode == 1{
-            if oknrDirection == 0{
+            if oknDirection == 0{
                 okpRAction(0)
             }else{
                 okpLAction(0)

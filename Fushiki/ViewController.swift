@@ -21,10 +21,11 @@ class ViewController: UIViewController {
     var timer1Interval:Int = 2
     var ettWidth:CGFloat = 200.0
     var ettSpeed:CGFloat = 0.3
-    var oknSpeed:CGFloat = 1.0
-    var oknrSpeed:Int = 1
-    var oknrDirection:Int = 0
-    var oknrWidth:CGFloat = 1.0
+    var oknSpeed:Int = 1
+    var oknSpeedsub:Int = 2
+    var okpSpeedsub:Int = 2
+    var oknDirection:Int = 0
+    var oknWidth:CGFloat = 1.0
     var gyroMode:Int = 0
     var okpMode:Int = 0
     var saccadeMode:Int = 0 //0:left 1:both 2:right
@@ -97,9 +98,11 @@ class ViewController: UIViewController {
         
         if let vc = segue.destination as? OKNrotateViewController{
             let Controller:OKNrotateViewController = vc
-            Controller.oknrSpeed=oknrSpeed
-            Controller.oknrDirection=oknrDirection
-            Controller.oknrWidth=oknrWidth
+            Controller.oknSpeed=oknSpeed
+            Controller.oknSpeedsub=oknSpeedsub
+            Controller.okpSpeedsub=okpSpeedsub
+            Controller.oknDirection=oknDirection
+            Controller.oknWidth=oknWidth
             Controller.gyroMode=gyroMode
             Controller.okpMode=okpMode
         }else if let vc = segue.destination as? StillViewController{
@@ -128,9 +131,11 @@ class ViewController: UIViewController {
         }
         if let vc = segue.source as? OKNrotateViewController{
             let Controller:OKNrotateViewController = vc
-            oknrSpeed=Controller.oknrSpeed
-            oknrDirection=Controller.oknrDirection
-            oknrWidth=Controller.oknrWidth
+            oknSpeed=Controller.oknSpeed
+            oknSpeedsub=Controller.oknSpeedsub
+            okpSpeedsub=Controller.okpSpeedsub
+            oknDirection=Controller.oknDirection
+            oknWidth=Controller.oknWidth
             gyroMode=Controller.gyroMode
             okpMode=Controller.okpMode
         }else if let vc = segue.source as? StillViewController{
