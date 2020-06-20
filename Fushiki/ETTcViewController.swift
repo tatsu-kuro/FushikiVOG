@@ -2,167 +2,175 @@
 //  ETTcViewController.swift
 //  Fushiki
 //
-//  Created by kuroda tatsuaki on 2018/08/05.
-//  Copyright © 2018年 tatsuaki.kuroda. All rights reserved.
+//  Created by Fushiki tatsuaki on 2018/08/05.
+//  Copyright © 2018年 tatsuaki.Fushiki. All rights reserved.
 //
 
 import UIKit
 import AVFoundation
 class ETTcViewController: UIViewController {
-    var previewLayer:AVCaptureVideoPreviewLayer!
-    var device: AVCaptureDevice!
-    var session: AVCaptureSession!
+ //   var previewLayer:AVCaptureVideoPreviewLayer!
+ //   var device: AVCaptureDevice!
+ //   var session: AVCaptureSession!
     var cirDiameter:CGFloat = 0
-    var backMode:Int = 0
+    var startTime=CFAbsoluteTimeGetCurrent()
+
+ //   var backMode:Int = 0
     var timer: Timer!
     var tcount: Int = 0
-    var panFlag:Bool = false
-    var ettWidth:CGFloat = 200.0
-    var ettSpeed:CGFloat = 0.3
+//    var panFlag:Bool = false
+ //   var ettWidth:CGFloat = 0
+    var ettWidth:Int = 0//1:narrow,2:wide
+    var oknSpeed:Int = 0
+    var oknDirection:Int = 0
+    var targetMode:Int = 0
+    var ettW:CGFloat = 0
+//    var ettSpeed:CGFloat = 0.3
+//   var ettSnd:Int = 0
+//    var ettMode:Int = 0
     @IBOutlet var doubleRec:UITapGestureRecognizer!
     @IBOutlet var singleRec:UITapGestureRecognizer!
 
-    @IBOutlet weak var checkerView: UIImageView!
-    @IBOutlet weak var checknView: UIImageView!
+//    @IBOutlet weak var checkerView: UIImageView!
+//    @IBOutlet weak var checknView: UIImageView!
     
-    @IBOutlet weak var cameraView: UIImageView!
-    @IBOutlet weak var textIroiro: UITextField!
-    @IBOutlet weak var furi1Button: UIButton!
+//    @IBOutlet weak var cameraView: UIImageView!
+//    @IBOutlet weak var textIroiro: UITextField!
+//    @IBOutlet weak var furi1Button: UIButton!
     @IBOutlet weak var furi2Button: UIButton!
     @IBOutlet weak var furi3Button: UIButton!
-    @IBOutlet weak var herz1Button: UIButton!
-    @IBOutlet weak var herz2Button: UIButton!
-    @IBOutlet weak var herz3Button: UIButton!
+//    @IBOutlet weak var herz1Button: UIButton!
+//    @IBOutlet weak var herz2Button: UIButton!
+//    @IBOutlet weak var herz3Button: UIButton!
+//    @IBOutlet weak var sndButton: UIButton!
+//    @IBOutlet weak var sndoffButton: UIButton!
+//    @IBOutlet weak var pur0Button: UIButton!
+//    @IBOutlet weak var pur1Button: UIButton!
+//    @IBOutlet weak var pur2Button: UIButton!
+
+//   @IBAction func furi1Action(_ sender: Any) {
+//        ettWidth=view.bounds.width/8
+//    }
+    var tapInterval=CFAbsoluteTimeGetCurrent()
     
-    @IBAction func furi1Action(_ sender: Any) {
-        ettWidth=view.bounds.width/8
+    @IBAction func doubleTap(_ sender: Any) {
+        let mainView = storyboard?.instantiateViewController(withIdentifier: "mainView") as! ViewController
+        mainView.ettWidth=ettWidth
+        mainView.oknSpeed=oknSpeed
+        mainView.oknDirection=oknDirection
+        mainView.targetMode=targetMode
+        if timer?.isValid == true {
+              timer.invalidate()
+        }
+        self.present(mainView, animated: false, completion: nil)
+    }
+    override func remoteControlReceived(with event: UIEvent?) {
+        guard event?.type == .remoteControl else { return }
+        
+        if let event = event {
+            
+            switch event.subtype {
+            case .remoteControlPlay:
+                print("Play")
+                if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
+                    print("doubleTapPlay")
+                    doubleTap(0)
+//                    self.dismiss(animated: true, completion: nil)
+                }
+                tapInterval=CFAbsoluteTimeGetCurrent()
+            case .remoteControlTogglePlayPause:
+                print("TogglePlayPause")
+                if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
+                    print("doubleTap")
+                    doubleTap(0)
+//                    self.dismiss(animated: true, completion: nil)
+                }
+                tapInterval=CFAbsoluteTimeGetCurrent()
+            case .remoteControlNextTrack:
+                ettWidth = 2
+                setETTwidth(width: 2)
+                tcount=1
+            case .remoteControlPreviousTrack:
+                ettWidth = 1
+                setETTwidth(width: 1)
+                tcount=1
+            default:
+                print("Others")
+            }
+        }
+    }
+    func setETTwidth(width:Int){
+        if width == 1{
+            ettW = view.bounds.width/4
+        }else{
+            ettW = view.bounds.width/2 - view.bounds.width/18
+        }
     }
     @IBAction func furi2Action(_ sender: Any) {
-        ettWidth=view.bounds.width/4
+        ettWidth = 1
+        setETTwidth(width: 1)
+        tcount=1
     }
     @IBAction func furi3Action(_ sender: Any) {
-        ettWidth=view.bounds.width/2 - 30
-    }
-    @IBAction func herz1Action(_ sender: Any) {
-        ettSpeed=0.3
-        textIroiro.text = "\(ettSpeed)Hz"
-    }
-    @IBAction func herz2Action(_ sender: Any) {
-        ettSpeed=0.6
-        textIroiro.text = "\(ettSpeed)Hz"
-    }
-    @IBAction func herz3Action(_ sender: Any) {
-        ettSpeed=0.9
-        textIroiro.text = "\(ettSpeed)Hz"
+        ettWidth = 2
+        setETTwidth(width: 2)
+        tcount=1
     }
 
     func hideButtons(hide:Bool){
-        furi1Button.isHidden=hide
         furi2Button.isHidden=hide
         furi3Button.isHidden=hide
-        herz1Button.isHidden=hide
-        herz2Button.isHidden=hide
-        herz3Button.isHidden=hide
-        textIroiro.isHidden=hide
      }
-    func setBack(){
-        if backMode==0{
-            checkerView.isHidden=true
-            checknView.isHidden=true
-            cameraView.isHidden=true
-        }else if backMode==1{
-            
-            if view.bounds.height/view.bounds.width>0.65{//iPad
-                checknView.isHidden=false
-                   checkerView.isHidden=true
-            }else{//iPhone
-                checkerView.isHidden=false
-                  checknView.isHidden=true
-            }
-            //checkerView.isHidden=false
-            cameraView.isHidden=true
-        }else{
-            checkerView.isHidden=true
-            checknView.isHidden=true
-            cameraView.isHidden=false
-        }
-    }
-    func initViews(){
-        checknView.frame.origin.x=0
-        checknView.frame.origin.y=0
-        checknView.frame.size.width=view.bounds.width
-        checknView.frame.size.height=view.bounds.height
-        checkerView.frame.origin.x=0
-        checkerView.frame.origin.y=0
-        checkerView.frame.size.width=view.bounds.width
-        checkerView.frame.size.height=view.bounds.height
-        cameraView.frame.origin.x=0
-        cameraView.frame.origin.y=0
-        cameraView.frame.size.width=view.bounds.width
-        cameraView.frame.size.height=view.bounds.height
-    }
     override func viewDidAppear(_ animated: Bool) {
-        initViews()
+         if ettWidth == 0{
+            ettWidth = 2
+         }
+        setETTwidth(width: ettWidth)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        initViews()//見える前にも
-        session = AVCaptureSession()
-        //       if view.bounds.width>view.bounds.height{
+        print("ETTcView")
+        if ettWidth == 0{
+            ettWidth = 2
+        }
+        setETTwidth(width: ettWidth)
         cirDiameter=view.bounds.width/26
-        //       }else{
-        //           cirDiameter = view.bounds.height/26
-        //       }
-        for d in AVCaptureDevice.devices() {
-            if (d as AnyObject).position == AVCaptureDevice.Position.back {
-                device = d as AVCaptureDevice
-                print("\(device!.localizedName) found.")
-            }
-            
-        }
-        guard let input = try? AVCaptureDeviceInput(device: device) else {
-            print("Caught exception!")
-            return
-        }
-        session.addInput(input)
-        previewLayer = AVCaptureVideoPreviewLayer(session: session)
-        previewLayer.frame = view.bounds
-        previewLayer.videoGravity=AVLayerVideoGravity.resizeAspectFill
-        //■■■向きを教える。
-        if let orientation = self.convertUIOrientation2VideoOrientation(f: {return self.appOrientation()}) {
-            previewLayer.connection?.videoOrientation = orientation
-        }
-        cameraView.layer.addSublayer(previewLayer)
-        //     view.layer.addSublayer(previewLayer)
-        session.startRunning()
-        setBack()
         singleRec.require(toFail: doubleRec)
 
-        
-        //        @IBAction func startETTC(_ sender: //Any) {
-        textIroiro.isHidden=true
-        
-           timer = Timer.scheduledTimer(timeInterval: 1.0/100.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+ //       lastX = view.bounds.height/2
+
+        timer = Timer.scheduledTimer(timeInterval: 1.0/60.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         tcount=0
         //       ETTbutton.isEnabled=false
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
         }
-        // Do any additional setup after loading the view.
-        hideButtons(hide: true)
+          hideButtons(hide: true)
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+        self.becomeFirstResponder()
+        tapInterval=CFAbsoluteTimeGetCurrent()-1
+        self.setNeedsStatusBarAppearanceUpdate()
     }
-    @objc func update(tm: Timer) {
-        if panFlag == false{
-            if tcount > 0{
-                view.layer.sublayers?.removeLast()
-            }
-            tcount += 1
-            //3.1415*5 -> 100回で１周、100回ps
-            let cPoint = CGPoint(x:view.bounds.width/2 + sin(CGFloat(tcount)*ettSpeed/(3.1415*5.0))*ettWidth, y: view.bounds.height/2)
-            drawCircle(cPoint:cPoint)
-        }
-  //      print("timer",tcount)
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
+ @objc func update(tm: Timer) {
+    
+    if tcount > 0{
+        view.layer.sublayers?.removeLast()
+    }
+    tcount += 1
+    if(tcount>60*30){
+     doubleTap(0)
+    }
+    let elapset=CFAbsoluteTimeGetCurrent()-startTime
+         
+    let sinV=sin(CGFloat(elapset)*3.1415*0.6)
+     
+    let cPoint:CGPoint = CGPoint(x:view.bounds.width/2 + sinV*ettW, y: view.bounds.height/2)
+    drawCircle(cPoint:cPoint)
+ }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -207,60 +215,22 @@ class ETTcViewController: UIViewController {
             alongsideTransition: nil,
             completion: {(UIViewControllerTransitionCoordinatorContext) in
                 //画面の回転後に向きを教える。
-                if let orientation = self.convertUIOrientation2VideoOrientation(f: {return self.appOrientation()}) {
-                    self.previewLayer?.connection?.videoOrientation = orientation
+                if self.convertUIOrientation2VideoOrientation(f: {return self.appOrientation()}) != nil {
+                    self.setETTwidth(width: self.ettWidth)
                 }
         }
         )
     }
     @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
-        //     print("tap")
-        let pos = sender.location(in: self.view)
-        if pos.y < view.bounds.height/2{
-        backMode += 1
-        if backMode>2{
-            backMode=0
-        }
-        setBack()
-        }else{
-            if furi1Button.isHidden == true{
+            if furi2Button.isHidden == true{
                 hideButtons(hide: false)
-                textIroiro.text = "\(ettSpeed)Hz"
             }else{
                 hideButtons(hide: true)
             }
-        }
     }
     @IBAction func panGes(_ sender: UIPanGestureRecognizer) {
         
-        if sender.state == .began {
-            textIroiro.isHidden=false
-            panFlag=true
-        } else if sender.state == .changed {
-            if sender.location(in: self.view).y>self.view.bounds.height/2{
-                
-                //               if timer?.isValid != true{
-                var pos = sender.location(in: self.view)
-                view.layer.sublayers?.removeLast()
-                pos.y = self.view.bounds.height/2
-                drawCircle(cPoint: pos)
-                ettWidth = abs(pos.x - self.view.bounds.width/2)
-                textIroiro.text = "\(ettSpeed)Hz"
-                
-            }else{
-                let speed = sender.location(in: self.view).x*10/self.view.bounds.width
-                ettSpeed = CGFloat(Int(speed+2))/10.0
-                textIroiro.text = "\(ettSpeed)Hz"
-            }
-            //print(ettSpeed,ettWidth,view.bounds.width)
-            //79,200,343/width=736
-        }else if sender.state == .ended{
-            panFlag=false
-             if herz1Button.isHidden == true {
-                textIroiro.isHidden=true
-                textIroiro.text = " "
-           }
-        }
+
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)

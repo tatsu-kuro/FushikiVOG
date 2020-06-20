@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  Fushiki
 //
-//  Created by kuroda tatsuaki on 2018/07/06.
-//  Copyright © 2018年 tatsuaki.kuroda. All rights reserved.
+//  Created by Fushiki tatsuaki on 2018/07/06.
+//  Copyright © 2018年 tatsuaki.Fushiki. All rights reserved.
 //
 
 import UIKit

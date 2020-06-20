@@ -2,14 +2,17 @@
 //  ViewController.swift
 //  Fushiki
 //
-//  Created by kuroda tatsuaki on 2018/07/06.
-//  Copyright © 2018年 tatsuaki.kuroda. All rights reserved.
+//  Created by Fushiki tatsuaki on 2018/07/06.
+//  Copyright © 2018年 tatsuaki.Fushiki. All rights reserved.
 //
 
 import UIKit
+import AVFoundation
+import MediaPlayer
 
+//import GameController
 class ViewController: UIViewController {
-    var freeCounter:Int = 0
+    var controllerF:Bool=false
     var timer: Timer!
     var backModeETTp:Int = 0
     var backModeETTs:Int = 0
@@ -18,143 +21,302 @@ class ViewController: UIViewController {
     var ballColorStill:Int = 1
     var cirDiameter:CGFloat = 0
     var bandWidth:CGFloat = 0
-    var timer1Interval:Int = 2
-    var ettWidth:CGFloat = 200.0
-    var ettSpeed:CGFloat = 0.3
-    var oknSpeed:Int = 1
-    var oknSpeedsub:Int = 2
-    var okpSpeedsub:Int = 2
+//    var timer1Interval:Int = 2
+    var ettWidth:Int = 0
+    var oknSpeed:Int = 2
+    var targetMode:Int = -1
     var oknDirection:Int = 0
-    var oknWidth:CGFloat = 1.0
-    var gyroMode:Int = 0
-    var okpMode:Int = 0
-    var saccadeMode:Int = 0 //0:left 1:both 2:right
-    @IBOutlet weak var counterText: UILabel!
-    @IBOutlet weak var ETTpbutton: UIButton!
-    @IBOutlet weak var ETTsButton: UIButton!
-    @IBOutlet weak var stillButton: UIButton!
+    var soundPlayer: AVAudioPlayer? = nil
     
-  //  @IBOutlet weak var showCeckbutton: UIButton!
- //   @IBOutlet weak var ETTCbutton: UIButton!
-    func getUserDefault(str:String,ret:Int) -> Int{//getUserDefault_one
+    func sound(snd:String){
+        if let soundharu = NSDataAsset(name: snd) {
+            soundPlayer = try? AVAudioPlayer(data: soundharu.data)
+            soundPlayer?.play() // → これで音が鳴る
+        }
+    }
+    
+    @IBAction func doMode0(_ sender: Any) {
+        targetMode=0
+        sound(snd:"silence")
+        doModes()
+    }
+    
+    @IBAction func doMode1(_ sender: Any) {
+        targetMode=1
+        sound(snd:"silence")
+        doModes()
+    }
+    
+    @IBAction func doMode2(_ sender: Any) {
+        targetMode=2
+        sound(snd:"silence")
+        doModes()
+    }
+    
+    @IBAction func doMode3(_ sender: Any) {
+        targetMode=3
+        sound(snd:"silence")
+        doModes()
+    }
+    
+    @IBAction func doMode4(_ sender: Any) {
+        targetMode=4
+        sound(snd:"silence")
+        doModes()
+    }
+    
+    @IBAction func doHelp(_ sender: Any) {
+        targetMode=5
+        sound(snd:"silence")
+        doModes()
+    }
+    func doModes(){
+        let storyboard: UIStoryboard = self.storyboard!
+        if targetMode==0{//pursuit
+            let nextView = storyboard.instantiateViewController(withIdentifier: "ETTc") as! ETTcViewController
+            nextView.ettWidth=ettWidth
+            nextView.oknSpeed = oknSpeed
+            nextView.oknDirection = oknDirection
+            nextView.targetMode = targetMode
+            self.present(nextView, animated: true, completion: nil)
+        }else if targetMode==1{//saccade
+            let nextView = storyboard.instantiateViewController(withIdentifier: "Saccade") as! SaccadeViewController
+            nextView.ettWidth=ettWidth
+            nextView.oknSpeed = oknSpeed
+            nextView.oknDirection = oknDirection
+            nextView.targetMode = targetMode
+            self.present(nextView, animated: true, completion: nil)
+        }else if targetMode==2{//okn
+            let nextView = storyboard.instantiateViewController(withIdentifier: "OKNrotate") as! OKNrotateViewController
+            nextView.ettWidth=ettWidth
+            nextView.oknSpeed = oknSpeed
+            nextView.oknDirection = oknDirection
+            nextView.targetMode = targetMode
+            self.present(nextView, animated: true, completion: nil)
+        }else if targetMode==3{//carolicETT
+            let nextView = storyboard.instantiateViewController(withIdentifier: "ETTs") as! ETTsViewController
+//            nextView.timer1Interval=timer1Interval
+            nextView.ettWidth=ettWidth
+            nextView.oknSpeed = oknSpeed
+            nextView.oknDirection = oknDirection
+            nextView.targetMode = targetMode
+            self.present(nextView, animated: true, completion: nil)
+        }else if targetMode==4{//carolicOKN
+            let nextView = storyboard.instantiateViewController(withIdentifier: "CarolicOKN") as! CarolicOKNViewController
+            nextView.ettWidth=ettWidth
+            nextView.oknSpeed = oknSpeed
+            nextView.oknDirection = oknDirection
+            nextView.targetMode = targetMode
+            self.present(nextView, animated: true, completion: nil)
+        }else if targetMode==5{//help
+            let nextView = storyboard.instantiateViewController(withIdentifier: "helpView") as! HelpViewController
+            nextView.ettWidth=ettWidth
+            nextView.oknSpeed = oknSpeed
+            nextView.oknDirection = oknDirection
+            nextView.targetMode = targetMode
+            self.present(nextView, animated: true, completion: nil)
+        }
+    }
+    override func remoteControlReceived(with event: UIEvent?) {
+        guard event?.type == .remoteControl else { return }
+        
+        if let event = event {
+            controllerF=true
+            switch event.subtype {
+            case .remoteControlPlay:
+                print("Play")
+                doModes()
+            case .remoteControlTogglePlayPause:
+               print("TogglePlayPause")
+               doModes()
+            case .remoteControlNextTrack:
+                setRotate(alp: 0.6)
+                if(targetMode == -1){
+                    targetMode=2
+                }else{
+                    targetMode += 1
+                }
+                if targetMode>5 {
+                    targetMode = 0
+                }
+                if targetMode==0{
+                    leftButton.alpha=1.0// saccadebut.alph=1.0
+                }else if targetMode==1{
+                    midButton.alpha=1.0
+                }else if targetMode==2{
+                    rightButton.alpha=1.0
+                }else if targetMode==3{
+                    mode3Button.alpha=1.0
+                }else if targetMode==4{
+                    mode4Button.alpha=1.0
+                }else{
+                    helpButton.alpha=1.0
+                }
+                print("NextTrack")
+                print(targetMode)
+            case .remoteControlPreviousTrack:
+                setRotate(alp: 0.6)
+                if(targetMode == -1){
+                    targetMode = 2
+                }else{
+                    targetMode -= 1
+                }
+                if targetMode<0{
+                    targetMode = 5
+                }
+                if targetMode==0{
+                    leftButton.alpha=1.0// saccadebut.alph=1.0
+                }else if targetMode==1{
+                    midButton.alpha=1.0
+                }else if targetMode==2{
+                    rightButton.alpha=1.0
+                }else if targetMode==3{
+                    mode3Button.alpha=1.0
+                }else if targetMode==4{
+                    mode4Button.alpha=1.0
+                }else{
+                    helpButton.alpha=1.0
+                }
+                print(targetMode)
+                print("PreviousTrack")
+            default:
+                print("Others")
+            }
+        }
+    }
+ /*   func getUserDefault(str:String,ret:Int) -> Int{//getUserDefault_one
         if (UserDefaults.standard.object(forKey: str) != nil){//keyが設定してなければretをセット
             return UserDefaults.standard.integer(forKey:str)
         }else{
             UserDefaults.standard.set(ret, forKey: str)
             return ret
         }
-    }
-    func CounterAlert(){
-        
-        counterText.text="\(freeCounter)/50"
-        
-        if freeCounter>50{
-            ETTpbutton.isEnabled=false
-            ETTsButton.isEnabled=false
-            // アラートを作成
-            let alert = UIAlertController(
-                title: "over 50 trials !",
-                message: "from now, some exercises are not available.",
-                preferredStyle: .alert)
-            // アラートにボタンをつける
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-                //self.vHITcalc_pre()
-            }))
-            // アラート表示
-            self.present(alert, animated: true, completion: nil)
-            //          return
-        }
-    }
-    @objc func viewWillEnterForeground(_ notification: Notification?) {
-        freeCounter = getUserDefault(str: "freeCounter", ret:0)//50回以上になるとその由のアラームを出す
-        freeCounter += 1
-        UserDefaults.standard.set(freeCounter, forKey: "freeCounter")
-        CounterAlert()
-     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.viewWillEnterForeground(_:)), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
-        stillButton.titleLabel?.numberOfLines = 2
-        stillButton.titleLabel!.textAlignment = NSTextAlignment.center
-        bandWidth = self.view.bounds.width/10
-        cirDiameter = self.view.bounds.width/26
-        freeCounter = getUserDefault(str: "freeCounter", ret:0)//50回以上になるとその由のアラームを出す
-        freeCounter += 1
-        UserDefaults.standard.set(freeCounter, forKey: "freeCounter")
-        CounterAlert()
-    }
-    @objc func update(tm: Timer) {
-        if UIApplication.shared.isIdleTimerDisabled == true{
-            UIApplication.shared.isIdleTimerDisabled = false//5分たったら監視する
-        }
-   //     print("**topView  timer")
-    }
- //   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        timer = Timer.scheduledTimer(timeInterval: 60*5, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
-        if UIApplication.shared.isIdleTimerDisabled == false{
-            UIApplication.shared.isIdleTimerDisabled = true//スリープしない
-        }
-        
-        if let vc = segue.destination as? OKNrotateViewController{
-            let Controller:OKNrotateViewController = vc
-            Controller.oknSpeed=oknSpeed
-            Controller.oknSpeedsub=oknSpeedsub
-            Controller.okpSpeedsub=okpSpeedsub
-            Controller.oknDirection=oknDirection
-            Controller.oknWidth=oknWidth
-            Controller.gyroMode=gyroMode
-            Controller.okpMode=okpMode
-        }else if let vc = segue.destination as? StillViewController{
-            let Controller:StillViewController = vc
-            Controller.backMode=backModeStill
-            Controller.ballSize=ballSizeStill
-            Controller.ballColor=ballColorStill
-        }else if let vc = segue.destination as? ETTsViewController{
-            let Controller:ETTsViewController = vc
-            Controller.backMode=backModeETTs
-            Controller.saccadeMode=saccadeMode
-            Controller.timer1Interval=timer1Interval
-        }else if let vc = segue.destination as? ETTcViewController{
-        let Controller:ETTcViewController = vc
-            Controller.backMode=backModeETTp
-            Controller.ettSpeed=ettSpeed
-            Controller.ettWidth=ettWidth
-        }
-    }
-    @IBAction func unwind(_ segue: UIStoryboardSegue) {
+    }*/
+    override func viewDidAppear(_ animated: Bool) {
         if UIApplication.shared.isIdleTimerDisabled == true{
             UIApplication.shared.isIdleTimerDisabled = false//監視する
         }
-        if timer?.isValid == true {
-            timer.invalidate()
+        //print("didappeariii")
+        if(controllerF){
+            setRotate(alp: 0.6)
         }
-        if let vc = segue.source as? OKNrotateViewController{
-            let Controller:OKNrotateViewController = vc
-            oknSpeed=Controller.oknSpeed
-            oknSpeedsub=Controller.oknSpeedsub
-            okpSpeedsub=Controller.okpSpeedsub
-            oknDirection=Controller.oknDirection
-            oknWidth=Controller.oknWidth
-            gyroMode=Controller.gyroMode
-            okpMode=Controller.okpMode
-        }else if let vc = segue.source as? StillViewController{
-            let Controller:StillViewController = vc
-            backModeStill=Controller.backMode
-            ballSizeStill=Controller.ballSize
-            ballColorStill=Controller.ballColor
-        }else if let vc = segue.source as? ETTsViewController{
-            let Controller:ETTsViewController = vc
-            saccadeMode=Controller.saccadeMode
-            backModeETTs=Controller.backMode
-            timer1Interval=Controller.timer1Interval
-        }else if let vc = segue.source as? ETTcViewController{
-            let Controller:ETTcViewController = vc
-            backModeETTp=Controller.backMode
-            ettWidth=Controller.ettWidth
-            ettSpeed=Controller.ettSpeed
-        }
+    }
+//    @objc func viewWillEnterForeground(_ notification: Notification?) {
+//        print("viewWillEnterForground")
+//        sound(snd:"silence")
+//    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+//        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.viewWillEnterForeground(_:)), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        bandWidth = self.view.bounds.width/10
+        cirDiameter = self.view.bounds.width/26
+        setRotate(alp:1)
         
+        sound(snd:"silence")
+//        setupGameController()
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+        self.becomeFirstResponder()
+    }
+ 
+           
+//      override var representedObject: Any? {
+//          didSet {
+          // Update the view, if already loaded.
+//          }
+ //     }
+ //   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        print("prepare")
+//        sound(snd:"silence")
+//    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+  
+        setRotate(alp:1)
+        coordinator.animate(
+            alongsideTransition: nil,
+            completion: {(UIViewControllerTransitionCoordinatorContext) in
+                self.setRotate(alp:1)
+        }
+        )
+    }
+    
+//    @IBAction func unwind(_ segue: UIStoryboardSegue) {
+//
+//        print("unwind")
+//        if timer?.isValid == true {
+//            timer.invalidate()
+//        }
+//        setRotate(alp:1)
+//    }
+    
+    @IBOutlet weak var helpButton: UIButton!
+    @IBOutlet weak var mode3Button: UIButton!
+    @IBOutlet weak var mode4Button: UIButton!
+    @IBOutlet weak var midButton: UIButton!
+    @IBOutlet weak var leftButton: UIButton!
+    @IBOutlet weak var rightButton: UIButton!
+    @IBOutlet weak var titleImage: UIImageView!
+    func setRotate(alp:CGFloat){
+ //       print("setrotate")
+        let ww:CGFloat=view.bounds.width
+        let wh:CGFloat=view.bounds.height
+        let bw:CGFloat=ww*20/129
+        let bh:CGFloat=bw*150/440
+        let sp=ww/129
+        let by=wh-bh-sp*4
+ 
+        leftButton.alpha=alp
+        midButton.alpha=alp
+        rightButton.alpha=alp
+        mode3Button.alpha=alp
+        mode4Button.alpha=alp
+        helpButton.alpha=alp
+
+        leftButton.frame.size.width = bw
+        leftButton.frame.size.height = bh
+        leftButton.frame.origin.x = sp*2
+        leftButton.frame.origin.y = by
+        midButton.frame.size.width = bw
+        midButton.frame.size.height = bh
+        midButton.frame.origin.x = bw*1+sp*3
+        midButton.frame.origin.y = by
+        rightButton.frame.size.width = bw
+        rightButton.frame.size.height = bh
+        rightButton.frame.origin.x = bw*2+sp*4
+        rightButton.frame.origin.y = by
+        mode3Button.frame.size.width=bw
+        mode3Button.frame.size.height=bh
+        mode3Button.frame.origin.x=bw*3+sp*5
+        mode3Button.frame.origin.y=by
+        mode4Button.frame.size.width=bw
+        mode4Button.frame.size.height=bh
+        mode4Button.frame.origin.x=bw*4+sp*6
+        mode4Button.frame.origin.y=by
+
+        helpButton.frame.size.width = bw
+        helpButton.frame.size.height = bh
+        helpButton.frame.origin.x = bw*5+sp*7
+        helpButton.frame.origin.y  = by
+
+        let logoY = ww/13
+        if view.bounds.width/2 > by - logoY{
+
+            titleImage.frame.origin.y = logoY
+            //view.bounds.width*56/730
+            titleImage.frame.size.width = (by - logoY)*2
+            //view.bounds.height/2*1800/700
+            titleImage.frame.size.height = by - logoY//view.bounds.height/2
+            titleImage.frame.origin.x = (view.bounds.width - titleImage.frame.size.width)/2
+        }else{
+            titleImage.frame.origin.x = 0
+            titleImage.frame.size.width = view.bounds.width
+            titleImage.frame.origin.y = logoY + (by - logoY - view.bounds.width/2)/2
+            titleImage.frame.size.height = view.bounds.width/2
+        }
+//        if UIApplication.shared.isIdleTimerDisabled == true{
+//            UIApplication.shared.isIdleTimerDisabled = false//監視する
+//        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

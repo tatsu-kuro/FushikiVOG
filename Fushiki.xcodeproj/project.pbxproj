@@ -7,23 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		69DB12C123AEF297000C733A /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69DB12C023AEF297000C733A /* GameController.framework */; };
 		8E2604122134237D00714C67 /* OKNrotateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2604112134237D00714C67 /* OKNrotateViewController.swift */; };
-		8ECCEF5F2143339C009F804F /* HelpjViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECCEF5E2143339C009F804F /* HelpjViewController.swift */; };
-		8ECCEF6121433423009F804F /* HelpeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECCEF6021433423009F804F /* HelpeViewController.swift */; };
+		8E3BD05F22C839A300454D93 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3BD05E22C839A300454D93 /* HelpViewController.swift */; };
+		8E4EDD532285BD4A00B0D306 /* SaccadeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4EDD522285BD4A00B0D306 /* SaccadeViewController.swift */; };
+		8E4EDD552285C0E500B0D306 /* CarolicOKNViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4EDD542285C0E500B0D306 /* CarolicOKNViewController.swift */; };
 		8ECD87C02116865C0084CDB1 /* ETTsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECD87BF2116865C0084CDB1 /* ETTsViewController.swift */; };
 		8ECD87C22116875E0084CDB1 /* ETTcViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECD87C12116875E0084CDB1 /* ETTcViewController.swift */; };
 		8EE77EC620EF742C00517DEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE77EC520EF742C00517DEC /* AppDelegate.swift */; };
-		8EE77EC820EF742C00517DEC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE77EC720EF742C00517DEC /* ViewController.swift */; };
 		8EE77ECB20EF742C00517DEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE77EC920EF742C00517DEC /* Main.storyboard */; };
 		8EE77ECD20EF742E00517DEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8EE77ECC20EF742E00517DEC /* Assets.xcassets */; };
 		8EE77ED020EF742E00517DEC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE77ECE20EF742E00517DEC /* LaunchScreen.storyboard */; };
-		8EFCACD921147FF500F0FA4F /* StillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFCACD821147FF500F0FA4F /* StillViewController.swift */; };
+		8EFA37CE215F93C10040F4E0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE77EC720EF742C00517DEC /* ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		69DB12C023AEF297000C733A /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 		8E2604112134237D00714C67 /* OKNrotateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OKNrotateViewController.swift; sourceTree = "<group>"; };
-		8ECCEF5E2143339C009F804F /* HelpjViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpjViewController.swift; sourceTree = "<group>"; };
-		8ECCEF6021433423009F804F /* HelpeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpeViewController.swift; sourceTree = "<group>"; };
+		8E3BD05E22C839A300454D93 /* HelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
+		8E4EDD522285BD4A00B0D306 /* SaccadeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaccadeViewController.swift; sourceTree = "<group>"; };
+		8E4EDD542285C0E500B0D306 /* CarolicOKNViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarolicOKNViewController.swift; sourceTree = "<group>"; };
 		8ECD87BF2116865C0084CDB1 /* ETTsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETTsViewController.swift; sourceTree = "<group>"; };
 		8ECD87C12116875E0084CDB1 /* ETTcViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETTcViewController.swift; sourceTree = "<group>"; };
 		8EE77EC220EF742C00517DEC /* Fushiki.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fushiki.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -33,7 +36,6 @@
 		8EE77ECC20EF742E00517DEC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8EE77ECF20EF742E00517DEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8EE77ED120EF742E00517DEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8EFCACD821147FF500F0FA4F /* StillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,17 +43,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69DB12C123AEF297000C733A /* GameController.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		69DB12BF23AEF297000C733A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				69DB12C023AEF297000C733A /* GameController.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		8EE77EB920EF742C00517DEC = {
 			isa = PBXGroup;
 			children = (
 				8EE77EC420EF742C00517DEC /* Fushiki */,
 				8EE77EC320EF742C00517DEC /* Products */,
+				69DB12BF23AEF297000C733A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,12 +79,12 @@
 			isa = PBXGroup;
 			children = (
 				8EE77EC520EF742C00517DEC /* AppDelegate.swift */,
-				8ECCEF5E2143339C009F804F /* HelpjViewController.swift */,
-				8ECCEF6021433423009F804F /* HelpeViewController.swift */,
-				8E2604112134237D00714C67 /* OKNrotateViewController.swift */,
-				8EE77EC720EF742C00517DEC /* ViewController.swift */,
-				8EFCACD821147FF500F0FA4F /* StillViewController.swift */,
+				8E3BD05E22C839A300454D93 /* HelpViewController.swift */,
+				8E4EDD542285C0E500B0D306 /* CarolicOKNViewController.swift */,
 				8ECD87BF2116865C0084CDB1 /* ETTsViewController.swift */,
+				8EE77EC720EF742C00517DEC /* ViewController.swift */,
+				8E2604112134237D00714C67 /* OKNrotateViewController.swift */,
+				8E4EDD522285BD4A00B0D306 /* SaccadeViewController.swift */,
 				8ECD87C12116875E0084CDB1 /* ETTcViewController.swift */,
 				8EE77EC920EF742C00517DEC /* Main.storyboard */,
 				8EE77ECC20EF742E00517DEC /* Assets.xcassets */,
@@ -110,10 +122,15 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0940;
 				LastUpgradeCheck = 0940;
-				ORGANIZATIONNAME = tatsuaki.kuroda;
+				ORGANIZATIONNAME = tatsuaki.Fushiki;
 				TargetAttributes = {
 					8EE77EC120EF742C00517DEC = {
 						CreatedOnToolsVersion = 9.4.1;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -153,14 +170,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8EE77EC820EF742C00517DEC /* ViewController.swift in Sources */,
-				8ECCEF6121433423009F804F /* HelpeViewController.swift in Sources */,
 				8EE77EC620EF742C00517DEC /* AppDelegate.swift in Sources */,
 				8ECD87C02116865C0084CDB1 /* ETTsViewController.swift in Sources */,
 				8ECD87C22116875E0084CDB1 /* ETTcViewController.swift in Sources */,
-				8ECCEF5F2143339C009F804F /* HelpjViewController.swift in Sources */,
+				8E3BD05F22C839A300454D93 /* HelpViewController.swift in Sources */,
+				8E4EDD532285BD4A00B0D306 /* SaccadeViewController.swift in Sources */,
+				8E4EDD552285C0E500B0D306 /* CarolicOKNViewController.swift in Sources */,
 				8E2604122134237D00714C67 /* OKNrotateViewController.swift in Sources */,
-				8EFCACD921147FF500F0FA4F /* StillViewController.swift in Sources */,
+				8EFA37CE215F93C10040F4E0 /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,7 +254,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -291,7 +308,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -305,14 +322,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.0.1;
 				DEVELOPMENT_TEAM = YKSHGZ7H3T;
 				INFOPLIST_FILE = Fushiki/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.kuroda33.Fushiki;
+				MARKETING_VERSION = 1.9;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kuroda33.FushikiETT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -324,14 +343,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.0.1;
 				DEVELOPMENT_TEAM = YKSHGZ7H3T;
 				INFOPLIST_FILE = Fushiki/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.kuroda33.Fushiki;
+				MARKETING_VERSION = 1.9;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kuroda33.FushikiETT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

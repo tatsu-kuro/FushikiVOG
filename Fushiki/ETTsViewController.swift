@@ -2,318 +2,96 @@
 //  ETTsViewController.swift
 //  Fushiki
 //
-//  Created by kuroda tatsuaki on 2018/08/05.
-//  Copyright © 2018年 tatsuaki.kuroda. All rights reserved.
+//  Created by Fushiki tatsuaki on 2018/08/05.
+//  Copyright © 2018年 tatsuaki.Fushiki. All rights reserved.
 //
 
 import UIKit
 import AVFoundation
 class ETTsViewController: UIViewController {
-    var previewLayer:AVCaptureVideoPreviewLayer!
-    var device: AVCaptureDevice!
-    var session: AVCaptureSession!
-    var cirDiameter:CGFloat = 0
-    var backMode:Int = 0
-    var saccadeMode:Int = 0
+    var ettWidth:Int = 0//1:narrow,2:wide
+    var oknSpeed:Int = 0
+    var oknDirection:Int = 0
+    var targetMode:Int = 0
+    var cirDia:CGFloat = 0
     var timer: Timer!
-    var timer1Interval:Int = 2
-
+ //   var timer1Interval:Int = 2
+    var epTim = Array<Int>()
     var tcount: Int = 0
-    @IBOutlet var doubleRec:UITapGestureRecognizer!
-    @IBOutlet var singleRec:UITapGestureRecognizer!
+    var startTime=CFAbsoluteTimeGetCurrent()
+ //   @IBOutlet var doubleRec:UITapGestureRecognizer!
+ //   @IBOutlet var singleRec:UITapGestureRecognizer!
 
-    @IBOutlet weak var leftButton: UIButton!
-    @IBOutlet weak var bothButton: UIButton!
-    @IBOutlet weak var rightButton: UIButton!
-    @IBOutlet weak var left1Button: UIButton!
-    @IBOutlet weak var both1Button: UIButton!
-    @IBOutlet weak var right1Button: UIButton!
-    @IBOutlet weak var left2Button: UIButton!
-    @IBOutlet weak var both2Button: UIButton!
-    @IBOutlet weak var right2Button: UIButton!
-    @IBOutlet weak var time05Button: UIButton!
-    @IBOutlet weak var time10Button: UIButton!
-    @IBOutlet weak var checkerView: UIImageView!
-    @IBOutlet weak var checker4View: UIImageView!
-    @IBOutlet weak var checknView: UIImageView!
-    @IBOutlet weak var checkn4View: UIImageView!
     @IBOutlet weak var cameraView: UIImageView!
- 
-    @IBAction func bothETT(_ sender: Any) {
-        saccadeMode=12
-        tcount=1
-    }
-    @IBAction func both1ETT(_ sender: Any) {
-        saccadeMode=11
-        tcount=1
-    }
-    @IBAction func both2ETT(_ sender: Any) {
-        saccadeMode=10
-        tcount=1
-    }
-    @IBAction func rightETT(_ sender: Any) {
-        saccadeMode=20
-        tcount=1
-    }
-    @IBAction func right1ETT(_ sender: Any) {
-        saccadeMode=21
-        tcount=1
-    }
-
-    @IBAction func right2ETT(_ sender: Any) {
-        saccadeMode=22
-        tcount=1
-    }
-    @IBAction func leftETT(_ sender: Any) {
-        saccadeMode=02
-        tcount=1
-    }
-    @IBAction func left1ETT(_ sender: Any) {
-        saccadeMode=01
-        tcount=1
-    }
-    @IBAction func left2ETT(_ sender: Any) {
-        saccadeMode=0
-        tcount=1
-    }
- 
-     @IBAction func setTimer05(_ sender: Any) {
-        timer1Interval=1
-    }
+ //   @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
+ //   }
+    var tapInterval=CFAbsoluteTimeGetCurrent()
     
-    @IBAction func setTimer10(_ sender: Any) {
-        timer1Interval=2
+    @IBAction func doubleTap(_ sender: Any) {
+        let mainView = storyboard?.instantiateViewController(withIdentifier: "mainView") as! ViewController
+        mainView.ettWidth=ettWidth
+        mainView.oknSpeed=oknSpeed
+        mainView.oknDirection=oknDirection
+        mainView.targetMode=targetMode
+        delTimer()
+        self.present(mainView, animated: false, completion: nil)
     }
-
-    @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
- //       print("tap")
-        let pos = sender.location(in: self.view)
-        if pos.y < view.bounds.height/2{
-            backMode += 1
-            if backMode>3{
-                backMode=0
-            }
-            setBack()
-        }else{
-            if leftButton.isHidden == true{
-                leftButton.isHidden=false
-                bothButton.isHidden=false
-                rightButton.isHidden=false
-                left1Button.isHidden=false
-                both1Button.isHidden=false
-                right1Button.isHidden=false
-                left2Button.isHidden=false
-                both2Button.isHidden=false
-                right2Button.isHidden=false
-                time05Button.isHidden=false
-                time10Button.isHidden=false
-            }else{
-                leftButton.isHidden=true
-                bothButton.isHidden=true
-                rightButton.isHidden=true
-                left1Button.isHidden=true
-                both1Button.isHidden=true
-                right1Button.isHidden=true
-                left2Button.isHidden=true
-                both2Button.isHidden=true
-                right2Button.isHidden=true
-               time05Button.isHidden=true
-                time10Button.isHidden=true
-            }
-        }
-    }
-    
-    func setBack(){
-        if backMode==0{
-            checkerView.isHidden=true
-            checker4View.isHidden=true
-            checknView.isHidden=true
-            checkn4View.isHidden=true
-            cameraView.isHidden=true
-        }else if backMode==1{//checker
-            checker4View.isHidden=true
-            checkn4View.isHidden=true
-            if view.bounds.height/view.bounds.width>0.65{//iPad
-                checknView.isHidden=false
-                checkerView.isHidden=true
-            }else{//iPhone
-                checkerView.isHidden=false
-                checknView.isHidden=true
-            }
-            cameraView.isHidden=true
-        }else if backMode==2{//checker 1/4 random
-            checkerView.isHidden=true
-            checknView.isHidden=true
-            if view.bounds.height/view.bounds.width>0.65{//iPad
-                checkn4View.isHidden=false
-                checker4View.isHidden=true
-            }else{
-                checkn4View.isHidden=true
-                checker4View.isHidden=false
-            }
-            cameraView.isHidden=true
-        }else{
-            checkerView.isHidden=true
-            checker4View.isHidden=true
-            checknView.isHidden=true
-            checkn4View.isHidden=true
-            cameraView.isHidden=false
-        }
-    }
-    func initViews(){
-        checknView.frame.origin.x=0
-        checknView.frame.origin.y=0
-        checknView.frame.size.width=view.bounds.width
-        checknView.frame.size.height=view.bounds.height
-        checkerView.frame.origin.x=0
-        checkerView.frame.origin.y=0
-        checkerView.frame.size.width=view.bounds.width
-        checkerView.frame.size.height=view.bounds.height
-        cameraView.frame.origin.x=0
-        cameraView.frame.origin.y=0
-        cameraView.frame.size.width=view.bounds.width
-        cameraView.frame.size.height=view.bounds.height
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        initViews()
-    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        session = AVCaptureSession()
-        //       if view.bounds.width>view.bounds.height{
-        cirDiameter=view.bounds.width/26
-        //       }else{
-        //           cirDiameter = view.bounds.height/26
-        //       }
-        checker4View.frame.size.width=view.bounds.width/2
-        checker4View.frame.size.height=view.bounds.height/2
-
-        for d in AVCaptureDevice.devices() {
-            if (d as AnyObject).position == AVCaptureDevice.Position.back {
-                device = d as AVCaptureDevice
-                print("\(device!.localizedName) found.")
-            }
-        }
-        guard let input = try? AVCaptureDeviceInput(device: device) else {
-            print("Caught exception!")
-            return
-        }
-        session.addInput(input)
-        previewLayer = AVCaptureVideoPreviewLayer(session: session)
-        previewLayer.frame = view.bounds
-        previewLayer.videoGravity=AVLayerVideoGravity.resizeAspectFill
-        //■■■向きを教える。
-        if let orientation = self.convertUIOrientation2VideoOrientation(f: {return self.appOrientation()}) {
-            previewLayer.connection?.videoOrientation = orientation
-        }
-        cameraView.layer.addSublayer(previewLayer)
-        //     view.layer.addSublayer(previewLayer)
-        session.startRunning()
-        initViews()//見える前にも
-        setBack()
-        singleRec.require(toFail: doubleRec)
-        timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
-        tcount=0
+    override func remoteControlReceived(with event: UIEvent?) {
+        guard event?.type == .remoteControl else { return }
         
-        if UIApplication.shared.isIdleTimerDisabled == false{
-            UIApplication.shared.isIdleTimerDisabled = true//スリープしない
-        }
-        leftButton.isHidden=true
-        bothButton.isHidden=true
-        rightButton.isHidden=true
-        left1Button.isHidden=true
-        both1Button.isHidden=true
-        right1Button.isHidden=true
-        left2Button.isHidden=true
-        both2Button.isHidden=true
-        right2Button.isHidden=true
-
-        time05Button.isHidden=true
-        time10Button.isHidden=true
-    }
-    var tcnt:Int = 0
-    var lastRandom:Int = 0
-    @objc func update(tm: Timer) {
-        tcnt += 1
-        if timer1Interval==2{
-            if tcnt%2 == 0 {
-                return
+        if let event = event {
+            
+            switch event.subtype {
+            case .remoteControlPlay:
+                print("Play")
+                if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
+                    print("doubleTapPlay")
+                    doubleTap(0)
+//                    self.dismiss(animated: true, completion: nil)
+                }
+                tapInterval=CFAbsoluteTimeGetCurrent()
+            case .remoteControlTogglePlayPause:
+                print("TogglePlayPause")
+                if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
+                    print("doubleTapTogglePlayPause")
+                    doubleTap(0)
+//                    self.dismiss(animated: true, completion: nil)
+                }
+                tapInterval=CFAbsoluteTimeGetCurrent()
+            default:
+                print("Others")
             }
         }
-        var cPoint = CGPoint(x:0,y:0)
-        if tcount > 0{
-            view.layer.sublayers?.removeLast()
-        }
-        tcount += 1
-        let sm = CGFloat(saccadeMode%10-1)
-        let tc = CGFloat((tcount%5)*2-4)
-        if saccadeMode/10 == 1{
-            cPoint = CGPoint(x:view.bounds.width/10,y:view.bounds.height/2)
-            if tcount%4 == 1 || tcount%4 == 3{
-                cPoint = CGPoint(x:view.bounds.width/2,y:view.bounds.height/2)
-                
-            }else if tcount%4 == 2{
-                cPoint = CGPoint(x:view.bounds.width*9/10,y:view.bounds.height*(5-sm*4)/10)
-            }else if tcount%4 == 0{
-                cPoint = CGPoint(x:view.bounds.width/10,y:view.bounds.height*(5+sm*4)/10)
-
-            }
-        }else if saccadeMode/10 == 2{
-            cPoint = CGPoint(x:view.bounds.width*CGFloat((tcount%5)*2+1)/10,y:view.bounds.height*(5.0+sm*tc)/10)
-        }else{
-            cPoint = CGPoint(x:view.bounds.width*CGFloat(9 - (tcount%5)*2)/10,y:view.bounds.height*(5.0+sm*tc)/10)
-        }
-        drawCircle(cPoint:cPoint)
-        var random = Int(arc4random_uniform(4))
-        if random == lastRandom{
-            random += 1//Int(arc4random_uniform(4))
-            if random>3{
-                random=0
+    }
+    @IBAction func panRecognizer(_ sender: UIPanGestureRecognizer) {
+        
+        if sender.state == .ended{
+            let move = sender.translation(in: self.view)
+            if (move.x < -150 || move.x > 150)
+            {
+                if tcnt < epTim[0] {
+                    tcnt = epTim[0]-1
+                }else if tcnt < epTim[1]{
+                    if tcnt > epTim[0]+1{
+                        tcnt = epTim[1]-1
+                    }
+                }else if tcnt < epTim[2]{
+                    tcnt = epTim[2]-1
+                }else if tcnt < epTim[3]{
+                    tcnt = epTim[3]-1
+                }else if tcnt < epTim[4]{
+                    tcnt = epTim[4]-1
+                }else if tcnt < epTim[5]{
+                    tcnt = epTim[5]-1
+                }
             }
         }
-        lastRandom = random
-        checker4View.frame.size.width=view.bounds.width/2
-        checker4View.frame.size.height=view.bounds.height/2
-        checkn4View.frame.size.width=view.bounds.width/2
-        checkn4View.frame.size.height=view.bounds.height/2
-       if random == 0{
-            checker4View.frame.origin.x=0
-            checker4View.frame.origin.y=0
-            checkn4View.frame.origin.x=0
-            checkn4View.frame.origin.y=0
+    }
+ 
+    override func viewDidAppear(_ animated: Bool) {
 
-        }else if random == 1{
-            checker4View.frame.origin.x=view.bounds.width/2
-            checker4View.frame.origin.y=0
-            checkn4View.frame.origin.x=view.bounds.width/2
-            checkn4View.frame.origin.y=0
-       }else if random == 2{
-            checker4View.frame.origin.x=view.bounds.width/2
-            checker4View.frame.origin.y=view.bounds.height/2
-            checkn4View.frame.origin.x=view.bounds.width/2
-            checkn4View.frame.origin.y=view.bounds.height/2
-       }else{
-            checker4View.frame.origin.x=0
-            checker4View.frame.origin.y=view.bounds.height/2
-            checkn4View.frame.origin.x=0
-            checkn4View.frame.origin.y=view.bounds.height/2
-        }
     }
-    func drawCircle(cPoint:CGPoint){
-        /* --- 円を描画 --- */
-        let circleLayer = CAShapeLayer.init()
-        let circleFrame = CGRect.init(x:cPoint.x-cirDiameter/2,y:cPoint.y-cirDiameter/2,width:cirDiameter,height:cirDiameter)
-        circleLayer.frame = circleFrame
-        // 輪郭の色
-        circleLayer.strokeColor = UIColor.white.cgColor
-        // 円の中の色
-        circleLayer.fillColor = UIColor.red.cgColor
-        // 輪郭の太さ
-        circleLayer.lineWidth = 0.5
-        // 円形を描画
-        circleLayer.path = UIBezierPath.init(ovalIn: CGRect.init(x: 0, y: 0, width: circleFrame.size.width, height: circleFrame.size.height)).cgPath
-        self.view.layer.addSublayer(circleLayer)
-    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -322,38 +100,159 @@ class ETTsViewController: UIViewController {
         return UIApplication.shared.statusBarOrientation
     }
     
-    func convertUIOrientation2VideoOrientation(f: () -> UIInterfaceOrientation) -> AVCaptureVideoOrientation? {
-        let v = f()
-        switch v {
-        case UIInterfaceOrientation.unknown:
-            return nil
-        default:
-            return ([
-                UIInterfaceOrientation.portrait: AVCaptureVideoOrientation.portrait,
-                UIInterfaceOrientation.portraitUpsideDown: AVCaptureVideoOrientation.portraitUpsideDown,
-                UIInterfaceOrientation.landscapeLeft: AVCaptureVideoOrientation.landscapeLeft,
-                UIInterfaceOrientation.landscapeRight: AVCaptureVideoOrientation.landscapeRight
-                ])[v]
-        }
-    }
-    
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
-        coordinator.animate(
-            alongsideTransition: nil,
-            completion: {(UIViewControllerTransitionCoordinatorContext) in
-                //画面の回転後に向きを教える。
-                if let orientation = self.convertUIOrientation2VideoOrientation(f: {return self.appOrientation()}) {
-                    self.previewLayer?.connection?.videoOrientation = orientation
-                }
-        }
-        )
+
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if timer?.isValid == true {
             timer.invalidate()
+        }
+        if timer2?.isValid == true {
+            timer2.invalidate()
+        }
+    }
+//    var timer: Timer!
+    var timer2: Timer!
+    var tcnt:Int = 0
+    var tcnt2:Int = 0
+    
+
+    
+    @IBOutlet weak var timerCnt: UILabel!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        epTim.append(10)
+        epTim.append(100)
+        epTim.append(110)
+        epTim.append(115)
+        epTim.append(138)
+        epTim.append(148)
+        print("ETTsView")
+        setBackcolor(color:UIColor.black.cgColor)
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+        if UIApplication.shared.isIdleTimerDisabled == false{
+            UIApplication.shared.isIdleTimerDisabled = true//スリープしない
+        }
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+        self.becomeFirstResponder()
+        tapInterval=CFAbsoluteTimeGetCurrent()-1
+        self.setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
+//    @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
+//        print("singletap")
+//    }
+    
+    @objc func update(tm: Timer) {
+        tcnt += 1
+        cirDia=view.bounds.width/26
+        //let cirDia=view.bounds.width/26
+        timerCnt.text = "\(tcnt)"
+        
+        if tcnt == epTim[0]{
+            drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2), cirDiameter: cirDia, color1: UIColor.red.cgColor , color2:UIColor.red.cgColor)
+        }
+        if tcnt == epTim[0]+1{
+            view.layer.sublayers?.removeLast()
+        }
+        if tcnt == epTim[1]{
+            setBackcolor(color:UIColor.white.cgColor)
+            drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2), cirDiameter: cirDia, color1: UIColor.black.cgColor , color2:UIColor.black.cgColor)
+        }
+        if tcnt == epTim[2]{
+            setBackcolor(color:UIColor.black.cgColor)
+        }
+        if tcnt == epTim[3]{
+            setBackcolor(color:UIColor.white.cgColor)
+            startTime=CFAbsoluteTimeGetCurrent()
+            timer2 = Timer.scheduledTimer(timeInterval: 1.0/60.0, target: self, selector: #selector(self.update2), userInfo: nil, repeats: true)
+        }
+        if tcnt == epTim[4]{
+            setBackcolor(color:UIColor.black.cgColor)
+            if timer2.isValid==true{
+                timer2.invalidate()
+            }
+        }
+        if tcnt==epTim[5]{
+            if UIApplication.shared.isIdleTimerDisabled == true{
+                UIApplication.shared.isIdleTimerDisabled = false//監視する
+            }
+            delTimer()
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+    }
+    func delTimer(){
+        if timer?.isValid == true {
+            timer.invalidate()
+        }
+        if timer2?.isValid == true {
+            timer2.invalidate()
+        }
+    }
+    func setBackcolor(color c:CGColor){
+        let boximage  = makeBox(width: self.view.bounds.width, height:self.view.bounds.height,color:c)
+        cameraView.image=boximage
+    }
+    func makeBox(width w:CGFloat,height h:CGFloat,color c:CGColor) -> UIImage{
+        let size = CGSize(width:w, height:h)
+        UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
+        let context = UIGraphicsGetCurrentContext()
+        let drawRect = CGRect(x:0, y:0, width:w, height:h)
+        let drawPath = UIBezierPath(rect:drawRect)
+        context?.setFillColor(c)
+        drawPath.fill()
+        context?.setStrokeColor(c)
+        drawPath.stroke()
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image!
+    }
+    
+    func drawCircle(cPoint:CGPoint,cirDiameter:CGFloat,color1:CGColor,color2:CGColor){
+        /* --- 円を描画 --- */
+        let circleLayer = CAShapeLayer.init()
+        let circleFrame = CGRect.init(x:cPoint.x-cirDiameter/2,y:cPoint.y-cirDiameter/2,width:cirDiameter,height:cirDiameter)
+        circleLayer.frame = circleFrame
+        // 輪郭の色
+        circleLayer.strokeColor = color1//UIColor.white.cgColor
+        // 円の中の色
+        circleLayer.fillColor = color2//UIColor.red.cgColor
+        // 輪郭の太さ
+        circleLayer.lineWidth = 0.5
+        // 円形を描画
+        circleLayer.path = UIBezierPath.init(ovalIn: CGRect.init(x: 0, y: 0, width: circleFrame.size.width, height: circleFrame.size.height)).cgPath
+        self.view.layer.addSublayer(circleLayer)
+    }
+    var setBackf:Bool=true
+    var setKnasf:Bool=true
+    var setEndf:Bool=true
+    @objc func update2(tm: Timer) {
+        tcnt2 += 1
+        let elapset=CFAbsoluteTimeGetCurrent()-startTime
+        if tcnt2 == 1 {
+            setBackcolor(color:UIColor.white.cgColor)
+        }
+        if elapset < 7/0.3{
+            let ettWidth=view.bounds.width/2 - view.bounds.width/18
+            //let ettSpeed:CGFloat = 0.3
+            //3.1415*5 -> 100回で１周、100回ps
+            
+            let sinV=sin(CGFloat(elapset)*3.1415*0.6)
+            var cPoint:CGPoint
+            cPoint = CGPoint(x:view.bounds.width/2 + sinV*ettWidth, y: view.bounds.height/2)
+            view.layer.sublayers?.removeLast()
+            
+            drawCircle(cPoint:cPoint,cirDiameter: cirDia,color1: UIColor.black.cgColor,color2:UIColor.black.cgColor)
         }
     }
 }
