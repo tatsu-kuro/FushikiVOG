@@ -160,17 +160,17 @@ class ETTcViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
- @objc func update(tm: Timer) {
+ @objc func update() {
     
     if tcount > 0{
         view.layer.sublayers?.removeLast()
     }
     tcount += 1
-    if(tcount>60*30){
+    let elapset=CFAbsoluteTimeGetCurrent()-startTime
+    if(tcount>60*30 && elapset>29 || tcount>120*30){
      doubleTap(0)
     }
-    let elapset=CFAbsoluteTimeGetCurrent()-startTime
-         
+
     let sinV=sin(CGFloat(elapset)*3.1415*0.6)
      
     let cPoint:CGPoint = CGPoint(x:view.bounds.width/2 + sinV*ettW, y: view.bounds.height/2)

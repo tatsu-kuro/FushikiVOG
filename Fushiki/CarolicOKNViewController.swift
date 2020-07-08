@@ -19,7 +19,7 @@ class CarolicOKNViewController: UIViewController {
     var startTime=CFAbsoluteTimeGetCurrent()
     var tcount: Int = 0
     //    var timer: Timer!
-    var timer2: Timer!
+//    var timer2: Timer!
     var tcnt:Int = 0
     var tcnt2:Int = 0
     var epTim = Array<Int>()
@@ -40,9 +40,10 @@ class CarolicOKNViewController: UIViewController {
          if timer1?.isValid == true {
              timer1.invalidate()
          }
-         if timer2?.isValid==true{
-             timer2.invalidate()
-         }
+        displayLink?.invalidate()
+//         if timer2?.isValid==true{
+//             timer2.invalidate()
+//         }
     }
     override func remoteControlReceived(with event: UIEvent?) {
         guard event?.type == .remoteControl else { return }
@@ -180,6 +181,7 @@ class CarolicOKNViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
+    var displayLink:CADisplayLink?
     @objc func update(tm: Timer) {
         tcnt += 1
         cirDia=view.bounds.width/25.0
@@ -206,12 +208,16 @@ class CarolicOKNViewController: UIViewController {
         if tcnt == epTim[3]{
             drawWrect()
             //setBackcolor(color:UIColor.white.cgColor)
-            timer2 = Timer.scheduledTimer(timeInterval: 1.0/60.0, target: self, selector: #selector(self.update2), userInfo: nil, repeats: true)
+            displayLink = CADisplayLink(target: self, selector: #selector(self.update2))
+            displayLink!.preferredFramesPerSecond = 120
+            displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
+//            timer2 = Timer.scheduledTimer(timeInterval: 1.0/60.0, target: self, selector: #selector(self.update2), userInfo: nil, repeats: true)
         }
         if tcnt == epTim[4]{
-            if timer2.isValid==true{
-                timer2.invalidate()
-            }
+            displayLink?.invalidate()
+//            if timer2.isValid==true{
+//                timer2.invalidate()
+//            }
             drawBrect()
         }
         if tcnt == epTim[5]{
@@ -245,12 +251,13 @@ class CarolicOKNViewController: UIViewController {
    //     if timer?.isValid == true {
      //       timer.invalidate()
        // }
-        if timer2?.isValid == true {
-            timer2.invalidate()
-        }
+//        if timer2?.isValid == true {
+//            timer2.invalidate()
+//        }
+        displayLink?.invalidate()
     }
     var initf:Bool=false
-    @objc func update2(tm: Timer) {
+    @objc func update2() {
         tcnt2 += 1
         if initf {
             for _ in 0..<6{

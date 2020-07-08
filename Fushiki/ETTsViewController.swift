@@ -243,7 +243,7 @@ class ETTsViewController: UIViewController {
     var setBackf:Bool=true
     var setKnasf:Bool=true
     var setEndf:Bool=true
-    @objc func update2(tm: Timer) {
+    @objc func update2() {
         tcnt2 += 1
         let elapset=CFAbsoluteTimeGetCurrent()-startTime
         if tcnt2 == 1 {

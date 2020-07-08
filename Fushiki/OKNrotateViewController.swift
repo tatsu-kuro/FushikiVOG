@@ -14,24 +14,15 @@ class OKNrotateViewController: UIViewController {
     var oknSpeed:Int = 2
     var oknDirection:Int = 0
     var targetMode:Int = 0
-    
-//    var timer:Timer!
-    var startTime=CFAbsoluteTimeGetCurrent()
-//    var timerokp:Timer!
+     var startTime=CFAbsoluteTimeGetCurrent()
     var cnt:Int = 0
- //   var cntOkp:Int = 0
-    var motionManager: CMMotionManager?
- //   var oknSpeed:Int = 2
+     var motionManager: CMMotionManager?
     var oknSpeedsub:Int = 3
-//    var okpSpeedsub:Int = 2
     var oknSp:Int = 3
- //   var oknDirection:Int = 0
-    var oknWidth:CGFloat = 1.0
+     var oknWidth:CGFloat = 1.0
     var panFlag:Bool = false
     @IBOutlet weak var timerPara: UILabel!
- //   @IBOutlet weak var bandsView2: UIImageView!
-  //  @IBOutlet weak var bandsView: UIImageView!
-    @IBOutlet weak var speed1Button: UIButton!
+     @IBOutlet weak var speed1Button: UIButton!
     @IBOutlet weak var speed2Button: UIButton!
     @IBOutlet weak var speed3Button: UIButton!
     @IBOutlet weak var rightButton: UIButton!
@@ -42,15 +33,12 @@ class OKNrotateViewController: UIViewController {
     var tapInterval=CFAbsoluteTimeGetCurrent()
     
     @IBAction func doubleTap(_ sender: Any) {
+        displayLink?.invalidate()
         let mainView = storyboard?.instantiateViewController(withIdentifier: "mainView") as! ViewController
         mainView.ettWidth=ettWidth
         mainView.oknSpeed=oknSpeed
         mainView.oknDirection=oknDirection
         mainView.targetMode=targetMode
-        displayLink?.invalidate()
-//        if timer?.isValid == true {
-//              timer.invalidate()
-//        }
         self.present(mainView, animated: false, completion: nil)
     }
     
@@ -73,21 +61,21 @@ class OKNrotateViewController: UIViewController {
                 }
                 tapInterval=CFAbsoluteTimeGetCurrent()
             case .remoteControlNextTrack:
-                stopTimer()
+//                stopTimer()
                 oknSpeed += 1
                 if(oknSpeed>3){
                     oknSpeed=1
                 }
                 oknDirection=0
-                setTimer()
+//                setTimer()
             case .remoteControlPreviousTrack:
-                stopTimer()
+//                stopTimer()
                 oknSpeed += 1
                 if(oknSpeed>3){
                     oknSpeed=1
                 }
                 oknDirection=1
-                setTimer()
+//                setTimer()
             default:
                 print("Others")
             }
@@ -100,11 +88,7 @@ class OKNrotateViewController: UIViewController {
         speed2Button.isHidden=hide
         speed3Button.isHidden=hide
     }
-    
-    //       iPhone iPad
-    //oowaru:40     61
-    //chwaru:42     64
-    //kowaru:52     53
+  
     @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
 
                 if leftButton.isHidden == true{
@@ -114,42 +98,39 @@ class OKNrotateViewController: UIViewController {
                 }
     }
     @IBAction func speed3Action(_ sender: Any) {
-        stopTimer()
+//        stopTimer()
         oknSpeed=3
-        setTimer()
+//        setTimer()
     }
     @IBAction func speed2Action(_ sender: Any) {
-        stopTimer()
+//        stopTimer()
         oknSpeed=2
-        setTimer()
+//        setTimer()
     }
     @IBAction func speed1Action(_ sender: Any) {
-        stopTimer()
+//        stopTimer()
         oknSpeed=1
-        setTimer()
+//        setTimer()
     }
     @IBAction func rightAction(_ sender: Any) {
-        stopTimer()
+//        stopTimer()
         oknDirection=0
-        setTimer()
+//        setTimer()
     }
     @IBAction func leftAction(_ sender: Any) {
-        stopTimer()
+//        stopTimer()
         oknDirection=1
-        setTimer()
+//        setTimer()
     }
     
     var pitch:CGFloat=0
  
-    func stopTimer(){
-//        if timer?.isValid == true {
-//            timer.invalidate()
-//        }
-        displayLink?.invalidate()
-        cnt=0
-        lastMove=0
-        initFlag=false
-    }
+//    func stopTimer(){
+//        displayLink?.invalidate()
+//        cnt=0
+//        lastMove=0
+//        initFlag=false
+//    }
     var displayLink:CADisplayLink?
     func setTimer(){
         startTime=CFAbsoluteTimeGetCurrent()
@@ -177,8 +158,12 @@ class OKNrotateViewController: UIViewController {
     var ww:CGFloat=0
     var wh:CGFloat=0
     var initf:Bool=false
-    @objc func update(tm: Timer) {
+    var endF=false
+    @objc func update() {
         cnt += 1
+        if endF==true{
+            return
+        }
         if initf {
             for _ in 0..<6{
                 view.layer.sublayers?.removeLast()
@@ -186,6 +171,12 @@ class OKNrotateViewController: UIViewController {
         }
         initf=true
         let elapset=CFAbsoluteTimeGetCurrent()-startTime
+        
+        if(cnt>60*30 && elapset>29 || cnt>120*30){
+            doubleTap(0)
+            endF=true
+        }
+
         if(oknDirection==0){
             var xd=ww*CGFloat(elapset)/3.2*CGFloat(oknSpeed)
             let x0=ww/5.0
@@ -212,9 +203,10 @@ class OKNrotateViewController: UIViewController {
         if lastMove > modoru{
             lastMove -= modoru
         }*/
-        if(cnt>60*30){//finish
-            doubleTap(0)
-        }
+//        if(cnt>60*30){//finish
+//            print("doubleTap(0)****")
+//            doubleTap(0)
+//        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -247,7 +239,7 @@ class OKNrotateViewController: UIViewController {
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        stopTimer()
+//        stopTimer()
     }
  
     var startX:CGFloat = 0
