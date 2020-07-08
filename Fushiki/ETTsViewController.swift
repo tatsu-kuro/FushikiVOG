@@ -155,6 +155,15 @@ class ETTsViewController: UIViewController {
     override func prefersHomeIndicatorAutoHidden() -> Bool {
         return true
     }
+    private func drawWrect() {
+        let rectLayer = CAShapeLayer.init()
+        let rect1 = CGRect(x:0,y:0,width:view.bounds.width,height:view.bounds.height)
+        rectLayer.strokeColor = UIColor.black.cgColor
+        rectLayer.fillColor = UIColor.white.cgColor
+        rectLayer.lineWidth = 0
+        rectLayer.path = UIBezierPath(rect:rect1).cgPath
+        self.view.layer.addSublayer(rectLayer)
+    }
 //   override var prefersStatusBarHidden: Bool {
 //        return true
 //    }
@@ -177,15 +186,18 @@ class ETTsViewController: UIViewController {
             view.layer.sublayers?.removeLast()
         }
         if tcnt == epTim[1]{
-            setBackcolor(color:UIColor.white.cgColor)
+            drawWrect()
+//            setBackcolor(color:UIColor.white.cgColor)
             drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2), cirDiameter: cirDia, color1: UIColor.black.cgColor , color2:UIColor.black.cgColor)
         }
         if tcnt == epTim[2]{
-            setBackcolor(color:UIColor.black.cgColor)
+            drawBrect()
+//            setBackcolor(color:UIColor.black.cgColor)
         }
         
         if tcnt == epTim[3]{
-            setBackcolor(color:UIColor.white.cgColor)
+            drawWrect()
+//            setBackcolor(color:UIColor.white.cgColor)
             startTime=CFAbsoluteTimeGetCurrent()
             displayLink = CADisplayLink(target: self, selector: #selector(self.update2))
             displayLink!.preferredFramesPerSecond = 120
@@ -193,8 +205,10 @@ class ETTsViewController: UIViewController {
             displayLinkF=true
         }
         if tcnt == epTim[4]{
-            setBackcolor(color:UIColor.black.cgColor)
+//            drawBrect()
+//            setBackcolor(color:UIColor.black.cgColor)
             stopDisplaylink()
+            drawBrect()
         }
         if tcnt==epTim[5]{
             if UIApplication.shared.isIdleTimerDisabled == true{
@@ -252,7 +266,8 @@ class ETTsViewController: UIViewController {
         tcnt2 += 1
         let elapset=CFAbsoluteTimeGetCurrent()-startTime
         if tcnt2 == 1 {
-            setBackcolor(color:UIColor.white.cgColor)
+            drawWrect()
+//            setBackcolor(color:UIColor.white.cgColor)
         }
         if elapset < 7/0.3{
             let ettWidth=view.bounds.width/2 - view.bounds.width/18
