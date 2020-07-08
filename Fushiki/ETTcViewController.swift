@@ -133,8 +133,13 @@ class ETTcViewController: UIViewController {
         self.becomeFirstResponder()
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
-    }
-    
+         prefersHomeIndicatorAutoHidden()
+//        prefersStatusBarHidden
+        }
+        
+        override func prefersHomeIndicatorAutoHidden() -> Bool {
+            return true
+        }
     override var prefersStatusBarHidden: Bool {
         return true
     }
