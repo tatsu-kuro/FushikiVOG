@@ -19,12 +19,9 @@ class ETTsViewController: UIViewController {
     var epTim = Array<Int>()
     var tcount: Int = 0
     var startTime=CFAbsoluteTimeGetCurrent()
- //   @IBOutlet var doubleRec:UITapGestureRecognizer!
- //   @IBOutlet var singleRec:UITapGestureRecognizer!
 
     @IBOutlet weak var cameraView: UIImageView!
- //   @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
- //   }
+
     var tapInterval=CFAbsoluteTimeGetCurrent()
     
     @IBAction func doubleTap(_ sender: Any) {
@@ -106,23 +103,23 @@ class ETTsViewController: UIViewController {
         
 
     }
+    func stopDisplaylink(){
+        if displayLinkF==true{
+            displayLink?.invalidate()
+            displayLinkF=false
+        }
+    }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if timer?.isValid == true {
             timer.invalidate()
         }
-        displayLink?.invalidate()
-//        if timer2?.isValid == true {
-//            timer2.invalidate()
-//        }
+        stopDisplaylink()
     }
-//    var timer: Timer!
-//    var timer2: Timer!
+
     var tcnt:Int = 0
     var tcnt2:Int = 0
-    
-
-    
+        
     @IBOutlet weak var timerCnt: UILabel!
     
     override func viewDidLoad() {
@@ -153,6 +150,7 @@ class ETTsViewController: UIViewController {
 //        print("singletap")
 //    }
     var displayLink:CADisplayLink?
+    var displayLinkF:Bool = false
     @objc func update(tm: Timer) {
         tcnt += 1
         cirDia=view.bounds.width/26
@@ -176,17 +174,14 @@ class ETTsViewController: UIViewController {
         if tcnt == epTim[3]{
             setBackcolor(color:UIColor.white.cgColor)
             startTime=CFAbsoluteTimeGetCurrent()
-            displayLink = CADisplayLink(target: self, selector: #selector(self.update2))   //#selector部分については後述
-            displayLink!.preferredFramesPerSecond = 120  // FPS設定  //この場合は1秒間に20回
+            displayLink = CADisplayLink(target: self, selector: #selector(self.update2))
+            displayLink!.preferredFramesPerSecond = 120
             displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
-//            timer2 = Timer.scheduledTimer(timeInterval: 1.0/60.0, target: self, selector: #selector(self.update2), userInfo: nil, repeats: true)
+            displayLinkF=true
         }
         if tcnt == epTim[4]{
             setBackcolor(color:UIColor.black.cgColor)
-            displayLink?.invalidate()
-//            if timer2.isValid==true{
-//                timer2.invalidate()
-//            }
+            stopDisplaylink()
         }
         if tcnt==epTim[5]{
             if UIApplication.shared.isIdleTimerDisabled == true{
@@ -201,10 +196,7 @@ class ETTsViewController: UIViewController {
         if timer?.isValid == true {
             timer.invalidate()
         }
-        displayLink!.invalidate()
-//        if timer2?.isValid == true {
-//            timer2.invalidate()
-//        }
+        stopDisplaylink()
     }
     func setBackcolor(color c:CGColor){
         let boximage  = makeBox(width: self.view.bounds.width, height:self.view.bounds.height,color:c)

@@ -18,14 +18,20 @@ class CarolicOKNViewController: UIViewController {
     var timer1Interval:Int = 2
     var startTime=CFAbsoluteTimeGetCurrent()
     var tcount: Int = 0
-    //    var timer: Timer!
-//    var timer2: Timer!
+    var displayLink:CADisplayLink?
+    var displayLinkF:Bool=false
+
     var tcnt:Int = 0
     var tcnt2:Int = 0
     var epTim = Array<Int>()
     @IBOutlet weak var timerCnt: UILabel!
     var tapInterval=CFAbsoluteTimeGetCurrent()
-    
+    func stopDisplaylink(){
+          if displayLinkF==true{
+              displayLink?.invalidate()
+              displayLinkF=false
+          }
+      }
     @IBAction func doubleTap(_ sender: Any) {
         let mainView = storyboard?.instantiateViewController(withIdentifier: "mainView") as! ViewController
         mainView.ettWidth=ettWidth
@@ -40,10 +46,7 @@ class CarolicOKNViewController: UIViewController {
          if timer1?.isValid == true {
              timer1.invalidate()
          }
-        displayLink?.invalidate()
-//         if timer2?.isValid==true{
-//             timer2.invalidate()
-//         }
+        stopDisplaylink()
     }
     override func remoteControlReceived(with event: UIEvent?) {
         guard event?.type == .remoteControl else { return }
@@ -181,8 +184,7 @@ class CarolicOKNViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    var displayLink:CADisplayLink?
-    @objc func update(tm: Timer) {
+    @objc func update() {
         tcnt += 1
         cirDia=view.bounds.width/25.0
         timerCnt.text = "\(tcnt)"
@@ -211,13 +213,10 @@ class CarolicOKNViewController: UIViewController {
             displayLink = CADisplayLink(target: self, selector: #selector(self.update2))
             displayLink!.preferredFramesPerSecond = 120
             displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
-//            timer2 = Timer.scheduledTimer(timeInterval: 1.0/60.0, target: self, selector: #selector(self.update2), userInfo: nil, repeats: true)
+            displayLinkF=true
         }
         if tcnt == epTim[4]{
-            displayLink?.invalidate()
-//            if timer2.isValid==true{
-//                timer2.invalidate()
-//            }
+            stopDisplaylink()
             drawBrect()
         }
         if tcnt == epTim[5]{
@@ -227,7 +226,6 @@ class CarolicOKNViewController: UIViewController {
             delTimer()
             self.dismiss(animated: true, completion: nil)
         }
-        
     }
     func drawCircle(cPoint:CGPoint,cirDiameter:CGFloat,color1:CGColor,color2:CGColor){
         /* --- 円を描画 --- */
@@ -247,14 +245,7 @@ class CarolicOKNViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-    //    view.layer.sublayers?.removeAll()
-   //     if timer?.isValid == true {
-     //       timer.invalidate()
-       // }
-//        if timer2?.isValid == true {
-//            timer2.invalidate()
-//        }
-        displayLink?.invalidate()
+        stopDisplaylink()
     }
     var initf:Bool=false
     @objc func update2() {

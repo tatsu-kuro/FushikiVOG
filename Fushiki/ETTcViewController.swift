@@ -9,60 +9,39 @@
 import UIKit
 import AVFoundation
 class ETTcViewController: UIViewController {
- //   var previewLayer:AVCaptureVideoPreviewLayer!
- //   var device: AVCaptureDevice!
- //   var session: AVCaptureSession!
+ 
     var cirDiameter:CGFloat = 0
     var startTime=CFAbsoluteTimeGetCurrent()
-
- //   var backMode:Int = 0
-//    var timer: Timer!
+    var displayLinkF:Bool=false
+    var displayLink:CADisplayLink?
     var tcount: Int = 0
-//    var panFlag:Bool = false
- //   var ettWidth:CGFloat = 0
     var ettWidth:Int = 0//1:narrow,2:wide
     var oknSpeed:Int = 0
     var oknDirection:Int = 0
     var targetMode:Int = 0
     var ettW:CGFloat = 0
-//    var ettSpeed:CGFloat = 0.3
-//   var ettSnd:Int = 0
-//    var ettMode:Int = 0
+
     @IBOutlet var doubleRec:UITapGestureRecognizer!
     @IBOutlet var singleRec:UITapGestureRecognizer!
 
-//    @IBOutlet weak var checkerView: UIImageView!
-//    @IBOutlet weak var checknView: UIImageView!
-    
-//    @IBOutlet weak var cameraView: UIImageView!
-//    @IBOutlet weak var textIroiro: UITextField!
-//    @IBOutlet weak var furi1Button: UIButton!
+
     @IBOutlet weak var furi2Button: UIButton!
     @IBOutlet weak var furi3Button: UIButton!
-//    @IBOutlet weak var herz1Button: UIButton!
-//    @IBOutlet weak var herz2Button: UIButton!
-//    @IBOutlet weak var herz3Button: UIButton!
-//    @IBOutlet weak var sndButton: UIButton!
-//    @IBOutlet weak var sndoffButton: UIButton!
-//    @IBOutlet weak var pur0Button: UIButton!
-//    @IBOutlet weak var pur1Button: UIButton!
-//    @IBOutlet weak var pur2Button: UIButton!
 
-//   @IBAction func furi1Action(_ sender: Any) {
-//        ettWidth=view.bounds.width/8
-//    }
     var tapInterval=CFAbsoluteTimeGetCurrent()
-    
+    func stopDisplaylink(){
+         if displayLinkF==true{
+             displayLink?.invalidate()
+             displayLinkF=false
+         }
+     }
     @IBAction func doubleTap(_ sender: Any) {
         let mainView = storyboard?.instantiateViewController(withIdentifier: "mainView") as! ViewController
         mainView.ettWidth=ettWidth
         mainView.oknSpeed=oknSpeed
         mainView.oknDirection=oknDirection
         mainView.targetMode=targetMode
-        displayLink?.invalidate()
-//        if timer?.isValid == true {
-//              timer.invalidate()
-//        }
+        stopDisplaylink()
         self.present(mainView, animated: false, completion: nil)
     }
     override func remoteControlReceived(with event: UIEvent?) {
@@ -128,7 +107,7 @@ class ETTcViewController: UIViewController {
          }
         setETTwidth(width: ettWidth)
     }
-    var displayLink:CADisplayLink?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         print("ETTcView")
@@ -139,12 +118,11 @@ class ETTcViewController: UIViewController {
         cirDiameter=view.bounds.width/26
         singleRec.require(toFail: doubleRec)
 
- //       lastX = view.bounds.height/2
-        displayLink = CADisplayLink(target: self, selector: #selector(self.update))   //#selector部分については後述
-        displayLink!.preferredFramesPerSecond = 120  // FPS設定  //この場合は1秒間に20回
+        displayLink = CADisplayLink(target: self, selector: #selector(self.update))
+        displayLink!.preferredFramesPerSecond = 120
         displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
+        displayLinkF=true
 
-//        timer = Timer.scheduledTimer(timeInterval: 1.0/60.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         tcount=0
         //       ETTbutton.isEnabled=false
         if UIApplication.shared.isIdleTimerDisabled == false{
@@ -239,9 +217,6 @@ class ETTcViewController: UIViewController {
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        displayLink?.invalidate()
-//        if timer?.isValid == true {
-//            timer.invalidate()
-//        }
+        stopDisplaylink()
     }
 }

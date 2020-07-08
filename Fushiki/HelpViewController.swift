@@ -107,6 +107,12 @@ class HelpViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func goExit(_ sender: Any) {
+        returnMain()
+    }
+    
+    
     func moveImage(mov:CGFloat){
         helpView.frame.origin.y -= mov
     }
@@ -135,6 +141,16 @@ class HelpViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        let ww:CGFloat=view.bounds.width
+            let wh:CGFloat=view.bounds.height
+            let bw:CGFloat=ww*20/129
+            let bh:CGFloat=bw*160/440
+            let sp=ww/129
+            let by=wh-bh-sp*2
+        exitButton.frame.size.width = bw
+            exitButton.frame.size.height = bh
+            exitButton.frame.origin.x = bw*5+sp*7
+            exitButton.frame.origin.y  = by
 //        let w=view.bounds.width
 //        let h=view.bounds.height
 //        helpView.frame.origin.x=10

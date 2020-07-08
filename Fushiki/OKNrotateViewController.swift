@@ -14,15 +14,23 @@ class OKNrotateViewController: UIViewController {
     var oknSpeed:Int = 2
     var oknDirection:Int = 0
     var targetMode:Int = 0
-     var startTime=CFAbsoluteTimeGetCurrent()
+    var startTime=CFAbsoluteTimeGetCurrent()
     var cnt:Int = 0
-     var motionManager: CMMotionManager?
+    var motionManager: CMMotionManager?
     var oknSpeedsub:Int = 3
     var oknSp:Int = 3
-     var oknWidth:CGFloat = 1.0
+    var oknWidth:CGFloat = 1.0
     var panFlag:Bool = false
+    var displayLink:CADisplayLink?
+    var displayLinkF:Bool=false
+    func stopDisplaylink(){
+        if displayLinkF==true{
+            displayLink?.invalidate()
+            displayLinkF=false
+        }
+    }
     @IBOutlet weak var timerPara: UILabel!
-     @IBOutlet weak var speed1Button: UIButton!
+    @IBOutlet weak var speed1Button: UIButton!
     @IBOutlet weak var speed2Button: UIButton!
     @IBOutlet weak var speed3Button: UIButton!
     @IBOutlet weak var rightButton: UIButton!
@@ -33,7 +41,7 @@ class OKNrotateViewController: UIViewController {
     var tapInterval=CFAbsoluteTimeGetCurrent()
     
     @IBAction func doubleTap(_ sender: Any) {
-        displayLink?.invalidate()
+        stopDisplaylink()
         let mainView = storyboard?.instantiateViewController(withIdentifier: "mainView") as! ViewController
         mainView.ettWidth=ettWidth
         mainView.oknSpeed=oknSpeed
@@ -61,21 +69,21 @@ class OKNrotateViewController: UIViewController {
                 }
                 tapInterval=CFAbsoluteTimeGetCurrent()
             case .remoteControlNextTrack:
-//                stopTimer()
+                //                stopTimer()
                 oknSpeed += 1
                 if(oknSpeed>3){
                     oknSpeed=1
                 }
                 oknDirection=0
-//                setTimer()
+            //                setTimer()
             case .remoteControlPreviousTrack:
-//                stopTimer()
+                //                stopTimer()
                 oknSpeed += 1
                 if(oknSpeed>3){
                     oknSpeed=1
                 }
                 oknDirection=1
-//                setTimer()
+            //                setTimer()
             default:
                 print("Others")
             }
@@ -88,7 +96,7 @@ class OKNrotateViewController: UIViewController {
         speed2Button.isHidden=hide
         speed3Button.isHidden=hide
     }
-  
+    
     @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
 
                 if leftButton.isHidden == true{
@@ -125,21 +133,15 @@ class OKNrotateViewController: UIViewController {
     
     var pitch:CGFloat=0
  
-//    func stopTimer(){
-//        displayLink?.invalidate()
-//        cnt=0
-//        lastMove=0
-//        initFlag=false
-//    }
-    var displayLink:CADisplayLink?
+ 
     func setTimer(){
         startTime=CFAbsoluteTimeGetCurrent()
         ww=view.bounds.width
         wh=view.bounds.height
-        let displayLink = CADisplayLink(target: self, selector: #selector(self.update))   //#selector部分については後述
-         displayLink.preferredFramesPerSecond = 120  // FPS設定  //この場合は1秒間に20回
-         displayLink.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
-//        timer = Timer.scheduledTimer(timeInterval: 1.0/60.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+        displayLink = CADisplayLink(target: self, selector: #selector(self.update))
+        displayLink!.preferredFramesPerSecond = 120
+        displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
+        displayLinkF=true
         cnt=0
     }
 
@@ -250,9 +252,6 @@ class OKNrotateViewController: UIViewController {
  
     override func viewDidAppear(_ animated: Bool) {
         setTimer()
-//        let displayLink = CADisplayLink(target: self, selector: #selector(self.update))   //#selector部分については後述
-//         displayLink.preferredFramesPerSecond = 120  // FPS設定  //この場合は1秒間に20回
-//         displayLink.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
     }
 }
 

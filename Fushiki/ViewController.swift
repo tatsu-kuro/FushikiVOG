@@ -262,9 +262,9 @@ class ViewController: UIViewController {
         let ww:CGFloat=view.bounds.width
         let wh:CGFloat=view.bounds.height
         let bw:CGFloat=ww*20/129
-        let bh:CGFloat=bw*150/440
+        let bh:CGFloat=bw*160/440
         let sp=ww/129
-        let by=wh-bh-sp*4
+        let by=wh-bh-sp*2
  
         leftButton.alpha=alp
         midButton.alpha=alp

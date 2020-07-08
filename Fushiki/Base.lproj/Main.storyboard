@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="ipad12_9" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -211,6 +211,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                                 <gestureRecognizers/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qIw-KK-ztU">
+                                <rect key="frame" x="1076" y="911" width="260" height="93"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" backgroundImage="exit"/>
+                                <connections>
+                                    <action selector="goExit:" destination="YRo-aS-cBq" eventType="touchUpInside" id="MsL-tM-ove"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
@@ -231,6 +239,7 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="exitButton" destination="qIw-KK-ztU" id="UbX-Iq-ZCT"/>
                         <outlet property="helpView" destination="VTz-6I-kn3" id="YAU-pv-Xdk"/>
                         <outlet property="helpVieweng" destination="Ehp-nz-p8Q" id="2cs-9U-pCL"/>
                     </connections>
@@ -509,6 +518,7 @@
         <image name="carolicokn" width="440" height="150"/>
         <image name="etthelp" width="1334" height="750"/>
         <image name="etthelpeng" width="1334" height="750"/>
+        <image name="exit" width="440" height="150"/>
         <image name="furi1" width="512" height="512"/>
         <image name="furi2" width="512" height="512"/>
         <image name="fushikititle" width="1100" height="500"/>
