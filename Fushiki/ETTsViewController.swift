@@ -121,7 +121,15 @@ class ETTsViewController: UIViewController {
     var tcnt2:Int = 0
         
     @IBOutlet weak var timerCnt: UILabel!
-    
+      func drawBrect() {
+          let rectLayer = CAShapeLayer.init()
+          let rect1 = CGRect(x:0,y:0,width:view.bounds.width,height:view.bounds.height)
+          rectLayer.strokeColor = UIColor.black.cgColor
+          rectLayer.fillColor = UIColor.black.cgColor
+          rectLayer.lineWidth = 0
+          rectLayer.path = UIBezierPath(rect:rect1).cgPath
+          self.view.layer.addSublayer(rectLayer)
+      }
     override func viewDidLoad() {
         super.viewDidLoad()
         epTim.append(10)
@@ -130,7 +138,8 @@ class ETTsViewController: UIViewController {
         epTim.append(115)
         epTim.append(138)
         epTim.append(148)
-        print("ETTsView")
+        print("ETTsView/carolicETT")//carolicETT
+        drawBrect()
         setBackcolor(color:UIColor.black.cgColor)
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         if UIApplication.shared.isIdleTimerDisabled == false{
@@ -140,11 +149,15 @@ class ETTsViewController: UIViewController {
         self.becomeFirstResponder()
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
+        prefersHomeIndicatorAutoHidden()
     }
     
-    override var prefersStatusBarHidden: Bool {
+    override func prefersHomeIndicatorAutoHidden() -> Bool {
         return true
     }
+//   override var prefersStatusBarHidden: Bool {
+//        return true
+//    }
     
 //    @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
 //        print("singletap")

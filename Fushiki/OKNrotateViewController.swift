@@ -234,8 +234,12 @@ class OKNrotateViewController: UIViewController {
         self.becomeFirstResponder()
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
-    }
-    
+            prefersHomeIndicatorAutoHidden()
+        }
+        
+        override func prefersHomeIndicatorAutoHidden() -> Bool {
+            return true
+        }
     override var prefersStatusBarHidden: Bool {
         return true
     }

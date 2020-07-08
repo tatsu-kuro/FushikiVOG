@@ -216,9 +216,12 @@ class ViewController: UIViewController {
 //        setupGameController()
         UIApplication.shared.beginReceivingRemoteControlEvents()
         self.becomeFirstResponder()
+        prefersHomeIndicatorAutoHidden()
     }
- 
-           
+
+           override func prefersHomeIndicatorAutoHidden() -> Bool {
+               return true
+           }
 //      override var representedObject: Any? {
 //          didSet {
           // Update the view, if already loaded.

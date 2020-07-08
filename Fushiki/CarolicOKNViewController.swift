@@ -152,6 +152,10 @@ class CarolicOKNViewController: UIViewController {
         }
         )
     }
+//    func setBackcolor(color c:CGColor){
+//         let boximage  = makeBox(width: self.view.bounds.width, height:self.view.bounds.height,color:c)
+//         cameraView.image=boximage
+//     }
     override func viewDidLoad() {
         super.viewDidLoad()
         ww=view.bounds.width
@@ -169,7 +173,9 @@ class CarolicOKNViewController: UIViewController {
         bandW.fillColor = UIColor.black.cgColor
         bandW.lineWidth = 0
         startTime=CFAbsoluteTimeGetCurrent()
+        print("carolicOKN")
         drawBrect()
+//        setBackcolor(color:UIColor.black.cgColor)
         timer1 = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
@@ -179,8 +185,22 @@ class CarolicOKNViewController: UIViewController {
         self.becomeFirstResponder()
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
-    }
-    
+         prefersHomeIndicatorAutoHidden()
+        }
+        
+        override func prefersHomeIndicatorAutoHidden() -> Bool {
+            return true
+        }
+    /*       setBackcolor(color:UIColor.black.cgColor)
+     timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+     if UIApplication.shared.isIdleTimerDisabled == false{
+         UIApplication.shared.isIdleTimerDisabled = true//スリープしない
+     }
+     UIApplication.shared.beginReceivingRemoteControlEvents()
+     self.becomeFirstResponder()
+     tapInterval=CFAbsoluteTimeGetCurrent()-1
+     self.setNeedsStatusBarAppearanceUpdate()
+*/
     override var prefersStatusBarHidden: Bool {
         return true
     }
