@@ -16,7 +16,7 @@ class ETTcViewController: UIViewController {
     var startTime=CFAbsoluteTimeGetCurrent()
 
  //   var backMode:Int = 0
-    var timer: Timer!
+//    var timer: Timer!
     var tcount: Int = 0
 //    var panFlag:Bool = false
  //   var ettWidth:CGFloat = 0
@@ -59,9 +59,10 @@ class ETTcViewController: UIViewController {
         mainView.oknSpeed=oknSpeed
         mainView.oknDirection=oknDirection
         mainView.targetMode=targetMode
-        if timer?.isValid == true {
-              timer.invalidate()
-        }
+        displayLink?.invalidate()
+//        if timer?.isValid == true {
+//              timer.invalidate()
+//        }
         self.present(mainView, animated: false, completion: nil)
     }
     override func remoteControlReceived(with event: UIEvent?) {
@@ -127,6 +128,7 @@ class ETTcViewController: UIViewController {
          }
         setETTwidth(width: ettWidth)
     }
+    var displayLink:CADisplayLink?
     override func viewDidLoad() {
         super.viewDidLoad()
         print("ETTcView")
@@ -138,8 +140,11 @@ class ETTcViewController: UIViewController {
         singleRec.require(toFail: doubleRec)
 
  //       lastX = view.bounds.height/2
+        displayLink = CADisplayLink(target: self, selector: #selector(self.update))   //#selector部分については後述
+        displayLink!.preferredFramesPerSecond = 120  // FPS設定  //この場合は1秒間に20回
+        displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
 
-        timer = Timer.scheduledTimer(timeInterval: 1.0/60.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+//        timer = Timer.scheduledTimer(timeInterval: 1.0/60.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         tcount=0
         //       ETTbutton.isEnabled=false
         if UIApplication.shared.isIdleTimerDisabled == false{
@@ -234,8 +239,9 @@ class ETTcViewController: UIViewController {
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if timer?.isValid == true {
-            timer.invalidate()
-        }
+        displayLink?.invalidate()
+//        if timer?.isValid == true {
+//            timer.invalidate()
+//        }
     }
 }

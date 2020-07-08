@@ -28,6 +28,7 @@ class SaccadeViewController: UIViewController {
         mainView.oknSpeed=oknSpeed
         mainView.oknDirection=oknDirection
         mainView.targetMode=targetMode
+//        displayLink.invalidate()
         if timer?.isValid == true {
               timer.invalidate()
           }

@@ -111,12 +111,13 @@ class ETTsViewController: UIViewController {
         if timer?.isValid == true {
             timer.invalidate()
         }
-        if timer2?.isValid == true {
-            timer2.invalidate()
-        }
+        displayLink?.invalidate()
+//        if timer2?.isValid == true {
+//            timer2.invalidate()
+//        }
     }
 //    var timer: Timer!
-    var timer2: Timer!
+//    var timer2: Timer!
     var tcnt:Int = 0
     var tcnt2:Int = 0
     
@@ -151,7 +152,7 @@ class ETTsViewController: UIViewController {
 //    @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
 //        print("singletap")
 //    }
-    
+    var displayLink:CADisplayLink?
     @objc func update(tm: Timer) {
         tcnt += 1
         cirDia=view.bounds.width/26
@@ -171,16 +172,21 @@ class ETTsViewController: UIViewController {
         if tcnt == epTim[2]{
             setBackcolor(color:UIColor.black.cgColor)
         }
+        
         if tcnt == epTim[3]{
             setBackcolor(color:UIColor.white.cgColor)
             startTime=CFAbsoluteTimeGetCurrent()
-            timer2 = Timer.scheduledTimer(timeInterval: 1.0/60.0, target: self, selector: #selector(self.update2), userInfo: nil, repeats: true)
+            displayLink = CADisplayLink(target: self, selector: #selector(self.update2))   //#selector部分については後述
+            displayLink!.preferredFramesPerSecond = 120  // FPS設定  //この場合は1秒間に20回
+            displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
+//            timer2 = Timer.scheduledTimer(timeInterval: 1.0/60.0, target: self, selector: #selector(self.update2), userInfo: nil, repeats: true)
         }
         if tcnt == epTim[4]{
             setBackcolor(color:UIColor.black.cgColor)
-            if timer2.isValid==true{
-                timer2.invalidate()
-            }
+            displayLink?.invalidate()
+//            if timer2.isValid==true{
+//                timer2.invalidate()
+//            }
         }
         if tcnt==epTim[5]{
             if UIApplication.shared.isIdleTimerDisabled == true{
@@ -195,9 +201,10 @@ class ETTsViewController: UIViewController {
         if timer?.isValid == true {
             timer.invalidate()
         }
-        if timer2?.isValid == true {
-            timer2.invalidate()
-        }
+        displayLink!.invalidate()
+//        if timer2?.isValid == true {
+//            timer2.invalidate()
+//        }
     }
     func setBackcolor(color c:CGColor){
         let boximage  = makeBox(width: self.view.bounds.width, height:self.view.bounds.height,color:c)

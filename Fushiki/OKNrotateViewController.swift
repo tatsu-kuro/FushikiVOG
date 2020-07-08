@@ -15,7 +15,7 @@ class OKNrotateViewController: UIViewController {
     var oknDirection:Int = 0
     var targetMode:Int = 0
     
-    var timer:Timer!
+//    var timer:Timer!
     var startTime=CFAbsoluteTimeGetCurrent()
 //    var timerokp:Timer!
     var cnt:Int = 0
@@ -47,9 +47,10 @@ class OKNrotateViewController: UIViewController {
         mainView.oknSpeed=oknSpeed
         mainView.oknDirection=oknDirection
         mainView.targetMode=targetMode
-        if timer?.isValid == true {
-              timer.invalidate()
-        }
+        displayLink?.invalidate()
+//        if timer?.isValid == true {
+//              timer.invalidate()
+//        }
         self.present(mainView, animated: false, completion: nil)
     }
     
@@ -118,7 +119,7 @@ class OKNrotateViewController: UIViewController {
         setTimer()
     }
     @IBAction func speed2Action(_ sender: Any) {
-         stopTimer()
+        stopTimer()
         oknSpeed=2
         setTimer()
     }
@@ -141,19 +142,23 @@ class OKNrotateViewController: UIViewController {
     var pitch:CGFloat=0
  
     func stopTimer(){
-        if timer?.isValid == true {
-            timer.invalidate()
-        }
+//        if timer?.isValid == true {
+//            timer.invalidate()
+//        }
+        displayLink?.invalidate()
         cnt=0
         lastMove=0
         initFlag=false
     }
+    var displayLink:CADisplayLink?
     func setTimer(){
         startTime=CFAbsoluteTimeGetCurrent()
         ww=view.bounds.width
         wh=view.bounds.height
-
-        timer = Timer.scheduledTimer(timeInterval: 1.0/60.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+        let displayLink = CADisplayLink(target: self, selector: #selector(self.update))   //#selector部分については後述
+         displayLink.preferredFramesPerSecond = 120  // FPS設定  //この場合は1秒間に20回
+         displayLink.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
+//        timer = Timer.scheduledTimer(timeInterval: 1.0/60.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         cnt=0
     }
 
@@ -253,6 +258,9 @@ class OKNrotateViewController: UIViewController {
  
     override func viewDidAppear(_ animated: Bool) {
         setTimer()
+//        let displayLink = CADisplayLink(target: self, selector: #selector(self.update))   //#selector部分については後述
+//         displayLink.preferredFramesPerSecond = 120  // FPS設定  //この場合は1秒間に20回
+//         displayLink.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
     }
 }
 
