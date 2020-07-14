@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		69DB12C123AEF297000C733A /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69DB12C023AEF297000C733A /* GameController.framework */; };
-		8E2604122134237D00714C67 /* OKNrotateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2604112134237D00714C67 /* OKNrotateViewController.swift */; };
+		8E2604122134237D00714C67 /* OKNViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2604112134237D00714C67 /* OKNViewController.swift */; };
 		8E3BD05F22C839A300454D93 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3BD05E22C839A300454D93 /* HelpViewController.swift */; };
 		8E4EDD532285BD4A00B0D306 /* SaccadeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4EDD522285BD4A00B0D306 /* SaccadeViewController.swift */; };
 		8E4EDD552285C0E500B0D306 /* CarolicOKNViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4EDD542285C0E500B0D306 /* CarolicOKNViewController.swift */; };
-		8ECD87C02116865C0084CDB1 /* ETTsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECD87BF2116865C0084CDB1 /* ETTsViewController.swift */; };
-		8ECD87C22116875E0084CDB1 /* ETTcViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECD87C12116875E0084CDB1 /* ETTcViewController.swift */; };
+		8ECD87C02116865C0084CDB1 /* CarolicETTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECD87BF2116865C0084CDB1 /* CarolicETTViewController.swift */; };
+		8ECD87C22116875E0084CDB1 /* ETTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECD87C12116875E0084CDB1 /* ETTViewController.swift */; };
 		8EE77EC620EF742C00517DEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE77EC520EF742C00517DEC /* AppDelegate.swift */; };
 		8EE77ECB20EF742C00517DEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE77EC920EF742C00517DEC /* Main.storyboard */; };
 		8EE77ECD20EF742E00517DEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8EE77ECC20EF742E00517DEC /* Assets.xcassets */; };
@@ -23,12 +23,12 @@
 
 /* Begin PBXFileReference section */
 		69DB12C023AEF297000C733A /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
-		8E2604112134237D00714C67 /* OKNrotateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OKNrotateViewController.swift; sourceTree = "<group>"; };
+		8E2604112134237D00714C67 /* OKNViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OKNViewController.swift; sourceTree = "<group>"; };
 		8E3BD05E22C839A300454D93 /* HelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
 		8E4EDD522285BD4A00B0D306 /* SaccadeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaccadeViewController.swift; sourceTree = "<group>"; };
 		8E4EDD542285C0E500B0D306 /* CarolicOKNViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarolicOKNViewController.swift; sourceTree = "<group>"; };
-		8ECD87BF2116865C0084CDB1 /* ETTsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETTsViewController.swift; sourceTree = "<group>"; };
-		8ECD87C12116875E0084CDB1 /* ETTcViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETTcViewController.swift; sourceTree = "<group>"; };
+		8ECD87BF2116865C0084CDB1 /* CarolicETTViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarolicETTViewController.swift; sourceTree = "<group>"; };
+		8ECD87C12116875E0084CDB1 /* ETTViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETTViewController.swift; sourceTree = "<group>"; };
 		8EE77EC220EF742C00517DEC /* Fushiki.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fushiki.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EE77EC520EF742C00517DEC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8EE77EC720EF742C00517DEC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -81,11 +81,11 @@
 				8EE77EC520EF742C00517DEC /* AppDelegate.swift */,
 				8E3BD05E22C839A300454D93 /* HelpViewController.swift */,
 				8E4EDD542285C0E500B0D306 /* CarolicOKNViewController.swift */,
-				8ECD87BF2116865C0084CDB1 /* ETTsViewController.swift */,
+				8ECD87BF2116865C0084CDB1 /* CarolicETTViewController.swift */,
 				8EE77EC720EF742C00517DEC /* ViewController.swift */,
-				8E2604112134237D00714C67 /* OKNrotateViewController.swift */,
+				8E2604112134237D00714C67 /* OKNViewController.swift */,
 				8E4EDD522285BD4A00B0D306 /* SaccadeViewController.swift */,
-				8ECD87C12116875E0084CDB1 /* ETTcViewController.swift */,
+				8ECD87C12116875E0084CDB1 /* ETTViewController.swift */,
 				8EE77EC920EF742C00517DEC /* Main.storyboard */,
 				8EE77ECC20EF742E00517DEC /* Assets.xcassets */,
 				8EE77ECE20EF742E00517DEC /* LaunchScreen.storyboard */,
@@ -171,12 +171,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				8EE77EC620EF742C00517DEC /* AppDelegate.swift in Sources */,
-				8ECD87C02116865C0084CDB1 /* ETTsViewController.swift in Sources */,
-				8ECD87C22116875E0084CDB1 /* ETTcViewController.swift in Sources */,
+				8ECD87C02116865C0084CDB1 /* CarolicETTViewController.swift in Sources */,
+				8ECD87C22116875E0084CDB1 /* ETTViewController.swift in Sources */,
 				8E3BD05F22C839A300454D93 /* HelpViewController.swift in Sources */,
 				8E4EDD532285BD4A00B0D306 /* SaccadeViewController.swift in Sources */,
 				8E4EDD552285C0E500B0D306 /* CarolicOKNViewController.swift in Sources */,
-				8E2604122134237D00714C67 /* OKNrotateViewController.swift in Sources */,
+				8E2604122134237D00714C67 /* OKNViewController.swift in Sources */,
 				8EFA37CE215F93C10040F4E0 /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

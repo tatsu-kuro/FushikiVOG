@@ -73,7 +73,7 @@ class ViewController: UIViewController {
     func doModes(){
         let storyboard: UIStoryboard = self.storyboard!
         if targetMode==0{//pursuit
-            let nextView = storyboard.instantiateViewController(withIdentifier: "ETTc") as! ETTcViewController
+            let nextView = storyboard.instantiateViewController(withIdentifier: "ETTc") as! ETTViewController
             nextView.ettWidth=ettWidth
             nextView.oknSpeed = oknSpeed
             nextView.oknDirection = oknDirection
@@ -87,14 +87,14 @@ class ViewController: UIViewController {
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }else if targetMode==2{//okn
-            let nextView = storyboard.instantiateViewController(withIdentifier: "OKNrotate") as! OKNrotateViewController
+            let nextView = storyboard.instantiateViewController(withIdentifier: "OKNrotate") as! OKNViewController
             nextView.ettWidth=ettWidth
             nextView.oknSpeed = oknSpeed
             nextView.oknDirection = oknDirection
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }else if targetMode==3{//carolicETT
-            let nextView = storyboard.instantiateViewController(withIdentifier: "ETTs") as! ETTsViewController
+            let nextView = storyboard.instantiateViewController(withIdentifier: "ETTs") as! CarolicETTViewController
 //            nextView.timer1Interval=timer1Interval
             nextView.ettWidth=ettWidth
             nextView.oknSpeed = oknSpeed
@@ -140,15 +140,15 @@ class ViewController: UIViewController {
                     targetMode = 0
                 }
                 if targetMode==0{
-                    leftButton.alpha=1.0// saccadebut.alph=1.0
+                    button0.alpha=1.0// saccadebut.alph=1.0
                 }else if targetMode==1{
-                    midButton.alpha=1.0
+                    button1.alpha=1.0
                 }else if targetMode==2{
-                    rightButton.alpha=1.0
+                    button2.alpha=1.0
                 }else if targetMode==3{
-                    mode3Button.alpha=1.0
+                    button3.alpha=1.0
                 }else if targetMode==4{
-                    mode4Button.alpha=1.0
+                    button4.alpha=1.0
                 }else{
                     helpButton.alpha=1.0
                 }
@@ -165,15 +165,15 @@ class ViewController: UIViewController {
                     targetMode = 5
                 }
                 if targetMode==0{
-                    leftButton.alpha=1.0// saccadebut.alph=1.0
+                    button0.alpha=1.0// saccadebut.alph=1.0
                 }else if targetMode==1{
-                    midButton.alpha=1.0
+                    button1.alpha=1.0
                 }else if targetMode==2{
-                    rightButton.alpha=1.0
+                    button2.alpha=1.0
                 }else if targetMode==3{
-                    mode3Button.alpha=1.0
+                    button3.alpha=1.0
                 }else if targetMode==4{
-                    mode4Button.alpha=1.0
+                    button4.alpha=1.0
                 }else{
                     helpButton.alpha=1.0
                 }
@@ -184,14 +184,7 @@ class ViewController: UIViewController {
             }
         }
     }
- /*   func getUserDefault(str:String,ret:Int) -> Int{//getUserDefault_one
-        if (UserDefaults.standard.object(forKey: str) != nil){//keyが設定してなければretをセット
-            return UserDefaults.standard.integer(forKey:str)
-        }else{
-            UserDefaults.standard.set(ret, forKey: str)
-            return ret
-        }
-    }*/
+
     override func viewDidAppear(_ animated: Bool) {
         if UIApplication.shared.isIdleTimerDisabled == true{
             UIApplication.shared.isIdleTimerDisabled = false//監視する
@@ -201,13 +194,9 @@ class ViewController: UIViewController {
             setRotate(alp: 0.6)
         }
     }
-//    @objc func viewWillEnterForeground(_ notification: Notification?) {
-//        print("viewWillEnterForground")
-//        sound(snd:"silence")
-//    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-//        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.viewWillEnterForeground(_:)), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         bandWidth = self.view.bounds.width/10
         cirDiameter = self.view.bounds.width/26
         setRotate(alp:1)
@@ -222,15 +211,7 @@ class ViewController: UIViewController {
            override func prefersHomeIndicatorAutoHidden() -> Bool {
                return true
            }
-//      override var representedObject: Any? {
-//          didSet {
-          // Update the view, if already loaded.
-//          }
- //     }
- //   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        print("prepare")
-//        sound(snd:"silence")
-//    }
+
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -244,21 +225,12 @@ class ViewController: UIViewController {
         )
     }
     
-//    @IBAction func unwind(_ segue: UIStoryboardSegue) {
-//
-//        print("unwind")
-//        if timer?.isValid == true {
-//            timer.invalidate()
-//        }
-//        setRotate(alp:1)
-//    }
-    
     @IBOutlet weak var helpButton: UIButton!
-    @IBOutlet weak var mode3Button: UIButton!
-    @IBOutlet weak var mode4Button: UIButton!
-    @IBOutlet weak var midButton: UIButton!
-    @IBOutlet weak var leftButton: UIButton!
-    @IBOutlet weak var rightButton: UIButton!
+    @IBOutlet weak var button3: UIButton!
+    @IBOutlet weak var button4: UIButton!
+    @IBOutlet weak var button1: UIButton!
+    @IBOutlet weak var button0: UIButton!
+    @IBOutlet weak var button2: UIButton!
     @IBOutlet weak var titleImage: UIImageView!
     func setRotate(alp:CGFloat){
  //       print("setrotate")
@@ -269,33 +241,33 @@ class ViewController: UIViewController {
         let sp=ww/129
         let by=wh-bh-sp*2
  
-        leftButton.alpha=alp
-        midButton.alpha=alp
-        rightButton.alpha=alp
-        mode3Button.alpha=alp
-        mode4Button.alpha=alp
+        button0.alpha=alp
+        button1.alpha=alp
+        button2.alpha=alp
+        button3.alpha=alp
+        button4.alpha=alp
         helpButton.alpha=alp
 
-        leftButton.frame.size.width = bw
-        leftButton.frame.size.height = bh
-        leftButton.frame.origin.x = sp*2
-        leftButton.frame.origin.y = by
-        midButton.frame.size.width = bw
-        midButton.frame.size.height = bh
-        midButton.frame.origin.x = bw*1+sp*3
-        midButton.frame.origin.y = by
-        rightButton.frame.size.width = bw
-        rightButton.frame.size.height = bh
-        rightButton.frame.origin.x = bw*2+sp*4
-        rightButton.frame.origin.y = by
-        mode3Button.frame.size.width=bw
-        mode3Button.frame.size.height=bh
-        mode3Button.frame.origin.x=bw*3+sp*5
-        mode3Button.frame.origin.y=by
-        mode4Button.frame.size.width=bw
-        mode4Button.frame.size.height=bh
-        mode4Button.frame.origin.x=bw*4+sp*6
-        mode4Button.frame.origin.y=by
+        button0.frame.size.width = bw
+        button0.frame.size.height = bh
+        button0.frame.origin.x = sp*2//1
+        button0.frame.origin.y = by
+        button1.frame.size.width = bw
+        button1.frame.size.height = bh
+        button1.frame.origin.x = bw*1+sp*3//2
+        button1.frame.origin.y = by
+        button2.frame.size.width = bw
+        button2.frame.size.height = bh
+        button2.frame.origin.x = bw*2+sp*4//3
+        button2.frame.origin.y = by
+        button3.frame.size.width=bw
+        button3.frame.size.height=bh
+        button3.frame.origin.x=bw*3+sp*5//4
+        button3.frame.origin.y=by
+        button4.frame.size.width=bw
+        button4.frame.size.height=bh
+        button4.frame.origin.x=bw*4+sp*6//5
+        button4.frame.origin.y=by
 
         helpButton.frame.size.width = bw
         helpButton.frame.size.height = bh

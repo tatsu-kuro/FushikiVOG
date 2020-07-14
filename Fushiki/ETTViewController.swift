@@ -8,7 +8,7 @@
 
 import UIKit
 import AVFoundation
-class ETTcViewController: UIViewController {
+class ETTViewController: UIViewController {
  
     var cirDiameter:CGFloat = 0
     var startTime=CFAbsoluteTimeGetCurrent()

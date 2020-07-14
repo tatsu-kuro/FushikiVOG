@@ -8,7 +8,7 @@
 
 import UIKit
 import AVFoundation
-class ETTsViewController: UIViewController {
+class CarolicETTViewController: UIViewController {
     var ettWidth:Int = 0//1:narrow,2:wide
     var oknSpeed:Int = 0
     var oknDirection:Int = 0

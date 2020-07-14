@@ -9,7 +9,7 @@
 import UIKit
 import CoreMotion
 
-class OKNrotateViewController: UIViewController {
+class OKNViewController: UIViewController {
     var ettWidth:Int = 0//1:narrow,2:wide
     var oknSpeed:Int = 2
     var oknDirection:Int = 0
