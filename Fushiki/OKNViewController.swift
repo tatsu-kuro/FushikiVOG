@@ -161,8 +161,10 @@ class OKNViewController: UIViewController {
     var wh:CGFloat=0
     var initf:Bool=false
     var endF=false
+    var maxtime:Double=0
     @objc func update() {
         cnt += 1
+        let time0=CFAbsoluteTimeGetCurrent()
         if endF==true{
             return
         }
@@ -174,7 +176,7 @@ class OKNViewController: UIViewController {
         initf=true
         let elapset=CFAbsoluteTimeGetCurrent()-startTime
         
-        if(cnt>60*30 && elapset>29 || cnt>120*30){
+        if(elapset>30){
             doubleTap(0)
             endF=true
         }
@@ -197,18 +199,12 @@ class OKNViewController: UIViewController {
             for i in 0..<6 {
                 drawBand(rectB:CGRect(x:CGFloat(i-1)*x0+xd,y:0,width:ww/10,height:wh))
             }
-
         }
-/*        cnt += 1
-        moveBandDir(move:lastMove+oknSpeed*(oknSpeedsub+1),dir:oknDirection,gyro:0)
-        lastMove += oknSpeed*(oknSpeedsub+1)
-        if lastMove > modoru{
-            lastMove -= modoru
-        }*/
-//        if(cnt>60*30){//finish
-//            print("doubleTap(0)****")
-//            doubleTap(0)
-//        }
+        let dtime=CFAbsoluteTimeGetCurrent()-time0
+        if dtime>maxtime{
+            maxtime=dtime
+        }
+        print("t:",maxtime,dtime)
     }
 
     override func didReceiveMemoryWarning() {

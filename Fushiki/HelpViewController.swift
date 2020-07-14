@@ -20,6 +20,7 @@ class HelpViewController: UIViewController {
     @IBOutlet weak var helpView: UIImageView!
     
     @IBOutlet weak var helpVieweng: UIImageView!
+    @IBOutlet weak var globeButton: UIButton!
     
     @IBOutlet weak var exitButton: UIButton!
     override func didReceiveMemoryWarning() {
@@ -27,22 +28,15 @@ class HelpViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func globeBut(_ sender: Any) {
+        chanLang()
+    }
     @IBAction func doubleTap(_ sender: Any) {//singleTapに変更したが、名前はそのまま
         if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
             print("doubleTapPlay")
             returnMain()
-            //                    doubleTap(0)
-            //                    self.dismiss(animated: true, completion: nil)
         }else{
-            if(englishF){
-                englishF=false
-                helpView.alpha=1.0
-                helpVieweng.alpha=0
-            }else{
-                englishF=true
-                helpView.alpha=0
-                helpVieweng.alpha=1.0
-            }
+            chanLang()
         }
         tapInterval=CFAbsoluteTimeGetCurrent()
     }
@@ -54,9 +48,17 @@ class HelpViewController: UIViewController {
         mainView.targetMode=targetMode
         self.present(mainView, animated: false, completion: nil)
     }
-//    @IBAction func exitGo(_ sender: Any) {
-//        doubleTap(0)
-//    }
+    func chanLang(){
+        if(englishF){
+              englishF=false
+              helpView.alpha=1.0
+              helpVieweng.alpha=0
+          }else{
+              englishF=true
+              helpView.alpha=0
+              helpVieweng.alpha=1.0
+          }
+    }
     override func remoteControlReceived(with event: UIEvent?) {
         guard event?.type == .remoteControl else { return }
         
@@ -68,18 +70,8 @@ class HelpViewController: UIViewController {
                 if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
                     print("doubleTapPlay")
                     returnMain()
-//                    doubleTap(0)
-                    //                    self.dismiss(animated: true, completion: nil)
                 }else{
-                    if(englishF){
-                        englishF=false
-                        helpView.alpha=1.0
-                        helpVieweng.alpha=0
-                    }else{
-                        englishF=true
-                        helpView.alpha=0
-                        helpVieweng.alpha=1.0
-                    }
+                    chanLang()
                 }
                 tapInterval=CFAbsoluteTimeGetCurrent()
             case .remoteControlTogglePlayPause:
@@ -87,19 +79,8 @@ class HelpViewController: UIViewController {
                 if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
                     print("doubleTap")
                     returnMain()
-//                    doubleTap(0)
-                    //                 self.dismiss(animated: true, completion: nil)
                 }else{
-                    if(englishF){
-                        englishF=false
-                        helpView.alpha=1.0
-                        helpVieweng.alpha=0
-                    }else{
-                        englishF=true
-                        helpView.alpha=0
-                        helpVieweng.alpha=1.0
-                    }
-                    print("singletap")
+                    chanLang()
                 }
                 tapInterval=CFAbsoluteTimeGetCurrent()
             default:
@@ -111,8 +92,7 @@ class HelpViewController: UIViewController {
     @IBAction func goExit(_ sender: Any) {
         returnMain()
     }
-    
-    
+  
     func moveImage(mov:CGFloat){
         helpView.frame.origin.y -= mov
     }
@@ -132,38 +112,36 @@ class HelpViewController: UIViewController {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
- //       helpVieweng.alpha=0//はみ出ているので
-//        let ww=view.bounds.width
-//        let wh=view.bounds.height
-//        let bw=ww/17
-//        let bh=bw//*15/20
-//        self.exitButton.frame = CGRect(x:ww-bw*4/3,y:wh-bh*4/3,width: bw,height: bh)
-    }
+     }
     override func viewDidLoad() {
         super.viewDidLoad()
         let ww:CGFloat=view.bounds.width
-            let wh:CGFloat=view.bounds.height
-            let bw:CGFloat=ww*20/129
-            let bh:CGFloat=bw*160/440
-            let sp=ww/129
-            let by=wh-bh-sp*2
+        let wh:CGFloat=view.bounds.height
+        let bw:CGFloat=ww*20/129
+        let bh:CGFloat=bw*160/440
+        let sp=ww/129
+        let by=wh-bh-sp*2
         exitButton.frame.size.width = bw
-            exitButton.frame.size.height = bh
-            exitButton.frame.origin.x = bw*5+sp*7
-            exitButton.frame.origin.y  = by
-//        let w=view.bounds.width
-//        let h=view.bounds.height
-//        helpView.frame.origin.x=10
-//        helpView.frame.origin.y=10
-//        helpView.frame.size.width=w-20
-//        helpView.frame.size.height=(w-2)*660/1320
-//        helpHlimit=view.bounds.height-(w-20)*660/1320 - 20
+        exitButton.frame.size.height = bh
+        exitButton.frame.origin.x = bw*5+sp*7
+        exitButton.frame.origin.y  = by
+        globeButton.frame.size.width = bw/3
+        globeButton.frame.size.height = bw/3
+        globeButton.frame.origin.x = ww - bw/3 - sp*2
+        globeButton.frame.origin.y  = sp
+        //        let w=view.bounds.width
+        //        let h=view.bounds.height
+        //        helpView.frame.origin.x=10
+        //        helpView.frame.origin.y=10
+        //        helpView.frame.size.width=w-20
+        //        helpView.frame.size.height=(w-2)*660/1320
+        //        helpHlimit=view.bounds.height-(w-20)*660/1320 - 20
         if UIApplication.shared.isIdleTimerDisabled == true{
             UIApplication.shared.isIdleTimerDisabled = false//監視する
         }
         self.setNeedsStatusBarAppearanceUpdate()
-           prefersHomeIndicatorAutoHidden()
-        }
+        prefersHomeIndicatorAutoHidden()
+    }
 
                override func prefersHomeIndicatorAutoHidden() -> Bool {
                    return true
