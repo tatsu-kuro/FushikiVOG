@@ -136,7 +136,7 @@ class MainViewController: UIViewController {
                 }else{
                     targetMode += 1
                 }
-                if targetMode>5 {
+                if targetMode>6 {
                     targetMode = 0
                 }
                 if targetMode==0{
@@ -149,8 +149,10 @@ class MainViewController: UIViewController {
                     button3.alpha=1.0
                 }else if targetMode==4{
                     button4.alpha=1.0
-                }else{
+                }else if targetMode==5{
                     helpButton.alpha=1.0
+                }else{
+                    setteiButton.alpha=1.0
                 }
                 print("NextTrack")
                 print(targetMode)
@@ -162,7 +164,7 @@ class MainViewController: UIViewController {
                     targetMode -= 1
                 }
                 if targetMode<0{
-                    targetMode = 5
+                    targetMode = 6
                 }
                 if targetMode==0{
                     button0.alpha=1.0// saccadebut.alph=1.0
@@ -174,8 +176,10 @@ class MainViewController: UIViewController {
                     button3.alpha=1.0
                 }else if targetMode==4{
                     button4.alpha=1.0
-                }else{
+                }else if targetMode==5{
                     helpButton.alpha=1.0
+                }else{
+                    setteiButton.alpha=1.0
                 }
                 print(targetMode)
                 print("PreviousTrack")
@@ -224,7 +228,7 @@ class MainViewController: UIViewController {
         }
         )
     }
-    
+    @IBOutlet weak var setteiButton: UIButton!
     @IBOutlet weak var helpButton: UIButton!
     @IBOutlet weak var button3: UIButton!
     @IBOutlet weak var button4: UIButton!
@@ -236,10 +240,10 @@ class MainViewController: UIViewController {
  //       print("setrotate")
         let ww:CGFloat=view.bounds.width
         let wh:CGFloat=view.bounds.height
-        let bw:CGFloat=ww*20/129
-        let bh:CGFloat=bw*160/440
-        let sp=ww/129
-        let by=wh-bh-sp*2
+        let bw:CGFloat=ww*0.9/7
+        let bh:CGFloat=bw*170/440
+        let sp=ww*0.1/10
+        let by=wh-bh-sp
  
         button0.alpha=alp
         button1.alpha=alp
@@ -247,32 +251,14 @@ class MainViewController: UIViewController {
         button3.alpha=alp
         button4.alpha=alp
         helpButton.alpha=alp
-
-        button0.frame.size.width = bw
-        button0.frame.size.height = bh
-        button0.frame.origin.x = sp*2//1
-        button0.frame.origin.y = by
-        button1.frame.size.width = bw
-        button1.frame.size.height = bh
-        button1.frame.origin.x = bw*1+sp*3//2
-        button1.frame.origin.y = by
-        button2.frame.size.width = bw
-        button2.frame.size.height = bh
-        button2.frame.origin.x = bw*2+sp*4//3
-        button2.frame.origin.y = by
-        button3.frame.size.width=bw
-        button3.frame.size.height=bh
-        button3.frame.origin.x=bw*3+sp*5//4
-        button3.frame.origin.y=by
-        button4.frame.size.width=bw
-        button4.frame.size.height=bh
-        button4.frame.origin.x=bw*4+sp*6//5
-        button4.frame.origin.y=by
-
-        helpButton.frame.size.width = bw
-        helpButton.frame.size.height = bh
-        helpButton.frame.origin.x = bw*5+sp*7
-        helpButton.frame.origin.y  = by
+        setteiButton.alpha=alp
+        button0.frame=CGRect(x:sp*2,y:by,width:bw,height:bh)
+        button1.frame=CGRect(x:bw*1+sp*3,y:by,width:bw,height:bh)
+        button2.frame=CGRect(x:bw*2+sp*4,y:by,width:bw,height:bh)
+        button3.frame=CGRect(x:bw*3+sp*5,y:by,width:bw,height:bh)
+        button4.frame=CGRect(x:bw*4+sp*6,y:by,width:bw,height:bh)
+        helpButton.frame=CGRect(x:bw*5+sp*7,y:by,width:bw,height:bh)
+        setteiButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height:bh)
 
         let logoY = ww/13
         if view.bounds.width/2 > by - logoY{
