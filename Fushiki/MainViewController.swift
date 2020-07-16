@@ -11,7 +11,7 @@ import AVFoundation
 import MediaPlayer
 
 //import GameController
-class ViewController: UIViewController {
+class MainViewController: UIViewController {
     var controllerF:Bool=false
     var timer: Timer!
     var backModeETTp:Int = 0
@@ -73,28 +73,28 @@ class ViewController: UIViewController {
     func doModes(){
         let storyboard: UIStoryboard = self.storyboard!
         if targetMode==0{//pursuit
-            let nextView = storyboard.instantiateViewController(withIdentifier: "ETTc") as! ETTViewController
+            let nextView = storyboard.instantiateViewController(withIdentifier: "ETT") as! ETTViewController
             nextView.ettWidth=ettWidth
             nextView.oknSpeed = oknSpeed
             nextView.oknDirection = oknDirection
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }else if targetMode==1{//saccade
-            let nextView = storyboard.instantiateViewController(withIdentifier: "Saccade") as! SaccadeViewController
+            let nextView = storyboard.instantiateViewController(withIdentifier: "OKP") as! OKPViewController
             nextView.ettWidth=ettWidth
             nextView.oknSpeed = oknSpeed
             nextView.oknDirection = oknDirection
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }else if targetMode==2{//okn
-            let nextView = storyboard.instantiateViewController(withIdentifier: "OKNrotate") as! OKNViewController
+            let nextView = storyboard.instantiateViewController(withIdentifier: "OKN") as! OKNViewController
             nextView.ettWidth=ettWidth
             nextView.oknSpeed = oknSpeed
             nextView.oknDirection = oknDirection
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }else if targetMode==3{//carolicETT
-            let nextView = storyboard.instantiateViewController(withIdentifier: "ETTs") as! CarolicETTViewController
+            let nextView = storyboard.instantiateViewController(withIdentifier: "CarolicETT") as! CarolicETTViewController
 //            nextView.timer1Interval=timer1Interval
             nextView.ettWidth=ettWidth
             nextView.oknSpeed = oknSpeed
@@ -109,7 +109,7 @@ class ViewController: UIViewController {
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }else if targetMode==5{//help
-            let nextView = storyboard.instantiateViewController(withIdentifier: "helpView") as! HelpViewController
+            let nextView = storyboard.instantiateViewController(withIdentifier: "HELP") as! HelpViewController
             nextView.ettWidth=ettWidth
             nextView.oknSpeed = oknSpeed
             nextView.oknDirection = oknDirection

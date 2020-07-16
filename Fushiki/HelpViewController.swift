@@ -41,7 +41,7 @@ class HelpViewController: UIViewController {
         tapInterval=CFAbsoluteTimeGetCurrent()
     }
     func returnMain(){
-        let mainView = storyboard?.instantiateViewController(withIdentifier: "mainView") as! ViewController
+        let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
         mainView.ettWidth=ettWidth
         mainView.oknSpeed=oknSpeed
         mainView.oknDirection=oknDirection

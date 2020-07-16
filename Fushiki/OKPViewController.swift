@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class SaccadeViewController: UIViewController {
+class OKPViewController: UIViewController {
     var ettWidth:Int = 0//1:narrow,2:wide
     var oknSpeed:Int = 2
     var oknDirection:Int = 0
@@ -23,7 +23,7 @@ class SaccadeViewController: UIViewController {
     var tcount: Int = 0
     var tapInterval=CFAbsoluteTimeGetCurrent()
     @IBAction func doubleTap(_ sender: Any) {
-        let mainView = storyboard?.instantiateViewController(withIdentifier: "mainView") as! ViewController
+        let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
         mainView.ettWidth=ettWidth
         mainView.oknSpeed=oknSpeed
         mainView.oknDirection=oknDirection

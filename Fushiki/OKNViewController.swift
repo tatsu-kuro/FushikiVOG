@@ -42,7 +42,7 @@ class OKNViewController: UIViewController {
     
     @IBAction func doubleTap(_ sender: Any) {
         stopDisplaylink()
-        let mainView = storyboard?.instantiateViewController(withIdentifier: "mainView") as! ViewController
+        let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
         mainView.ettWidth=ettWidth
         mainView.oknSpeed=oknSpeed
         mainView.oknDirection=oknDirection

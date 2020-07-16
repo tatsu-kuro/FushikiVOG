@@ -8,10 +8,25 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Settei View Controller-->
+        <scene sceneID="HTz-C2-LSA">
+            <objects>
+                <viewController storyboardIdentifier="SETTEI" id="gOS-fU-nK5" userLabel="Settei View Controller" customClass="SetteiViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LGj-S8-yQ0">
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="53f-q3-sSQ"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bde-H1-uyg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-883" y="-2928"/>
+        </scene>
+        <!--OKN View Controller-->
         <scene sceneID="g5B-W1-Ehd">
             <objects>
-                <viewController storyboardIdentifier="OKNrotate" modalPresentationStyle="fullScreen" id="fl3-2K-fNm" customClass="OKNViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OKN" modalPresentationStyle="fullScreen" id="fl3-2K-fNm" userLabel="OKN View Controller" customClass="OKNViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CNm-l8-Sua">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -140,7 +155,7 @@
         <!--CarolicETT View Controller-->
         <scene sceneID="VIV-hu-Fjj">
             <objects>
-                <viewController storyboardIdentifier="ETTs" modalPresentationStyle="fullScreen" id="41X-WK-AtZ" customClass="CarolicETTViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CarolicETT" modalPresentationStyle="fullScreen" id="41X-WK-AtZ" customClass="CarolicETTViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RRo-5E-Plm">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -199,7 +214,7 @@
         <!--Help View Controller-->
         <scene sceneID="fHr-hu-Bqw">
             <objects>
-                <viewController storyboardIdentifier="helpView" modalPresentationStyle="fullScreen" id="YRo-aS-cBq" customClass="HelpViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HELP" modalPresentationStyle="fullScreen" id="YRo-aS-cBq" customClass="HelpViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VeA-Hv-JEV">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -267,10 +282,10 @@
             </objects>
             <point key="canvasLocation" x="68.973214285714278" y="-2795.6521739130435"/>
         </scene>
-        <!--View Controller-->
+        <!--ETT View Controller-->
         <scene sceneID="qLL-Sy-2iy">
             <objects>
-                <viewController storyboardIdentifier="ETTc" modalPresentationStyle="fullScreen" id="uZP-sJ-vGG" customClass="ETTViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ETT" modalPresentationStyle="fullScreen" id="uZP-sJ-vGG" userLabel="ETT View Controller" customClass="ETTViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="439-Kz-5Q0">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -349,10 +364,10 @@
             </objects>
             <point key="canvasLocation" x="-52" y="-1372"/>
         </scene>
-        <!--Saccade View Controller-->
+        <!--OKP View Controller-->
         <scene sceneID="bOq-gE-gCc">
             <objects>
-                <viewController storyboardIdentifier="Saccade" modalPresentationStyle="fullScreen" id="XY3-rd-IfB" customClass="SaccadeViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OKP" modalPresentationStyle="fullScreen" id="XY3-rd-IfB" userLabel="OKP View Controller" customClass="OKPViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cIk-4H-s6y">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -373,10 +388,10 @@
             </objects>
             <point key="canvasLocation" x="-52" y="-682"/>
         </scene>
-        <!--View Controller-->
+        <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="mainView" modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="ViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MAIN" modalPresentationStyle="fullScreen" id="BYZ-38-t0r" userLabel="Main View Controller" customClass="MainViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="UIImageView">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
