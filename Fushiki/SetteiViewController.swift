@@ -146,7 +146,7 @@ class SetteiViewController: UIViewController {
         paraCnt7.value=Float(ettWidth)/100.0
     }
     func setokpMode(){
-        paraTxt0.text="OKP:" + String(Int(okpMode)) + "   "
+        paraTxt0.text="OKP-MODE" + "   "
         if okpMode == 0{
             paraTxt0.text! += " right -> " + String(Int(okpTime)) + "sec -> left"
         }else if okpMode == 1{
@@ -158,7 +158,7 @@ class SetteiViewController: UIViewController {
         }
     }
     func setoknMode(){
-        paraTxt3.text="OKN:" + String(Int(oknMode)) + "   "
+        paraTxt3.text="OKN-MODE" + "   "
         if oknMode == 0{
             paraTxt3.text! += " right(" + String(Int(oknTime)) + "sec) -> black"
         }else if oknMode == 1{
@@ -170,7 +170,7 @@ class SetteiViewController: UIViewController {
         }
     }
     func setettMode(){
-        paraTxt6.text="ETT:" + String(Int(ettMode)) + "   "
+        paraTxt6.text="ETT-MODE" + "   "
         if ettMode == 0{
             paraTxt6.text! += " pursuit(30s) horizontal"
         }else if ettMode == 1{
