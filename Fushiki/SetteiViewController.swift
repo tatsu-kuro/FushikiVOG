@@ -9,12 +9,14 @@
 import UIKit
 
 class SetteiViewController: UIViewController {
-    var oknSpeed:Int = 2
-    var oknTime:Int = 0
+    var oknSpeed:Int = 50
+    var oknTime:Int = 50
     var oknMode:Int=0
-    var okpSpeed:Int=1
-    var okpTime:Int=0
+    var okpSpeed:Int=50
+    var okpTime:Int=50
     var okpMode:Int=0
+    var ettMode:Int = 0
+    var ettWidth:Int=500
     
     @IBOutlet weak var paraCnt0: UISegmentedControl!
     @IBOutlet weak var paraCnt1: UISlider!
@@ -73,12 +75,20 @@ class SetteiViewController: UIViewController {
         UserDefaults.standard.set(oknSpeed, forKey: "oknSpeed")
         UserDefaults.standard.set(oknTime, forKey: "oknTime")
         UserDefaults.standard.set(oknMode, forKey: "oknMode")
+        UserDefaults.standard.set(ettMode,forKey: "ettMode")
+        UserDefaults.standard.set(ettWidth,forKey: "ettWidth")
         
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
         //delTimer()
         self.present(mainView, animated: false, completion: nil)
     }
-    /*   @IBAction func paraAct1(_ sender: UISlider) {
+    
+     @IBAction func paraAct0(_ sender: UISegmentedControl) {
+          okpMode=sender.selectedSegmentIndex
+          dispTexts()
+      }
+
+     @IBAction func paraAct1(_ sender: UISlider) {
          okpSpeed=Int(sender.value*200)
          dispTexts()
      }
@@ -87,10 +97,10 @@ class SetteiViewController: UIViewController {
          okpTime=Int(sender.value*50)
          dispTexts()
      }
-     @IBAction func paraAct0(_ sender: UISegmentedControl) {
-         okpMode=sender.selectedSegmentIndex
-         dispTexts()
-     }
+      @IBAction func paraAct3(_ sender: UISegmentedControl) {
+           oknMode=sender.selectedSegmentIndex
+           dispTexts()
+       }
      @IBAction func paraAct4(_ sender: UISlider) {
          oknSpeed=Int(sender.value*200)
          dispTexts()
@@ -100,12 +110,17 @@ class SetteiViewController: UIViewController {
          oknTime=Int(sender.value*100)
          dispTexts()
      }
-     
-     @IBAction func paraAct3(_ sender: UISegmentedControl) {
-         oknMode=sender.selectedSegmentIndex
+     @IBAction func paraAct6(_ sender: UISegmentedControl) {
+           ettMode=sender.selectedSegmentIndex
+           dispTexts()
+        print("chante ett mode:",ettMode)
+       }
+     @IBAction func paraAct7(_ sender: UISlider) {
+         ettWidth=Int(sender.value*200)
          dispTexts()
      }
-     */
+  
+    
     @IBAction func defaultAct(_ sender: Any) {
         okpSpeed=100
         okpTime=5
@@ -113,19 +128,23 @@ class SetteiViewController: UIViewController {
         oknSpeed=100
         oknTime=60
         oknMode=0
+        ettMode=0
+        ettWidth=100
         setPars()
         dispTexts()
     }
     func setPars(){
+        paraCnt0.selectedSegmentIndex=okpMode%4
         paraCnt1.value=Float(okpSpeed)/200.0
         paraCnt2.value=Float(okpTime)/50.0
-        paraCnt0.selectedSegmentIndex=okpMode%4
+        paraCnt3.selectedSegmentIndex=oknMode%4
         paraCnt4.value=Float(oknSpeed)/200.0
         paraCnt5.value=Float(oknTime)/100.0
-        paraCnt3.selectedSegmentIndex=oknMode%4
+        paraCnt6.selectedSegmentIndex=ettMode%4
+        paraCnt7.value=Float(ettWidth)/100.0
     }
     func setokpMode(){
-        paraTxt0.text="OKP-MODE:" + String(Int(okpMode)) + "   "
+        paraTxt0.text="OKP:" + String(Int(okpMode)) + "   "
         if okpMode == 0{
             paraTxt0.text! += " right -> " + String(Int(okpTime)) + "sec -> left"
         }else if okpMode == 1{
@@ -137,7 +156,7 @@ class SetteiViewController: UIViewController {
         }
     }
     func setoknMode(){
-        paraTxt3.text="OKN-MODE:" + String(Int(oknMode)) + "   "
+        paraTxt3.text="OKN:" + String(Int(oknMode)) + "   "
         if oknMode == 0{
             paraTxt3.text! += " right(" + String(Int(oknTime)) + "sec) -> black"
         }else if oknMode == 1{
@@ -146,6 +165,18 @@ class SetteiViewController: UIViewController {
             paraTxt3.text! += " right"
         }else{
             paraTxt3.text! += " left"
+        }
+    }
+    func setettMode(){
+        paraTxt6.text="ETT:" + String(Int(ettMode)) + "   "
+        if ettMode == 0{
+            paraTxt6.text! += " pursuit(30s) horizontal"
+        }else if ettMode == 1{
+            paraTxt6.text! += " saccade(30s) horizontal"
+        }else if ettMode == 2{
+            paraTxt6.text! += " saccade(30s) horizontal & vertical"
+        }else{
+            paraTxt6.text! += " pursuit(20s)->saccade(20s)->random(20s)"
         }
     }
     func setokpSpeed(){
@@ -157,10 +188,13 @@ class SetteiViewController: UIViewController {
     func dispTexts(){
         setokpMode()
         setoknMode()
+        setettMode()
         setokpSpeed()
         setoknSpeed()
         paraTxt2.text="OKP-PAUSE:" + String(Int(okpTime)) + "sec"
         paraTxt5.text="OKN-TIME:" + String(Int(oknTime)) + "sec"
+        paraTxt7.text="ETT-WIDTH:" + String(Int(ettWidth)) + "%"
+        
     }
     func getUserDefault(str:String,ret:Int) -> Int{//getUserDefault_one
         if (UserDefaults.standard.object(forKey: str) != nil){//keyが設定してなければretをセット
@@ -178,7 +212,9 @@ class SetteiViewController: UIViewController {
         oknSpeed = getUserDefault(str: "oknSpeed", ret: 100)
         oknTime = getUserDefault(str: "oknTime", ret: 60)
         oknMode = getUserDefault(str: "oknMode", ret: 0)
-        
+        ettMode = getUserDefault(str: "ettMode", ret: 0)
+        ettWidth = getUserDefault(str: "ettWidth", ret: 60)
+
         setScreen()
         dispTexts()
         setPars()

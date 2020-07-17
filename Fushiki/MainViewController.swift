@@ -14,6 +14,15 @@ import MediaPlayer
 class MainViewController: UIViewController {
     var controllerF:Bool=false
     var timer: Timer!
+    var oknSpeed:Int = 50
+    var oknTime:Int = 50
+    var oknMode:Int=0
+    var okpSpeed:Int=50
+    var okpTime:Int=50
+    var okpMode:Int=0
+    var ettMode:Int = 0
+    var ettWidth:Int=500
+
     var backModeETTp:Int = 0
     var backModeETTs:Int = 0
     var backModeStill:Int = 0
@@ -22,8 +31,8 @@ class MainViewController: UIViewController {
     var cirDiameter:CGFloat = 0
     var bandWidth:CGFloat = 0
 //    var timer1Interval:Int = 2
-    var ettWidth:Int = 0
-    var oknSpeed:Int = 2
+//    var ettWidth:Int = 0
+//    var oknSpeed:Int = 2
     var targetMode:Int = -1
     var oknDirection:Int = 0
     var soundPlayer: AVAudioPlayer? = nil
@@ -211,13 +220,28 @@ class MainViewController: UIViewController {
             setRotate(alp: 0.6)
         }
     }
-
+    func getUserDefault(str:String,ret:Int) -> Int{//getUserDefault_one
+        if (UserDefaults.standard.object(forKey: str) != nil){//keyが設定してなければretをセット
+            return UserDefaults.standard.integer(forKey:str)
+        }else{
+            UserDefaults.standard.set(ret, forKey: str)
+            return ret
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        okpSpeed = getUserDefault(str: "okpSpeed", ret:100)
+        okpTime = getUserDefault(str: "okpTime", ret: 5)
+        okpMode = getUserDefault(str: "okpMode", ret: 0)
+        oknSpeed = getUserDefault(str: "oknSpeed", ret: 100)
+        oknTime = getUserDefault(str: "oknTime", ret: 60)
+        oknMode = getUserDefault(str: "oknMode", ret: 0)
+        ettMode = getUserDefault(str: "ettMode", ret: 0)
+        ettWidth = getUserDefault(str: "ettWidth", ret: 60)
+        
         bandWidth = self.view.bounds.width/10
         cirDiameter = self.view.bounds.width/26
         setRotate(alp:1)
-        
         sound(snd:"silence")
 //        setupGameController()
         UIApplication.shared.beginReceivingRemoteControlEvents()
