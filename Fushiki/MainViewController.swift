@@ -87,17 +87,17 @@ class MainViewController: UIViewController {
             self.present(nextView, animated: true, completion: nil)
         }else if targetMode==1{//saccade
             let nextView = storyboard.instantiateViewController(withIdentifier: "OKP") as! OKPViewController
-            nextView.ettWidth=ettWidth
-            nextView.oknSpeed = oknSpeed
-            nextView.oknDirection = oknDirection
-            nextView.targetMode = targetMode
+//            nextView.ettWidth=ettWidth
+//            nextView.oknSpeed = oknSpeed
+//            nextView.oknDirection = oknDirection
+//            nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }else if targetMode==2{//okn
             let nextView = storyboard.instantiateViewController(withIdentifier: "OKN") as! OKNViewController
-            nextView.ettWidth=ettWidth
-            nextView.oknSpeed = oknSpeed
-            nextView.oknDirection = oknDirection
-            nextView.targetMode = targetMode
+//            nextView.ettWidth=ettWidth
+//            nextView.oknSpeed = oknSpeed
+//            nextView.oknDirection = oknDirection
+//            nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }else if targetMode==3{//carolicETT
             let nextView = storyboard.instantiateViewController(withIdentifier: "CarolicETT") as! CarolicETTViewController
@@ -224,11 +224,11 @@ class MainViewController: UIViewController {
         self.becomeFirstResponder()
         prefersHomeIndicatorAutoHidden()
     }
-
-           override func prefersHomeIndicatorAutoHidden() -> Bool {
-               return true
-           }
-
+    
+    override func prefersHomeIndicatorAutoHidden() -> Bool {
+        return true
+    }
+    
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)

@@ -21,12 +21,12 @@ class ETTViewController: UIViewController {
     var targetMode:Int = 0
     var ettW:CGFloat = 0
 
-    @IBOutlet var doubleRec:UITapGestureRecognizer!
-    @IBOutlet var singleRec:UITapGestureRecognizer!
-
-
-    @IBOutlet weak var furi2Button: UIButton!
-    @IBOutlet weak var furi3Button: UIButton!
+//    @IBOutlet var doubleRec:UITapGestureRecognizer!
+//    @IBOutlet var singleRec:UITapGestureRecognizer!
+//
+//
+//    @IBOutlet weak var furi2Button: UIButton!
+//    @IBOutlet weak var furi3Button: UIButton!
 
     var tapInterval=CFAbsoluteTimeGetCurrent()
     func stopDisplaylink(){
@@ -86,21 +86,21 @@ class ETTViewController: UIViewController {
             ettW = view.bounds.width/2 - view.bounds.width/18
         }
     }
-    @IBAction func furi2Action(_ sender: Any) {
-        ettWidth = 1
-        setETTwidth(width: 1)
-        tcount=1
-    }
-    @IBAction func furi3Action(_ sender: Any) {
-        ettWidth = 2
-        setETTwidth(width: 2)
-        tcount=1
-    }
+//    @IBAction func furi2Action(_ sender: Any) {
+//        ettWidth = 1
+//        setETTwidth(width: 1)
+//        tcount=1
+//    }
+//    @IBAction func furi3Action(_ sender: Any) {
+//        ettWidth = 2
+//        setETTwidth(width: 2)
+//        tcount=1
+//    }
 
-    func hideButtons(hide:Bool){
-        furi2Button.isHidden=hide
-        furi3Button.isHidden=hide
-     }
+//    func hideButtons(hide:Bool){
+//        furi2Button.isHidden=hide
+//        furi3Button.isHidden=hide
+//     }
     override func viewDidAppear(_ animated: Bool) {
          if ettWidth == 0{
             ettWidth = 2
@@ -116,7 +116,7 @@ class ETTViewController: UIViewController {
         }
         setETTwidth(width: ettWidth)
         cirDiameter=view.bounds.width/26
-        singleRec.require(toFail: doubleRec)
+//        singleRec.require(toFail: doubleRec)
 
         displayLink = CADisplayLink(target: self, selector: #selector(self.update))
         displayLink!.preferredFramesPerSecond = 120
@@ -128,7 +128,7 @@ class ETTViewController: UIViewController {
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
         }
-          hideButtons(hide: true)
+//          hideButtons(hide: true)
         UIApplication.shared.beginReceivingRemoteControlEvents()
         self.becomeFirstResponder()
         tapInterval=CFAbsoluteTimeGetCurrent()-1
@@ -209,17 +209,17 @@ class ETTViewController: UIViewController {
         }
         )
     }
-    @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
-            if furi2Button.isHidden == true{
-                hideButtons(hide: false)
-            }else{
-                hideButtons(hide: true)
-            }
-    }
-    @IBAction func panGes(_ sender: UIPanGestureRecognizer) {
-        
-
-    }
+//    @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
+//            if furi2Button.isHidden == true{
+//                hideButtons(hide: false)
+//            }else{
+//                hideButtons(hide: true)
+//            }
+//    }
+//    @IBAction func panGes(_ sender: UIPanGestureRecognizer) {
+//        
+//
+//    }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         stopDisplaylink()
