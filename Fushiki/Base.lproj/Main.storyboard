@@ -64,6 +64,9 @@
                                 <rect key="frame" x="518" y="327" width="172" height="57"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="default"/>
+                                <connections>
+                                    <action selector="defaultAct:" destination="gOS-fU-nK5" eventType="touchUpInside" id="jLa-bx-HE4"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vji-3f-Tqg">
                                 <rect key="frame" x="751" y="310" width="115" height="74"/>
