@@ -70,6 +70,12 @@ class MainViewController: UIViewController {
         sound(snd:"silence")
         doModes()
     }
+    
+    @IBAction func doSettei(_ sender: Any) {
+        targetMode=6
+        sound(snd:"silence")
+        doModes()
+    }
     func doModes(){
         let storyboard: UIStoryboard = self.storyboard!
         if targetMode==0{//pursuit
@@ -114,6 +120,13 @@ class MainViewController: UIViewController {
             nextView.oknSpeed = oknSpeed
             nextView.oknDirection = oknDirection
             nextView.targetMode = targetMode
+            self.present(nextView, animated: true, completion: nil)
+        }else if targetMode==6{//settei
+            let nextView = storyboard.instantiateViewController(withIdentifier: "SETTEI") as! SetteiViewController
+//            nextView.ettWidth=ettWidth
+//            nextView.oknSpeed = oknSpeed
+//            nextView.oknDirection = oknDirection
+//            nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }
     }
