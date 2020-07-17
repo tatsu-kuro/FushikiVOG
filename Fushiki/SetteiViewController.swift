@@ -78,6 +78,34 @@ class SetteiViewController: UIViewController {
         //delTimer()
         self.present(mainView, animated: false, completion: nil)
     }
+    /*   @IBAction func paraAct1(_ sender: UISlider) {
+         okpSpeed=Int(sender.value*200)
+         dispTexts()
+     }
+     
+     @IBAction func paraAct2(_ sender: UISlider) {
+         okpTime=Int(sender.value*50)
+         dispTexts()
+     }
+     @IBAction func paraAct0(_ sender: UISegmentedControl) {
+         okpMode=sender.selectedSegmentIndex
+         dispTexts()
+     }
+     @IBAction func paraAct4(_ sender: UISlider) {
+         oknSpeed=Int(sender.value*200)
+         dispTexts()
+     }
+     
+     @IBAction func paraAct5(_ sender: UISlider) {
+         oknTime=Int(sender.value*100)
+         dispTexts()
+     }
+     
+     @IBAction func paraAct3(_ sender: UISegmentedControl) {
+         oknMode=sender.selectedSegmentIndex
+         dispTexts()
+     }
+     */
     @IBAction func defaultAct(_ sender: Any) {
         okpSpeed=100
         okpTime=5
