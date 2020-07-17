@@ -26,9 +26,9 @@ class CarolicETTViewController: UIViewController {
     
     @IBAction func doubleTap(_ sender: Any) {
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
-        mainView.ettWidth=ettWidth
-        mainView.oknSpeed=oknSpeed
-        mainView.oknDirection=oknDirection
+//        mainView.ettWidth=ettWidth
+//        mainView.oknSpeed=oknSpeed
+//        mainView.oknDirection=oknDirection
         mainView.targetMode=targetMode
         delTimer()
         self.present(mainView, animated: false, completion: nil)

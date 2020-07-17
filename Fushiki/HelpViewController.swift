@@ -42,9 +42,9 @@ class HelpViewController: UIViewController {
     }
     func returnMain(){
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
-        mainView.ettWidth=ettWidth
-        mainView.oknSpeed=oknSpeed
-        mainView.oknDirection=oknDirection
+//        mainView.ettWidth=ettWidth
+//        mainView.oknSpeed=oknSpeed
+//        mainView.oknDirection=oknDirection
         mainView.targetMode=targetMode
         self.present(mainView, animated: false, completion: nil)
     }

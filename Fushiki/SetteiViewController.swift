@@ -9,14 +9,15 @@
 import UIKit
 
 class SetteiViewController: UIViewController {
+    var oknMode:Int=0
     var oknSpeed:Int = 50
     var oknTime:Int = 50
-    var oknMode:Int=0
+    var okpMode:Int=0
     var okpSpeed:Int=50
     var okpTime:Int=50
-    var okpMode:Int=0
     var ettMode:Int = 0
-    var ettWidth:Int=500
+    var ettWidth:Int=50
+    var targetMode:Int=0
     
     @IBOutlet weak var paraCnt0: UISegmentedControl!
     @IBOutlet weak var paraCnt1: UISlider!
@@ -80,6 +81,7 @@ class SetteiViewController: UIViewController {
         
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
         //delTimer()
+        mainView.targetMode=targetMode
         self.present(mainView, animated: false, completion: nil)
     }
     
@@ -116,20 +118,20 @@ class SetteiViewController: UIViewController {
         print("chante ett mode:",ettMode)
        }
      @IBAction func paraAct7(_ sender: UISlider) {
-         ettWidth=Int(sender.value*200)
+         ettWidth=Int(sender.value*100)
          dispTexts()
      }
   
     
     @IBAction func defaultAct(_ sender: Any) {
-        okpSpeed=100
-        okpTime=5
         okpMode=0
-        oknSpeed=100
-        oknTime=60
+        okpSpeed=50
+        okpTime=50
         oknMode=0
-        ettMode=0
-        ettWidth=100
+        oknSpeed=50
+        oknTime=50
+         ettMode=0
+        ettWidth=50
         setPars()
         dispTexts()
     }
@@ -206,14 +208,14 @@ class SetteiViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        okpSpeed = getUserDefault(str: "okpSpeed", ret:100)
-        okpTime = getUserDefault(str: "okpTime", ret: 5)
         okpMode = getUserDefault(str: "okpMode", ret: 0)
-        oknSpeed = getUserDefault(str: "oknSpeed", ret: 100)
-        oknTime = getUserDefault(str: "oknTime", ret: 60)
+        okpSpeed = getUserDefault(str: "okpSpeed", ret:50)
+        okpTime = getUserDefault(str: "okpTime", ret: 50)
         oknMode = getUserDefault(str: "oknMode", ret: 0)
+        oknSpeed = getUserDefault(str: "oknSpeed", ret: 50)
+        oknTime = getUserDefault(str: "oknTime", ret: 50)
         ettMode = getUserDefault(str: "ettMode", ret: 0)
-        ettWidth = getUserDefault(str: "ettWidth", ret: 60)
+        ettWidth = getUserDefault(str: "ettWidth", ret: 50)
 
         setScreen()
         dispTexts()

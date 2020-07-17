@@ -89,9 +89,9 @@ class MainViewController: UIViewController {
         let storyboard: UIStoryboard = self.storyboard!
         if targetMode==0{//pursuit
             let nextView = storyboard.instantiateViewController(withIdentifier: "ETT") as! ETTViewController
-            nextView.ettWidth=ettWidth
-            nextView.oknSpeed = oknSpeed
-            nextView.oknDirection = oknDirection
+//            nextView.ettWidth=ettWidth
+//            nextView.oknSpeed = oknSpeed
+//            nextView.oknDirection = oknDirection
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }else if targetMode==1{//saccade
@@ -99,35 +99,35 @@ class MainViewController: UIViewController {
 //            nextView.ettWidth=ettWidth
 //            nextView.oknSpeed = oknSpeed
 //            nextView.oknDirection = oknDirection
-//            nextView.targetMode = targetMode
+            nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }else if targetMode==2{//okn
             let nextView = storyboard.instantiateViewController(withIdentifier: "OKN") as! OKNViewController
 //            nextView.ettWidth=ettWidth
 //            nextView.oknSpeed = oknSpeed
 //            nextView.oknDirection = oknDirection
-//            nextView.targetMode = targetMode
+            nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }else if targetMode==3{//carolicETT
             let nextView = storyboard.instantiateViewController(withIdentifier: "CarolicETT") as! CarolicETTViewController
 //            nextView.timer1Interval=timer1Interval
-            nextView.ettWidth=ettWidth
-            nextView.oknSpeed = oknSpeed
-            nextView.oknDirection = oknDirection
+//            nextView.ettWidth=ettWidth
+//            nextView.oknSpeed = oknSpeed
+//            nextView.oknDirection = oknDirection
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }else if targetMode==4{//carolicOKN
             let nextView = storyboard.instantiateViewController(withIdentifier: "CarolicOKN") as! CarolicOKNViewController
-            nextView.ettWidth=ettWidth
-            nextView.oknSpeed = oknSpeed
-            nextView.oknDirection = oknDirection
+//            nextView.ettWidth=ettWidth
+//            nextView.oknSpeed = oknSpeed
+//            nextView.oknDirection = oknDirection
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }else if targetMode==5{//help
             let nextView = storyboard.instantiateViewController(withIdentifier: "HELP") as! HelpViewController
-            nextView.ettWidth=ettWidth
-            nextView.oknSpeed = oknSpeed
-            nextView.oknDirection = oknDirection
+//            nextView.ettWidth=ettWidth
+//            nextView.oknSpeed = oknSpeed
+//            nextView.oknDirection = oknDirection
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }else if targetMode==6{//settei
@@ -135,7 +135,7 @@ class MainViewController: UIViewController {
 //            nextView.ettWidth=ettWidth
 //            nextView.oknSpeed = oknSpeed
 //            nextView.oknDirection = oknDirection
-//            nextView.targetMode = targetMode
+            nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }
     }

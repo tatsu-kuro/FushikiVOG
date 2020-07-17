@@ -17,8 +17,11 @@ class OKNViewController: UIViewController {
     var speed:Int=0
     var oknTime:Int = 0
     var oknMode:Int=0
+    var targetMode:Int=0
     var ww:CGFloat=0
     var wh:CGFloat=0
+    var displayLink:CADisplayLink?
+    var displayLinkF:Bool=false
     //    @IBOutlet weak var timerPara: UILabel!
     
 //    @IBOutlet var doubleRec:UITapGestureRecognizer!
@@ -29,6 +32,7 @@ class OKNViewController: UIViewController {
         //        if timer?.isValid == true {
         //            timer.invalidate()
         //        }
+        mainView.targetMode=targetMode
         if UIApplication.shared.isIdleTimerDisabled == true{
             UIApplication.shared.isIdleTimerDisabled = false//スリープする
         }
@@ -76,21 +80,20 @@ class OKNViewController: UIViewController {
     }
     
     func stopTimer(){
-        //        if timer?.isValid == true {
-        //            timer.invalidate()
-        //        }
-        displayLink?.invalidate()
+        if displayLinkF==true{
+            displayLink?.invalidate()
+        }
         cnt=0
     }
-    var displayLink:CADisplayLink?
+
     func setTimer(){
         startTime=CFAbsoluteTimeGetCurrent()
         ww=view.bounds.width
         wh=view.bounds.height
-        displayLink = CADisplayLink(target: self, selector: #selector(self.update))   //#selector部分については後述
-        displayLink!.preferredFramesPerSecond = 120  // FPS設定  //この場合は1秒間に20回
+        displayLink = CADisplayLink(target: self, selector: #selector(self.update))
+        displayLink!.preferredFramesPerSecond = 120
         displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
-        //        timer = Timer.scheduledTimer(timeInterval: 1.0/120.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+        displayLinkF=true
         cnt=0
     }
     
@@ -179,7 +182,6 @@ class OKNViewController: UIViewController {
         oknSpeed = getUserDefault(str: "oknSpeed", ret: 100)
         oknTime = getUserDefault(str: "oknTime", ret: 60)
         oknMode = getUserDefault(str: "oknMode", ret: 0)
-        
         speed = oknSpeed*15
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
