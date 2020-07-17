@@ -168,20 +168,13 @@ class OKNViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func getUserDefault(str:String,ret:Int) -> Int{//getUserDefault_one
-        if (UserDefaults.standard.object(forKey: str) != nil){//keyが設定してなければretをセット
-            return UserDefaults.standard.integer(forKey:str)
-        }else{
-            UserDefaults.standard.set(ret, forKey: str)
-            return ret
-        }
-    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         //       timerPara.isHidden=true
-        oknSpeed = getUserDefault(str: "oknSpeed", ret: 100)
-        oknTime = getUserDefault(str: "oknTime", ret: 60)
-        oknMode = getUserDefault(str: "oknMode", ret: 0)
+        oknSpeed = UserDefaults.standard.integer(forKey:"oknSpeed")
+        oknTime = UserDefaults.standard.integer(forKey:"oknTime")
+        oknMode = UserDefaults.standard.integer(forKey:"oknMode")
         speed = oknSpeed*15
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない

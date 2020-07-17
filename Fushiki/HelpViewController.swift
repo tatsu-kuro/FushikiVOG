@@ -12,9 +12,9 @@ class HelpViewController: UIViewController {
     var englishF:Bool=false
     var helpHlimit:CGFloat=0
     var posYlast:CGFloat=0
-    var ettWidth:Int = 0//1:narrow,2:wide
-    var oknSpeed:Int = 0
-    var oknDirection:Int = 0
+//    var ettWidth:Int = 0//1:narrow,2:wide
+//    var oknSpeed:Int = 0
+//    var oknDirection:Int = 0
     var targetMode:Int = 0
     var tapInterval=CFAbsoluteTimeGetCurrent()
     @IBOutlet weak var helpView: UIImageView!
@@ -42,9 +42,7 @@ class HelpViewController: UIViewController {
     }
     func returnMain(){
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
-//        mainView.ettWidth=ettWidth
-//        mainView.oknSpeed=oknSpeed
-//        mainView.oknDirection=oknDirection
+
         mainView.targetMode=targetMode
         self.present(mainView, animated: false, completion: nil)
     }
@@ -96,20 +94,20 @@ class HelpViewController: UIViewController {
     func moveImage(mov:CGFloat){
         helpView.frame.origin.y -= mov
     }
-    @IBAction func panGesture(_ sender: UIPanGestureRecognizer) {
-        
-//        if sender.state == .began {
-//            posYlast=sender.location(in: self.view).y
-//        } else if sender.state == .changed {
-//            let posY = sender.location(in: self.view).y
-//            let h=helpView.frame.origin.y - posYlast + posY
-//            if h < 0 && h > helpHlimit{
-//                helpView.frame.origin.y -= posYlast-posY
-//                posYlast=posY
-//            }
-//        }else if sender.state == .ended{
-//        }
-    }
+//    @IBAction func panGesture(_ sender: UIPanGestureRecognizer) {
+//        
+////        if sender.state == .began {
+////            posYlast=sender.location(in: self.view).y
+////        } else if sender.state == .changed {
+////            let posY = sender.location(in: self.view).y
+////            let h=helpView.frame.origin.y - posYlast + posY
+////            if h < 0 && h > helpHlimit{
+////                helpView.frame.origin.y -= posYlast-posY
+////                posYlast=posY
+////            }
+////        }else if sender.state == .ended{
+////        }
+//    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
      }

@@ -13,7 +13,7 @@ import MediaPlayer
 //import GameController
 class MainViewController: UIViewController {
     var controllerF:Bool=false
-    var timer: Timer!
+//    var timer: Timer!
     var oknSpeed:Int = 50
     var oknTime:Int = 50
     var oknMode:Int=0
@@ -23,18 +23,18 @@ class MainViewController: UIViewController {
     var ettMode:Int = 0
     var ettWidth:Int=500
 
-    var backModeETTp:Int = 0
-    var backModeETTs:Int = 0
-    var backModeStill:Int = 0
-    var ballSizeStill:Int = 2
-    var ballColorStill:Int = 1
-    var cirDiameter:CGFloat = 0
-    var bandWidth:CGFloat = 0
+//    var backModeETTp:Int = 0
+//    var backModeETTs:Int = 0
+//    var backModeStill:Int = 0
+//    var ballSizeStill:Int = 2
+//    var ballColorStill:Int = 1
+//    var cirDiameter:CGFloat = 0
+//    var bandWidth:CGFloat = 0
 //    var timer1Interval:Int = 2
 //    var ettWidth:Int = 0
 //    var oknSpeed:Int = 2
     var targetMode:Int = -1
-    var oknDirection:Int = 0
+//    var oknDirection:Int = 0
     var soundPlayer: AVAudioPlayer? = nil
     
     func sound(snd:String){
@@ -89,52 +89,30 @@ class MainViewController: UIViewController {
         let storyboard: UIStoryboard = self.storyboard!
         if targetMode==0{//pursuit
             let nextView = storyboard.instantiateViewController(withIdentifier: "ETT") as! ETTViewController
-//            nextView.ettWidth=ettWidth
-//            nextView.oknSpeed = oknSpeed
-//            nextView.oknDirection = oknDirection
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }else if targetMode==1{//saccade
             let nextView = storyboard.instantiateViewController(withIdentifier: "OKP") as! OKPViewController
-//            nextView.ettWidth=ettWidth
-//            nextView.oknSpeed = oknSpeed
-//            nextView.oknDirection = oknDirection
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }else if targetMode==2{//okn
             let nextView = storyboard.instantiateViewController(withIdentifier: "OKN") as! OKNViewController
-//            nextView.ettWidth=ettWidth
-//            nextView.oknSpeed = oknSpeed
-//            nextView.oknDirection = oknDirection
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }else if targetMode==3{//carolicETT
             let nextView = storyboard.instantiateViewController(withIdentifier: "CarolicETT") as! CarolicETTViewController
-//            nextView.timer1Interval=timer1Interval
-//            nextView.ettWidth=ettWidth
-//            nextView.oknSpeed = oknSpeed
-//            nextView.oknDirection = oknDirection
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }else if targetMode==4{//carolicOKN
             let nextView = storyboard.instantiateViewController(withIdentifier: "CarolicOKN") as! CarolicOKNViewController
-//            nextView.ettWidth=ettWidth
-//            nextView.oknSpeed = oknSpeed
-//            nextView.oknDirection = oknDirection
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }else if targetMode==5{//help
             let nextView = storyboard.instantiateViewController(withIdentifier: "HELP") as! HelpViewController
-//            nextView.ettWidth=ettWidth
-//            nextView.oknSpeed = oknSpeed
-//            nextView.oknDirection = oknDirection
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }else if targetMode==6{//settei
             let nextView = storyboard.instantiateViewController(withIdentifier: "SETTEI") as! SetteiViewController
-//            nextView.ettWidth=ettWidth
-//            nextView.oknSpeed = oknSpeed
-//            nextView.oknDirection = oknDirection
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }
@@ -228,6 +206,7 @@ class MainViewController: UIViewController {
             return ret
         }
     }
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         okpSpeed = getUserDefault(str: "okpSpeed", ret:100)
@@ -237,13 +216,10 @@ class MainViewController: UIViewController {
         oknTime = getUserDefault(str: "oknTime", ret: 60)
         oknMode = getUserDefault(str: "oknMode", ret: 0)
         ettMode = getUserDefault(str: "ettMode", ret: 0)
-        ettWidth = getUserDefault(str: "ettWidth", ret: 60)
+        ettWidth = getUserDefault(str: "ettWidth", ret: 90)
         
-        bandWidth = self.view.bounds.width/10
-        cirDiameter = self.view.bounds.width/26
         setRotate(alp:1)
         sound(snd:"silence")
-//        setupGameController()
         UIApplication.shared.beginReceivingRemoteControlEvents()
         self.becomeFirstResponder()
         prefersHomeIndicatorAutoHidden()

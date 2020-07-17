@@ -106,18 +106,11 @@ class ETTViewController: UIViewController {
         }
         setETTwidth(width: ettWidth)
     }
-    func getUserDefault(str:String,ret:Int) -> Int{//getUserDefault_one
-        if (UserDefaults.standard.object(forKey: str) != nil){//keyが設定してなければretをセット
-            return UserDefaults.standard.integer(forKey:str)
-        }else{
-            UserDefaults.standard.set(ret, forKey: str)
-            return ret
-        }
-    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        ettMode = getUserDefault(str: "ettMode", ret: 100)
-        ettWidth = getUserDefault(str: "ettWidth", ret: 60)
+        ettMode=UserDefaults.standard.integer(forKey: "ettMode")
+        ettWidth=UserDefaults.standard.integer(forKey: "ettWidth")
         if ettWidth == 0{
             ettWidth = 2
         }

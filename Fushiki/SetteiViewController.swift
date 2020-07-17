@@ -125,13 +125,13 @@ class SetteiViewController: UIViewController {
     
     @IBAction func defaultAct(_ sender: Any) {
         okpMode=0
-        okpSpeed=50
-        okpTime=50
+        okpSpeed=100
+        okpTime=5
         oknMode=0
-        oknSpeed=50
-        oknTime=50
+        oknSpeed=100
+        oknTime=60
          ettMode=0
-        ettWidth=50
+        ettWidth=90
         setPars()
         dispTexts()
     }
@@ -196,26 +196,25 @@ class SetteiViewController: UIViewController {
         paraTxt2.text="OKP-PAUSE:" + String(Int(okpTime)) + "sec"
         paraTxt5.text="OKN-TIME:" + String(Int(oknTime)) + "sec"
         paraTxt7.text="ETT-WIDTH:" + String(Int(ettWidth)) + "%"
-        
     }
-    func getUserDefault(str:String,ret:Int) -> Int{//getUserDefault_one
-        if (UserDefaults.standard.object(forKey: str) != nil){//keyが設定してなければretをセット
-            return UserDefaults.standard.integer(forKey:str)
-        }else{
-            UserDefaults.standard.set(ret, forKey: str)
-            return ret
-        }
-    }
+//    func getUserDefault(str:String,ret:Int) -> Int{//getUserDefault_one
+//        if (UserDefaults.standard.object(forKey: str) != nil){//keyが設定してなければretをセット
+//            return UserDefaults.standard.integer(forKey:str)
+//        }else{
+//            UserDefaults.standard.set(ret, forKey: str)
+//            return ret
+//        }
+//    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        okpMode = getUserDefault(str: "okpMode", ret: 0)
-        okpSpeed = getUserDefault(str: "okpSpeed", ret:50)
-        okpTime = getUserDefault(str: "okpTime", ret: 50)
-        oknMode = getUserDefault(str: "oknMode", ret: 0)
-        oknSpeed = getUserDefault(str: "oknSpeed", ret: 50)
-        oknTime = getUserDefault(str: "oknTime", ret: 50)
-        ettMode = getUserDefault(str: "ettMode", ret: 0)
-        ettWidth = getUserDefault(str: "ettWidth", ret: 50)
+        okpMode = UserDefaults.standard.integer(forKey: "okpMode")
+        okpSpeed = UserDefaults.standard.integer(forKey: "okpSpeed")
+        okpTime = UserDefaults.standard.integer(forKey: "okpTime")
+        oknMode = UserDefaults.standard.integer(forKey: "oknMode")
+        oknSpeed = UserDefaults.standard.integer(forKey: "oknSpeed")
+        oknTime = UserDefaults.standard.integer(forKey: "oknTime")
+        ettMode = UserDefaults.standard.integer(forKey: "ettMode")
+        ettWidth = UserDefaults.standard.integer(forKey: "ettWidth")
 
         setScreen()
         dispTexts()

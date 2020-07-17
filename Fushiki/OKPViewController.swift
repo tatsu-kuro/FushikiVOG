@@ -77,22 +77,14 @@ class OKPViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
     }
-    func getUserDefault(str:String,ret:Int) -> Int{//getUserDefault_one
-        if (UserDefaults.standard.object(forKey: str) != nil){//keyが設定してなければretをセット
-            return UserDefaults.standard.integer(forKey:str)
-        }else{
-            UserDefaults.standard.set(ret, forKey: str)
-            return ret
-        }
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         ww=view.bounds.width
         wh=view.bounds.height
-        okpSpeed = getUserDefault(str: "okpSpeed", ret:100)
-        okpTime = getUserDefault(str: "okpTime", ret: 5)
-        okpMode = getUserDefault(str: "okpMode", ret: 0)
+        okpSpeed = UserDefaults.standard.integer(forKey: "okpSpeed")
+        okpTime = UserDefaults.standard.integer(forKey:"okpTime")
+        okpMode = UserDefaults.standard.integer(forKey:"okpMode")
         startTime=CFAbsoluteTimeGetCurrent()
         okpSpeed *= 15
         if okpMode == 0 || okpMode == 2{
