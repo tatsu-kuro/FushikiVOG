@@ -117,48 +117,26 @@ class HelpViewController: UIViewController {
         super.viewDidLoad()
         let ww:CGFloat=view.bounds.width
         let wh:CGFloat=view.bounds.height
-        let bw:CGFloat=ww*20/129
-        let bh:CGFloat=bw*160/440
-        let sp=ww/129
-        let by=wh-bh-sp*2
-        exitButton.frame.size.width = bw
-        exitButton.frame.size.height = bh
-        exitButton.frame.origin.x = bw*5+sp*7
-        exitButton.frame.origin.y  = by
-        globeButton.frame.size.width = bw/3
-        globeButton.frame.size.height = bw/3
-        globeButton.frame.origin.x = ww - bw/3 - sp*2
-        globeButton.frame.origin.y  = sp
-        //        let w=view.bounds.width
-        //        let h=view.bounds.height
-        //        helpView.frame.origin.x=10
-        //        helpView.frame.origin.y=10
-        //        helpView.frame.size.width=w-20
-        //        helpView.frame.size.height=(w-2)*660/1320
-        //        helpHlimit=view.bounds.height-(w-20)*660/1320 - 20
+       
+        var bw=ww*0.9/7
+        var bh=bw*170/440
+        var sp=ww*0.1/10
+        var by=wh-bh-sp
+        exitButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height:bh)
+        globeButton.frame=CGRect(x:ww-bw/2.5-sp*2,y:sp,width:bw/2.5,height: bw/2.5)
         if UIApplication.shared.isIdleTimerDisabled == true{
             UIApplication.shared.isIdleTimerDisabled = false//監視する
         }
         self.setNeedsStatusBarAppearanceUpdate()
         prefersHomeIndicatorAutoHidden()
     }
-
-               override func prefersHomeIndicatorAutoHidden() -> Bool {
-                   return true
-               }
-
-    override var prefersStatusBarHidden: Bool {
+    
+    override func prefersHomeIndicatorAutoHidden() -> Bool {
         return true
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
-    */
 
 }

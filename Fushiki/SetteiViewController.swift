@@ -73,15 +73,27 @@ class SetteiViewController: UIViewController {
         paraCnt7.frame  = CGRect(x:x0,   y: b7y ,width: bw,height:bh)
         paraTxt7.frame  = CGRect(x:x1,   y: b7y ,width: bw*5,height:bh)
         
-        bw=ww*8/48
-        bh=bw*150/440
-        sp=ww/48
+//        bw=ww*8/48
+//        bh=bw*150/440
+//        sp=ww/48
+//        let by=wh-bh-sp
+        
+//        let x4=bw*3+sp*5
+//        let x5=bw*4+sp*6
+        
+        bw=ww*0.9/7
+        bh=bw*170/440
+        sp=ww*0.1/10
         let by=wh-bh-sp
         
-        let x4=bw*3+sp*5
-        let x5=bw*4+sp*6
-        defaultButton.frame   = CGRect(x:x4,   y: by ,width: bw, height: bh)
-        exitButton.frame   = CGRect(x:x5,   y: by ,width: bw, height: bh)
+        defaultButton.frame=CGRect(x:bw*5+sp*7,y:by,width:bw,height:bh)
+        exitButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height:bh)
+
+        
+        
+        
+//        defaultButton.frame   = CGRect(x:x4,   y: by ,width: bw, height: bh)
+//        exitButton.frame   = CGRect(x:x5,   y: by ,width: bw, height: bh)
     }
 
     /*
