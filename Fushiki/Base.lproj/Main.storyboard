@@ -69,6 +69,9 @@
                                 <rect key="frame" x="751" y="310" width="115" height="74"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="exit"/>
+                                <connections>
+                                    <action selector="exitBut:" destination="gOS-fU-nK5" eventType="touchUpInside" id="KfE-Rm-f6N"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JNE-pm-V4S">
                                 <rect key="frame" x="270" y="45" width="42" height="21"/>

@@ -28,6 +28,9 @@ class SetteiViewController: UIViewController {
     @IBOutlet weak var paraTxt6: UILabel!
     @IBOutlet weak var paraTxt7: UILabel!
     
+    @IBAction func exitBut(_ sender: Any) {
+        goExit(0)
+    }
     @IBAction func goExit(_ sender: Any) {
               let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
                //delTimer()
