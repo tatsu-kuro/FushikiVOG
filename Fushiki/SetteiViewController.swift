@@ -9,6 +9,21 @@
 import UIKit
 
 class SetteiViewController: UIViewController {
+    @IBOutlet weak var paraCnt0: UISegmentedControl!
+    @IBOutlet weak var paraCnt1: UISlider!
+    @IBOutlet weak var paraCnt2: UISlider!
+    @IBOutlet weak var paraCnt3: UISegmentedControl!
+    @IBOutlet weak var paraCnt4: UISlider!
+    @IBOutlet weak var paraCnt5: UISlider!
+    @IBOutlet weak var paraCnt6: UISegmentedControl!
+    @IBOutlet weak var paraCnt7: UISlider!
+    @IBOutlet weak var exitButton: UIButton!
+    @IBOutlet weak var defaultButton: UIButton!
+    
+    
+    
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
