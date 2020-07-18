@@ -173,9 +173,9 @@ class SetteiViewController: UIViewController {
         paraTxt6.text="ETT-MODE" + "   "
         if ettMode == 0{
             paraTxt6.text! += " pursuit(30s) horizontal"
+//        }else if ettMode == 1{
+//            paraTxt6.text! += " saccade(30s) horizontal"
         }else if ettMode == 1{
-            paraTxt6.text! += " saccade(30s) horizontal"
-        }else if ettMode == 2{
             paraTxt6.text! += " saccade(30s) horizontal & vertical"
         }else{
             paraTxt6.text! += " pursuit(20s)->saccade(20s)->random(20s)"

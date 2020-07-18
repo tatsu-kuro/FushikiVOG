@@ -12,6 +12,8 @@ class ETTViewController: UIViewController {
     
     var cirDiameter:CGFloat = 0
     var startTime=CFAbsoluteTimeGetCurrent()
+    var lastTime=CFAbsoluteTimeGetCurrent()
+
     var displayLinkF:Bool=false
     var displayLink:CADisplayLink?
     var tcount: Int = 0
@@ -114,8 +116,16 @@ class ETTViewController: UIViewController {
         let w=view.bounds.width/2
         ettW = w*CGFloat(ettWidth)/100.0
         cirDiameter=view.bounds.width/26
-        displayLink = CADisplayLink(target: self, selector: #selector(self.update))
-        displayLink!.preferredFramesPerSecond = 120
+        if ettMode==0{//pursuit
+            displayLink = CADisplayLink(target: self, selector: #selector(self.update0))
+            displayLink!.preferredFramesPerSecond = 120
+        }else if ettMode==1{//vert-horizon saccade
+            displayLink = CADisplayLink(target: self, selector: #selector(self.update1))
+            displayLink!.preferredFramesPerSecond = 1
+        }else{//pursuit->saccade->random
+            displayLink = CADisplayLink(target: self, selector: #selector(self.update3))
+            displayLink!.preferredFramesPerSecond = 120
+        }
         displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
         displayLinkF=true
         
@@ -139,7 +149,91 @@ class ETTViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    @objc func update() {
+    var lastrand:Int=1
+    var rand:Int=0
+ 
+     var initf:Bool=false
+     @objc func update3() {
+         if initf {
+             view.layer.sublayers?.removeLast()
+         }
+         initf=true
+         tcount += 1
+         let elapset=CFAbsoluteTimeGetCurrent()-startTime
+         if elapset<20.0 {//}(tcount<60*20){
+             let sinV=sin(CGFloat(elapset)*3.1415*0.6)
+             //let sinV=sin(CGFloat(tcount)*0.03183)//0.3Hz
+             let cPoint:CGPoint = CGPoint(x:view.bounds.width/2 + sinV*ettW, y: view.bounds.height/2)
+             drawCircle(cPoint:cPoint)
+         }else if elapset<40.0 {//}(tcount<60*20*2){
+             //    if Int(elapset) != Int(lastTime){
+             if Int(elapset)%2 == 0{// }(tcount/60)%2==0){
+                 let cPoint:CGPoint = CGPoint(x:view.bounds.width/2 + ettW, y: view.bounds.height/2)
+                 drawCircle(cPoint:cPoint)
+             }else{
+                 let cPoint:CGPoint = CGPoint(x:view.bounds.width/2 - ettW, y: view.bounds.height/2)
+                 drawCircle(cPoint:cPoint)
+             }
+             //  }
+         }else if elapset<60 {//}(tcount<60*20*3){
+             
+             if Int(elapset) != Int(lastTime){
+                 rand = Int.random(in: 0..<5) - 2
+                 if(lastrand==rand){
+                     rand += 1
+                     if(rand > 2){
+                         rand = -2
+                     }
+                 }
+             }
+             let cg=CGFloat(rand)/2.0
+             lastrand=rand
+             let cPoint:CGPoint = CGPoint(x:view.bounds.width/2 - cg*ettW, y: view.bounds.height/2)
+             drawCircle(cPoint:cPoint)
+         }else if elapset<65{
+             let cPoint:CGPoint = CGPoint(x:view.bounds.width/2, y: view.bounds.height/2)
+             drawCircle(cPoint:cPoint)
+             //self.dismiss(animated: true, completion: nil)
+         }else{
+//             delTimer()
+             doubleTap(0)
+         }
+         lastTime=elapset
+     }
+     
+    @objc func update1() {
+         if tcount > 0{
+             view.layer.sublayers?.removeLast()
+         }
+         tcount += 1
+         var rand = Int.random(in: 0..<10)
+         if (rand==9){
+             rand=4
+         }
+         if (lastrand==rand){
+             rand += 1
+             if(rand==9){
+                 rand=0
+             }
+         }
+         if(tcount>30){//finish
+             doubleTap(0)
+         }
+         lastrand=rand
+         var xn:Int=0
+         var yn:Int=0
+         if(rand%3==0){xn = -1}
+         else if(rand%3==1){xn=0}
+         else {xn=1}
+         if(rand/3==0){yn = -1}
+         else if(rand/3==1){yn = 0}
+         else {yn=1}
+         let x0=view.bounds.width/2
+         let y0=view.bounds.height/2
+         let cPoint:CGPoint = CGPoint(x:x0 + CGFloat(xn*ettWidth)*x0/100, y: y0 + CGFloat(yn*ettWidth)*y0/100)
+         drawCircle(cPoint:cPoint)
+     }
+    @objc func update0() {//pursuit
         if tcount > 0{
             view.layer.sublayers?.removeLast()
         }
