@@ -66,25 +66,25 @@ class ETTViewController: UIViewController {
                 }
                 tapInterval=CFAbsoluteTimeGetCurrent()
             case .remoteControlNextTrack:
-                ettWidth = 2
-                setETTwidth(width: 2)
+//                ettWidth = 2
+//                setETTwidth(width: 2)
                 tcount=1
             case .remoteControlPreviousTrack:
-                ettWidth = 1
-                setETTwidth(width: 1)
+//                ettWidth = 1
+//                setETTwidth(width: 1)
                 tcount=1
             default:
                 print("Others")
             }
         }
     }
-    func setETTwidth(width:Int){
-        if width == 1{
-            ettW = view.bounds.width/4
-        }else{
-            ettW = view.bounds.width/2 - view.bounds.width/18
-        }
-    }
+//    func setETTwidth(width:Int){
+//        if width == 1{
+//            ettW = view.bounds.width/4
+//        }else{
+//            ettW = view.bounds.width/2 - view.bounds.width/18
+//        }
+//    }
     //    @IBAction func furi2Action(_ sender: Any) {
     //        ettWidth = 1
     //        setETTwidth(width: 1)
@@ -101,20 +101,20 @@ class ETTViewController: UIViewController {
     //        furi3Button.isHidden=hide
     //     }
     override func viewDidAppear(_ animated: Bool) {
-        if ettWidth == 0{
-            ettWidth = 2
-        }
-        setETTwidth(width: ettWidth)
+//        if ettWidth == 0{
+//            ettWidth = 2
+//        }
+//        setETTwidth(width: ettWidth)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         ettMode=UserDefaults.standard.integer(forKey: "ettMode")
         ettWidth=UserDefaults.standard.integer(forKey: "ettWidth")
-        if ettWidth == 0{
-            ettWidth = 2
-        }
-        setETTwidth(width: ettWidth)
+        let w=view.bounds.width/2
+        ettW = w*CGFloat(ettWidth)/100.0
+        
+ 
         cirDiameter=view.bounds.width/26
         displayLink = CADisplayLink(target: self, selector: #selector(self.update))
         displayLink!.preferredFramesPerSecond = 120
@@ -201,7 +201,7 @@ class ETTViewController: UIViewController {
             completion: {(UIViewControllerTransitionCoordinatorContext) in
                 //画面の回転後に向きを教える。
                 if self.convertUIOrientation2VideoOrientation(f: {return self.appOrientation()}) != nil {
-                    self.setETTwidth(width: self.ettWidth)
+//                    self.setETTwidth(width: self.ettWidth)
                 }
         }
         )
