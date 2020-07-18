@@ -113,8 +113,6 @@ class ETTViewController: UIViewController {
         ettWidth=UserDefaults.standard.integer(forKey: "ettWidth")
         let w=view.bounds.width/2
         ettW = w*CGFloat(ettWidth)/100.0
-        
- 
         cirDiameter=view.bounds.width/26
         displayLink = CADisplayLink(target: self, selector: #selector(self.update))
         displayLink!.preferredFramesPerSecond = 120
