@@ -10,8 +10,8 @@ import UIKit
 import AVFoundation
 class CarolicETTViewController: UIViewController {
     var ettWidth:Int = 0//1:narrow,2:wide
-    var oknSpeed:Int = 0
-    var oknDirection:Int = 0
+//    var oknSpeed:Int = 0
+//    var oknDirection:Int = 0
     var targetMode:Int = 0
     var cirDia:CGFloat = 0
     var timer: Timer!
@@ -120,7 +120,7 @@ class CarolicETTViewController: UIViewController {
     var tcnt:Int = 0
     var tcnt2:Int = 0
         
-    @IBOutlet weak var timerCnt: UILabel!
+//    @IBOutlet weak var timerCnt: UILabel!
       func drawBrect() {
           let rectLayer = CAShapeLayer.init()
           let rect1 = CGRect(x:0,y:0,width:view.bounds.width,height:view.bounds.height)
@@ -138,7 +138,8 @@ class CarolicETTViewController: UIViewController {
         epTim.append(115)
         epTim.append(138)
         epTim.append(148)
-        print("ETTsView/carolicETT")//carolicETT
+        ettWidth = UserDefaults.standard.integer(forKey:"ettWidth")
+//        print("ETTsView/carolicETT")//carolicETT
         drawBrect()
         setBackcolor(color:UIColor.black.cgColor)
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
@@ -177,7 +178,7 @@ class CarolicETTViewController: UIViewController {
         tcnt += 1
         cirDia=view.bounds.width/26
         //let cirDia=view.bounds.width/26
-        timerCnt.text = "\(tcnt)"
+//        timerCnt.text = "\(tcnt)"
         
         if tcnt == epTim[0]{
             drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2), cirDiameter: cirDia, color1: UIColor.red.cgColor , color2:UIColor.red.cgColor)

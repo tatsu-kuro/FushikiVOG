@@ -9,9 +9,9 @@
 import UIKit
 import AVFoundation
 class CarolicOKNViewController: UIViewController {
-    var ettWidth:Int = 0//1:narrow,2:wide
+//    var ettWidth:Int = 0//1:narrow,2:wide
     var oknSpeed:Int = 0
-    var oknDirection:Int = 0
+//    var oknDirection:Int = 0
     var targetMode:Int = 0
     var cirDia:CGFloat = 0
     var timer1: Timer!
@@ -157,6 +157,7 @@ class CarolicOKNViewController: UIViewController {
         super.viewDidLoad()
         ww=view.bounds.width
         wh=view.bounds.height
+        oknSpeed = UserDefaults.standard.integer(forKey:"oknSpeed")
         epTim.append(10)
         epTim.append(100)
         epTim.append(110)
@@ -204,7 +205,7 @@ class CarolicOKNViewController: UIViewController {
     @objc func update() {
         tcnt += 1
         cirDia=view.bounds.width/25.0
-        timerCnt.text = "\(tcnt)"
+//        timerCnt.text = "\(tcnt)"
         ww=view.bounds.width
         wh=view.bounds.height
 
@@ -223,7 +224,7 @@ class CarolicOKNViewController: UIViewController {
             drawBrect()
             //setBackcolor(color:UIColor.black.cgColor)
         }
-        timerCnt.text = "\(tcnt)"
+//        timerCnt.text = "\(tcnt)"
         if tcnt == epTim[3]{
             drawWrect()
             //setBackcolor(color:UIColor.white.cgColor)

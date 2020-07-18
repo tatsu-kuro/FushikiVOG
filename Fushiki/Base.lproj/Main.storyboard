@@ -232,17 +232,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.14999999999999999" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y47-Fn-ClV">
-                                <rect key="frame" x="802" y="8" width="42" height="21"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="42" id="CsN-hk-SCv"/>
-                                    <constraint firstAttribute="height" constant="21" id="uaq-LC-Yrl"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ryv-pi-E5I">
                                 <rect key="frame" x="44" y="0.0" width="808" height="393"/>
                                 <gestureRecognizers/>
@@ -253,10 +242,8 @@
                         <constraints>
                             <constraint firstItem="ryv-pi-E5I" firstAttribute="leading" secondItem="TeQ-fF-YWK" secondAttribute="leading" id="D6m-BA-bZp"/>
                             <constraint firstItem="ryv-pi-E5I" firstAttribute="bottom" secondItem="TeQ-fF-YWK" secondAttribute="bottom" id="DQ7-Vw-d6c"/>
-                            <constraint firstItem="TeQ-fF-YWK" firstAttribute="trailing" secondItem="y47-Fn-ClV" secondAttribute="trailing" constant="8" id="RiG-FH-DR2"/>
                             <constraint firstItem="ryv-pi-E5I" firstAttribute="top" secondItem="TeQ-fF-YWK" secondAttribute="top" id="cJK-oX-Zdo"/>
                             <constraint firstItem="ryv-pi-E5I" firstAttribute="trailing" secondItem="TeQ-fF-YWK" secondAttribute="trailing" id="pH5-Yc-tOe"/>
-                            <constraint firstItem="y47-Fn-ClV" firstAttribute="top" secondItem="TeQ-fF-YWK" secondAttribute="top" constant="8" id="xhy-lq-G4a"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="TeQ-fF-YWK"/>
                         <connections>
@@ -266,7 +253,6 @@
                     </view>
                     <connections>
                         <outlet property="cameraView" destination="ryv-pi-E5I" id="Fob-CX-BbY"/>
-                        <outlet property="timerCnt" destination="y47-Fn-ClV" id="pCS-gR-GDz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yJD-y9-4Av" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -510,34 +496,14 @@
                     <view key="view" contentMode="scaleToFill" id="74d-sk-dwA">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.14999999999999999" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="000" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CAg-dW-h7v">
-                                <rect key="frame" x="796" y="20" width="80" height="20"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="00m-ps-LyW"/>
-                                    <constraint firstAttribute="height" constant="20" id="a6S-wb-UtD"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="CAg-dW-h7v" secondAttribute="trailing" constant="20" id="Gf4-UG-knB"/>
-                            <constraint firstItem="CAg-dW-h7v" firstAttribute="top" secondItem="xFK-TN-9vp" secondAttribute="top" constant="20" id="Udp-Rq-Vqu"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="xFK-TN-9vp"/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="nZg-VO-jx0" appends="YES" id="3ne-sW-EkM"/>
                             <outletCollection property="gestureRecognizers" destination="gQA-Nk-WZ6" appends="YES" id="qef-6p-S6B"/>
                         </connections>
                     </view>
-                    <connections>
-                        <outlet property="timerCnt" destination="CAg-dW-h7v" id="x8K-R8-aFo"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m9l-v2-IBH" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer numberOfTapsRequired="2" id="nZg-VO-jx0">
