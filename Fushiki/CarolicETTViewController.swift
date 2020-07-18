@@ -151,11 +151,18 @@ class CarolicETTViewController: UIViewController {
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
         prefersHomeIndicatorAutoHidden()
-    }
+         
+            //        prefersStatusBarHidden
+        }
+        
+        override func prefersHomeIndicatorAutoHidden() -> Bool {
+            return true
+        }
+        override var prefersStatusBarHidden: Bool {
+            return true
+        }
+
     
-    override func prefersHomeIndicatorAutoHidden() -> Bool {
-        return true
-    }
     private func drawWrect() {
         let rectLayer = CAShapeLayer.init()
         let rect1 = CGRect(x:0,y:0,width:view.bounds.width,height:view.bounds.height)

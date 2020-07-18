@@ -115,7 +115,7 @@ class SetteiViewController: UIViewController {
      @IBAction func paraAct6(_ sender: UISegmentedControl) {
            ettMode=sender.selectedSegmentIndex
            dispTexts()
-        print("chante ett mode:",ettMode)
+//        print("chante ett mode:",ettMode)
        }
      @IBAction func paraAct7(_ sender: UISlider) {
          ettWidth=Int(sender.value*100)

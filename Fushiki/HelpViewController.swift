@@ -125,16 +125,16 @@ class HelpViewController: UIViewController {
         if UIApplication.shared.isIdleTimerDisabled == true{
             UIApplication.shared.isIdleTimerDisabled = false//監視する
         }
-        self.setNeedsStatusBarAppearanceUpdate()
-        prefersHomeIndicatorAutoHidden()
+//        self.setNeedsStatusBarAppearanceUpdate()
+//        prefersHomeIndicatorAutoHidden()
     }
     
-    override func prefersHomeIndicatorAutoHidden() -> Bool {
-        return true
-    }
-    
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
+//    override func prefersHomeIndicatorAutoHidden() -> Bool {
+//        return true
+//    }
+//    
+//    override var prefersStatusBarHidden: Bool {
+//        return true
+//    }
 
 }
