@@ -116,7 +116,7 @@ class OKNViewController: UIViewController {
     var currentSpeed:Double = 0
     var initf:Bool=false
     @objc func update() {
-        cnt += 1
+//        cnt += 1
         let x0=ww/5
         if initf {
             for _ in 0..<6{
@@ -142,11 +142,11 @@ class OKNViewController: UIViewController {
         }else{
             currentSpeed = -Double(speed)
         }
-        if cnt%10 == 0 {
-            //            print("dx:",currentSpeed*dTime,oknSpeed ,oknTime,oknMode)//okpSpeed, "cuSpe:",currentSpeed)
-            //            print("dt:",dTime)//okpSpeed, "cuSpe:",currentSpeed)
-            print(String(format: "dtime: %.5f %",dTime))
-        }
+//        if cnt%10 == 0 {
+//            //            print("dx:",currentSpeed*dTime,oknSpeed ,oknTime,oknMode)//okpSpeed, "cuSpe:",currentSpeed)
+//            //            print("dt:",dTime)//okpSpeed, "cuSpe:",currentSpeed)
+//            print(String(format: "dtime: %.5f %",dTime))
+//        }
         
         var x = lastx + CGFloat(currentSpeed * dTime)
         
