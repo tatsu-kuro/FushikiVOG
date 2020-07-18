@@ -10,25 +10,19 @@ import UIKit
 import AVFoundation
 class CarolicETTViewController: UIViewController {
     var ettWidth:Int = 0//1:narrow,2:wide
-//    var oknSpeed:Int = 0
-//    var oknDirection:Int = 0
     var targetMode:Int = 0
     var cirDia:CGFloat = 0
     var timer: Timer!
- //   var timer1Interval:Int = 2
     var epTim = Array<Int>()
     var tcount: Int = 0
     var startTime=CFAbsoluteTimeGetCurrent()
-
+    
     @IBOutlet weak var cameraView: UIImageView!
-
+    
     var tapInterval=CFAbsoluteTimeGetCurrent()
     
     @IBAction func doubleTap(_ sender: Any) {
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
-//        mainView.ettWidth=ettWidth
-//        mainView.oknSpeed=oknSpeed
-//        mainView.oknDirection=oknDirection
         mainView.targetMode=targetMode
         delTimer()
         self.present(mainView, animated: false, completion: nil)
@@ -44,7 +38,7 @@ class CarolicETTViewController: UIViewController {
                 if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
                     print("doubleTapPlay")
                     doubleTap(0)
-//                    self.dismiss(animated: true, completion: nil)
+                    //                    self.dismiss(animated: true, completion: nil)
                 }
                 tapInterval=CFAbsoluteTimeGetCurrent()
             case .remoteControlTogglePlayPause:
@@ -52,7 +46,7 @@ class CarolicETTViewController: UIViewController {
                 if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
                     print("doubleTapTogglePlayPause")
                     doubleTap(0)
-//                    self.dismiss(animated: true, completion: nil)
+                    //                    self.dismiss(animated: true, completion: nil)
                 }
                 tapInterval=CFAbsoluteTimeGetCurrent()
             default:
@@ -84,11 +78,11 @@ class CarolicETTViewController: UIViewController {
             }
         }
     }
- 
+    
     override func viewDidAppear(_ animated: Bool) {
-
+        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -97,11 +91,11 @@ class CarolicETTViewController: UIViewController {
         return UIApplication.shared.statusBarOrientation
     }
     
-
+    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
-
+        
     }
     func stopDisplaylink(){
         if displayLinkF==true{
@@ -116,20 +110,20 @@ class CarolicETTViewController: UIViewController {
         }
         stopDisplaylink()
     }
-
+    
     var tcnt:Int = 0
     var tcnt2:Int = 0
-        
-//    @IBOutlet weak var timerCnt: UILabel!
-      func drawBrect() {
-          let rectLayer = CAShapeLayer.init()
-          let rect1 = CGRect(x:0,y:0,width:view.bounds.width,height:view.bounds.height)
-          rectLayer.strokeColor = UIColor.black.cgColor
-          rectLayer.fillColor = UIColor.black.cgColor
-          rectLayer.lineWidth = 0
-          rectLayer.path = UIBezierPath(rect:rect1).cgPath
-          self.view.layer.addSublayer(rectLayer)
-      }
+    
+    //    @IBOutlet weak var timerCnt: UILabel!
+    func drawBrect() {
+        let rectLayer = CAShapeLayer.init()
+        let rect1 = CGRect(x:0,y:0,width:view.bounds.width,height:view.bounds.height)
+        rectLayer.strokeColor = UIColor.black.cgColor
+        rectLayer.fillColor = UIColor.black.cgColor
+        rectLayer.lineWidth = 0
+        rectLayer.path = UIBezierPath(rect:rect1).cgPath
+        self.view.layer.addSublayer(rectLayer)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         epTim.append(10)
@@ -139,7 +133,7 @@ class CarolicETTViewController: UIViewController {
         epTim.append(138)
         epTim.append(148)
         ettWidth = UserDefaults.standard.integer(forKey:"ettWidth")
-//        print("ETTsView/carolicETT")//carolicETT
+        //        print("ETTsView/carolicETT")//carolicETT
         drawBrect()
         setBackcolor(color:UIColor.black.cgColor)
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
@@ -151,17 +145,14 @@ class CarolicETTViewController: UIViewController {
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
         prefersHomeIndicatorAutoHidden()
-         
-            //        prefersStatusBarHidden
-        }
-        
-        override func prefersHomeIndicatorAutoHidden() -> Bool {
-            return true
-        }
-        override var prefersStatusBarHidden: Bool {
-            return true
-        }
-
+    }
+    
+    override func prefersHomeIndicatorAutoHidden() -> Bool {
+        return true
+    }
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
     
     private func drawWrect() {
         let rectLayer = CAShapeLayer.init()
@@ -172,20 +163,14 @@ class CarolicETTViewController: UIViewController {
         rectLayer.path = UIBezierPath(rect:rect1).cgPath
         self.view.layer.addSublayer(rectLayer)
     }
-//   override var prefersStatusBarHidden: Bool {
-//        return true
-//    }
-    
-//    @IBAction func tapGes(_ sender: UITapGestureRecognizer) {
-//        print("singletap")
-//    }
+ 
     var displayLink:CADisplayLink?
     var displayLinkF:Bool = false
     @objc func update(tm: Timer) {
         tcnt += 1
         cirDia=view.bounds.width/26
         //let cirDia=view.bounds.width/26
-//        timerCnt.text = "\(tcnt)"
+        //        timerCnt.text = "\(tcnt)"
         
         if tcnt == epTim[0]{
             drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2), cirDiameter: cirDia, color1: UIColor.red.cgColor , color2:UIColor.red.cgColor)
@@ -195,17 +180,17 @@ class CarolicETTViewController: UIViewController {
         }
         if tcnt == epTim[1]{
             drawWrect()
-//            setBackcolor(color:UIColor.white.cgColor)
+            //            setBackcolor(color:UIColor.white.cgColor)
             drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2), cirDiameter: cirDia, color1: UIColor.black.cgColor , color2:UIColor.black.cgColor)
         }
         if tcnt == epTim[2]{
             drawBrect()
-//            setBackcolor(color:UIColor.black.cgColor)
+            //            setBackcolor(color:UIColor.black.cgColor)
         }
         
         if tcnt == epTim[3]{
             drawWrect()
-//            setBackcolor(color:UIColor.white.cgColor)
+            //            setBackcolor(color:UIColor.white.cgColor)
             startTime=CFAbsoluteTimeGetCurrent()
             displayLink = CADisplayLink(target: self, selector: #selector(self.update2))
             displayLink!.preferredFramesPerSecond = 120
@@ -213,8 +198,8 @@ class CarolicETTViewController: UIViewController {
             displayLinkF=true
         }
         if tcnt == epTim[4]{
-//            drawBrect()
-//            setBackcolor(color:UIColor.black.cgColor)
+            //            drawBrect()
+            //            setBackcolor(color:UIColor.black.cgColor)
             stopDisplaylink()
             drawBrect()
         }
@@ -272,19 +257,19 @@ class CarolicETTViewController: UIViewController {
     var setEndf:Bool=true
     @objc func update2() {
         tcnt2 += 1
+        let ww2=view.bounds.width/2
         let elapset=CFAbsoluteTimeGetCurrent()-startTime
         if tcnt2 == 1 {
             drawWrect()
-//            setBackcolor(color:UIColor.white.cgColor)
         }
         if elapset < 7/0.3{
-            let ettWidth=view.bounds.width/2 - view.bounds.width/18
+            //            let ettWidth=view.bounds.width/2 - view.bounds.width/18
             //let ettSpeed:CGFloat = 0.3
             //3.1415*5 -> 100回で１周、100回ps
             
             let sinV=sin(CGFloat(elapset)*3.1415*0.6)
             var cPoint:CGPoint
-            cPoint = CGPoint(x:view.bounds.width/2 + sinV*ettWidth, y: view.bounds.height/2)
+            cPoint = CGPoint(x:ww2 + sinV*ww2*CGFloat(ettWidth)/100, y: view.bounds.height/2)
             view.layer.sublayers?.removeLast()
             
             drawCircle(cPoint:cPoint,cirDiameter: cirDia,color1: UIColor.black.cgColor,color2:UIColor.black.cgColor)

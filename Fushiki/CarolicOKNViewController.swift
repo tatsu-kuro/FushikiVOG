@@ -11,20 +11,24 @@ import AVFoundation
 class CarolicOKNViewController: UIViewController {
 //    var ettWidth:Int = 0//1:narrow,2:wide
     var oknSpeed:Int = 0
+    var oknMode:Int=0
 //    var oknDirection:Int = 0
     var targetMode:Int = 0
     var cirDia:CGFloat = 0
     var timer1: Timer!
     var timer1Interval:Int = 2
     var startTime=CFAbsoluteTimeGetCurrent()
-    var tcount: Int = 0
+//    var startTime=CFAbsoluteTimeGetCurrent()
+     var lastTime=CFAbsoluteTimeGetCurrent()
+
+//    var tcount: Int = 0
     var displayLink:CADisplayLink?
     var displayLinkF:Bool=false
 
     var tcnt:Int = 0
-    var tcnt2:Int = 0
+//    var tcnt2:Int = 0
     var epTim = Array<Int>()
-    @IBOutlet weak var timerCnt: UILabel!
+//    @IBOutlet weak var timerCnt: UILabel!
     var tapInterval=CFAbsoluteTimeGetCurrent()
     func stopDisplaylink(){
           if displayLinkF==true{
@@ -40,9 +44,9 @@ class CarolicOKNViewController: UIViewController {
     }
     
     func delTimer(){
-         if timer1?.isValid == true {
-             timer1.invalidate()
-         }
+        if timer1?.isValid == true {
+            timer1.invalidate()
+        }
         stopDisplaylink()
     }
     override func remoteControlReceived(with event: UIEvent?) {
@@ -158,6 +162,7 @@ class CarolicOKNViewController: UIViewController {
         ww=view.bounds.width
         wh=view.bounds.height
         oknSpeed = UserDefaults.standard.integer(forKey:"oknSpeed")
+        oknMode = UserDefaults.standard.integer(forKey:"oknMode")
         epTim.append(10)
         epTim.append(100)
         epTim.append(110)
@@ -171,6 +176,7 @@ class CarolicOKNViewController: UIViewController {
         bandW.fillColor = UIColor.black.cgColor
         bandW.lineWidth = 0
         startTime=CFAbsoluteTimeGetCurrent()
+        
         print("carolicOKN")
         drawBrect()
 //        setBackcolor(color:UIColor.black.cgColor)
@@ -211,8 +217,8 @@ class CarolicOKNViewController: UIViewController {
         tcnt += 1
         cirDia=view.bounds.width/25.0
 //        timerCnt.text = "\(tcnt)"
-        ww=view.bounds.width
-        wh=view.bounds.height
+//        ww=view.bounds.width
+//        wh=view.bounds.height
 
         if tcnt == epTim[0]{
             drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2), cirDiameter: cirDia, color1: UIColor.red.cgColor , color2:UIColor.red.cgColor)
@@ -270,7 +276,7 @@ class CarolicOKNViewController: UIViewController {
         super.viewWillDisappear(animated)
         stopDisplaylink()
     }
-    var initf:Bool=false
+ /*   var initf:Bool=false
     @objc func update2() {
         tcnt2 += 1
         if initf {
@@ -288,5 +294,57 @@ class CarolicOKNViewController: UIViewController {
         for i in 0..<6 {
             drawBand(rectB:CGRect(x:CGFloat(i)*x0+xd,y:0,width:ww/10,height:wh))
         }
-    }
+    }*/
+    var lastx:CGFloat=0
+     var currentSpeed:Double = 0
+     var initf:Bool=false
+     @objc func update2() {
+//         tcnt2 += 1
+         let x0=ww/5
+         if initf {
+             for _ in 0..<6{
+                 view.layer.sublayers?.removeLast()
+             }
+         }
+         initf=true
+         let currentTime=CFAbsoluteTimeGetCurrent()
+         let dTime = currentTime - lastTime
+         lastTime = currentTime
+//         if currentTime - startTime>120{
+//             if UIApplication.shared.isIdleTimerDisabled == true{
+//                 UIApplication.shared.isIdleTimerDisabled = false//スリープする
+//             }
+//         }
+//         if oknMode<2 && Int(currentTime - startTime)>oknTime{
+//             //stopTimer()
+//             drawBand(rectB:CGRect(x:0,y:0,width:ww,height:wh))
+//             return
+//         }
+         if oknMode == 0 || oknMode == 2{
+             currentSpeed = Double(oknSpeed*15)
+         }else{
+             currentSpeed = -Double(oknSpeed*15)
+         }
+//         if tcnt2%10 == 0 {
+//             //            print("dx:",currentSpeed*dTime,oknSpeed ,oknTime,oknMode)//okpSpeed, "cuSpe:",currentSpeed)
+//             //            print("dt:",dTime)//okpSpeed, "cuSpe:",currentSpeed)
+//             print(String(format: "dtime: %.5f %",dTime))
+//         }
+         
+         var x = lastx + CGFloat(currentSpeed * dTime)
+         
+         //if (x>x0) {
+         while x>x0 {
+             x -= x0
+         }
+         //if (x < 0) {
+         while x<0 {
+             x += x0
+         }
+         for i in 0..<6 {
+             drawBand(rectB:CGRect(x:CGFloat(i-1)*x0+x,y:0,width:ww/10,height:wh))
+         }
+         lastx=x
+         
+     }
 }

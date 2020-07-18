@@ -115,7 +115,7 @@ class OKNViewController: UIViewController {
     var lastx:CGFloat=0
     var currentSpeed:Double = 0
     var initf:Bool=false
-    @objc func update(tm: Timer) {
+    @objc func update() {
         cnt += 1
         let x0=ww/5
         if initf {
