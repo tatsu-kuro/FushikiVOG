@@ -116,10 +116,10 @@ class HelpViewController: UIViewController {
         let ww:CGFloat=view.bounds.width
         let wh:CGFloat=view.bounds.height
        
-        var bw=ww*0.9/7
-        var bh=bw*170/440
-        var sp=ww*0.1/10
-        var by=wh-bh-sp
+        let bw=ww*0.9/7
+        let bh=bw*170/440
+        let sp=ww*0.1/10
+        let by=wh-bh-sp
         exitButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height:bh)
         globeButton.frame=CGRect(x:ww-bw/2.5-sp*2,y:sp,width:bw/2.5,height: bw/2.5)
         if UIApplication.shared.isIdleTimerDisabled == true{

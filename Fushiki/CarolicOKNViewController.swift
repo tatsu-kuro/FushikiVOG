@@ -189,16 +189,16 @@ class CarolicOKNViewController: UIViewController {
         self.becomeFirstResponder()
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
-         prefersHomeIndicatorAutoHidden()
-                //        prefersStatusBarHidden
-            }
-            
-            override func prefersHomeIndicatorAutoHidden() -> Bool {
-                return true
-            }
-            override var prefersStatusBarHidden: Bool {
-                return true
-            }
+        prefersHomeIndicatorAutoHidden()
+        //        prefersStatusBarHidden
+    }
+    
+    override func prefersHomeIndicatorAutoHidden() -> Bool {
+        return true
+    }
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 
     /*       setBackcolor(color:UIColor.black.cgColor)
      timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
