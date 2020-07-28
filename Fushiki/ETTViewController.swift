@@ -21,6 +21,7 @@ class ETTViewController: UIViewController {
     var ettMode:Int = 0
     var targetMode:Int = 0
     var ettW:CGFloat = 0
+    var ettH:CGFloat = 0
     
     //    @IBOutlet var doubleRec:UITapGestureRecognizer!
     //    @IBOutlet var singleRec:UITapGestureRecognizer!
@@ -113,14 +114,18 @@ class ETTViewController: UIViewController {
         super.viewDidLoad()
         ettMode=UserDefaults.standard.integer(forKey: "ettMode")
         ettWidth=UserDefaults.standard.integer(forKey: "ettWidth")
-        let w=view.bounds.width/2
-        ettW = w*CGFloat(ettWidth)/100.0
+//        let w=view.bounds.width/2
+        ettW = (view.bounds.width/2)*CGFloat(ettWidth)/100.0
+        ettH = (view.bounds.height/2)*CGFloat(ettWidth)/100.0
         cirDiameter=view.bounds.width/26
         if ettMode==0{//pursuit
             displayLink = CADisplayLink(target: self, selector: #selector(self.update0))
             displayLink!.preferredFramesPerSecond = 120
         }else if ettMode==1{//vert-horizon saccade
             displayLink = CADisplayLink(target: self, selector: #selector(self.update1))
+            displayLink!.preferredFramesPerSecond = 120
+        }else if ettMode==2{//vert-horizon saccade
+            displayLink = CADisplayLink(target: self, selector: #selector(self.update2))
             displayLink!.preferredFramesPerSecond = 1
         }else{//pursuit->saccade->random
             displayLink = CADisplayLink(target: self, selector: #selector(self.update3))
@@ -201,7 +206,7 @@ class ETTViewController: UIViewController {
          lastTime=elapset
      }
      
-    @objc func update1() {
+    @objc func update2() {
          if tcount > 0{
              view.layer.sublayers?.removeLast()
          }
@@ -233,6 +238,21 @@ class ETTViewController: UIViewController {
          let cPoint:CGPoint = CGPoint(x:x0 + CGFloat(xn*ettWidth)*x0/100, y: y0 + CGFloat(yn*ettWidth)*y0/100)
          drawCircle(cPoint:cPoint)
      }
+    @objc func update1() {//pursuit
+           if tcount > 0{
+               view.layer.sublayers?.removeLast()
+           }
+           tcount += 1
+           let elapset=CFAbsoluteTimeGetCurrent()-startTime
+           if(tcount>60*30 && elapset>29 || tcount>120*30){
+               doubleTap(0)
+           }
+           
+           let sinV=sin(CGFloat(elapset)*3.1415*0.6)
+           
+           let cPoint:CGPoint = CGPoint(x:view.bounds.width/2 , y: view.bounds.height/2 + sinV*ettH)
+           drawCircle(cPoint:cPoint)
+       }
     @objc func update0() {//pursuit
         if tcount > 0{
             view.layer.sublayers?.removeLast()
