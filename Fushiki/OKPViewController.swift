@@ -30,14 +30,14 @@ class OKPViewController: UIViewController {
 
     
     @IBAction func singleTap(_ sender: Any) {
-        print("singleTap****")
-        okpMode = UserDefaults.standard.integer(forKey:"okpMode")
-        if (okpMode == 0) || (okpMode == 2){
-            okpMode += 1
-        }else{
-            okpMode -= 1
-        }
-        UserDefaults.standard.set(okpMode, forKey:"okpMode")
+//        print("singleTap****")
+//        okpMode = UserDefaults.standard.integer(forKey:"okpMode")
+//        if (okpMode == 0) || (okpMode == 2){
+//            okpMode += 1
+//        }else{
+//            okpMode -= 1
+//        }
+//        UserDefaults.standard.set(okpMode, forKey:"okpMode")
     }
     
     //        @available(iOS 11, *)
