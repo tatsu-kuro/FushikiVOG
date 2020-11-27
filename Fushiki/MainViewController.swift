@@ -22,18 +22,7 @@ class MainViewController: UIViewController {
     var okpMode:Int=0
     var ettMode:Int = 0
     var ettWidth:Int=500
-
-//    var backModeETTp:Int = 0
-//    var backModeETTs:Int = 0
-//    var backModeStill:Int = 0
-//    var ballSizeStill:Int = 2
-//    var ballColorStill:Int = 1
-//    var cirDiameter:CGFloat = 0
-//    var bandWidth:CGFloat = 0
-//    var timer1Interval:Int = 2
-//    var ettWidth:Int = 0
-//    var oknSpeed:Int = 2
-    var targetMode:Int = -1
+    var targetMode:Int = 6
 //    var oknDirection:Int = 0
     var soundPlayer: AVAudioPlayer? = nil
     
@@ -87,6 +76,7 @@ class MainViewController: UIViewController {
     }
     func doModes(){
         let storyboard: UIStoryboard = self.storyboard!
+        UserDefaults.standard.set(targetMode, forKey:"targetMode")
         if targetMode==0{//pursuit
             let nextView = storyboard.instantiateViewController(withIdentifier: "ETT") as! ETTViewController
             nextView.targetMode = targetMode
@@ -194,9 +184,25 @@ class MainViewController: UIViewController {
             UIApplication.shared.isIdleTimerDisabled = false//監視する
         }
         //print("didappeariii")
-        if(controllerF){
+//        if(true){//controllerF){
             setRotate(alp: 0.6)
-        }
+            if targetMode==0{
+                button0.alpha=1.0// saccadebut.alph=1.0
+            }else if targetMode==1{
+                button1.alpha=1.0
+            }else if targetMode==2{
+                button2.alpha=1.0
+            }else if targetMode==3{
+                button3.alpha=1.0
+            }else if targetMode==4{
+                button4.alpha=1.0
+            }else if targetMode==5{
+                helpButton.alpha=1.0
+            }else{
+                setteiButton.alpha=1.0
+            }
+  //      }
+  //      print("videDidAppear*****")
     }
     func getUserDefault(str:String,ret:Int) -> Int{//getUserDefault_one
         if (UserDefaults.standard.object(forKey: str) != nil){//keyが設定してなければretをセット
@@ -217,7 +223,7 @@ class MainViewController: UIViewController {
         oknMode = getUserDefault(str: "oknMode", ret: 0)
         ettMode = getUserDefault(str: "ettMode", ret: 0)
         ettWidth = getUserDefault(str: "ettWidth", ret: 90)
-        
+        targetMode = getUserDefault(str: "targetMode", ret: 6)
         setRotate(alp:1)
         sound(snd:"silence")
         UIApplication.shared.beginReceivingRemoteControlEvents()

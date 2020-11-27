@@ -10,7 +10,10 @@ import UIKit
 import AVFoundation
 
 class OKPViewController: UIViewController {
+ 
     
+    @IBOutlet var singleRec: UITapGestureRecognizer!
+    @IBOutlet var doubleRec: UITapGestureRecognizer!
     var okp4:Double=40//最高スピードに達するまでの時間
     var okpSpeed:Int=5
     var okpTime:Int=0
@@ -24,7 +27,20 @@ class OKPViewController: UIViewController {
     var ww:CGFloat=0
     var wh:CGFloat=0
     var tapInterval=CFAbsoluteTimeGetCurrent()
-//        @available(iOS 11, *)
+
+    
+    @IBAction func singleTap(_ sender: Any) {
+        print("singleTap****")
+        okpMode = UserDefaults.standard.integer(forKey:"okpMode")
+        if (okpMode == 0) || (okpMode == 2){
+            okpMode += 1
+        }else{
+            okpMode -= 1
+        }
+        UserDefaults.standard.set(okpMode, forKey:"okpMode")
+    }
+    
+    //        @available(iOS 11, *)
 //        override var prefersHomeIndicatorAutoHidden: Bool {
 //            get {
 //                return true

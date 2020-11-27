@@ -23,8 +23,19 @@ class OKNViewController: UIViewController {
     var displayLink:CADisplayLink?
     var displayLinkF:Bool=false
     //    @IBOutlet weak var timerPara: UILabel!
+    @IBOutlet var singleRec: UITapGestureRecognizer!
     
-//    @IBOutlet var doubleRec:UITapGestureRecognizer!
+    @IBAction func singleTap(_ sender: Any) {
+        oknMode = UserDefaults.standard.integer(forKey:"oknMode")
+        if (oknMode == 0) || (oknMode == 2){
+            oknMode += 1
+        }else{
+            oknMode -= 1
+        }
+        UserDefaults.standard.set(oknMode, forKey:"oknMode")
+    }
+    @IBOutlet var doubleRec: UITapGestureRecognizer!
+    //    @IBOutlet var doubleRec:UITapGestureRecognizer!
     var tapInterval=CFAbsoluteTimeGetCurrent()
     
     @IBAction func doubleTap(_ sender: Any) {
@@ -53,6 +64,7 @@ class OKNViewController: UIViewController {
                 tapInterval=CFAbsoluteTimeGetCurrent()
             case .remoteControlTogglePlayPause:
                 print("TogglePlayPause")
+                singleTap(0)//change direction
                 if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
                     doubleTap(0)
                 }
@@ -70,7 +82,7 @@ class OKNViewController: UIViewController {
                 if(oknSpeed<1){
                     oknSpeed=1
                 }
-                speed=oknSpeed*15
+                speed=15*oknSpeed
                 UserDefaults.standard.set(oknSpeed, forKey: "oknSpeed")
             //                setTimer()
             default:
@@ -176,6 +188,7 @@ class OKNViewController: UIViewController {
         oknTime = UserDefaults.standard.integer(forKey:"oknTime")
         oknMode = UserDefaults.standard.integer(forKey:"oknMode")
         speed = oknSpeed*15
+      //  singleRec.require(toFail: doubleRec)
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
         }

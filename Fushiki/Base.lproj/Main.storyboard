@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="landscape" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -90,7 +91,7 @@
                                     <action selector="paraAct7:" destination="gOS-fU-nK5" eventType="valueChanged" id="RSa-GC-wDv"/>
                                 </connections>
                             </slider>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wIu-wr-ffr">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wIu-wr-ffr">
                                 <rect key="frame" x="518" y="327" width="172" height="57"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="default"/>
@@ -98,7 +99,7 @@
                                     <action selector="defaultAct:" destination="gOS-fU-nK5" eventType="touchUpInside" id="jLa-bx-HE4"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vji-3f-Tqg">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vji-3f-Tqg">
                                 <rect key="frame" x="751" y="310" width="115" height="74"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="exit"/>
@@ -163,9 +164,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <gestureRecognizers/>
                         <viewLayoutGuide key="safeArea" id="53f-q3-sSQ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="3TM-bb-wSt" appends="YES" id="Ssp-pU-SrV"/>
                         </connections>
@@ -207,18 +208,28 @@
                     <view key="view" contentMode="scaleToFill" id="CNm-l8-Sua">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="gvg-Wd-BnG"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
-                        <viewLayoutGuide key="safeArea" id="gvg-Wd-BnG"/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="u8Q-Hr-VUf" appends="YES" id="wDM-jF-fBb"/>
+                            <outletCollection property="gestureRecognizers" destination="zcQ-ry-kcN" appends="YES" id="gzs-70-QUV"/>
                         </connections>
                     </view>
+                    <connections>
+                        <outlet property="doubleRec" destination="u8Q-Hr-VUf" id="dEP-qj-p85"/>
+                        <outlet property="singleRec" destination="zcQ-ry-kcN" id="lGe-JD-yCE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BCE-Hz-4mh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer numberOfTapsRequired="2" id="u8Q-Hr-VUf">
                     <connections>
                         <action selector="doubleTap:" destination="fl3-2K-fNm" id="4wu-o1-VlV"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="zcQ-ry-kcN">
+                    <connections>
+                        <action selector="singleTap:" destination="fl3-2K-fNm" id="pTS-Up-X9s"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -237,6 +248,7 @@
                                 <gestureRecognizers/>
                             </imageView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="TeQ-fF-YWK"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
                         <constraints>
@@ -245,7 +257,6 @@
                             <constraint firstItem="ryv-pi-E5I" firstAttribute="top" secondItem="TeQ-fF-YWK" secondAttribute="top" id="cJK-oX-Zdo"/>
                             <constraint firstItem="ryv-pi-E5I" firstAttribute="trailing" secondItem="TeQ-fF-YWK" secondAttribute="trailing" id="pH5-Yc-tOe"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="TeQ-fF-YWK"/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="HbH-SX-RR2" appends="YES" id="qzi-ZC-69q"/>
                             <outletCollection property="gestureRecognizers" destination="xI7-KX-hjs" appends="YES" id="PHR-SH-TRI"/>
@@ -292,7 +303,7 @@
                                     <action selector="globeBut:" destination="YRo-aS-cBq" eventType="touchUpInside" id="2d2-v6-V8F"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qIw-KK-ztU">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qIw-KK-ztU">
                                 <rect key="frame" x="705" y="326" width="164" height="67"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="exit"/>
@@ -301,6 +312,7 @@
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="CfK-RG-r1l"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
                         <constraints>
@@ -313,7 +325,6 @@
                             <constraint firstItem="Ehp-nz-p8Q" firstAttribute="bottom" secondItem="CfK-RG-r1l" secondAttribute="bottom" id="x1p-k6-0Po"/>
                             <constraint firstItem="Ehp-nz-p8Q" firstAttribute="leading" secondItem="CfK-RG-r1l" secondAttribute="leading" id="zXd-Ru-E7m"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="CfK-RG-r1l"/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="zSj-ag-bUT" appends="YES" id="2JK-90-fZn"/>
                         </connections>
@@ -341,9 +352,9 @@
                     <view key="view" contentMode="scaleToFill" id="439-Kz-5Q0">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Bqo-QN-y3H"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
-                        <viewLayoutGuide key="safeArea" id="Bqo-QN-y3H"/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Ocd-pN-Xxi" appends="YES" id="w72-uP-jWJ"/>
                         </connections>
@@ -365,13 +376,18 @@
                     <view key="view" contentMode="scaleToFill" id="cIk-4H-s6y">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="wGH-Xk-fDT"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
-                        <viewLayoutGuide key="safeArea" id="wGH-Xk-fDT"/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Ndv-7n-u4N" appends="YES" id="8dE-LG-nuw"/>
+                            <outletCollection property="gestureRecognizers" destination="tbD-An-HEh" appends="YES" id="ha4-ju-0UR"/>
                         </connections>
                     </view>
+                    <connections>
+                        <outlet property="doubleRec" destination="Ndv-7n-u4N" id="K7U-bU-6NW"/>
+                        <outlet property="singleRec" destination="tbD-An-HEh" id="YsW-Eu-M9U"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="flV-Ff-bB3" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer numberOfTapsRequired="2" id="Ndv-7n-u4N">
@@ -379,8 +395,13 @@
                         <action selector="doubleTap:" destination="XY3-rd-IfB" id="W6U-dy-743"/>
                     </connections>
                 </tapGestureRecognizer>
+                <tapGestureRecognizer id="tbD-An-HEh">
+                    <connections>
+                        <action selector="singleTap:" destination="XY3-rd-IfB" id="64g-Q3-bbX"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-52" y="-682"/>
+            <point key="canvasLocation" x="-52" y="-538"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -390,7 +411,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S68-fh-yHQ">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S68-fh-yHQ">
                                 <rect key="frame" x="30" y="305" width="80" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -401,7 +422,7 @@
                                     <action selector="doMode0:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IQ8-Fi-Bmy"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cTd-rF-Jk7">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cTd-rF-Jk7">
                                 <rect key="frame" x="120" y="305" width="80" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="okp">
@@ -411,7 +432,7 @@
                                     <action selector="doMode1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JGE-XG-crn"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uQ1-87-BgY">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uQ1-87-BgY">
                                 <rect key="frame" x="210" y="305" width="80" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -422,7 +443,7 @@
                                     <action selector="doMode2:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0gv-vV-zuc"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jef-4N-Mcg">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jef-4N-Mcg">
                                 <rect key="frame" x="298" y="301" width="102" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="carolicett"/>
@@ -430,7 +451,7 @@
                                     <action selector="doMode3:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nnd-G0-WOH"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SgL-BM-Dbh">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SgL-BM-Dbh">
                                 <rect key="frame" x="432" y="305" width="77" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="carolicokn"/>
@@ -448,7 +469,7 @@
                                     <constraint firstAttribute="width" secondItem="uoZ-Mt-SBf" secondAttribute="height" multiplier="13:1" id="bqD-7Z-tYr"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="deG-Tq-o9U">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="deG-Tq-o9U">
                                 <rect key="frame" x="547" y="305" width="100" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="help"/>
@@ -456,7 +477,7 @@
                                     <action selector="doHelp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IhA-EU-kmL"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CTI-eK-yKu" userLabel="Settei Button">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CTI-eK-yKu" userLabel="Settei Button">
                                 <rect key="frame" x="682" y="305" width="154" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="settei"/>
@@ -465,6 +486,7 @@
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
@@ -472,7 +494,6 @@
                             <constraint firstItem="uoZ-Mt-SBf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="NdE-ZH-9L4"/>
                             <constraint firstItem="uoZ-Mt-SBf" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="boa-PB-VOf"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="button0" destination="S68-fh-yHQ" id="GSv-1T-ZgH"/>
@@ -496,9 +517,9 @@
                     <view key="view" contentMode="scaleToFill" id="74d-sk-dwA">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="xFK-TN-9vp"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
-                        <viewLayoutGuide key="safeArea" id="xFK-TN-9vp"/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="nZg-VO-jx0" appends="YES" id="3ne-sW-EkM"/>
                             <outletCollection property="gestureRecognizers" destination="gQA-Nk-WZ6" appends="YES" id="qef-6p-S6B"/>
@@ -535,5 +556,8 @@
         <image name="okn" width="440" height="150"/>
         <image name="okp" width="440" height="150"/>
         <image name="settei" width="440" height="150"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
