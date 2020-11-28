@@ -224,12 +224,12 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BCE-Hz-4mh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer numberOfTapsRequired="2" id="u8Q-Hr-VUf">
                     <connections>
-                        <action selector="doubleTap:" destination="fl3-2K-fNm" id="4wu-o1-VlV"/>
+                        <action selector="doubleTap:" destination="fl3-2K-fNm" id="XLp-TD-ohd"/>
                     </connections>
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="zcQ-ry-kcN">
                     <connections>
-                        <action selector="singleTap:" destination="fl3-2K-fNm" id="pTS-Up-X9s"/>
+                        <action selector="singleTap:" destination="fl3-2K-fNm" id="gQV-S4-ni7"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

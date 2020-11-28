@@ -24,8 +24,7 @@ class OKNViewController: UIViewController {
     var displayLinkF:Bool=false
     //    @IBOutlet weak var timerPara: UILabel!
     @IBOutlet var singleRec: UITapGestureRecognizer!
-    
-    @IBAction func singleTap(_ sender: Any) {
+    func changeDirection(){
         oknMode = UserDefaults.standard.integer(forKey:"oknMode")
         if (oknMode == 0) || (oknMode == 2){
             oknMode += 1
@@ -34,20 +33,44 @@ class OKNViewController: UIViewController {
         }
         UserDefaults.standard.set(oknMode, forKey:"oknMode")
     }
+    @IBAction func singleTap(_ sender: UITapGestureRecognizer) {
+        let x=sender.location(in: self.view).x
+        if x<view.bounds.width/3{
+            oknSpeed -= 1
+            if(oknSpeed<1){
+                oknSpeed=1
+            }
+            speed=15*oknSpeed
+            UserDefaults.standard.set(oknSpeed, forKey: "oknSpeed")
+        }else if x>view.bounds.width*2/3{
+            oknSpeed += 1
+            if(oknSpeed>200){
+                oknSpeed=200
+            }
+            speed=15*oknSpeed
+            UserDefaults.standard.set(oknSpeed, forKey: "oknSpeed")
+        }else{
+            changeDirection()
+        }
+    }
     @IBOutlet var doubleRec: UITapGestureRecognizer!
     //    @IBOutlet var doubleRec:UITapGestureRecognizer!
     var tapInterval=CFAbsoluteTimeGetCurrent()
-    
-    @IBAction func doubleTap(_ sender: Any) {
+    func exit4OKN(){
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
-        //        if timer?.isValid == true {
-        //            timer.invalidate()
-        //        }
+   
         mainView.targetMode=targetMode
         if UIApplication.shared.isIdleTimerDisabled == true{
             UIApplication.shared.isIdleTimerDisabled = false//スリープする
         }
         self.present(mainView, animated: false, completion: nil)
+    }
+    @IBAction func doubleTap(_ sender: UITapGestureRecognizer) {
+        let x=sender.location(in: self.view).x
+        let vw=view.bounds.width
+        if x>vw/3 && x<vw*2/3{
+            exit4OKN()
+        }
     }
     
     override func remoteControlReceived(with event: UIEvent?) {
@@ -59,14 +82,15 @@ class OKNViewController: UIViewController {
             case .remoteControlPlay:
                 print("Play")
                 if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
-                    doubleTap(0)
+                    exit4OKN()
                 }
                 tapInterval=CFAbsoluteTimeGetCurrent()
             case .remoteControlTogglePlayPause:
                 print("TogglePlayPause")
-                singleTap(0)//change direction
+                changeDirection()
+//                singleTap(0)//change direction
                 if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
-                    doubleTap(0)
+                    exit4OKN()
                 }
                 tapInterval=CFAbsoluteTimeGetCurrent()
             case .remoteControlNextTrack:
