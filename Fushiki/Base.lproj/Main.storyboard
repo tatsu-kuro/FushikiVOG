@@ -397,7 +397,7 @@
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="tbD-An-HEh">
                     <connections>
-                        <action selector="singleTap:" destination="XY3-rd-IfB" id="64g-Q3-bbX"/>
+                        <action selector="singleTap:" destination="XY3-rd-IfB" id="ynI-8u-oQZ"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

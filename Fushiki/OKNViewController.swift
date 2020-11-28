@@ -24,33 +24,39 @@ class OKNViewController: UIViewController {
     var displayLinkF:Bool=false
     //    @IBOutlet weak var timerPara: UILabel!
     @IBOutlet var singleRec: UITapGestureRecognizer!
-    func changeDirection(){
+    func changeDirection(dir:Int){
         oknMode = UserDefaults.standard.integer(forKey:"oknMode")
-        if (oknMode == 0) || (oknMode == 2){
-            oknMode += 1
+        if dir==1{
+            if (oknMode == 0) || (oknMode == 2){
+                oknMode += 1
+            }
         }else{
-            oknMode -= 1
+            if oknMode==1 || oknMode==3{
+                oknMode -= 1
+            }
         }
         UserDefaults.standard.set(oknMode, forKey:"oknMode")
     }
     @IBAction func singleTap(_ sender: UITapGestureRecognizer) {
         let x=sender.location(in: self.view).x
-        if x<view.bounds.width/3{
+        if x<view.bounds.width/6{
             oknSpeed -= 1
             if(oknSpeed<1){
                 oknSpeed=1
             }
             speed=15*oknSpeed
             UserDefaults.standard.set(oknSpeed, forKey: "oknSpeed")
-        }else if x>view.bounds.width*2/3{
+        }else if x>view.bounds.width*5/6{
             oknSpeed += 1
             if(oknSpeed>200){
                 oknSpeed=200
             }
             speed=15*oknSpeed
             UserDefaults.standard.set(oknSpeed, forKey: "oknSpeed")
+        }else if x>view.bounds.width/2{
+            changeDirection(dir:0)
         }else{
-            changeDirection()
+            changeDirection(dir:1)
         }
     }
     @IBOutlet var doubleRec: UITapGestureRecognizer!
@@ -68,7 +74,7 @@ class OKNViewController: UIViewController {
     @IBAction func doubleTap(_ sender: UITapGestureRecognizer) {
         let x=sender.location(in: self.view).x
         let vw=view.bounds.width
-        if x>vw/3 && x<vw*2/3{
+        if x>vw/6 && x<vw*5/6{
             exit4OKN()
         }
     }
@@ -86,29 +92,41 @@ class OKNViewController: UIViewController {
                 }
                 tapInterval=CFAbsoluteTimeGetCurrent()
             case .remoteControlTogglePlayPause:
-                print("TogglePlayPause")
-                changeDirection()
+//                print("TogglePlayPause")
+//                changeDirection()
 //                singleTap(0)//change direction
                 if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
                     exit4OKN()
                 }
                 tapInterval=CFAbsoluteTimeGetCurrent()
             case .remoteControlNextTrack:
-                oknSpeed += 1
-                if(oknSpeed>200){
-                    oknSpeed=200
+                oknMode = UserDefaults.standard.integer(forKey:"oknMode")
+                if oknMode==1 || oknMode==3{
+                    oknMode -= 1
                 }
-                speed=15*oknSpeed
-                UserDefaults.standard.set(oknSpeed, forKey: "oknSpeed")
+                UserDefaults.standard.set(oknMode, forKey:"oknMode")
             case .remoteControlPreviousTrack:
-                //stopTimer()
-                oknSpeed -= 1
-                if(oknSpeed<1){
-                    oknSpeed=1
+                oknMode = UserDefaults.standard.integer(forKey:"oknMode")
+                if oknMode==0 || oknMode==2{
+                    oknMode += 1
                 }
-                speed=15*oknSpeed
-                UserDefaults.standard.set(oknSpeed, forKey: "oknSpeed")
-            //                setTimer()
+                UserDefaults.standard.set(oknMode, forKey:"oknMode")
+//            case .remoteControlNextTrack:
+//                oknSpeed += 1
+//                if(oknSpeed>200){
+//                    oknSpeed=200
+//                }
+//                speed=15*oknSpeed
+//                UserDefaults.standard.set(oknSpeed, forKey: "oknSpeed")
+//            case .remoteControlPreviousTrack:
+//                //stopTimer()
+//                oknSpeed -= 1
+//                if(oknSpeed<1){
+//                    oknSpeed=1
+//                }
+//                speed=15*oknSpeed
+//                UserDefaults.standard.set(oknSpeed, forKey: "oknSpeed")
+//            //                setTimer()
             default:
                 print("Others")
             }

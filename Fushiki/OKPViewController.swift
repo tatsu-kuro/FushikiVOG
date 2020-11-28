@@ -29,15 +29,18 @@ class OKPViewController: UIViewController {
     var tapInterval=CFAbsoluteTimeGetCurrent()
 
     
-    @IBAction func singleTap(_ sender: Any) {
-//        print("singleTap****")
-//        okpMode = UserDefaults.standard.integer(forKey:"okpMode")
-//        if (okpMode == 0) || (okpMode == 2){
-//            okpMode += 1
-//        }else{
-//            okpMode -= 1
-//        }
-//        UserDefaults.standard.set(okpMode, forKey:"okpMode")
+    @IBAction func singleTap(_ sender: UITapGestureRecognizer) {
+        okpMode = UserDefaults.standard.integer(forKey:"okpMode")
+        if sender.location(in: self.view).x<view.bounds.width/2{
+            if okpMode==0 || okpMode==2{
+                okpMode += 1
+            }
+        }else{
+            if okpMode==1 || okpMode==3{
+                okpMode -= 1
+            }
+        }
+        UserDefaults.standard.set(okpMode, forKey:"okpMode")
     }
     
     //        @available(iOS 11, *)
@@ -73,7 +76,6 @@ class OKPViewController: UIViewController {
                 if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
                     print("doubleTapPlay")
                     doubleTap(0)
-                    //                    self.dismiss(animated: true, completion: nil)
                 }
                 tapInterval=CFAbsoluteTimeGetCurrent()
             case .remoteControlTogglePlayPause:
@@ -81,9 +83,20 @@ class OKPViewController: UIViewController {
                 if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
                     print("doubleTap")
                     doubleTap(0)
-                    //                 self.dismiss(animated: true, completion: nil)
                 }
                 tapInterval=CFAbsoluteTimeGetCurrent()
+            case .remoteControlNextTrack:
+                okpMode = UserDefaults.standard.integer(forKey:"okpMode")
+                if okpMode==1 || okpMode==3{
+                    okpMode -= 1
+                }
+                UserDefaults.standard.set(okpMode, forKey:"okpMode")
+            case .remoteControlPreviousTrack:
+                okpMode = UserDefaults.standard.integer(forKey:"okpMode")
+                if okpMode==0 || okpMode==2{
+                    okpMode += 1
+                }
+                UserDefaults.standard.set(okpMode, forKey:"okpMode")
             default:
                 print("Others")
             }
@@ -103,17 +116,17 @@ class OKPViewController: UIViewController {
         okpMode = UserDefaults.standard.integer(forKey:"okpMode")
         startTime=CFAbsoluteTimeGetCurrent()
         okpSpeed *= 15
-        if okpMode == 0 || okpMode == 2{
+//        if okpMode == 0 || okpMode == 2{
             displayLink = CADisplayLink(target: self, selector: #selector(self.update))
             displayLink!.preferredFramesPerSecond = 120
             displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
             displayLinkF=true
-        }else{
-            displayLink = CADisplayLink(target: self, selector: #selector(self.update1))
-            displayLink!.preferredFramesPerSecond = 120
-            displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
-            displayLinkF=true
-        }
+//        }else{
+//            displayLink = CADisplayLink(target: self, selector: #selector(self.update1))
+//            displayLink!.preferredFramesPerSecond = 120
+//            displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
+//            displayLinkF=true
+//        }
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
         }
@@ -163,10 +176,14 @@ class OKPViewController: UIViewController {
         let elapsed = currentTime - startTime
         let dTime = currentTime - lastTime
         lastTime = currentTime
+        var okp4Speed=Double(okpSpeed)/okp4
+        if okpMode==1 || okpMode==3{
+            okp4Speed = -okp4Speed
+        }
         if elapsed < okp4  {
-            currentSpeed = elapsed * (Double(okpSpeed) / okp4)
+            currentSpeed = elapsed * okp4Speed
         } else if elapsed < okp4 * 2.0 {
-            currentSpeed = (okp4 * 2.0 - elapsed) * (Double(okpSpeed) / okp4)
+            currentSpeed = (okp4 * 2.0 - elapsed) * okp4Speed
         } else if elapsed < okp4*2.0 + Double(okpTime){
             currentSpeed=0
             if okpMode > 1{
@@ -176,9 +193,9 @@ class OKPViewController: UIViewController {
                 return
             }
         } else if elapsed < okp4 * 3.0 + Double(okpTime) {
-            currentSpeed = -(elapsed - okp4 * 2.0 - Double(okpTime)) * (Double(okpSpeed) / okp4)
+            currentSpeed = -(elapsed - okp4 * 2.0 - Double(okpTime)) * okp4Speed
         } else if elapsed < okp4 * 4.0 + Double(okpTime) {
-            currentSpeed = -(okp4 * 4.0 - elapsed + Double(okpTime)) * (Double(okpSpeed) / okp4)
+            currentSpeed = -(okp4 * 4.0 - elapsed + Double(okpTime)) * okp4Speed
         } else {
             currentSpeed = 0
             if UIApplication.shared.isIdleTimerDisabled == true{
