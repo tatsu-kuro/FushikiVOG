@@ -11,11 +11,13 @@ import AVFoundation
 
 class OKPViewController: UIViewController {
  
+    @IBOutlet weak var speedLabel: UILabel!
     
     @IBOutlet var singleRec: UITapGestureRecognizer!
     @IBOutlet var doubleRec: UITapGestureRecognizer!
     var okp4:Double=40//最高スピードに達するまでの時間
     var okpSpeed:Int=5
+    var speed:Int=0
     var okpTime:Int=0
     var okpMode:Int=0
     var targetMode:Int = 0
@@ -28,6 +30,34 @@ class OKPViewController: UIViewController {
     var wh:CGFloat=0
     var tapInterval=CFAbsoluteTimeGetCurrent()
 
+    var startX:CGFloat?
+    var startSpeed:Int?
+    
+    @IBAction func panGes(_ sender: UIPanGestureRecognizer) {
+
+        if sender.state == .began {
+            speedLabel.isHidden=false
+            startSpeed=okpSpeed
+            startX=sender.location(in:self.view).x//sender.location(in: self.view)
+        }else if sender.state == .changed {
+            okpSpeed = startSpeed! + Int(sender.location(in:self.view).x - startX!)/20
+            
+            if okpSpeed<1{
+                okpSpeed=1
+            }else if okpSpeed>200{
+                okpSpeed=200
+            }
+            speedLabel.text="MaxSPEED:" + String(Int(okpSpeed*15)) + "pt/sec" + "  ScreenWidth(" + String(Int(view.bounds.width)) + "pt)"
+            speed=15*okpSpeed
+        }else if sender.state == .ended{
+            UserDefaults.standard.set(okpSpeed, forKey:"okpSpeed")
+            speedLabel.isHidden=true
+        }
+    }
+    
+//    @IBAction func panGes(_ sender: Any) {
+//
+//    }
     
     @IBAction func singleTap(_ sender: UITapGestureRecognizer) {
         okpMode = UserDefaults.standard.integer(forKey:"okpMode")
@@ -115,7 +145,8 @@ class OKPViewController: UIViewController {
         okpTime = UserDefaults.standard.integer(forKey:"okpTime")
         okpMode = UserDefaults.standard.integer(forKey:"okpMode")
         startTime=CFAbsoluteTimeGetCurrent()
-        okpSpeed *= 15
+        speedLabel.isHidden=true
+        speed = okpSpeed*15
 //        if okpMode == 0 || okpMode == 2{
             displayLink = CADisplayLink(target: self, selector: #selector(self.update))
             displayLink!.preferredFramesPerSecond = 120
@@ -176,7 +207,7 @@ class OKPViewController: UIViewController {
         let elapsed = currentTime - startTime
         let dTime = currentTime - lastTime
         lastTime = currentTime
-        var okp4Speed=Double(okpSpeed)/okp4
+        var okp4Speed=Double(speed)/okp4
         if okpMode==1 || okpMode==3{
             okp4Speed = -okp4Speed
         }
@@ -220,56 +251,4 @@ class OKPViewController: UIViewController {
         lastx=x
         
     }
-    @objc func update1(tm: Timer) {
-        let x0=ww/5
-        if initf {
-            for _ in 0..<6{
-                view.layer.sublayers?.removeLast()
-            }
-        }
-        initf=true
-        let currentTime=CFAbsoluteTimeGetCurrent()
-        let elapsed = currentTime - startTime
-        let dTime = currentTime - lastTime
-        lastTime = currentTime
-        if elapsed < okp4 {
-            currentSpeed = -elapsed * (Double(okpSpeed) / okp4)
-        } else if elapsed < okp4 * 2.0 {
-            currentSpeed = -(okp4 * 2.0 - elapsed) * (Double(okpSpeed) / okp4)
-        } else if elapsed < okp4 * 2.0 + Double(okpTime){
-            currentSpeed=0
-            if okpMode > 1{
-                for i in 0..<6 {
-                    drawBand(rectB:CGRect(x:CGFloat(i-1)*x0+lastx,y:0,width:ww/10,height:wh))
-                }
-                return
-            }
-        } else if elapsed < okp4 * 3.0 + Double(okpTime) {
-            currentSpeed = (elapsed - okp4 * 2.0 - Double(okpTime)) * (Double(okpSpeed) / okp4)
-        } else if elapsed < okp4 * 4.0 + Double(okpTime) {
-            currentSpeed = (okp4 * 4.0 - elapsed + Double(okpTime)) * (Double(okpSpeed) / okp4)
-        } else {
-            currentSpeed = 0
-            if UIApplication.shared.isIdleTimerDisabled == true{
-                UIApplication.shared.isIdleTimerDisabled = false//スリープする
-            }
-        }
-        
-        var x = lastx + CGFloat(currentSpeed * dTime)
-        
-        //if (x>x0) {
-        while x>x0 {
-            x -= x0
-        }
-        //if (x < 0) {
-        while x<0 {
-            x += x0
-        }
-        
-        for i in 0..<6 {
-            drawBand(rectB:CGRect(x:CGFloat(i-1)*x0+x,y:0,width:ww/10,height:wh))
-        }
-        lastx=x
-    }
-    
 }

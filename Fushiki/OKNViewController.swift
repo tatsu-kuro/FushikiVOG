@@ -22,7 +22,34 @@ class OKNViewController: UIViewController {
     var wh:CGFloat=0
     var displayLink:CADisplayLink?
     var displayLinkF:Bool=false
+ 
+    
+    @IBOutlet weak var speedLabel: UILabel!
     //    @IBOutlet weak var timerPara: UILabel!
+    var startX:CGFloat?
+    var startSpeed:Int?
+    @IBAction func panGes(_ sender: UIPanGestureRecognizer) {
+        if sender.state == .began {
+            speedLabel.isHidden=false
+            startSpeed=oknSpeed
+            startX=sender.location(in:self.view).x//sender.location(in: self.view)
+        }else if sender.state == .changed {
+            oknSpeed = startSpeed! + Int(sender.location(in:self.view).x - startX!)/20
+            
+            if oknSpeed<1{
+                oknSpeed=1
+            }else if oknSpeed>200{
+                oknSpeed=200
+            }
+            speedLabel.text="SPEED:" + String(Int(oknSpeed*15)) + "pt/sec" + "  ScreenWidth(" + String(Int(view.bounds.width)) + "pt)"
+            speed=15*oknSpeed
+        }else if sender.state == .ended{
+            UserDefaults.standard.set(oknSpeed, forKey:"oknSpeed")
+            speedLabel.isHidden=true
+        }
+    }
+   
+
     @IBOutlet var singleRec: UITapGestureRecognizer!
     func changeDirection(dir:Int){
         oknMode = UserDefaults.standard.integer(forKey:"oknMode")
@@ -38,22 +65,23 @@ class OKNViewController: UIViewController {
         UserDefaults.standard.set(oknMode, forKey:"oknMode")
     }
     @IBAction func singleTap(_ sender: UITapGestureRecognizer) {
-        let x=sender.location(in: self.view).x
-        if x<view.bounds.width/6{
-            oknSpeed -= 1
-            if(oknSpeed<1){
-                oknSpeed=1
-            }
-            speed=15*oknSpeed
-            UserDefaults.standard.set(oknSpeed, forKey: "oknSpeed")
-        }else if x>view.bounds.width*5/6{
-            oknSpeed += 1
-            if(oknSpeed>200){
-                oknSpeed=200
-            }
-            speed=15*oknSpeed
-            UserDefaults.standard.set(oknSpeed, forKey: "oknSpeed")
-        }else if x>view.bounds.width/2{
+//        let x=sender.location(in: self.view).x
+//        if x<view.bounds.width/6{
+//            oknSpeed -= 1
+//            if(oknSpeed<1){
+//                oknSpeed=1
+//            }
+//            speed=15*oknSpeed
+//            UserDefaults.standard.set(oknSpeed, forKey: "oknSpeed")
+//        }else if x>view.bounds.width*5/6{
+//            oknSpeed += 1
+//            if(oknSpeed>200){
+//                oknSpeed=200
+//            }
+//            speed=15*oknSpeed
+//            UserDefaults.standard.set(oknSpeed, forKey: "oknSpeed")
+//        }else if x>view.bounds.width/2{
+        if sender.location(in: self.view).x>view.bounds.width/2{
             changeDirection(dir:0)
         }else{
             changeDirection(dir:1)
@@ -230,6 +258,7 @@ class OKNViewController: UIViewController {
         oknTime = UserDefaults.standard.integer(forKey:"oknTime")
         oknMode = UserDefaults.standard.integer(forKey:"oknMode")
         speed = oknSpeed*15
+        speedLabel.isHidden=true
       //  singleRec.require(toFail: doubleRec)
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない

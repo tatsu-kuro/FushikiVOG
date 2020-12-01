@@ -208,17 +208,36 @@
                     <view key="view" contentMode="scaleToFill" id="CNm-l8-Sua">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="200" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9I0-D2-09s">
+                                <rect key="frame" x="54" y="20" width="832" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="xhN-M8-whD"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="gvg-Wd-BnG"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="9I0-D2-09s" secondAttribute="trailing" constant="10" id="MIW-Qh-onD"/>
+                            <constraint firstItem="9I0-D2-09s" firstAttribute="top" secondItem="gvg-Wd-BnG" secondAttribute="top" constant="20" id="WlZ-JS-bFw"/>
+                            <constraint firstItem="9I0-D2-09s" firstAttribute="leading" secondItem="gvg-Wd-BnG" secondAttribute="leading" constant="10" id="ktq-ST-cr9"/>
+                        </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="u8Q-Hr-VUf" appends="YES" id="wDM-jF-fBb"/>
                             <outletCollection property="gestureRecognizers" destination="zcQ-ry-kcN" appends="YES" id="gzs-70-QUV"/>
+                            <outletCollection property="gestureRecognizers" destination="dgP-ma-pTe" appends="YES" id="3I1-vL-FSU"/>
                         </connections>
                     </view>
                     <connections>
                         <outlet property="doubleRec" destination="u8Q-Hr-VUf" id="dEP-qj-p85"/>
                         <outlet property="singleRec" destination="zcQ-ry-kcN" id="lGe-JD-yCE"/>
+                        <outlet property="speedLabel" destination="9I0-D2-09s" id="hVs-CR-7Uf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BCE-Hz-4mh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -232,8 +251,13 @@
                         <action selector="singleTap:" destination="fl3-2K-fNm" id="gQV-S4-ni7"/>
                     </connections>
                 </tapGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="dgP-ma-pTe">
+                    <connections>
+                        <action selector="panGes:" destination="fl3-2K-fNm" id="i9y-I0-Qos"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-675" y="-2426.0869565217395"/>
+            <point key="canvasLocation" x="-876.5625" y="-2281.1594202898555"/>
         </scene>
         <!--CarolicETT View Controller-->
         <scene sceneID="VIV-hu-Fjj">
@@ -376,17 +400,36 @@
                     <view key="view" contentMode="scaleToFill" id="cIk-4H-s6y">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Czw-Go-oXf">
+                                <rect key="frame" x="54" y="20" width="788" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="hz1-1l-3jb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="wGH-Xk-fDT"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="Czw-Go-oXf" firstAttribute="leading" secondItem="wGH-Xk-fDT" secondAttribute="leading" constant="10" id="QRA-jN-7sY"/>
+                            <constraint firstItem="wGH-Xk-fDT" firstAttribute="trailing" secondItem="Czw-Go-oXf" secondAttribute="trailing" constant="10" id="q4d-Pl-HaP"/>
+                            <constraint firstItem="Czw-Go-oXf" firstAttribute="top" secondItem="wGH-Xk-fDT" secondAttribute="top" constant="20" id="t8n-V9-a4J"/>
+                        </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Ndv-7n-u4N" appends="YES" id="8dE-LG-nuw"/>
                             <outletCollection property="gestureRecognizers" destination="tbD-An-HEh" appends="YES" id="ha4-ju-0UR"/>
+                            <outletCollection property="gestureRecognizers" destination="9vm-p0-VdW" appends="YES" id="63e-Xe-UXW"/>
                         </connections>
                     </view>
                     <connections>
                         <outlet property="doubleRec" destination="Ndv-7n-u4N" id="K7U-bU-6NW"/>
                         <outlet property="singleRec" destination="tbD-An-HEh" id="YsW-Eu-M9U"/>
+                        <outlet property="speedLabel" destination="Czw-Go-oXf" id="ars-jw-x0T"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="flV-Ff-bB3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -400,6 +443,11 @@
                         <action selector="singleTap:" destination="XY3-rd-IfB" id="ynI-8u-oQZ"/>
                     </connections>
                 </tapGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="9vm-p0-VdW">
+                    <connections>
+                        <action selector="panGes:" destination="XY3-rd-IfB" id="ia9-XA-vYJ"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-52" y="-538"/>
         </scene>
