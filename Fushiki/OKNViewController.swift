@@ -100,11 +100,11 @@ class OKNViewController: UIViewController {
         self.present(mainView, animated: false, completion: nil)
     }
     @IBAction func doubleTap(_ sender: UITapGestureRecognizer) {
-        let x=sender.location(in: self.view).x
-        let vw=view.bounds.width
-        if x>vw/6 && x<vw*5/6{
+  //      let x=sender.location(in: self.view).x
+  //      let vw=view.bounds.width
+  //      if x>vw/6 && x<vw*5/6{
             exit4OKN()
-        }
+  //      }
     }
     
     override func remoteControlReceived(with event: UIEvent?) {
