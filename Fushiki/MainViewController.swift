@@ -9,9 +9,10 @@
 import UIKit
 import AVFoundation
 import MediaPlayer
-
+import Photos
 //import GameController
 class MainViewController: UIViewController {
+//    var FushikiAlbum: PHAssetCollection? // アルバムをオブジェクト化
     var controllerF:Bool=false
 //    var timer: Timer!
     var oknSpeed:Int = 50
@@ -212,7 +213,47 @@ class MainViewController: UIViewController {
             return ret
         }
     }
- 
+    // アルバムが既にあるか確認し、FushikiAlbumに代入
+    func albumExists(albumTitle: String) -> Bool {
+        // ここで以下のようなエラーが出るが、なぜか問題なくアルバムが取得できている
+        // [core] "Error returned from daemon: Error Domain=com.apple.accounts Code=7 "(null)""
+        let albums = PHAssetCollection.fetchAssetCollections(with: PHAssetCollectionType.album, subtype:
+            PHAssetCollectionSubtype.albumRegular, options: nil)
+        for i in 0 ..< albums.count {
+            let album = albums.object(at: i)
+            if album.localizedTitle != nil && album.localizedTitle == albumTitle {
+//                FushikiAlbum = album
+                return true
+            }
+        }
+        return false
+    }
+    func albumCheck(album:String){//ここでもチェックしないとダメのよう
+        if albumExists(albumTitle: album)==false{
+            createNewAlbum(albumTitle: album) { (isSuccess) in
+                if isSuccess{
+                    print("album can be made,")
+                } else{
+                    print("album can't be made.")
+                }
+            }
+        }else{
+            print("album exist already.")
+        }
+    }
+    //何も返していないが、ここで見つけたor作成したalbumを返したい。そうすればグローバル変数にアクセスせずに済む
+    func createNewAlbum(albumTitle: String, callback: @escaping (Bool) -> Void) {
+        if self.albumExists(albumTitle: albumTitle) {
+            callback(true)
+        } else {
+            PHPhotoLibrary.shared().performChanges({
+                let createAlbumRequest = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: albumTitle)
+            }) { (isSuccess, error) in
+                callback(isSuccess)
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         okpSpeed = getUserDefault(str: "okpSpeed", ret:100)
@@ -229,6 +270,7 @@ class MainViewController: UIViewController {
         UIApplication.shared.beginReceivingRemoteControlEvents()
         self.becomeFirstResponder()
         prefersHomeIndicatorAutoHidden()
+        albumCheck(album:"fushiki")
     }
     
     override func prefersHomeIndicatorAutoHidden() -> Bool {

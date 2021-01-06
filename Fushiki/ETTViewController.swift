@@ -30,14 +30,11 @@ class ETTViewController: UIViewController, AVCaptureFileOutputRecordingDelegate 
     
     @IBOutlet weak var cameraView: UIImageView!
     func setVideoFormat(desiredFps: Double)->Bool {
-
         var retF:Bool=false
-
         // 取得したフォーマットを格納する変数
         var selectedFormat: AVCaptureDevice.Format! = nil
         // そのフレームレートの中で一番大きい解像度を取得する
         var maxWidth: Int32 = 0
-        
         // フォーマットを探る
 //        var getDesiedformat:Bool=false
         for format in videoDevice!.formats {
@@ -68,7 +65,6 @@ class ETTViewController: UIViewController, AVCaptureFileOutputRecordingDelegate 
             do {
                 try videoDevice!.lockForConfiguration()
                 videoDevice!.activeFormat = selectedFormat
-//                videoDevice!.activeVideoMinFrameDuration = CMTimeMake(value: 1, timescale: Int32(desiredFps))
                 videoDevice!.activeVideoMaxFrameDuration = CMTimeMake(1, Int32(desiredFps))
                 videoDevice!.unlockForConfiguration()
                 
@@ -76,7 +72,6 @@ class ETTViewController: UIViewController, AVCaptureFileOutputRecordingDelegate 
                 let dimensions = CMVideoFormatDescriptionGetDimensions(description)  // 幅・高さ情報を抜き出す
                 let iCapNYSWidth = dimensions.width
                 let iCapNYSHeight = dimensions.height
-//                let iCapNYSFPS = desiredFps
                 print("フォーマット・フレームレートを設定 : \(desiredFps) fps・\(iCapNYSWidth) px x \(iCapNYSHeight) px")
                 
                 retF=true
@@ -232,11 +227,9 @@ class ETTViewController: UIViewController, AVCaptureFileOutputRecordingDelegate 
 //        prefersHomeIndicatorAutoHidden()
         //        prefersStatusBarHidden
         initSession(fps: 30)
-        albumCheck()
+        albumCheck(album: "fushiki")
         try? FileManager.default.removeItem(atPath: TempFilePath)
-
         let fileURL = NSURL(fileURLWithPath: TempFilePath)
-
         fileOutput.startRecording(to: fileURL as URL, recordingDelegate: self)
     }
     
@@ -412,17 +405,17 @@ class ETTViewController: UIViewController, AVCaptureFileOutputRecordingDelegate 
         }
         return false
     }
-    func albumCheck(){//ここでもチェックしないとダメのよう
-        if albumExists(albumTitle: "fushiki")==false{
-            createNewAlbum(albumTitle: "fushiki") { (isSuccess) in
+    func albumCheck(album:String){//ここでもチェックしないとダメのよう
+        if albumExists(albumTitle: album)==false{
+            createNewAlbum(albumTitle: album) { (isSuccess) in
                 if isSuccess{
-                    print("fushiki_album can be made,")
+                    print("album can be made,")
                 } else{
-                    print("fushiki_album can't be made.")
+                    print("album can't be made.")
                 }
             }
         }else{
-            print("fushiki_album exist already.")
+            print("album exist already.")
         }
     }
     //何も返していないが、ここで見つけたor作成したalbumを返したい。そうすればグローバル変数にアクセスせずに済む
