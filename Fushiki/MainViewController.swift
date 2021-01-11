@@ -228,19 +228,6 @@ class MainViewController: UIViewController {
         }
         return false
     }
-    func albumCheck(album:String){//ここでもチェックしないとダメのよう
-        if albumExists(albumTitle: album)==false{
-            createNewAlbum(albumTitle: album) { (isSuccess) in
-                if isSuccess{
-                    print("album can be made,")
-                } else{
-                    print("album can't be made.")
-                }
-            }
-        }else{
-            print("album exist already.")
-        }
-    }
     //何も返していないが、ここで見つけたor作成したalbumを返したい。そうすればグローバル変数にアクセスせずに済む
     func createNewAlbum(albumTitle: String, callback: @escaping (Bool) -> Void) {
         if self.albumExists(albumTitle: albumTitle) {
@@ -270,9 +257,21 @@ class MainViewController: UIViewController {
         UIApplication.shared.beginReceivingRemoteControlEvents()
         self.becomeFirstResponder()
         prefersHomeIndicatorAutoHidden()
-        albumCheck(album:"fushiki")
+        makeAlbum(albumTitle:"fushiki")
     }
-    
+    func makeAlbum(albumTitle:String){
+        if albumExists(albumTitle: albumTitle)==false{
+            createNewAlbum(albumTitle: albumTitle) { [self] (isSuccess) in
+                if isSuccess{
+                    print(albumTitle," can be made,")
+                } else{
+                    print(albumTitle," can't be made.")
+                }
+            }
+        }else{
+            print(albumTitle," exist already.")
+        }
+    }
     override func prefersHomeIndicatorAutoHidden() -> Bool {
         return true
     }

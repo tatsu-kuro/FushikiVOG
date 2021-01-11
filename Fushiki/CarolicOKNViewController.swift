@@ -8,7 +8,9 @@
 
 import UIKit
 import AVFoundation
-class CarolicOKNViewController: UIViewController {
+import Photos
+class CarolicOKNViewController: UIViewController{
+    let camera = RecordController()
 //    var ettWidth:Int = 0//1:narrow,2:wide
     var oknSpeed:Int = 0
     var oknMode:Int=0
@@ -40,6 +42,7 @@ class CarolicOKNViewController: UIViewController {
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
         mainView.targetMode=targetMode
         delTimer()
+        camera.recordStop()
         self.present(mainView, animated: false, completion: nil)
     }
     
@@ -159,6 +162,8 @@ class CarolicOKNViewController: UIViewController {
 //     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        let album = AlbumController()
+        album.makeAlbum()
         ww=view.bounds.width
         wh=view.bounds.height
         oknSpeed = UserDefaults.standard.integer(forKey:"oknSpeed")
@@ -190,7 +195,7 @@ class CarolicOKNViewController: UIViewController {
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
         prefersHomeIndicatorAutoHidden()
-        //        prefersStatusBarHidden
+        camera.recordStart()
     }
     
     override func prefersHomeIndicatorAutoHidden() -> Bool {
@@ -345,6 +350,6 @@ class CarolicOKNViewController: UIViewController {
              drawBand(rectB:CGRect(x:CGFloat(i-1)*x0+x,y:0,width:ww/10,height:wh))
          }
          lastx=x
-         
      }
+  
 }

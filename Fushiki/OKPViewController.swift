@@ -8,9 +8,9 @@
 
 import UIKit
 import AVFoundation
-
-class OKPViewController: UIViewController {
- 
+import Photos
+class OKPViewController: UIViewController{
+    let camera = RecordController()
     @IBOutlet weak var speedLabel: UILabel!
     
     @IBOutlet var singleRec: UITapGestureRecognizer!
@@ -87,6 +87,7 @@ class OKPViewController: UIViewController {
         if UIApplication.shared.isIdleTimerDisabled == true{
             UIApplication.shared.isIdleTimerDisabled = false//スリープする
         }
+        camera.recordStop()// fileOutput.stopRecording()
         self.present(mainView, animated: false, completion: nil)
     }
     
@@ -139,6 +140,8 @@ class OKPViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let album = AlbumController()
+        album.makeAlbum()
         ww=view.bounds.width
         wh=view.bounds.height
         okpSpeed = UserDefaults.standard.integer(forKey: "okpSpeed")
@@ -168,6 +171,11 @@ class OKPViewController: UIViewController {
         self.setNeedsStatusBarAppearanceUpdate()
           prefersHomeIndicatorAutoHidden()
             //        prefersStatusBarHidden
+        camera.recordStart()
+        //        initSession(fps: 30)
+//        try? FileManager.default.removeItem(atPath: TempFilePath)
+//        let fileURL = NSURL(fileURLWithPath: TempFilePath)
+//        fileOutput.startRecording(to: fileURL as URL, recordingDelegate: self)
         }
         
         override func prefersHomeIndicatorAutoHidden() -> Bool {
@@ -249,6 +257,6 @@ class OKPViewController: UIViewController {
             drawBand(rectB:CGRect(x:CGFloat(i-1)*x0+x,y:0,width:ww/10,height:wh))
         }
         lastx=x
-        
     }
+
 }

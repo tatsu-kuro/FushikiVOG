@@ -8,8 +8,10 @@
 
 import UIKit
 import CoreMotion
-
-class OKNViewController: UIViewController {
+import Photos
+import AVFoundation
+class OKNViewController: UIViewController{
+    let camera = RecordController()
     var startTime=CFAbsoluteTimeGetCurrent()
     var lastTime=CFAbsoluteTimeGetCurrent()
     var cnt:Int = 0
@@ -97,14 +99,11 @@ class OKNViewController: UIViewController {
         if UIApplication.shared.isIdleTimerDisabled == true{
             UIApplication.shared.isIdleTimerDisabled = false//スリープする
         }
+        camera.recordStop()//fileOutput.stopRecording()
         self.present(mainView, animated: false, completion: nil)
     }
     @IBAction func doubleTap(_ sender: UITapGestureRecognizer) {
-  //      let x=sender.location(in: self.view).x
-  //      let vw=view.bounds.width
-  //      if x>vw/6 && x<vw*5/6{
             exit4OKN()
-  //      }
     }
     
     override func remoteControlReceived(with event: UIEvent?) {
@@ -253,6 +252,8 @@ class OKNViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let album = AlbumController()
+        album.makeAlbum()
         //       timerPara.isHidden=true
         oknSpeed = UserDefaults.standard.integer(forKey:"oknSpeed")
         oknTime = UserDefaults.standard.integer(forKey:"oknTime")
@@ -269,15 +270,17 @@ class OKNViewController: UIViewController {
         self.setNeedsStatusBarAppearanceUpdate()
          prefersHomeIndicatorAutoHidden()
             //        prefersStatusBarHidden
-        }
-        
-        override func prefersHomeIndicatorAutoHidden() -> Bool {
-            return true
-        }
-        override var prefersStatusBarHidden: Bool {
-            return true
-        }
-
+        camera.recordStart()
+    }
+ 
+  
+    override func prefersHomeIndicatorAutoHidden() -> Bool {
+        return true
+    }
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         stopTimer()
@@ -286,6 +289,7 @@ class OKNViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         setTimer()
     }
+
 }
 
 
