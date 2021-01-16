@@ -11,10 +11,13 @@ import AVFoundation
 import MediaPlayer
 import Photos
 //import GameController
-class MainViewController: UIViewController {
+class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 //    var FushikiAlbum: PHAssetCollection? // アルバムをオブジェクト化
     var controllerF:Bool=false
 //    var timer: Timer!
+//    let albumName:String = "iCapNYS"
+    var videoArrayCount:Int = 0
+    let album = AlbumController()
     var oknSpeed:Int = 50
     var oknTime:Int = 50
     var oknMode:Int=0
@@ -24,6 +27,8 @@ class MainViewController: UIViewController {
     var ettMode:Int = 0
     var ettWidth:Int=500
     var targetMode:Int = 6
+    @IBOutlet weak var tableView: UITableView!
+    
 //    var oknDirection:Int = 0
     var soundPlayer: AVAudioPlayer? = nil
     
@@ -213,33 +218,6 @@ class MainViewController: UIViewController {
             return ret
         }
     }
-    // アルバムが既にあるか確認し、FushikiAlbumに代入
-    func albumExists(albumTitle: String) -> Bool {
-        // ここで以下のようなエラーが出るが、なぜか問題なくアルバムが取得できている
-        // [core] "Error returned from daemon: Error Domain=com.apple.accounts Code=7 "(null)""
-        let albums = PHAssetCollection.fetchAssetCollections(with: PHAssetCollectionType.album, subtype:
-            PHAssetCollectionSubtype.albumRegular, options: nil)
-        for i in 0 ..< albums.count {
-            let album = albums.object(at: i)
-            if album.localizedTitle != nil && album.localizedTitle == albumTitle {
-//                FushikiAlbum = album
-                return true
-            }
-        }
-        return false
-    }
-    //何も返していないが、ここで見つけたor作成したalbumを返したい。そうすればグローバル変数にアクセスせずに済む
-    func createNewAlbum(albumTitle: String, callback: @escaping (Bool) -> Void) {
-        if self.albumExists(albumTitle: albumTitle) {
-            callback(true)
-        } else {
-            PHPhotoLibrary.shared().performChanges({
-                let createAlbumRequest = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: albumTitle)
-            }) { (isSuccess, error) in
-                callback(isSuccess)
-            }
-        }
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -257,21 +235,25 @@ class MainViewController: UIViewController {
         UIApplication.shared.beginReceivingRemoteControlEvents()
         self.becomeFirstResponder()
         prefersHomeIndicatorAutoHidden()
-        makeAlbum(albumTitle:"fushiki")
+//        makeAlbum(albumTitle:"fushiki")
+        album.getAlbumList()
+        videoArrayCount = album.videoURL.count
+        print(videoArrayCount,album.videoURL.count,album.videoDate.count)
+        tableView.reloadData()
     }
-    func makeAlbum(albumTitle:String){
-        if albumExists(albumTitle: albumTitle)==false{
-            createNewAlbum(albumTitle: albumTitle) { [self] (isSuccess) in
-                if isSuccess{
-                    print(albumTitle," can be made,")
-                } else{
-                    print(albumTitle," can't be made.")
-                }
-            }
-        }else{
-            print(albumTitle," exist already.")
-        }
-    }
+//    func makeAlbum(albumTitle:String){
+//        if albumExists(albumTitle: albumTitle)==false{
+//            createNewAlbum(albumTitle: albumTitle) { [self] (isSuccess) in
+//                if isSuccess{
+//                    print(albumTitle," can be made,")
+//                } else{
+//                    print(albumTitle," can't be made.")
+//                }
+//            }
+//        }else{
+//            print(albumTitle," exist already.")
+//        }
+//    }
     override func prefersHomeIndicatorAutoHidden() -> Bool {
         return true
     }
@@ -295,7 +277,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var button1: UIButton!
     @IBOutlet weak var button0: UIButton!
     @IBOutlet weak var button2: UIButton!
-    @IBOutlet weak var titleImage: UIImageView!
+//    @IBOutlet weak var titleImage: UIImageView!
     func setRotate(alp:CGFloat){
  //       print("setrotate")
         let ww:CGFloat=view.bounds.width
@@ -320,21 +302,21 @@ class MainViewController: UIViewController {
         helpButton.frame=CGRect(x:bw*5+sp*7,y:by,width:bw,height:bh)
         setteiButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height:bh)
 
-        let logoY = ww/13
-        if view.bounds.width/2 > by - logoY{
+//        let logoY = ww/13
+//        if view.bounds.width/2 > by - logoY{
 
-            titleImage.frame.origin.y = logoY
-            //view.bounds.width*56/730
-            titleImage.frame.size.width = (by - logoY)*2
-            //view.bounds.height/2*1800/700
-            titleImage.frame.size.height = by - logoY//view.bounds.height/2
-            titleImage.frame.origin.x = (view.bounds.width - titleImage.frame.size.width)/2
-        }else{
-            titleImage.frame.origin.x = 0
-            titleImage.frame.size.width = view.bounds.width
-            titleImage.frame.origin.y = logoY + (by - logoY - view.bounds.width/2)/2
-            titleImage.frame.size.height = view.bounds.width/2
-        }
+//            titleImage.frame.origin.y = logoY
+//            //view.bounds.width*56/730
+//            titleImage.frame.size.width = (by - logoY)*2
+//            //view.bounds.height/2*1800/700
+//            titleImage.frame.size.height = by - logoY//view.bounds.height/2
+//            titleImage.frame.origin.x = (view.bounds.width - titleImage.frame.size.width)/2
+//        }else{
+//            titleImage.frame.origin.x = 0
+//            titleImage.frame.size.width = view.bounds.width
+//            titleImage.frame.origin.y = logoY + (by - logoY - view.bounds.width/2)/2
+//            titleImage.frame.size.height = view.bounds.width/2
+//        }
 //        if UIApplication.shared.isIdleTimerDisabled == true{
 //            UIApplication.shared.isIdleTimerDisabled = false//監視する
 //        }
@@ -342,6 +324,28 @@ class MainViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    //nuber of cell
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if album.albumExist==false{
+            return 0
+        }else{
+//            let album = AlbumController()
+            return album.videoURL.count
+        }
+    }
+    //set data on cell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath:IndexPath) -> UITableViewCell{
+        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier:"cell",for :indexPath)
+        let number = (indexPath.row+1).description + ") "
+        cell.textLabel!.text = number + album.videoDate[indexPath.row]
+        return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard: UIStoryboard = self.storyboard!
+        let nextView = storyboard.instantiateViewController(withIdentifier: "PLAY") as! PlayViewController
+        nextView.videoURL = album.videoURL[indexPath.row]
+        self.present(nextView, animated: true, completion: nil)
     }
 }
 
