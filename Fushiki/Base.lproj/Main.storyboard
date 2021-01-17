@@ -485,6 +485,28 @@
                                 <rect key="frame" x="217" y="353" width="240" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fushikihead" translatesAutoresizingMaskIntoConstraints="NO" id="SBv-qp-uiy">
+                                <rect key="frame" x="224" y="368" width="226" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2ai-kF-qQC">
+                                <rect key="frame" x="0.0" y="0.0" width="896" height="353"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="139" id="2G5-eP-MHF">
+                                        <rect key="frame" x="0.0" y="28" width="896" height="139"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2G5-eP-MHF" id="8hS-zy-JdQ">
+                                            <rect key="frame" x="44" y="0.0" width="808" height="139"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="EHS-TN-kcP"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="udL-h9-gh9"/>
+                                </connections>
+                            </tableView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S68-fh-yHQ">
                                 <rect key="frame" x="30" y="305" width="80" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -549,28 +571,6 @@
                                     <action selector="doSettei:" destination="BYZ-38-t0r" eventType="touchUpInside" id="N5J-fQ-EGh"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2ai-kF-qQC">
-                                <rect key="frame" x="0.0" y="0.0" width="896" height="353"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="139" id="2G5-eP-MHF">
-                                        <rect key="frame" x="0.0" y="28" width="896" height="139"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2G5-eP-MHF" id="8hS-zy-JdQ">
-                                            <rect key="frame" x="44" y="0.0" width="808" height="139"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="EHS-TN-kcP"/>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="udL-h9-gh9"/>
-                                </connections>
-                            </tableView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fushikititle" translatesAutoresizingMaskIntoConstraints="NO" id="SBv-qp-uiy">
-                                <rect key="frame" x="224" y="368" width="226" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -638,7 +638,7 @@
         <image name="etthelp" width="1334" height="750"/>
         <image name="etthelpeng" width="1334" height="750"/>
         <image name="exit" width="440" height="150"/>
-        <image name="fushikititle" width="1100" height="500"/>
+        <image name="fushikihead" width="1100" height="500"/>
         <image name="help" width="440" height="150"/>
         <image name="lang" width="164" height="166"/>
         <image name="logomejiro" width="1300" height="100"/>

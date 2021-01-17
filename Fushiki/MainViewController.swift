@@ -191,26 +191,31 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         if UIApplication.shared.isIdleTimerDisabled == true{
             UIApplication.shared.isIdleTimerDisabled = false//監視する
         }
-        //print("didappeariii")
-//        if(true){//controllerF){
-            setRotate(alp: 0.6)
-            if targetMode==0{
-                button0.alpha=1.0// saccadebut.alph=1.0
-            }else if targetMode==1{
-                button1.alpha=1.0
-            }else if targetMode==2{
-                button2.alpha=1.0
-            }else if targetMode==3{
-                button3.alpha=1.0
-            }else if targetMode==4{
-                button4.alpha=1.0
-            }else if targetMode==5{
-                helpButton.alpha=1.0
-            }else{
-                setteiButton.alpha=1.0
-            }
-  //      }
-  //      print("videDidAppear*****")
+ 
+        setRotate(alp: 0.6)
+        if targetMode==0{
+            button0.alpha=1.0
+        }else if targetMode==1{
+            button1.alpha=1.0
+        }else if targetMode==2{
+            button2.alpha=1.0
+        }else if targetMode==3{
+            button3.alpha=1.0
+        }else if targetMode==4{
+            button4.alpha=1.0
+        }else if targetMode==5{
+            helpButton.alpha=1.0
+        }else{
+            setteiButton.alpha=1.0
+        }
+    }
+    func setToppage()
+    {
+        if album.videoURL.count==0{
+            tableView.isHidden=true
+        }else{
+            tableView.isHidden=false
+        }
     }
     func getUserDefault(str:String,ret:Int) -> Int{//getUserDefault_one
         if (UserDefaults.standard.object(forKey: str) != nil){//keyが設定してなければretをセット
@@ -241,12 +246,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         videoArrayCount = album.videoURL.count
         print(videoArrayCount,album.videoURL.count,album.videoDate.count)
         tableView.reloadData()
-        if album.videoURL.count==0{
-            tableView.isHidden=true
-        }else{
-            logoImage.isHidden=true
-            titleImage.isHidden=true
-        }
+        setToppage()
     }
   
     override func prefersHomeIndicatorAutoHidden() -> Bool {
@@ -255,7 +255,6 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-  
         setRotate(alp:1)
         coordinator.animate(
             alongsideTransition: nil,
@@ -339,7 +338,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     //play item
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard: UIStoryboard = self.storyboard!
-        print("****play***")
+
         let nextView = storyboard.instantiateViewController(withIdentifier: "PLAY") as! PlayViewController
         nextView.videoURL = album.videoURL[indexPath.row]
         self.present(nextView, animated: true, completion: nil)
@@ -350,7 +349,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     //セルの削除ボタンが押された時の処理
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        print("*****sakujo***")
+
         //削除するだけなのでindexPath_row = indexPath.rowをする必要はない。
         if editingStyle == UITableViewCell.EditingStyle.delete {
             album.eraseVideo(number: indexPath.row)

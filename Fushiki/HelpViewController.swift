@@ -9,7 +9,7 @@
 import UIKit
 
 class HelpViewController: UIViewController {
-    var englishF:Bool=false
+    var englishF:Int=0
     var helpHlimit:CGFloat=0
     var posYlast:CGFloat=0
 //    var ettWidth:Int = 0//1:narrow,2:wide
@@ -47,14 +47,19 @@ class HelpViewController: UIViewController {
         self.present(mainView, animated: false, completion: nil)
     }
     func chanLang(){
-        if(englishF){
-              englishF=false
+        englishF += 1
+        if englishF>2{
+            englishF=0
+        }
+        if(englishF==0){
               helpView.alpha=1.0
               helpVieweng.alpha=0
-          }else{
-              englishF=true
+          }else if englishF==1{
               helpView.alpha=0
               helpVieweng.alpha=1.0
+            helpVieweng.image=UIImage(named:"etthelpeng")
+          }else{
+            helpVieweng.image=UIImage(named:"fushikihead")
           }
     }
     override func remoteControlReceived(with event: UIEvent?) {
