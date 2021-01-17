@@ -208,6 +208,10 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }else{
             setteiButton.alpha=1.0
         }
+        setToppage()
+        album.getAlbumList()
+        videoArrayCount = album.videoURL.count
+        tableView.reloadData()
     }
     func setToppage()
     {
@@ -245,8 +249,8 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         album.getAlbumList()
         videoArrayCount = album.videoURL.count
         print(videoArrayCount,album.videoURL.count,album.videoDate.count)
-        tableView.reloadData()
         setToppage()
+        tableView.reloadData()
     }
   
     override func prefersHomeIndicatorAutoHidden() -> Bool {
@@ -321,6 +325,10 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     //nuber of cell
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("number of cell")
+        album.getAlbumList()
+        videoArrayCount = album.videoURL.count
+        setToppage()
         if album.albumExist==false{
             return 0
         }else{
@@ -330,6 +338,9 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     //set data on cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath:IndexPath) -> UITableViewCell{
+        print("set data on cell")
+        album.getAlbumList()
+        videoArrayCount = album.videoURL.count
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier:"cell",for :indexPath)
         let number = (indexPath.row+1).description + ") "
         cell.textLabel!.text = number + album.videoDate[indexPath.row]
@@ -338,12 +349,13 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     //play item
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard: UIStoryboard = self.storyboard!
-
+        
         let nextView = storyboard.instantiateViewController(withIdentifier: "PLAY") as! PlayViewController
         nextView.videoURL = album.videoURL[indexPath.row]
         self.present(nextView, animated: true, completion: nil)
     }
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        print("set canMoveRowAt")
         return false
     }//not sort
     
@@ -357,11 +369,19 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 sleep(UInt32(0.1))
             }
             if album.dialogStatus==1{
-            album.videoURL.remove(at: indexPath.row)
-            album.videoDate.remove(at: indexPath.row)
-            tableView.reloadData()
+                album.videoURL.remove(at: indexPath.row)
+                album.videoDate.remove(at: indexPath.row)
+                tableView.reloadData()
             }
+            setToppage()
         }
+    }
+    @IBAction func unwindAction(segue: UIStoryboardSegue) {
+        UIApplication.shared.isIdleTimerDisabled = false//スリープする
+        album.getAlbumList()
+        tableView.reloadData()
+        videoArrayCount=album.videoURL.count
+//        print("count:",album.videoURL.count)
     }
 }
 

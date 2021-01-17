@@ -32,7 +32,8 @@ class CarolicETTViewController: UIViewController{
         mainView.targetMode=targetMode
         delTimer()
         camera.recordStop() //fileOutput.stopRecording()
-        self.present(mainView, animated: false, completion: nil)
+//        self.present(mainView, animated: false, completion: nil)
+        performSegue(withIdentifier: "fromCarolicETT", sender: self)
     }
     override func remoteControlReceived(with event: UIEvent?) {
         guard event?.type == .remoteControl else { return }

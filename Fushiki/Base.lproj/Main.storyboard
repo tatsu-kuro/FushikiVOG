@@ -219,6 +219,14 @@
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wu9-dr-QYo">
+                                <rect key="frame" x="132" y="192" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="tER-u6-nBQ" kind="unwind" identifier="fromOKN" unwindAction="unwindActionWithSegue:" id="djx-bO-FDI"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="gvg-Wd-BnG"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -241,6 +249,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BCE-Hz-4mh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="tER-u6-nBQ" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer numberOfTapsRequired="2" id="u8Q-Hr-VUf">
                     <connections>
                         <action selector="doubleTap:" destination="fl3-2K-fNm" id="XLp-TD-ohd"/>
@@ -271,6 +280,14 @@
                                 <rect key="frame" x="44" y="0.0" width="808" height="393"/>
                                 <gestureRecognizers/>
                             </imageView>
+                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jtj-vg-RBa">
+                                <rect key="frame" x="147" y="121" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="bVQ-8A-Iyu" kind="unwind" identifier="fromCarolicETT" unwindAction="unwindActionWithSegue:" id="oVQ-nR-TZg"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="TeQ-fF-YWK"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -291,6 +308,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yJD-y9-4Av" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="bVQ-8A-Iyu" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer numberOfTapsRequired="2" id="HbH-SX-RR2">
                     <connections>
                         <action selector="doubleTap:" destination="41X-WK-AtZ" id="uga-uh-Hkq"/>
@@ -376,6 +394,20 @@
                     <view key="view" contentMode="scaleToFill" id="439-Kz-5Q0">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NVd-Ff-X9K">
+                                <rect key="frame" x="173" y="151" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" button="YES"/>
+                                    <bool key="isElement" value="NO"/>
+                                </accessibility>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="VpQ-qO-5DE" kind="unwind" identifier="fromETT" unwindAction="unwindActionWithSegue:" id="tRX-FB-681"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="Bqo-QN-y3H"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
@@ -385,6 +417,7 @@
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GgU-ck-e0b" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="VpQ-qO-5DE" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer numberOfTapsRequired="2" id="Ocd-pN-Xxi">
                     <connections>
                         <action selector="doubleTap:" destination="uZP-sJ-vGG" id="etX-3a-4an"/>
@@ -411,6 +444,14 @@
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Umf-QT-HY0">
+                                <rect key="frame" x="161" y="145" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="Np6-aW-TAw" kind="unwind" identifier="fromOKP" unwindAction="unwindActionWithSegue:" id="4hT-5D-Fjk"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="wGH-Xk-fDT"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -433,6 +474,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="flV-Ff-bB3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Np6-aW-TAw" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer numberOfTapsRequired="2" id="Ndv-7n-u4N">
                     <connections>
                         <action selector="doubleTap:" destination="XY3-rd-IfB" id="W6U-dy-743"/>
@@ -606,6 +648,16 @@
                     <view key="view" contentMode="scaleToFill" id="74d-sk-dwA">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="anc-4m-txa">
+                                <rect key="frame" x="125" y="99" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="nlX-Y6-F6Q" kind="unwind" identifier="fromCarolicOKN" unwindAction="unwindActionWithSegue:" id="5Lm-oi-iQf"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="xFK-TN-9vp"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
@@ -616,6 +668,7 @@
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m9l-v2-IBH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="nlX-Y6-F6Q" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer numberOfTapsRequired="2" id="nZg-VO-jx0">
                     <connections>
                         <action selector="doubleTap:" destination="qbJ-IO-gJC" id="CHc-f0-z3V"/>

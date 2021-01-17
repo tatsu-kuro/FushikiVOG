@@ -10,12 +10,14 @@ import UIKit
 import AVFoundation
 import Photos
 class RecordController: NSObject, AVCaptureFileOutputRecordingDelegate {
-    
+    var album=AlbumController(name: "fushiki")
     var videoDevice: AVCaptureDevice?
     var captureSession: AVCaptureSession!
     var fileOutput = AVCaptureMovieFileOutput()
     let TempFilePath: String = "\(NSTemporaryDirectory())temp.mp4"
     var soundIdx:SystemSoundID = 0
+//    var savedFlag:Bool = false
+    var saved2album:Bool = false
     func recordStart(){
         initSession(fps: 30)
         try? FileManager.default.removeItem(atPath: TempFilePath)
@@ -24,6 +26,9 @@ class RecordController: NSObject, AVCaptureFileOutputRecordingDelegate {
     }
     func recordStop(){
         fileOutput.stopRecording()
+//        while saved2album==false{
+//            sleep(UInt32(0.3))//0.5こんな適当な事が
+//        }
     }
     func setVideoFormat(desiredFps: Double)->Bool {
         var retF:Bool=false
@@ -47,7 +52,7 @@ class RecordController: NSObject, AVCaptureFileOutputRecordingDelegate {
                     selectedFormat = format
                     maxWidth = width
  //                   getDesiedformat=true
-                    print(range.maxFrameRate,dimensions.width,dimensions.height)
+//                    print(range.maxFrameRate,dimensions.width,dimensions.height)
  //                   break
                 }
             }
@@ -105,7 +110,7 @@ class RecordController: NSObject, AVCaptureFileOutputRecordingDelegate {
         // セッションを開始する (録画開始とは別)
         captureSession.startRunning()
     }
-    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+    /*func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         if let soundUrl = URL(string:
                           "/System/Library/Audio/UISounds/end_record.caf"/*photoShutter.caf*/){
             AudioServicesCreateSystemSoundID(soundUrl as CFURL, &soundIdx)
@@ -125,17 +130,114 @@ class RecordController: NSObject, AVCaptureFileOutputRecordingDelegate {
         }) { [self] (isSuccess, error) in
             if isSuccess {
                 // 保存した画像にアクセスする為のimageIDを返却
-                //completionBlock(imageID)
-                print("success")
-//                self.saved2album=true
+                print("Record:success")
+                self.saved2album=true
             } else {
                 //failureBlock(error)
-                print("fail")
-                //                print(error)
-//                self.saved2album=true
+                print("Record:fail")
+                self.saved2album=true
             }
-            //            _ = try? FileManager.default.removeItem(atPath: self.TempFilePath)
         }
-//        performSegue(withIdentifier: "fromRecordToMain", sender: self)
+    }*/
+    
+    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        if let soundUrl = URL(string:
+                                "/System/Library/Audio/UISounds/end_record.caf"/*photoShutter.caf*/){
+            AudioServicesCreateSystemSoundID(soundUrl as CFURL, &soundIdx)
+            AudioServicesPlaySystemSound(soundIdx)
+        }
+        
+        print("終了ボタン、最大を超えた時もここを通る")
+        //         motionManager.stopDeviceMotionUpdates()//ここで止めたが良さそう。
+        //         //        recordedFPS=getFPS(url: outputFileURL)
+        //         //        topImage=getThumb(url: outputFileURL)
+        //
+        //         if timer?.isValid == true {
+        //             timer!.invalidate()
+        //    }
+        //    let album = AlbumController(name:"fushiki")
+        
+        if album.albumExists()==true{
+//            recordedFlag=true
+            PHPhotoLibrary.shared().performChanges({ [self] in
+                //let assetRequest = PHAssetChangeRequest.creationRequestForAsset(from: avAsset)
+                let assetRequest = PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: outputFileURL)!
+                let albumChangeRequest = PHAssetCollectionChangeRequest(for: album.getPHAssetcollection())
+                let placeHolder = assetRequest.placeholderForCreatedAsset
+                albumChangeRequest?.addAssets([placeHolder!] as NSArray)
+                //imageID = assetRequest.placeholderForCreatedAsset?.localIdentifier
+                print("file add to album")
+            }) { [self] (isSuccess, error) in
+                if isSuccess {
+                    // 保存した画像にアクセスする為のimageIDを返却
+                    //completionBlock(imageID)
+                    print("success")
+                    self.saved2album=true
+                } else {
+                    //failureBlock(error)
+                    print("fail")
+                    //                print(error)
+                    self.saved2album=true
+                }
+                //            _ = try? FileManager.default.removeItem(atPath: self.TempFilePath)
+            }
+        }else{
+            
+            //上二つをunwindでチェック
+            //アプリ起動中にアルバムを消したら、保存せずに戻る。
+            //削除してもどこかにあるようで、参照URLは生きていて、再生できる。
+        }
+        captureSession.stopRunning()
+        //         performSegue(withIdentifier: "fromRecordToMain", sender: self)
     }
+    /*
+    func recordStop() {
+        // stop recording
+        if let soundUrl = URL(string:
+                          "/System/Library/Audio/UISounds/end_record.caf"/*photoShutter.caf*/){
+            AudioServicesCreateSystemSoundID(soundUrl as CFURL, &soundIdx)
+            AudioServicesPlaySystemSound(soundIdx)
+        }
+        
+        if FileManager.default.fileExists(atPath: TempFilePath){
+            print("tempFileExists")
+        }
+        let fileURL = URL(fileURLWithPath: TempFilePath)
+        //let avAsset = AVAsset(url: fileURL)
+//        let album = AlbumController()
+        let album = AlbumController(name:"fushiki")
+        if album.albumExists()==true{
+//        if albumExists(albumTitle: albumName){
+            PHPhotoLibrary.shared().performChanges({ [self] in
+                //let assetRequest = PHAssetChangeRequest.creationRequestForAsset(from: avAsset)
+                let assetRequest = PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: fileURL)!
+                let albumChangeRequest = PHAssetCollectionChangeRequest(for:album.getPHAssetcollection())
+                let placeHolder = assetRequest.placeholderForCreatedAsset
+                albumChangeRequest?.addAssets([placeHolder!] as NSArray)
+                //imageID = assetRequest.placeholderForCreatedAsset?.localIdentifier
+                print("file add to album")
+            }) { [self] (isSuccess, error) in
+                if isSuccess {
+                    // 保存した画像にアクセスする為のimageIDを返却
+                    //completionBlock(imageID)
+                    print("success")
+                    self.saved2album=true
+                } else {
+                    //failureBlock(error)
+                    print("fail")
+                    //                print(error)
+                    self.saved2album=true
+                }
+            }
+        }else{
+            //アプリ起動中にアルバムを削除して録画するとここを通る。
+//            stopButton.isHidden=true
+            //と変更することで、Exitボタンで帰った状態にする。
+        }
+//        motionManager.stopDeviceMotionUpdates()
+//        captureSession.stopRunning()
+//        killTimer()
+//        performSegue(withIdentifier: "fromRecord", sender: self)
+    }*/
 }
+

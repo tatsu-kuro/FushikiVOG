@@ -94,13 +94,15 @@ class OKNViewController: UIViewController{
     var tapInterval=CFAbsoluteTimeGetCurrent()
     func exit4OKN(){
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
-   
         mainView.targetMode=targetMode
-        if UIApplication.shared.isIdleTimerDisabled == true{
-            UIApplication.shared.isIdleTimerDisabled = false//スリープする
-        }
+        delTimer()
         camera.recordStop()//fileOutput.stopRecording()
-        self.present(mainView, animated: false, completion: nil)
+        performSegue(withIdentifier: "fromOKN", sender: self)
+    }
+    func delTimer(){
+        if displayLinkF==true{
+            displayLink?.invalidate()
+        }
     }
     @IBAction func doubleTap(_ sender: UITapGestureRecognizer) {
             exit4OKN()

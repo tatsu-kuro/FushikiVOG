@@ -84,11 +84,8 @@ class OKPViewController: UIViewController{
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
         mainView.targetMode=targetMode
         delTimer()
-        if UIApplication.shared.isIdleTimerDisabled == true{
-            UIApplication.shared.isIdleTimerDisabled = false//スリープする
-        }
         camera.recordStop()// fileOutput.stopRecording()
-        self.present(mainView, animated: false, completion: nil)
+        performSegue(withIdentifier: "fromOKP", sender: self)
     }
     
     func delTimer(){

@@ -43,7 +43,8 @@ class CarolicOKNViewController: UIViewController{
         mainView.targetMode=targetMode
         delTimer()
         camera.recordStop()
-        self.present(mainView, animated: false, completion: nil)
+//        self.present(mainView, animated: false, completion: nil)
+        performSegue(withIdentifier: "fromCarolicOKN", sender: self)
     }
     
     func delTimer(){
