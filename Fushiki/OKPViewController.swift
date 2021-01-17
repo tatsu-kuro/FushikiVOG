@@ -140,7 +140,7 @@ class OKPViewController: UIViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let album = AlbumController()
+        let album = AlbumController(name:"fushiki")
         album.makeAlbum()
         ww=view.bounds.width
         wh=view.bounds.height

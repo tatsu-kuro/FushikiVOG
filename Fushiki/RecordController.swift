@@ -112,7 +112,7 @@ class RecordController: NSObject, AVCaptureFileOutputRecordingDelegate {
             AudioServicesPlaySystemSound(soundIdx)
         }
         print("終了ボタン、最大を超えた時もここを通る")
-        let album = AlbumController()
+        let album = AlbumController(name:"fushiki")
         PHPhotoLibrary.shared().performChanges({ [self] in
             //let assetRequest = PHAssetChangeRequest.creationRequestForAsset(from: avAsset)
             let assetRequest = PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: outputFileURL)!

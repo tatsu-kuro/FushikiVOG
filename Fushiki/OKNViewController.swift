@@ -252,7 +252,7 @@ class OKNViewController: UIViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let album = AlbumController()
+        let album = AlbumController(name: "fushiki")
         album.makeAlbum()
         //       timerPara.isHidden=true
         oknSpeed = UserDefaults.standard.integer(forKey:"oknSpeed")

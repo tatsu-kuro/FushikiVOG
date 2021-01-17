@@ -133,7 +133,7 @@ class CarolicETTViewController: UIViewController{
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        let album = AlbumController()
+        let album = AlbumController(name:"fushiki")
         album.makeAlbum()
         epTim.append(10)
         epTim.append(100)

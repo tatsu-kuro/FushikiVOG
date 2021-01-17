@@ -82,7 +82,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let album = AlbumController()
+        let album = AlbumController(name:"fushiki")
         album.makeAlbum()
 //        var fushikiAlbum:recordAlbum?
         ettMode=UserDefaults.standard.integer(forKey: "ettMode")

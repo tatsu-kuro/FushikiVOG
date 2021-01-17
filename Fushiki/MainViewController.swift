@@ -14,10 +14,12 @@ import Photos
 class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 //    var FushikiAlbum: PHAssetCollection? // アルバムをオブジェクト化
     var controllerF:Bool=false
-//    var timer: Timer!
-//    let albumName:String = "iCapNYS"
+    @IBOutlet weak var titleImage: UIImageView!
+    //    var timer: Timer!
+    @IBOutlet weak var logoImage: UIImageView!
+    //    let albumName:String = "iCapNYS"
     var videoArrayCount:Int = 0
-    let album = AlbumController()
+    let album = AlbumController(name: "fushiki")
     var oknSpeed:Int = 50
     var oknTime:Int = 50
     var oknMode:Int=0
@@ -235,30 +237,22 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         UIApplication.shared.beginReceivingRemoteControlEvents()
         self.becomeFirstResponder()
         prefersHomeIndicatorAutoHidden()
-//        makeAlbum(albumTitle:"fushiki")
         album.getAlbumList()
         videoArrayCount = album.videoURL.count
         print(videoArrayCount,album.videoURL.count,album.videoDate.count)
         tableView.reloadData()
+        if album.videoURL.count==0{
+            tableView.isHidden=true
+        }else{
+            logoImage.isHidden=true
+            titleImage.isHidden=true
+        }
     }
-//    func makeAlbum(albumTitle:String){
-//        if albumExists(albumTitle: albumTitle)==false{
-//            createNewAlbum(albumTitle: albumTitle) { [self] (isSuccess) in
-//                if isSuccess{
-//                    print(albumTitle," can be made,")
-//                } else{
-//                    print(albumTitle," can't be made.")
-//                }
-//            }
-//        }else{
-//            print(albumTitle," exist already.")
-//        }
-//    }
+  
     override func prefersHomeIndicatorAutoHidden() -> Bool {
         return true
     }
     
-
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
   
@@ -286,7 +280,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let bh:CGFloat=bw*170/440
         let sp=ww*0.1/10
         let by=wh-bh-sp
- 
+
         button0.alpha=alp
         button1.alpha=alp
         button2.alpha=alp
@@ -302,24 +296,25 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         helpButton.frame=CGRect(x:bw*5+sp*7,y:by,width:bw,height:bh)
         setteiButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height:bh)
 
-//        let logoY = ww/13
-//        if view.bounds.width/2 > by - logoY{
+        let logoY = ww/13
+        if view.bounds.width/2 > by - logoY{
 
-//            titleImage.frame.origin.y = logoY
-//            //view.bounds.width*56/730
-//            titleImage.frame.size.width = (by - logoY)*2
-//            //view.bounds.height/2*1800/700
-//            titleImage.frame.size.height = by - logoY//view.bounds.height/2
-//            titleImage.frame.origin.x = (view.bounds.width - titleImage.frame.size.width)/2
-//        }else{
-//            titleImage.frame.origin.x = 0
-//            titleImage.frame.size.width = view.bounds.width
-//            titleImage.frame.origin.y = logoY + (by - logoY - view.bounds.width/2)/2
-//            titleImage.frame.size.height = view.bounds.width/2
-//        }
-//        if UIApplication.shared.isIdleTimerDisabled == true{
-//            UIApplication.shared.isIdleTimerDisabled = false//監視する
-//        }
+            titleImage.frame.origin.y = logoY
+            //view.bounds.width*56/730
+            titleImage.frame.size.width = (by - logoY)*2
+            //view.bounds.height/2*1800/700
+            titleImage.frame.size.height = by - logoY//view.bounds.height/2
+            titleImage.frame.origin.x = (view.bounds.width - titleImage.frame.size.width)/2
+        }else{
+            titleImage.frame.origin.x = 0
+            titleImage.frame.size.width = view.bounds.width
+            titleImage.frame.origin.y = logoY + (by - logoY - view.bounds.width/2)/2
+            titleImage.frame.size.height = view.bounds.width/2
+        }
+        logoImage.frame = CGRect(x: 0, y: 0, width:view.bounds.width, height:view.bounds.height/10)
+        if UIApplication.shared.isIdleTimerDisabled == true{
+            UIApplication.shared.isIdleTimerDisabled = false//監視する
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -341,11 +336,33 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         cell.textLabel!.text = number + album.videoDate[indexPath.row]
         return cell
     }
+    //play item
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard: UIStoryboard = self.storyboard!
+        print("****play***")
         let nextView = storyboard.instantiateViewController(withIdentifier: "PLAY") as! PlayViewController
         nextView.videoURL = album.videoURL[indexPath.row]
         self.present(nextView, animated: true, completion: nil)
+    }
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }//not sort
+    
+    //セルの削除ボタンが押された時の処理
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        print("*****sakujo***")
+        //削除するだけなのでindexPath_row = indexPath.rowをする必要はない。
+        if editingStyle == UITableViewCell.EditingStyle.delete {
+            album.eraseVideo(number: indexPath.row)
+            while album.dialogStatus==0{
+                sleep(UInt32(0.1))
+            }
+            if album.dialogStatus==1{
+            album.videoURL.remove(at: indexPath.row)
+            album.videoDate.remove(at: indexPath.row)
+            tableView.reloadData()
+            }
+        }
     }
 }
 
