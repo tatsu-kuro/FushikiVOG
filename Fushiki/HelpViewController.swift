@@ -9,7 +9,7 @@
 import UIKit
 
 class HelpViewController: UIViewController {
-    var englishF:Int=0
+    var helpNumber:Int=0
     var helpHlimit:CGFloat=0
     var posYlast:CGFloat=0
 //    var ettWidth:Int = 0//1:narrow,2:wide
@@ -19,7 +19,6 @@ class HelpViewController: UIViewController {
     var tapInterval=CFAbsoluteTimeGetCurrent()
     @IBOutlet weak var helpView: UIImageView!
     
-    @IBOutlet weak var helpVieweng: UIImageView!
     @IBOutlet weak var globeButton: UIButton!
     
     @IBOutlet weak var exitButton: UIButton!
@@ -47,20 +46,19 @@ class HelpViewController: UIViewController {
         self.present(mainView, animated: false, completion: nil)
     }
     func chanLang(){
-        englishF += 1
-        if englishF>2{
-            englishF=0
+        helpNumber += 1
+        if helpNumber>3{
+            helpNumber=0
         }
-        if(englishF==0){
-              helpView.alpha=1.0
-              helpVieweng.alpha=0
-          }else if englishF==1{
-              helpView.alpha=0
-              helpVieweng.alpha=1.0
-            helpVieweng.image=UIImage(named:"etthelpeng")
-          }else{
-            helpVieweng.image=UIImage(named:"fushikihead")
-          }
+        if(helpNumber==0){
+            helpView.image=UIImage(named:"fushiki_j")
+        }else if helpNumber==1{
+            helpView.image=UIImage(named:"etthelp")
+        }else if helpNumber==2{
+            helpView.image=UIImage(named:"fushiki_e")
+        }else{
+            helpView.image=UIImage(named:"etthelpeng")
+        }
     }
     override func remoteControlReceived(with event: UIEvent?) {
         guard event?.type == .remoteControl else { return }
@@ -99,20 +97,7 @@ class HelpViewController: UIViewController {
     func moveImage(mov:CGFloat){
         helpView.frame.origin.y -= mov
     }
-//    @IBAction func panGesture(_ sender: UIPanGestureRecognizer) {
-//        
-////        if sender.state == .began {
-////            posYlast=sender.location(in: self.view).y
-////        } else if sender.state == .changed {
-////            let posY = sender.location(in: self.view).y
-////            let h=helpView.frame.origin.y - posYlast + posY
-////            if h < 0 && h > helpHlimit{
-////                helpView.frame.origin.y -= posYlast-posY
-////                posYlast=posY
-////            }
-////        }else if sender.state == .ended{
-////        }
-//    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
      }
@@ -126,20 +111,10 @@ class HelpViewController: UIViewController {
         let sp=ww*0.1/10
         let by=wh-bh-sp
         exitButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height:bh)
-        globeButton.frame=CGRect(x:ww-bw/2.5-sp*2,y:sp,width:bw/2.5,height: bw/2.5)
+        globeButton.frame=CGRect(x:ww-bw/2-sp*2,y:sp,width:bw/2,height: bw/2)
         if UIApplication.shared.isIdleTimerDisabled == true{
             UIApplication.shared.isIdleTimerDisabled = false//監視する
         }
-//        self.setNeedsStatusBarAppearanceUpdate()
-//        prefersHomeIndicatorAutoHidden()
+        helpView.image=UIImage(named:"fushiki_j")
     }
-    
-//    override func prefersHomeIndicatorAutoHidden() -> Bool {
-//        return true
-//    }
-//    
-//    override var prefersStatusBarHidden: Bool {
-//        return true
-//    }
-
 }

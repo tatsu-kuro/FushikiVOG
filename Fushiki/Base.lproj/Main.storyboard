@@ -330,21 +330,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="etthelpeng" translatesAutoresizingMaskIntoConstraints="NO" id="Ehp-nz-p8Q">
-                                <rect key="frame" x="44" y="0.0" width="808" height="393"/>
-                            </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="etthelp" translatesAutoresizingMaskIntoConstraints="NO" id="VTz-6I-kn3">
                                 <rect key="frame" x="44" y="0.0" width="808" height="393"/>
                                 <gestureRecognizers/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n7m-sE-d1T">
-                                <rect key="frame" x="705" y="20" width="164" height="166"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="lang"/>
-                                <connections>
-                                    <action selector="globeBut:" destination="YRo-aS-cBq" eventType="touchUpInside" id="2d2-v6-V8F"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qIw-KK-ztU">
                                 <rect key="frame" x="705" y="326" width="164" height="67"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -353,19 +342,24 @@
                                     <action selector="goExit:" destination="YRo-aS-cBq" eventType="touchUpInside" id="MsL-tM-ove"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleAspectFill" semanticContentAttribute="playback" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n7m-sE-d1T">
+                                <rect key="frame" x="777" y="47" width="59" height="67"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" backgroundImage="sankaku"/>
+                                <connections>
+                                    <action selector="globeBut:" destination="YRo-aS-cBq" eventType="touchUpInside" id="2d2-v6-V8F"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="CfK-RG-r1l"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="Ehp-nz-p8Q" firstAttribute="trailing" secondItem="CfK-RG-r1l" secondAttribute="trailing" id="D1Y-kK-M2K"/>
-                            <constraint firstItem="Ehp-nz-p8Q" firstAttribute="top" secondItem="CfK-RG-r1l" secondAttribute="top" id="KEZ-YB-Mww"/>
                             <constraint firstItem="VTz-6I-kn3" firstAttribute="top" secondItem="CfK-RG-r1l" secondAttribute="top" id="KMm-GH-B25"/>
                             <constraint firstItem="VTz-6I-kn3" firstAttribute="bottom" secondItem="CfK-RG-r1l" secondAttribute="bottom" id="Zdr-7U-PQw"/>
                             <constraint firstItem="VTz-6I-kn3" firstAttribute="leading" secondItem="CfK-RG-r1l" secondAttribute="leading" id="h77-Yd-gyI"/>
                             <constraint firstItem="VTz-6I-kn3" firstAttribute="trailing" secondItem="CfK-RG-r1l" secondAttribute="trailing" id="ilo-LK-tGj"/>
-                            <constraint firstItem="Ehp-nz-p8Q" firstAttribute="bottom" secondItem="CfK-RG-r1l" secondAttribute="bottom" id="x1p-k6-0Po"/>
-                            <constraint firstItem="Ehp-nz-p8Q" firstAttribute="leading" secondItem="CfK-RG-r1l" secondAttribute="leading" id="zXd-Ru-E7m"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="zSj-ag-bUT" appends="YES" id="2JK-90-fZn"/>
@@ -375,7 +369,6 @@
                         <outlet property="exitButton" destination="qIw-KK-ztU" id="UbX-Iq-ZCT"/>
                         <outlet property="globeButton" destination="n7m-sE-d1T" id="tL3-Cw-jdO"/>
                         <outlet property="helpView" destination="VTz-6I-kn3" id="YAU-pv-Xdk"/>
-                        <outlet property="helpVieweng" destination="Ehp-nz-p8Q" id="2cs-9U-pCL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SHZ-t8-76y" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -527,7 +520,7 @@
                                 <rect key="frame" x="217" y="353" width="240" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fushikihead" translatesAutoresizingMaskIntoConstraints="NO" id="SBv-qp-uiy">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fushiki_e" translatesAutoresizingMaskIntoConstraints="NO" id="SBv-qp-uiy">
                                 <rect key="frame" x="224" y="368" width="226" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -689,14 +682,13 @@
         <image name="default" width="440" height="150"/>
         <image name="ett" width="440" height="150"/>
         <image name="etthelp" width="1334" height="750"/>
-        <image name="etthelpeng" width="1334" height="750"/>
         <image name="exit" width="440" height="150"/>
-        <image name="fushikihead" width="1100" height="500"/>
+        <image name="fushiki_e" width="1168" height="577"/>
         <image name="help" width="440" height="150"/>
-        <image name="lang" width="164" height="166"/>
         <image name="logomejiro" width="1300" height="100"/>
         <image name="okn" width="440" height="150"/>
         <image name="okp" width="440" height="150"/>
+        <image name="sankaku" width="225" height="225"/>
         <image name="settei" width="440" height="150"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
