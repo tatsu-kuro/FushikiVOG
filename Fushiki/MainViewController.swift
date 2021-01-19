@@ -326,8 +326,8 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     //nuber of cell
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("number of cell")
-        album.getAlbumList()//probably not nessesary
-        videoArrayCount = album.videoURL.count//probably not nessesary
+//        album.getAlbumList()//probably not nessesary
+//        videoArrayCount = album.videoURL.count//probably not nessesary
         setToppage()//nessesary
         if album.albumExist==false{
             return 0
@@ -378,10 +378,11 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     @IBAction func unwindAction(segue: UIStoryboardSegue) {
         UIApplication.shared.isIdleTimerDisabled = false//スリープする
-        album.getAlbumList()
-        tableView.reloadData()
-        videoArrayCount=album.videoURL.count
-        setToppage()//not effective
+//        album.getAlbumList()
+//        tableView.reloadData()
+//        videoArrayCount=album.videoURL.count
+//        setToppage()//not effective
+//        print("unwindAction:",videoArrayCount)
     }
 }
 
