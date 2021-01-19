@@ -19,7 +19,7 @@ class HelpViewController: UIViewController {
     var tapInterval=CFAbsoluteTimeGetCurrent()
     @IBOutlet weak var helpView: UIImageView!
     
-    @IBOutlet weak var globeButton: UIButton!
+    @IBOutlet weak var nextButton: UIButton!
     
     @IBOutlet weak var exitButton: UIButton!
     override func didReceiveMemoryWarning() {
@@ -106,12 +106,12 @@ class HelpViewController: UIViewController {
         let ww:CGFloat=view.bounds.width
         let wh:CGFloat=view.bounds.height
        
-        let bw=ww*0.9/7
+        let bw=ww*0.9/7//fit to mainView buttons
         let bh=bw*170/440
         let sp=ww*0.1/10
         let by=wh-bh-sp
         exitButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height:bh)
-        globeButton.frame=CGRect(x:ww-bw/2-sp*2,y:sp,width:bw/2,height: bw/2)
+        nextButton.frame=CGRect(x:sp,y:wh-bw/2-sp,width:bw/2,height: bw/2)
         if UIApplication.shared.isIdleTimerDisabled == true{
             UIApplication.shared.isIdleTimerDisabled = false//監視する
         }
