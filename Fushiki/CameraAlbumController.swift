@@ -24,9 +24,7 @@ class CameraAlbumController: NSObject, AVCaptureFileOutputRecordingDelegate{
         // 全てのプロパティを初期化する前にインスタンスメソッドを実行することはできない
         self.albumName = name
     }
-    func initSession(){
-        initSession(fps:30)
-    }
+   
     func albumExists() -> Bool {
         // ここで以下のようなエラーが出るが、なぜか問題なくアルバムが取得できている
         let albums = PHAssetCollection.fetchAssetCollections(with: PHAssetCollectionType.album, subtype:
@@ -193,9 +191,16 @@ class CameraAlbumController: NSObject, AVCaptureFileOutputRecordingDelegate{
             }
         }
     }
-    
+    func setSession(fps:Double){
+        initSession(fps:fps)
+    }
+    func sessionRecStart(fps:Double){
+        initSession(fps: fps)
+        try? FileManager.default.removeItem(atPath: TempFilePath)
+        let fileURL = NSURL(fileURLWithPath: TempFilePath)
+        fileOutput.startRecording(to: fileURL as URL, recordingDelegate: self)
+    }
     func recordStart(){
-//        initSession(fps: 30)
         try? FileManager.default.removeItem(atPath: TempFilePath)
         let fileURL = NSURL(fileURLWithPath: TempFilePath)
         fileOutput.startRecording(to: fileURL as URL, recordingDelegate: self)

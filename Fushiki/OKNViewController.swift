@@ -254,7 +254,7 @@ class OKNViewController: UIViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        camera.recordStart()
+//        camera.recordStart()
 //        let album = CameraAlbumController(name: "fushiki")
         camera.makeAlbum()
         //       timerPara.isHidden=true
@@ -273,7 +273,7 @@ class OKNViewController: UIViewController{
         self.setNeedsStatusBarAppearanceUpdate()
          prefersHomeIndicatorAutoHidden()
             //        prefersStatusBarHidden
-        
+        camera.sessionRecStart(fps: 30)
     }
  
   

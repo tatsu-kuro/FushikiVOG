@@ -168,7 +168,7 @@ class OKPViewController: UIViewController{
         self.setNeedsStatusBarAppearanceUpdate()
           prefersHomeIndicatorAutoHidden()
             //        prefersStatusBarHidden
-        camera.recordStart()
+        camera.sessionRecStart(fps:30)
         //        initSession(fps: 30)
 //        try? FileManager.default.removeItem(atPath: TempFilePath)
 //        let fileURL = NSURL(fileURLWithPath: TempFilePath)

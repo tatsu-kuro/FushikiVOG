@@ -155,7 +155,7 @@ class CarolicETTViewController: UIViewController{
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
         prefersHomeIndicatorAutoHidden()
-        camera.recordStart()
+        camera.sessionRecStart(fps:30)
     }
     
     override func prefersHomeIndicatorAutoHidden() -> Bool {

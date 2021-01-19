@@ -88,7 +88,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         camera.makeAlbum()
-        camera.initSession()
+//        camera.initSession()
         ettMode=UserDefaults.standard.integer(forKey: "ettMode")
         ettWidth=UserDefaults.standard.integer(forKey: "ettWidth")
 //        let w=view.bounds.width/2
@@ -121,7 +121,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         self.becomeFirstResponder()
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
-        camera.recordStart()
+        camera.sessionRecStart(fps:30)
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)

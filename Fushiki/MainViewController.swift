@@ -326,9 +326,9 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     //nuber of cell
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("number of cell")
-        album.getAlbumList()
-        videoArrayCount = album.videoURL.count
-        setToppage()
+        album.getAlbumList()//probably not nessesary
+        videoArrayCount = album.videoURL.count//probably not nessesary
+        setToppage()//nessesary
         if album.albumExist==false{
             return 0
         }else{
@@ -338,9 +338,9 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     //set data on cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath:IndexPath) -> UITableViewCell{
-        print("set data on cell")
-        album.getAlbumList()
-        videoArrayCount = album.videoURL.count
+//        print("set data on cell")
+//        album.getAlbumList()
+//        videoArrayCount = album.videoURL.count
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier:"cell",for :indexPath)
         let number = (indexPath.row+1).description + ") "
         cell.textLabel!.text = number + album.videoDate[indexPath.row]
@@ -373,7 +373,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 album.videoDate.remove(at: indexPath.row)
                 tableView.reloadData()
             }
-            setToppage()
+//            setToppage()
         }
     }
     @IBAction func unwindAction(segue: UIStoryboardSegue) {
@@ -381,7 +381,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         album.getAlbumList()
         tableView.reloadData()
         videoArrayCount=album.videoURL.count
-//        print("count:",album.videoURL.count)
+        setToppage()//not effective
     }
 }
 
