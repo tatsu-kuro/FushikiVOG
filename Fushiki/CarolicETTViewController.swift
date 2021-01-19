@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import Photos
 class CarolicETTViewController: UIViewController{
-    let camera = RecordController()
+    let camera = CameraAlbumController(name:"fushiki")
     var videoDevice: AVCaptureDevice?
     var captureSession: AVCaptureSession!
     var fileOutput = AVCaptureMovieFileOutput()
@@ -134,8 +134,8 @@ class CarolicETTViewController: UIViewController{
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        let album = AlbumController(name:"fushiki")
-        album.makeAlbum()
+//        let album = CameraAlbumController(name:"fushiki")
+        camera.makeAlbum()
         epTim.append(10)
         epTim.append(100)
         epTim.append(110)

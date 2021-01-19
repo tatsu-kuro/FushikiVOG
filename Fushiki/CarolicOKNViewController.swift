@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import Photos
 class CarolicOKNViewController: UIViewController{
-    let camera = RecordController()
+    let camera = CameraAlbumController(name:"fushiki")
 //    var ettWidth:Int = 0//1:narrow,2:wide
     var oknSpeed:Int = 0
     var oknMode:Int=0
@@ -163,8 +163,8 @@ class CarolicOKNViewController: UIViewController{
 //     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        let album = AlbumController(name:"fushiki")
-        album.makeAlbum()
+//        let album = CameraAlbumController(name:"fushiki")
+        camera.makeAlbum()
         ww=view.bounds.width
         wh=view.bounds.height
         oknSpeed = UserDefaults.standard.integer(forKey:"oknSpeed")

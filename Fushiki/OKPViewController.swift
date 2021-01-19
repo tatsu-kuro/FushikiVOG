@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import Photos
 class OKPViewController: UIViewController{
-    let camera = RecordController()
+    let camera = CameraAlbumController(name:"fushiki")
     @IBOutlet weak var speedLabel: UILabel!
     
     @IBOutlet var singleRec: UITapGestureRecognizer!
@@ -137,8 +137,8 @@ class OKPViewController: UIViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let album = AlbumController(name:"fushiki")
-        album.makeAlbum()
+//        let album = CameraAlbumController(name:"fushiki")
+        camera.makeAlbum()
         ww=view.bounds.width
         wh=view.bounds.height
         okpSpeed = UserDefaults.standard.integer(forKey: "okpSpeed")

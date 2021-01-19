@@ -19,7 +19,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var logoImage: UIImageView!
     //    let albumName:String = "iCapNYS"
     var videoArrayCount:Int = 0
-    let album = AlbumController(name: "fushiki")
+    let album = CameraAlbumController(name: "fushiki")
     var oknSpeed:Int = 50
     var oknTime:Int = 50
     var oknMode:Int=0

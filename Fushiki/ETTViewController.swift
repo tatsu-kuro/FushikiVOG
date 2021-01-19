@@ -10,7 +10,8 @@ import UIKit
 import Photos
 import AVFoundation
 class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegate {
-    let camera = RecordController()
+//    let camera = RecordController()
+    let camera = CameraAlbumController(name:"fushiki")
     var cirDiameter:CGFloat = 0
     var startTime=CFAbsoluteTimeGetCurrent()
     var lastTime=CFAbsoluteTimeGetCurrent()
@@ -24,7 +25,6 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     var ettW:CGFloat = 0
     var ettH:CGFloat = 0
     var recordedF:Bool = false
-    
 
     var tapInterval=CFAbsoluteTimeGetCurrent()
     func stopDisplaylink(){
@@ -87,8 +87,8 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let album = AlbumController(name:"fushiki")
-        album.makeAlbum()
+        camera.makeAlbum()
+        camera.initSession()
         ettMode=UserDefaults.standard.integer(forKey: "ettMode")
         ettWidth=UserDefaults.standard.integer(forKey: "ettWidth")
 //        let w=view.bounds.width/2

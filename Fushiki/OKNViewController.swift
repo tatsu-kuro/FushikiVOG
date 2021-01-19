@@ -11,7 +11,7 @@ import CoreMotion
 import Photos
 import AVFoundation
 class OKNViewController: UIViewController{
-    let camera = RecordController()
+    let camera = CameraAlbumController(name:"fushiki")
     var startTime=CFAbsoluteTimeGetCurrent()
     var lastTime=CFAbsoluteTimeGetCurrent()
     var cnt:Int = 0
@@ -254,8 +254,9 @@ class OKNViewController: UIViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let album = AlbumController(name: "fushiki")
-        album.makeAlbum()
+        camera.recordStart()
+//        let album = CameraAlbumController(name: "fushiki")
+        camera.makeAlbum()
         //       timerPara.isHidden=true
         oknSpeed = UserDefaults.standard.integer(forKey:"oknSpeed")
         oknTime = UserDefaults.standard.integer(forKey:"oknTime")
@@ -272,7 +273,7 @@ class OKNViewController: UIViewController{
         self.setNeedsStatusBarAppearanceUpdate()
          prefersHomeIndicatorAutoHidden()
             //        prefersStatusBarHidden
-        camera.recordStart()
+        
     }
  
   
