@@ -10,7 +10,8 @@ import UIKit
 import Photos
 import AVFoundation
 class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegate {
-    let camera = RecordController()
+//    let camera = RecordController()
+    let camera = CameraAlbumController(name:"fushiki")
     var cirDiameter:CGFloat = 0
     var startTime=CFAbsoluteTimeGetCurrent()
     var lastTime=CFAbsoluteTimeGetCurrent()
@@ -23,7 +24,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     var targetMode:Int = 0
     var ettW:CGFloat = 0
     var ettH:CGFloat = 0
-    
+    var recordedF:Bool = false
 
     var tapInterval=CFAbsoluteTimeGetCurrent()
     func stopDisplaylink(){
@@ -34,11 +35,15 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     }
     @IBAction func doubleTap(_ sender: Any) {
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
-
         mainView.targetMode=targetMode
-        stopDisplaylink()
+        delTimer()
         camera.recordStop()
-        self.present(mainView, animated: false, completion: nil)
+        performSegue(withIdentifier: "fromETT", sender: self)
+    }
+    func delTimer(){
+        if displayLinkF==true{
+            displayLink?.invalidate()
+        }
     }
     override func remoteControlReceived(with event: UIEvent?) {
         guard event?.type == .remoteControl else { return }
@@ -82,9 +87,8 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let album = AlbumController()
-        album.makeAlbum()
-//        var fushikiAlbum:recordAlbum?
+        camera.makeAlbum()
+//        camera.initSession()
         ettMode=UserDefaults.standard.integer(forKey: "ettMode")
         ettWidth=UserDefaults.standard.integer(forKey: "ettWidth")
 //        let w=view.bounds.width/2
@@ -117,9 +121,12 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         self.becomeFirstResponder()
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
-        camera.recordStart()
+        camera.sessionRecStart(fps:30)
     }
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopDisplaylink()
+    }
     override func prefersHomeIndicatorAutoHidden() -> Bool {
         return true
     }
@@ -129,102 +136,102 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     var lastrand:Int=1
     var rand:Int=0
  
-     var initf:Bool=false
-     @objc func update3() {
-         if initf {
-             view.layer.sublayers?.removeLast()
-         }
-         initf=true
-         tcount += 1
-         let elapset=CFAbsoluteTimeGetCurrent()-startTime
-         if elapset<20.0 {//}(tcount<60*20){
-             let sinV=sin(CGFloat(elapset)*3.1415*0.6)
-             //let sinV=sin(CGFloat(tcount)*0.03183)//0.3Hz
-             let cPoint:CGPoint = CGPoint(x:view.bounds.width/2 + sinV*ettW, y: view.bounds.height/2)
-             drawCircle(cPoint:cPoint)
-         }else if elapset<40.0 {//}(tcount<60*20*2){
-             //    if Int(elapset) != Int(lastTime){
-             if Int(elapset)%2 == 0{// }(tcount/60)%2==0){
-                 let cPoint:CGPoint = CGPoint(x:view.bounds.width/2 + ettW, y: view.bounds.height/2)
-                 drawCircle(cPoint:cPoint)
-             }else{
-                 let cPoint:CGPoint = CGPoint(x:view.bounds.width/2 - ettW, y: view.bounds.height/2)
-                 drawCircle(cPoint:cPoint)
-             }
-             //  }
-         }else if elapset<60 {//}(tcount<60*20*3){
-             
-             if Int(elapset) != Int(lastTime){
-                 rand = Int.random(in: 0..<5) - 2
-                 if(lastrand==rand){
-                     rand += 1
-                     if(rand > 2){
-                         rand = -2
-                     }
-                 }
-             }
-             let cg=CGFloat(rand)/2.0
-             lastrand=rand
-             let cPoint:CGPoint = CGPoint(x:view.bounds.width/2 - cg*ettW, y: view.bounds.height/2)
-             drawCircle(cPoint:cPoint)
-         }else if elapset<65{
-             let cPoint:CGPoint = CGPoint(x:view.bounds.width/2, y: view.bounds.height/2)
-             drawCircle(cPoint:cPoint)
-             //self.dismiss(animated: true, completion: nil)
-         }else{
-//             delTimer()
-             doubleTap(0)
-         }
-         lastTime=elapset
-     }
-     
+    var initf:Bool=false
+    @objc func update3() {
+        if initf {
+            view.layer.sublayers?.removeLast()
+        }
+        initf=true
+        tcount += 1
+        let elapset=CFAbsoluteTimeGetCurrent()-startTime
+        if elapset<20.0 {//}(tcount<60*20){
+            let sinV=sin(CGFloat(elapset)*3.1415*0.6)
+            //let sinV=sin(CGFloat(tcount)*0.03183)//0.3Hz
+            let cPoint:CGPoint = CGPoint(x:view.bounds.width/2 + sinV*ettW, y: view.bounds.height/2)
+            drawCircle(cPoint:cPoint)
+        }else if elapset<40.0 {//}(tcount<60*20*2){
+            //    if Int(elapset) != Int(lastTime){
+            if Int(elapset)%2 == 0{// }(tcount/60)%2==0){
+                let cPoint:CGPoint = CGPoint(x:view.bounds.width/2 + ettW, y: view.bounds.height/2)
+                drawCircle(cPoint:cPoint)
+            }else{
+                let cPoint:CGPoint = CGPoint(x:view.bounds.width/2 - ettW, y: view.bounds.height/2)
+                drawCircle(cPoint:cPoint)
+            }
+            //  }
+        }else if elapset<60 {//}(tcount<60*20*3){
+            
+            if Int(elapset) != Int(lastTime){
+                rand = Int.random(in: 0..<5) - 2
+                if(lastrand==rand){
+                    rand += 1
+                    if(rand > 2){
+                        rand = -2
+                    }
+                }
+            }
+            let cg=CGFloat(rand)/2.0
+            lastrand=rand
+            let cPoint:CGPoint = CGPoint(x:view.bounds.width/2 - cg*ettW, y: view.bounds.height/2)
+            drawCircle(cPoint:cPoint)
+        }else if elapset<65{
+            let cPoint:CGPoint = CGPoint(x:view.bounds.width/2, y: view.bounds.height/2)
+            drawCircle(cPoint:cPoint)
+            //self.dismiss(animated: true, completion: nil)
+        }else{
+            //             delTimer()
+            doubleTap(0)
+        }
+        lastTime=elapset
+    }
+    
     @objc func update2() {
-         if tcount > 0{
-             view.layer.sublayers?.removeLast()
-         }
-         tcount += 1
-         var rand = Int.random(in: 0..<10)
-         if (rand==9){
-             rand=4
-         }
-         if (lastrand==rand){
-             rand += 1
-             if(rand==9){
-                 rand=0
-             }
-         }
-         if(tcount>30){//finish
-             doubleTap(0)
-         }
-         lastrand=rand
-         var xn:Int=0
-         var yn:Int=0
-         if(rand%3==0){xn = -1}
-         else if(rand%3==1){xn=0}
-         else {xn=1}
-         if(rand/3==0){yn = -1}
-         else if(rand/3==1){yn = 0}
-         else {yn=1}
-         let x0=view.bounds.width/2
-         let y0=view.bounds.height/2
-         let cPoint:CGPoint = CGPoint(x:x0 + CGFloat(xn*ettWidth)*x0/100, y: y0 + CGFloat(yn*ettWidth)*y0/100)
-         drawCircle(cPoint:cPoint)
-     }
+        if tcount > 0{
+            view.layer.sublayers?.removeLast()
+        }
+        tcount += 1
+        var rand = Int.random(in: 0..<10)
+        if (rand==9){
+            rand=4
+        }
+        if (lastrand==rand){
+            rand += 1
+            if(rand==9){
+                rand=0
+            }
+        }
+        if(tcount>30){//finish
+            doubleTap(0)
+        }
+        lastrand=rand
+        var xn:Int=0
+        var yn:Int=0
+        if(rand%3==0){xn = -1}
+        else if(rand%3==1){xn=0}
+        else {xn=1}
+        if(rand/3==0){yn = -1}
+        else if(rand/3==1){yn = 0}
+        else {yn=1}
+        let x0=view.bounds.width/2
+        let y0=view.bounds.height/2
+        let cPoint:CGPoint = CGPoint(x:x0 + CGFloat(xn*ettWidth)*x0/100, y: y0 + CGFloat(yn*ettWidth)*y0/100)
+        drawCircle(cPoint:cPoint)
+    }
     @objc func update1() {//pursuit
-           if tcount > 0{
-               view.layer.sublayers?.removeLast()
-           }
-           tcount += 1
-           let elapset=CFAbsoluteTimeGetCurrent()-startTime
-           if(tcount>60*30 && elapset>29 || tcount>120*30){
-               doubleTap(0)
-           }
-           
-           let sinV=sin(CGFloat(elapset)*3.1415*0.6)
-           
-           let cPoint:CGPoint = CGPoint(x:view.bounds.width/2 , y: view.bounds.height/2 + sinV*ettH)
-           drawCircle(cPoint:cPoint)
-       }
+        if tcount > 0{
+            view.layer.sublayers?.removeLast()
+        }
+        tcount += 1
+        let elapset=CFAbsoluteTimeGetCurrent()-startTime
+        if(tcount>60*30 && elapset>29 || tcount>120*30){
+            doubleTap(0)
+        }
+        
+        let sinV=sin(CGFloat(elapset)*3.1415*0.6)
+        
+        let cPoint:CGPoint = CGPoint(x:view.bounds.width/2 , y: view.bounds.height/2 + sinV*ettH)
+        drawCircle(cPoint:cPoint)
+    }
     @objc func update0() {//pursuit
         if tcount > 0{
             view.layer.sublayers?.removeLast()
@@ -277,7 +284,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
             ])[v]
         }
     }
-
+    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
@@ -286,15 +293,9 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
             completion: {(UIViewControllerTransitionCoordinatorContext) in
                 //画面の回転後に向きを教える。
                 if self.convertUIOrientation2VideoOrientation(f: {return self.appOrientation()}) != nil {
-//                    self.setETTwidth(width: self.ettWidth)
+                    //                    self.setETTwidth(width: self.ettWidth)
                 }
-        }
+            }
         )
     }
- 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        stopDisplaylink()
-    }
-
 }

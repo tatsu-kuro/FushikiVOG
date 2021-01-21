@@ -1,0 +1,341 @@
+//
+//  recordAlbum.swift
+//  Fushiki
+//
+//  Created by 黒田建彰 on 2021/01/10.
+//  Copyright © 2021 tatsuaki.Fushiki. All rights reserved.
+//
+import UIKit
+import Photos
+import AVFoundation
+class CameraAlbumController: NSObject, AVCaptureFileOutputRecordingDelegate{
+    var videoDevice: AVCaptureDevice?
+    var captureSession: AVCaptureSession!
+    var fileOutput = AVCaptureMovieFileOutput()
+    let TempFilePath: String = "\(NSTemporaryDirectory())temp.mp4"
+    var soundIdx:SystemSoundID = 0
+    var saved2album:Bool = false
+    var albumName:String = ""
+    var videoDate = Array<String>()
+    var videoURL = Array<URL>()
+    var albumExist:Bool = false
+    var dialogStatus:Int=0
+    init(name: String) {
+        // 全てのプロパティを初期化する前にインスタンスメソッドを実行することはできない
+        self.albumName = name
+    }
+   
+    func albumExists() -> Bool {
+        // ここで以下のようなエラーが出るが、なぜか問題なくアルバムが取得できている
+        let albums = PHAssetCollection.fetchAssetCollections(with: PHAssetCollectionType.album, subtype:
+            PHAssetCollectionSubtype.albumRegular, options: nil)
+        for i in 0 ..< albums.count {
+            let album = albums.object(at: i)
+            if album.localizedTitle != nil && album.localizedTitle == albumName {
+                return true
+            }
+        }
+        return false
+    }
+    //何も返していないが、ここで見つけたor作成したalbumを返したい。そうすればグローバル変数にアクセスせずに済む
+    func createNewAlbum( callback: @escaping (Bool) -> Void) {
+        if self.albumExists() {
+            callback(true)
+        } else {
+            PHPhotoLibrary.shared().performChanges({ [self] in
+                _ = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: albumName)
+            }) { (isSuccess, error) in
+                callback(isSuccess)
+            }
+        }
+    }
+    func makeAlbum(){
+        if albumExists()==false{
+            createNewAlbum() { [self] (isSuccess) in
+                if isSuccess{
+                    print(albumName," can be made,")
+                } else{
+                    print(albumName," can't be made.")
+                }
+            }
+        }else{
+            print(albumName," exist already.")
+        }
+    }
+    func getPHAssetcollection()->PHAssetCollection{
+        let requestOptions = PHImageRequestOptions()
+        requestOptions.isSynchronous = true
+        requestOptions.isNetworkAccessAllowed = false
+        requestOptions.deliveryMode = .highQualityFormat //これでもicloud上のvideoを取ってしまう
+        //アルバムをフェッチ
+        let assetFetchOptions = PHFetchOptions()
+        assetFetchOptions.predicate = NSPredicate(format: "title == %@", albumName)
+        let assetCollections = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .smartAlbumVideos, options: assetFetchOptions)
+        //アルバムはviewdidloadで作っているのであるはず？
+//        if (assetCollections.count > 0) {
+        //同じ名前のアルバムは一つしかないはずなので最初のオブジェクトを使用
+        return assetCollections.object(at:0)
+    }
+    var gettingAlbumF:Bool=true
+    func getAlbumList(){//最後のvideoを取得するまで待つ
+        gettingAlbumF = true
+        getAlbumList_sub()
+        while gettingAlbumF == true{
+            sleep(UInt32(0.1))
+        }
+    }
+    func getAlbumList_sub(){
+        //     let imgManager = PHImageManager.default()
+        let requestOptions = PHImageRequestOptions()
+        videoURL.removeAll()
+        videoDate.removeAll()
+        requestOptions.isSynchronous = true
+        requestOptions.isNetworkAccessAllowed = false//これでもicloud上のvideoを取ってしまう
+        requestOptions.deliveryMode = .highQualityFormat
+        // アルバムをフェッチ
+        let assetFetchOptions = PHFetchOptions()
+        assetFetchOptions.predicate = NSPredicate(format: "title == %@", albumName)
+        let assetCollections = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .smartAlbumVideos, options: assetFetchOptions)
+        
+        //アルバムが存在しない事もある？
+        if (assetCollections.count > 0) {
+            //同じ名前のアルバムは一つしかないはずなので最初のオブジェクトを使用
+            let assetCollection = assetCollections.object(at:0)
+            // creationDate降順でアルバム内のアセットをフェッチ
+            let fetchOptions = PHFetchOptions()
+            fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+            let assets = PHAsset.fetchAssets(in: assetCollection, options: fetchOptions)
+            albumExist=true
+            if assets.count == 0{
+                gettingAlbumF=false
+                albumExist=false
+            }
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            for i in 0..<assets.count{
+                let asset=assets[i]
+                let date_sub = asset.creationDate
+                let date = formatter.string(from: date_sub!)
+                let duration = String(format:"%.1fs",asset.duration)
+                let options=PHVideoRequestOptions()
+                options.version = .original
+                PHImageManager.default().requestAVAsset(forVideo:asset,
+                                                        options: options){ [self](asset:AVAsset?,audioMix, info:[AnyHashable:Any]?)->Void in
+                    
+                    if let urlAsset = asset as? AVURLAsset{//not on iCloud
+                        videoURL.append(urlAsset.url)
+                        videoDate.append(date + "(" + duration + ")")
+                        if i == assets.count - 1{
+                            gettingAlbumF=false
+                        }
+                    }else{//on icloud
+                        if i == assets.count - 1{
+                            gettingAlbumF=false
+                        }
+                    }
+                }
+            }
+        }else{
+            albumExist=false
+            gettingAlbumF=false
+        }
+    }
+    func eraseVideo(number:Int) {
+        dialogStatus=0
+        let requestOptions = PHImageRequestOptions()
+        requestOptions.isSynchronous = true
+        requestOptions.isNetworkAccessAllowed = false
+        requestOptions.deliveryMode = .highQualityFormat //これでもicloud上のvideoを取ってしまう
+        //アルバムをフェッチ
+        let assetFetchOptions = PHFetchOptions()
+        
+        assetFetchOptions.predicate = NSPredicate(format: "title == %@", albumName)
+        
+        let assetCollections = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .smartAlbumVideos, options: assetFetchOptions)
+//        print("asset:",assetCollections.count)
+        //アルバムが存在しない事もある？
+        
+        if (assetCollections.count > 0) {
+            //同じ名前のアルバムは一つしかないはずなので最初のオブジェクトを使用
+            let assetCollection = assetCollections.object(at:0)
+            // creationDate降順でアルバム内のアセットをフェッチ
+            let fetchOptions = PHFetchOptions()
+            fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+            let assets = PHAsset.fetchAssets(in: assetCollection, options: fetchOptions)
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+//            var eraseAssetDate=assets[0].creationDate
+//            var eraseAssetPngNumber=0
+            for i in 0..<assets.count{
+                let date_sub=assets[i].creationDate
+                let date = formatter.string(from:date_sub!)
+                if videoDate[number].contains(date){
+                    if !assets[i].canPerform(.delete) {
+                        return
+                    }
+                    var delAssets=Array<PHAsset>()
+                    delAssets.append(assets[i])
+                    
+                    PHPhotoLibrary.shared().performChanges({
+                        PHAssetChangeRequest.deleteAssets(NSArray(array: delAssets))
+                    }, completionHandler: { [self] success,error in//[self] _, _ in
+                        if success==true{
+                            dialogStatus = 1//YES
+                        }else{
+                            dialogStatus = -1//NO
+                        }
+                        // 削除後の処理
+                    })
+//                    break
+                }
+            }
+        }
+    }
+    func setSession(fps:Double){
+        initSession(fps:fps)
+    }
+    func sessionRecStart(fps:Double){
+        initSession(fps: fps)
+        try? FileManager.default.removeItem(atPath: TempFilePath)
+        let fileURL = NSURL(fileURLWithPath: TempFilePath)
+        fileOutput.startRecording(to: fileURL as URL, recordingDelegate: self)
+    }
+    func recordStart(){
+        try? FileManager.default.removeItem(atPath: TempFilePath)
+        let fileURL = NSURL(fileURLWithPath: TempFilePath)
+        fileOutput.startRecording(to: fileURL as URL, recordingDelegate: self)
+    }
+    func recordStop(){
+        fileOutput.stopRecording()
+    }
+    func setVideoFormat(desiredFps: Double)->Bool {
+        var retF:Bool=false
+        // 取得したフォーマットを格納する変数
+        var selectedFormat: AVCaptureDevice.Format! = nil
+        // そのフレームレートの中で一番大きい解像度を取得する
+        var maxWidth: Int32 = 0
+        // フォーマットを探る
+//        var getDesiedformat:Bool=false
+        for format in videoDevice!.formats {
+            // フォーマット内の情報を抜き出す (for in と書いているが1つの format につき1つの range しかない)
+//            if getDesiedformat==true{
+//                break
+//            }
+            for range: AVFrameRateRange in format.videoSupportedFrameRateRanges {
+                let description = format.formatDescription as CMFormatDescription    // フォーマットの説明
+                let dimensions = CMVideoFormatDescriptionGetDimensions(description)  // 幅・高さ情報を抜き出す
+                let width = dimensions.width
+//                print(dimensions.width,dimensions.height)
+                if desiredFps == range.maxFrameRate && width == 1280{//}>= maxWidth {
+                    selectedFormat = format
+                    maxWidth = width
+                }
+            }
+        }
+//ipod touch 1280x720 1440*1080
+//SE 960x540 1280x720 1920x1080
+//11 192x144 352x288 480x360 640x480 1024x768 1280x720 1440x1080 1920x1080 3840x2160
+//1280に設定すると上手く行く。合成のところには1920x1080で飛んでくるようだ。？
+        // フォーマットが取得できていれば設定する
+        if selectedFormat != nil {
+            do {
+                try videoDevice!.lockForConfiguration()
+                videoDevice!.activeFormat = selectedFormat
+                videoDevice!.activeVideoMaxFrameDuration = CMTimeMake(1, Int32(desiredFps))
+                videoDevice!.unlockForConfiguration()
+                
+                let description = selectedFormat.formatDescription as CMFormatDescription    // フォーマットの説明
+                let dimensions = CMVideoFormatDescriptionGetDimensions(description)  // 幅・高さ情報を抜き出す
+                let iCapNYSWidth = dimensions.width
+                let iCapNYSHeight = dimensions.height
+                print("フォーマット・フレームレートを設定 : \(desiredFps) fps・\(iCapNYSWidth) px x \(iCapNYSHeight) px")
+                
+                retF=true
+            }
+            catch {
+                print("フォーマット・フレームレートが指定できなかった")
+                retF=false
+            }
+        }
+        else {
+            print("指定のフォーマットが取得できなかった")
+            retF=false
+        }
+        return retF
+    }
+    func initSession(fps:Double) {
+        // カメラ入力 : 背面カメラ
+        videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front)
+        let videoInput = try! AVCaptureDeviceInput.init(device: videoDevice!)
+
+        if setVideoFormat(desiredFps: fps)==false{
+            print("error******")
+        }
+        // AVCaptureSession生成
+        captureSession = AVCaptureSession()
+        captureSession.addInput(videoInput)
+ 
+        // ファイル出力設定
+        fileOutput = AVCaptureMovieFileOutput()
+        captureSession.addOutput(fileOutput)
+        
+        let videoDataOuputConnection = fileOutput.connection(with: .video)
+        let orientation = UIDevice.current.orientation
+        videoDataOuputConnection!.videoOrientation = AVCaptureVideoOrientation(rawValue: orientation.rawValue)!
+        // セッションを開始する (録画開始とは別)
+        captureSession.startRunning()
+    }
+    
+    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        if let soundUrl = URL(string:
+                                "/System/Library/Audio/UISounds/end_record.caf"/*photoShutter.caf*/){
+            AudioServicesCreateSystemSoundID(soundUrl as CFURL, &soundIdx)
+            AudioServicesPlaySystemSound(soundIdx)
+        }
+        
+        print("終了ボタン、最大を超えた時もここを通る")
+        //         motionManager.stopDeviceMotionUpdates()//ここで止めたが良さそう。
+        //         //        recordedFPS=getFPS(url: outputFileURL)
+        //         //        topImage=getThumb(url: outputFileURL)
+        //
+        //         if timer?.isValid == true {
+        //             timer!.invalidate()
+        //    }
+        //    let album = AlbumController(name:"fushiki")
+        
+        if albumExists()==true{
+//            recordedFlag=true
+            PHPhotoLibrary.shared().performChanges({ [self] in
+                //let assetRequest = PHAssetChangeRequest.creationRequestForAsset(from: avAsset)
+                let assetRequest = PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: outputFileURL)!
+                let albumChangeRequest = PHAssetCollectionChangeRequest(for: getPHAssetcollection())
+                let placeHolder = assetRequest.placeholderForCreatedAsset
+                albumChangeRequest?.addAssets([placeHolder!] as NSArray)
+                //imageID = assetRequest.placeholderForCreatedAsset?.localIdentifier
+                print("file add to album")
+            }) { [self] (isSuccess, error) in
+                if isSuccess {
+                    // 保存した画像にアクセスする為のimageIDを返却
+                    //completionBlock(imageID)
+                    print("success")
+                    self.saved2album=true
+                } else {
+                    //failureBlock(error)
+                    print("fail")
+                    //                print(error)
+                    self.saved2album=true
+                }
+                //            _ = try? FileManager.default.removeItem(atPath: self.TempFilePath)
+            }
+        }else{
+            //上二つをunwindでチェック
+            //アプリ起動中にアルバムを消したら、保存せずに戻る。
+            //削除してもどこかにあるようで、参照URLは生きていて、再生できる。
+        }
+        while saved2album==false{
+            sleep(UInt32(0.1))
+        }
+        captureSession.stopRunning()
+        //         performSegue(withIdentifier: "fromRecordToMain", sender: self)
+    }
+}

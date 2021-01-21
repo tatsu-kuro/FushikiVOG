@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import Photos
 class OKPViewController: UIViewController{
-    let camera = RecordController()
+    let camera = CameraAlbumController(name:"fushiki")
     @IBOutlet weak var speedLabel: UILabel!
     
     @IBOutlet var singleRec: UITapGestureRecognizer!
@@ -84,11 +84,8 @@ class OKPViewController: UIViewController{
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
         mainView.targetMode=targetMode
         delTimer()
-        if UIApplication.shared.isIdleTimerDisabled == true{
-            UIApplication.shared.isIdleTimerDisabled = false//スリープする
-        }
         camera.recordStop()// fileOutput.stopRecording()
-        self.present(mainView, animated: false, completion: nil)
+        performSegue(withIdentifier: "fromOKP", sender: self)
     }
     
     func delTimer(){
@@ -140,8 +137,8 @@ class OKPViewController: UIViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let album = AlbumController()
-        album.makeAlbum()
+//        let album = CameraAlbumController(name:"fushiki")
+        camera.makeAlbum()
         ww=view.bounds.width
         wh=view.bounds.height
         okpSpeed = UserDefaults.standard.integer(forKey: "okpSpeed")
@@ -171,7 +168,7 @@ class OKPViewController: UIViewController{
         self.setNeedsStatusBarAppearanceUpdate()
           prefersHomeIndicatorAutoHidden()
             //        prefersStatusBarHidden
-        camera.recordStart()
+        camera.sessionRecStart(fps:30)
         //        initSession(fps: 30)
 //        try? FileManager.default.removeItem(atPath: TempFilePath)
 //        let fileURL = NSURL(fileURLWithPath: TempFilePath)

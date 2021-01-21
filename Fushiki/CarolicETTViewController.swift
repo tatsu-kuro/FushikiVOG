@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import Photos
 class CarolicETTViewController: UIViewController{
-    let camera = RecordController()
+    let camera = CameraAlbumController(name:"fushiki")
     var videoDevice: AVCaptureDevice?
     var captureSession: AVCaptureSession!
     var fileOutput = AVCaptureMovieFileOutput()
@@ -32,7 +32,8 @@ class CarolicETTViewController: UIViewController{
         mainView.targetMode=targetMode
         delTimer()
         camera.recordStop() //fileOutput.stopRecording()
-        self.present(mainView, animated: false, completion: nil)
+//        self.present(mainView, animated: false, completion: nil)
+        performSegue(withIdentifier: "fromCarolicETT", sender: self)
     }
     override func remoteControlReceived(with event: UIEvent?) {
         guard event?.type == .remoteControl else { return }
@@ -133,8 +134,8 @@ class CarolicETTViewController: UIViewController{
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        let album = AlbumController()
-        album.makeAlbum()
+//        let album = CameraAlbumController(name:"fushiki")
+        camera.makeAlbum()
         epTim.append(10)
         epTim.append(100)
         epTim.append(110)
@@ -154,7 +155,7 @@ class CarolicETTViewController: UIViewController{
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
         prefersHomeIndicatorAutoHidden()
-        camera.recordStart()
+        camera.sessionRecStart(fps:30)
     }
     
     override func prefersHomeIndicatorAutoHidden() -> Bool {
