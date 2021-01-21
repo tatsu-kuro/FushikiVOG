@@ -302,25 +302,26 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         helpButton.frame=CGRect(x:bw*5+sp*7,y:by,width:bw,height:bh)
         setteiButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height:bh)
 
-//        let logoY = ww/13
-//        if view.bounds.width/2 > by - logoY{
+        let logoY = ww/13
+        if view.bounds.width/2 > by - logoY{
 
-//            titleImage.frame.origin.y = logoY
-//            //view.bounds.width*56/730
-//            titleImage.frame.size.width = (by - logoY)*2
-//            //view.bounds.height/2*1800/700
-//            titleImage.frame.size.height = by - logoY//view.bounds.height/2
-//            titleImage.frame.origin.x = (view.bounds.width - titleImage.frame.size.width)/2
-//        }else{
-//            titleImage.frame.origin.x = 0
-//            titleImage.frame.size.width = view.bounds.width
-//            titleImage.frame.origin.y = logoY + (by - logoY - view.bounds.width/2)/2
-//            titleImage.frame.size.height = view.bounds.width/2
-//        }
-//        if UIApplication.shared.isIdleTimerDisabled == true{
-//            UIApplication.shared.isIdleTimerDisabled = false//監視する
-//        }
+            titleImage.frame.origin.y = logoY
+            //view.bounds.width*56/730
+            titleImage.frame.size.width = (by - logoY)*2
+            //view.bounds.height/2*1800/700
+            titleImage.frame.size.height = by - logoY//view.bounds.height/2
+            titleImage.frame.origin.x = (view.bounds.width - titleImage.frame.size.width)/2
+        }else{
+            titleImage.frame.origin.x = 0
+            titleImage.frame.size.width = view.bounds.width
+            titleImage.frame.origin.y = logoY + (by - logoY - view.bounds.width/2)/2
+            titleImage.frame.size.height = view.bounds.width/2
+        }
+        if UIApplication.shared.isIdleTimerDisabled == true{
+            UIApplication.shared.isIdleTimerDisabled = false//監視する
+        }
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
