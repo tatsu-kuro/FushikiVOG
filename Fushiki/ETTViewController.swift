@@ -15,7 +15,8 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     var cirDiameter:CGFloat = 0
     var startTime=CFAbsoluteTimeGetCurrent()
     var lastTime=CFAbsoluteTimeGetCurrent()
-
+    var timer:Timer?
+    @IBOutlet weak var recClarification: UIImageView!
     var displayLinkF:Bool=false
     var displayLink:CADisplayLink?
     var tcount: Int = 0
@@ -43,6 +44,9 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     func delTimer(){
         if displayLinkF==true{
             displayLink?.invalidate()
+        }
+        if timer?.isValid == true {
+            timer!.invalidate()
         }
     }
     override func remoteControlReceived(with event: UIEvent?) {
@@ -84,11 +88,26 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     override func viewDidAppear(_ animated: Bool) {
 
     }
-
+ 
+    var recordCircleCnt:Int=0
+    @objc func updateRecClarification(tm: Timer) {
+        recordCircleCnt += 1
+        var cnt=recordCircleCnt%40
+        if cnt>19{
+            cnt = 40 - cnt
+        }
+//        let alpha=CGFloat(cnt)/20.0
+        var alpha=CGFloat(cnt)*0.9/20.0//少し目立たなくなる
+        alpha += 0.05
+        recClarification.alpha=alpha
+        if recordCircleCnt==1{
+            camera.recordStart()//ここだと暗くならない
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         camera.makeAlbum()
-//        camera.initSession()
+        camera.initSession(fps: 30)
         ettMode=UserDefaults.standard.integer(forKey: "ettMode")
         ettWidth=UserDefaults.standard.integer(forKey: "ettWidth")
 //        let w=view.bounds.width/2
@@ -110,9 +129,13 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         }
         displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
         displayLinkF=true
-        
         tcount=0
-        //       ETTbutton.isEnabled=false
+        recordCircleCnt=0
+        timer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: true)
+        let imgH=view.bounds.height/30//415*177 2.34  383*114 3.36 257*112 2.3
+        let imgW=imgH*2.3
+        let space=imgW*0.1
+        recClarification.frame=CGRect(x:view.bounds.width-imgW-space,y:view.bounds.height-imgH-space,width: imgW,height:imgH)
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
         }
@@ -121,7 +144,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         self.becomeFirstResponder()
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
-        camera.sessionRecStart(fps:30)
+//        camera.sessionRecStart(fps:30)
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)

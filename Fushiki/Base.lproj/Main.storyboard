@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="landscape" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -12,7 +14,7 @@
             <objects>
                 <viewController storyboardIdentifier="SETTEI" modalPresentationStyle="fullScreen" id="gOS-fU-nK5" userLabel="Settei View Controller" customClass="SetteiViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LGj-S8-yQ0">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="grl-Cp-esh">
@@ -204,11 +206,11 @@
             <objects>
                 <viewController storyboardIdentifier="OKN" modalPresentationStyle="fullScreen" id="fl3-2K-fNm" userLabel="OKN View Controller" customClass="OKNViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CNm-l8-Sua">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="200" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9I0-D2-09s">
-                                <rect key="frame" x="10" y="20" width="580" height="30"/>
+                                <rect key="frame" x="54" y="20" width="832" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="xhN-M8-whD"/>
@@ -225,6 +227,10 @@
                                     <segue destination="tER-u6-nBQ" kind="unwind" identifier="fromOKN" unwindAction="unwindActionWithSegue:" id="djx-bO-FDI"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rec" translatesAutoresizingMaskIntoConstraints="NO" id="moQ-7Z-vCW">
+                                <rect key="frame" x="114" y="192" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="gvg-Wd-BnG"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -271,11 +277,11 @@
             <objects>
                 <viewController storyboardIdentifier="CarolicETT" modalPresentationStyle="fullScreen" id="41X-WK-AtZ" customClass="CarolicETTViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RRo-5E-Plm">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ryv-pi-E5I">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="44" y="0.0" width="808" height="393"/>
                                 <gestureRecognizers/>
                             </imageView>
                             <button opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jtj-vg-RBa">
@@ -286,6 +292,10 @@
                                     <segue destination="bVQ-8A-Iyu" kind="unwind" identifier="fromCarolicETT" unwindAction="unwindActionWithSegue:" id="oVQ-nR-TZg"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rec" translatesAutoresizingMaskIntoConstraints="NO" id="69I-5a-YhC">
+                                <rect key="frame" x="114" y="248" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="TeQ-fF-YWK"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -325,11 +335,11 @@
             <objects>
                 <viewController storyboardIdentifier="HELP" modalPresentationStyle="fullScreen" id="YRo-aS-cBq" customClass="HelpViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VeA-Hv-JEV">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="etthelp" translatesAutoresizingMaskIntoConstraints="NO" id="VTz-6I-kn3">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="44" y="0.0" width="808" height="393"/>
                                 <gestureRecognizers/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qIw-KK-ztU">
@@ -383,7 +393,7 @@
             <objects>
                 <viewController storyboardIdentifier="ETT" modalPresentationStyle="fullScreen" id="uZP-sJ-vGG" userLabel="ETT View Controller" customClass="ETTViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="439-Kz-5Q0">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NVd-Ff-X9K">
@@ -398,6 +408,10 @@
                                     <segue destination="VpQ-qO-5DE" kind="unwind" identifier="fromETT" unwindAction="unwindActionWithSegue:" id="tRX-FB-681"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rec" translatesAutoresizingMaskIntoConstraints="NO" id="feB-Pl-rYU">
+                                <rect key="frame" x="579" y="246" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bqo-QN-y3H"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -406,6 +420,9 @@
                             <outletCollection property="gestureRecognizers" destination="Ocd-pN-Xxi" appends="YES" id="w72-uP-jWJ"/>
                         </connections>
                     </view>
+                    <connections>
+                        <outlet property="recClarification" destination="feB-Pl-rYU" id="to7-i5-ooQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GgU-ck-e0b" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="VpQ-qO-5DE" userLabel="Exit" sceneMemberID="exit"/>
@@ -422,11 +439,11 @@
             <objects>
                 <viewController storyboardIdentifier="OKP" modalPresentationStyle="fullScreen" id="XY3-rd-IfB" userLabel="OKP View Controller" customClass="OKPViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cIk-4H-s6y">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Czw-Go-oXf">
-                                <rect key="frame" x="10" y="20" width="580" height="30"/>
+                                <rect key="frame" x="54" y="20" width="788" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="hz1-1l-3jb"/>
@@ -443,6 +460,10 @@
                                     <segue destination="Np6-aW-TAw" kind="unwind" identifier="fromOKP" unwindAction="unwindActionWithSegue:" id="4hT-5D-Fjk"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rec" translatesAutoresizingMaskIntoConstraints="NO" id="W2e-Ry-PpH">
+                                <rect key="frame" x="245" y="96" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="wGH-Xk-fDT"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -460,6 +481,7 @@
                     </view>
                     <connections>
                         <outlet property="doubleRec" destination="Ndv-7n-u4N" id="K7U-bU-6NW"/>
+                        <outlet property="recClarification" destination="W2e-Ry-PpH" id="cMN-6F-tYV"/>
                         <outlet property="singleRec" destination="tbD-An-HEh" id="YsW-Eu-M9U"/>
                         <outlet property="speedLabel" destination="Czw-Go-oXf" id="ars-jw-x0T"/>
                     </connections>
@@ -489,7 +511,7 @@
             <objects>
                 <viewController storyboardIdentifier="PLAY" id="qHa-wQ-wFQ" customClass="PlayViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Q3S-Wy-6Zt">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fWd-OW-NJ2">
@@ -511,7 +533,7 @@
             <objects>
                 <viewController storyboardIdentifier="MAIN" modalPresentationStyle="fullScreen" id="BYZ-38-t0r" userLabel="Main View Controller" customClass="MainViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="UIImageView">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logomejiro" translatesAutoresizingMaskIntoConstraints="NO" id="rFo-zO-z8q">
@@ -523,14 +545,14 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2ai-kF-qQC">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="560"/>
+                                <rect key="frame" x="0.0" y="0.0" width="896" height="353"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="139" id="2G5-eP-MHF">
-                                        <rect key="frame" x="0.0" y="28" width="600" height="139"/>
+                                        <rect key="frame" x="0.0" y="28" width="896" height="139"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2G5-eP-MHF" id="8hS-zy-JdQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="139"/>
+                                            <rect key="frame" x="44" y="0.0" width="808" height="139"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -637,7 +659,7 @@
             <objects>
                 <viewController storyboardIdentifier="CarolicOKN" modalPresentationStyle="fullScreen" id="qbJ-IO-gJC" customClass="CarolicOKNViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="74d-sk-dwA">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="anc-4m-txa">
@@ -648,6 +670,10 @@
                                     <segue destination="nlX-Y6-F6Q" kind="unwind" identifier="fromCarolicOKN" unwindAction="unwindActionWithSegue:" id="5Lm-oi-iQf"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rec" translatesAutoresizingMaskIntoConstraints="NO" id="RyR-5k-fZx">
+                                <rect key="frame" x="125" y="199" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xFK-TN-9vp"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -686,6 +712,7 @@
         <image name="logomejiro" width="1300" height="100"/>
         <image name="okn" width="440" height="150"/>
         <image name="okp" width="440" height="150"/>
+        <image name="rec" width="257" height="112"/>
         <image name="sankaku" width="225" height="225"/>
         <image name="settei" width="440" height="150"/>
         <systemColor name="systemBackgroundColor">
