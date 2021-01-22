@@ -171,7 +171,8 @@ class CarolicETTViewController: UIViewController{
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
         prefersHomeIndicatorAutoHidden()
-        camera.sessionRecStart(fps:30)
+//        camera.sessionRecStart(fps:30)
+        view.bringSubview(toFront: recClarification)
     }
     
     override func prefersHomeIndicatorAutoHidden() -> Bool {
@@ -204,15 +205,18 @@ class CarolicETTViewController: UIViewController{
         }
         if tcnt == epTim[0]+1{
             view.layer.sublayers?.removeLast()
+            view.bringSubview(toFront: recClarification)
         }
         if tcnt == epTim[1]{
             drawWrect()
             //            setBackcolor(color:UIColor.white.cgColor)
             drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2), cirDiameter: cirDia, color1: UIColor.black.cgColor , color2:UIColor.black.cgColor)
+            view.bringSubview(toFront: recClarification)
         }
         if tcnt == epTim[2]{
             drawBrect()
             //            setBackcolor(color:UIColor.black.cgColor)
+//            view.bringSubview(toFront: recClarification)
         }
         
         if tcnt == epTim[3]{
@@ -223,6 +227,7 @@ class CarolicETTViewController: UIViewController{
             displayLink!.preferredFramesPerSecond = 120
             displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
             displayLinkF=true
+//            view.bringSubview(toFront: recClarification)
         }
         if tcnt == epTim[4]{
             //            drawBrect()
@@ -237,7 +242,6 @@ class CarolicETTViewController: UIViewController{
             delTimer()
             self.dismiss(animated: true, completion: nil)
         }
-        
     }
     func delTimer(){
         if timer?.isValid == true {
