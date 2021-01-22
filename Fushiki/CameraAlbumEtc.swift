@@ -8,7 +8,7 @@
 import UIKit
 import Photos
 import AVFoundation
-class CameraAlbumController: NSObject, AVCaptureFileOutputRecordingDelegate{
+class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
     var videoDevice: AVCaptureDevice?
     var captureSession: AVCaptureSession!
     var fileOutput = AVCaptureMovieFileOutput()
@@ -24,7 +24,26 @@ class CameraAlbumController: NSObject, AVCaptureFileOutputRecordingDelegate{
         // 全てのプロパティを初期化する前にインスタンスメソッドを実行することはできない
         self.albumName = name
     }
-   
+    func updateRecClarification(tm: Int)->CGFloat {
+        var cnt=tm%40
+        if cnt>19{
+            cnt = 40 - cnt
+        }
+//        let alpha=CGFloat(cnt)/20.0
+        var alpha=CGFloat(cnt)*0.9/20.0//少し目立たなくなる
+        alpha += 0.05
+        return alpha
+//        recClarification.alpha=alpha
+//        if recordCircleCnt==1{
+//            camera.recordStart()//ここだと暗くならない
+//        }
+    }
+    func getRecClarificationRct(width:CGFloat,height:CGFloat)->CGRect{
+        let imgH=height/30//415*177 2.34  383*114 3.36 257*112 2.3
+        let imgW=imgH*2.3
+        let space=imgW*0.1
+        return CGRect(x:width-imgW-space,y:height-imgH-space,width: imgW,height:imgH)
+    }
     func albumExists() -> Bool {
         // ここで以下のようなエラーが出るが、なぜか問題なくアルバムが取得できている
         let albums = PHAssetCollection.fetchAssetCollections(with: PHAssetCollectionType.album, subtype:

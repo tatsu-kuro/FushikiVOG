@@ -10,20 +10,22 @@ import UIKit
 import AVFoundation
 import Photos
 class CarolicOKNViewController: UIViewController{
-    let camera = CameraAlbumController(name:"fushiki")
+    let camera = CameraAlbumEtc(name:"fushiki")
 //    var ettWidth:Int = 0//1:narrow,2:wide
     var oknSpeed:Int = 0
     var oknMode:Int=0
 //    var oknDirection:Int = 0
     var targetMode:Int = 0
     var cirDia:CGFloat = 0
-    var timer1: Timer!
+    var timer: Timer!
+    var tierREC:Timer?
     var timer1Interval:Int = 2
     var startTime=CFAbsoluteTimeGetCurrent()
 //    var startTime=CFAbsoluteTimeGetCurrent()
      var lastTime=CFAbsoluteTimeGetCurrent()
 
-//    var tcount: Int = 0
+    @IBOutlet weak var recClarification: UIImageView!
+    //    var tcount: Int = 0
     var displayLink:CADisplayLink?
     var displayLinkF:Bool=false
 
@@ -48,10 +50,13 @@ class CarolicOKNViewController: UIViewController{
     }
     
     func delTimer(){
-        if timer1?.isValid == true {
-            timer1.invalidate()
+        if timer?.isValid == true {
+            timer.invalidate()
         }
         stopDisplaylink()
+        if tierREC?.isValid == true {
+            tierREC!.invalidate()
+        }
     }
     override func remoteControlReceived(with event: UIEvent?) {
         guard event?.type == .remoteControl else { return }
@@ -161,10 +166,19 @@ class CarolicOKNViewController: UIViewController{
 //         let boximage  = makeBox(width: self.view.bounds.width, height:self.view.bounds.height,color:c)
 //         cameraView.image=boximage
 //     }
+    var cntREC:Int=0
+    @objc func updateRecClarification(tm: Timer) {
+        cntREC += 1
+        recClarification.alpha=camera.updateRecClarification(tm: cntREC)
+        if cntREC==1{
+            camera.recordStart()//ここだと暗くならない
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 //        let album = CameraAlbumController(name:"fushiki")
         camera.makeAlbum()
+        camera.initSession(fps: 30)
         ww=view.bounds.width
         wh=view.bounds.height
         oknSpeed = UserDefaults.standard.integer(forKey:"oknSpeed")
@@ -186,7 +200,10 @@ class CarolicOKNViewController: UIViewController{
         print("carolicOKN")
         drawBrect()
 //        setBackcolor(color:UIColor.black.cgColor)
-        timer1 = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+        tierREC = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: true)
+        recClarification.frame=camera.getRecClarificationRct(width: view.bounds.width, height: view.bounds.height)
+
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
         }
@@ -196,7 +213,8 @@ class CarolicOKNViewController: UIViewController{
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
         prefersHomeIndicatorAutoHidden()
-        camera.sessionRecStart(fps:30)
+//        camera.sessionRecStart(fps:30)
+        view.bringSubview(toFront: recClarification)
     }
     
     override func prefersHomeIndicatorAutoHidden() -> Bool {
@@ -231,11 +249,13 @@ class CarolicOKNViewController: UIViewController{
         }
         if tcnt == epTim[0]+1{
             view.layer.sublayers?.removeLast()
+            view.bringSubview(toFront: recClarification)
         }
         if tcnt == epTim[1]{
             drawWrect()
                //setBackcolor(color:UIColor.white.cgColor)
             drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2), cirDiameter: cirDia, color1: UIColor.black.cgColor , color2:UIColor.black.cgColor)
+            view.bringSubview(toFront: recClarification)
         }
         if tcnt == epTim[2]{
             drawBrect()
@@ -352,5 +372,5 @@ class CarolicOKNViewController: UIViewController{
          }
          lastx=x
      }
-  
+//    view.bringSubview(toFront: recClarification)
 }

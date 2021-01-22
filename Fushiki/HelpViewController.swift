@@ -111,7 +111,7 @@ class HelpViewController: UIViewController {
         let sp=ww*0.1/10
         let by=wh-bh-sp
         exitButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height:bh)
-        nextButton.frame=CGRect(x:sp,y:wh-bw/2-sp,width:bw/2,height: bw/2)
+        nextButton.frame=CGRect(x:sp,y:wh-bh-sp,width:bh,height: bh)
         if UIApplication.shared.isIdleTimerDisabled == true{
             UIApplication.shared.isIdleTimerDisabled = false//監視する
         }

@@ -10,20 +10,20 @@ import UIKit
 import AVFoundation
 import Photos
 class CarolicETTViewController: UIViewController{
-    let camera = CameraAlbumController(name:"fushiki")
-    var videoDevice: AVCaptureDevice?
-    var captureSession: AVCaptureSession!
-    var fileOutput = AVCaptureMovieFileOutput()
-    let TempFilePath: String = "\(NSTemporaryDirectory())temp.mp4"
+    let camera = CameraAlbumEtc(name:"fushiki")
+//    var videoDevice: AVCaptureDevice?
+//    var captureSession: AVCaptureSession!
+//    var fileOutput = AVCaptureMovieFileOutput()
+//    let TempFilePath: String = "\(NSTemporaryDirectory())temp.mp4"
     var ettWidth:Int = 0//1:narrow,2:wide
     var targetMode:Int = 0
     var cirDia:CGFloat = 0
     var timer: Timer!
+    var timerREC: Timer?
     var epTim = Array<Int>()
     var tcount: Int = 0
     var startTime=CFAbsoluteTimeGetCurrent()
-    
-    @IBOutlet weak var cameraView: UIImageView!
+    @IBOutlet weak var recClarification: UIImageView!
     
     var tapInterval=CFAbsoluteTimeGetCurrent()
     
@@ -116,6 +116,9 @@ class CarolicETTViewController: UIViewController{
         if timer?.isValid == true {
             timer.invalidate()
         }
+        if timerREC?.isValid == true{
+            timerREC!.invalidate()
+        }
         stopDisplaylink()
     }
     
@@ -132,10 +135,19 @@ class CarolicETTViewController: UIViewController{
         rectLayer.path = UIBezierPath(rect:rect1).cgPath
         self.view.layer.addSublayer(rectLayer)
     }
+    var cntREC:Int=0
+    @objc func updateRecClarification(tm: Timer) {
+        cntREC += 1
+        recClarification.alpha=camera.updateRecClarification(tm: cntREC)
+        if cntREC==1{
+            camera.recordStart()//ここだと暗くならない
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 //        let album = CameraAlbumController(name:"fushiki")
         camera.makeAlbum()
+        camera.initSession(fps: 30)
         epTim.append(10)
         epTim.append(100)
         epTim.append(110)
@@ -145,8 +157,12 @@ class CarolicETTViewController: UIViewController{
         ettWidth = UserDefaults.standard.integer(forKey:"ettWidth")
         //        print("ETTsView/carolicETT")//carolicETT
         drawBrect()
-        setBackcolor(color:UIColor.black.cgColor)
+//        setBackcolor(color:UIColor.black.cgColor)
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+        
+        timerREC = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: true)
+        recClarification.frame=camera.getRecClarificationRct(width: view.bounds.width, height: view.bounds.height)
+        
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
         }
@@ -155,7 +171,8 @@ class CarolicETTViewController: UIViewController{
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
         prefersHomeIndicatorAutoHidden()
-        camera.sessionRecStart(fps:30)
+//        camera.sessionRecStart(fps:30)
+        view.bringSubview(toFront: recClarification)
     }
     
     override func prefersHomeIndicatorAutoHidden() -> Bool {
@@ -188,15 +205,18 @@ class CarolicETTViewController: UIViewController{
         }
         if tcnt == epTim[0]+1{
             view.layer.sublayers?.removeLast()
+            view.bringSubview(toFront: recClarification)
         }
         if tcnt == epTim[1]{
             drawWrect()
             //            setBackcolor(color:UIColor.white.cgColor)
             drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2), cirDiameter: cirDia, color1: UIColor.black.cgColor , color2:UIColor.black.cgColor)
+            view.bringSubview(toFront: recClarification)
         }
         if tcnt == epTim[2]{
             drawBrect()
             //            setBackcolor(color:UIColor.black.cgColor)
+//            view.bringSubview(toFront: recClarification)
         }
         
         if tcnt == epTim[3]{
@@ -207,6 +227,7 @@ class CarolicETTViewController: UIViewController{
             displayLink!.preferredFramesPerSecond = 120
             displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
             displayLinkF=true
+//            view.bringSubview(toFront: recClarification)
         }
         if tcnt == epTim[4]{
             //            drawBrect()
@@ -221,7 +242,6 @@ class CarolicETTViewController: UIViewController{
             delTimer()
             self.dismiss(animated: true, completion: nil)
         }
-        
     }
     func delTimer(){
         if timer?.isValid == true {
@@ -229,24 +249,24 @@ class CarolicETTViewController: UIViewController{
         }
         stopDisplaylink()
     }
-    func setBackcolor(color c:CGColor){
-        let boximage  = makeBox(width: self.view.bounds.width, height:self.view.bounds.height,color:c)
-        cameraView.image=boximage
-    }
-    func makeBox(width w:CGFloat,height h:CGFloat,color c:CGColor) -> UIImage{
-        let size = CGSize(width:w, height:h)
-        UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
-        let context = UIGraphicsGetCurrentContext()
-        let drawRect = CGRect(x:0, y:0, width:w, height:h)
-        let drawPath = UIBezierPath(rect:drawRect)
-        context?.setFillColor(c)
-        drawPath.fill()
-        context?.setStrokeColor(c)
-        drawPath.stroke()
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return image!
-    }
+//    func setBackcolor(color c:CGColor){
+////        let boximage  = makeBox(width: self.view.bounds.width, height:self.view.bounds.height,color:c)
+////        cameraView.image=boximage
+//    }
+//    func makeBox(width w:CGFloat,height h:CGFloat,color c:CGColor) -> UIImage{
+//        let size = CGSize(width:w, height:h)
+//        UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
+//        let context = UIGraphicsGetCurrentContext()
+//        let drawRect = CGRect(x:0, y:0, width:w, height:h)
+//        let drawPath = UIBezierPath(rect:drawRect)
+//        context?.setFillColor(c)
+//        drawPath.fill()
+//        context?.setStrokeColor(c)
+//        drawPath.stroke()
+//        let image = UIGraphicsGetImageFromCurrentImageContext()
+//        UIGraphicsEndImageContext()
+//        return image!
+//    }
     
     func drawCircle(cPoint:CGPoint,cirDiameter:CGFloat,color1:CGColor,color2:CGColor){
         /* --- 円を描画 --- */

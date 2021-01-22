@@ -10,14 +10,14 @@ import UIKit
 import AVFoundation
 import Photos
 class OKPViewController: UIViewController{
-    let camera = CameraAlbumController(name:"fushiki")
+    let camera = CameraAlbumEtc(name:"fushiki")
     @IBOutlet weak var speedLabel: UILabel!
     
     @IBOutlet var singleRec: UITapGestureRecognizer!
     @IBOutlet var doubleRec: UITapGestureRecognizer!
     var okp4:Double=40//最高スピードに達するまでの時間
     @IBOutlet weak var recClarification: UIImageView!
-    var timer:Timer?
+    var timerREC:Timer?
     var okpSpeed:Int=5
     var speed:Int=0
     var okpTime:Int=0
@@ -94,8 +94,8 @@ class OKPViewController: UIViewController{
         if displayLinkF==true{
             displayLink?.invalidate()
         }
-        if timer?.isValid == true {
-            timer!.invalidate()
+        if timerREC?.isValid == true {
+            timerREC!.invalidate()
         }
     }
     override func remoteControlReceived(with event: UIEvent?) {
@@ -140,17 +140,11 @@ class OKPViewController: UIViewController{
         super.viewWillTransition(to: size, with: coordinator)
     }
     
-    var recordCircleCnt:Int=0
+    var cntREC:Int=0
     @objc func updateRecClarification(tm: Timer) {
-        recordCircleCnt += 1
-        var cnt=recordCircleCnt%40
-        if cnt>19{
-            cnt = 40 - cnt
-        }
-        var alpha=CGFloat(cnt)*0.9/20.0
-        alpha += 0.05
-        recClarification.alpha=alpha
-        if recordCircleCnt==1{
+        cntREC += 1
+        recClarification.alpha=camera.updateRecClarification(tm: cntREC)
+        if cntREC==1{
             camera.recordStart()//ここだと暗くならない
         }
     }
@@ -167,33 +161,23 @@ class OKPViewController: UIViewController{
         startTime=CFAbsoluteTimeGetCurrent()
         speedLabel.isHidden=true
         speed = okpSpeed*15
-//        if okpMode == 0 || okpMode == 2{
-            displayLink = CADisplayLink(target: self, selector: #selector(self.update))
-            displayLink!.preferredFramesPerSecond = 120
-            displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
-            displayLinkF=true
-//        }else{
-//            displayLink = CADisplayLink(target: self, selector: #selector(self.update1))
-//            displayLink!.preferredFramesPerSecond = 120
-//            displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
-//            displayLinkF=true
-//        }
+        displayLink = CADisplayLink(target: self, selector: #selector(self.update))
+        displayLink!.preferredFramesPerSecond = 120
+        displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
+        displayLinkF=true
+
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
         }
-        timer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: true)
-        let imgH=view.bounds.height/30//415*177 2.34  383*114 3.36 257*112 2.3
-        let imgW=imgH*2.3
-        let space=imgW*0.1
-        recClarification.frame=CGRect(x:view.bounds.width-imgW-space,y:view.bounds.height-imgH-space,width: imgW,height:imgH)
+        timerREC = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: true)
+        recClarification.frame=camera.getRecClarificationRct(width: view.bounds.width, height: view.bounds.height)
         // Do any additional setup after loading the view.
         UIApplication.shared.beginReceivingRemoteControlEvents()
         self.becomeFirstResponder()
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
-          prefersHomeIndicatorAutoHidden()
+        prefersHomeIndicatorAutoHidden()
             //        prefersStatusBarHidden
-
         //        initSession(fps: 30)
 //        try? FileManager.default.removeItem(atPath: TempFilePath)
 //        let fileURL = NSURL(fileURLWithPath: TempFilePath)

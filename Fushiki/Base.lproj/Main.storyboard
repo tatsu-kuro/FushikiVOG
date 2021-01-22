@@ -228,7 +228,7 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rec" translatesAutoresizingMaskIntoConstraints="NO" id="moQ-7Z-vCW">
-                                <rect key="frame" x="114" y="192" width="240" height="128"/>
+                                <rect key="frame" x="789" y="333" width="97" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
@@ -248,6 +248,7 @@
                     </view>
                     <connections>
                         <outlet property="doubleRec" destination="u8Q-Hr-VUf" id="dEP-qj-p85"/>
+                        <outlet property="recClarification" destination="moQ-7Z-vCW" id="KIR-bc-OMC"/>
                         <outlet property="singleRec" destination="zcQ-ry-kcN" id="lGe-JD-yCE"/>
                         <outlet property="speedLabel" destination="9I0-D2-09s" id="hVs-CR-7Uf"/>
                     </connections>
@@ -270,7 +271,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-876.5625" y="-2281.1594202898555"/>
+            <point key="canvasLocation" x="-876.5625" y="-2282.608695652174"/>
         </scene>
         <!--CarolicETT View Controller-->
         <scene sceneID="VIV-hu-Fjj">
@@ -280,10 +281,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ryv-pi-E5I">
-                                <rect key="frame" x="44" y="0.0" width="808" height="393"/>
-                                <gestureRecognizers/>
-                            </imageView>
                             <button opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jtj-vg-RBa">
                                 <rect key="frame" x="147" y="121" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -293,26 +290,20 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rec" translatesAutoresizingMaskIntoConstraints="NO" id="69I-5a-YhC">
-                                <rect key="frame" x="114" y="248" width="240" height="128"/>
+                                <rect key="frame" x="731" y="315" width="105" height="78"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="TeQ-fF-YWK"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
-                        <constraints>
-                            <constraint firstItem="ryv-pi-E5I" firstAttribute="leading" secondItem="TeQ-fF-YWK" secondAttribute="leading" id="D6m-BA-bZp"/>
-                            <constraint firstItem="ryv-pi-E5I" firstAttribute="bottom" secondItem="TeQ-fF-YWK" secondAttribute="bottom" id="DQ7-Vw-d6c"/>
-                            <constraint firstItem="ryv-pi-E5I" firstAttribute="top" secondItem="TeQ-fF-YWK" secondAttribute="top" id="cJK-oX-Zdo"/>
-                            <constraint firstItem="ryv-pi-E5I" firstAttribute="trailing" secondItem="TeQ-fF-YWK" secondAttribute="trailing" id="pH5-Yc-tOe"/>
-                        </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="HbH-SX-RR2" appends="YES" id="qzi-ZC-69q"/>
                             <outletCollection property="gestureRecognizers" destination="xI7-KX-hjs" appends="YES" id="PHR-SH-TRI"/>
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="cameraView" destination="ryv-pi-E5I" id="Fob-CX-BbY"/>
+                        <outlet property="recClarification" destination="69I-5a-YhC" id="ZsP-5V-g3b"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yJD-y9-4Av" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -328,7 +319,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="70" y="-3524"/>
+            <point key="canvasLocation" x="69.642857142857139" y="-3524.6376811594205"/>
         </scene>
         <!--Help View Controller-->
         <scene sceneID="fHr-hu-Bqw">
@@ -409,7 +400,7 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rec" translatesAutoresizingMaskIntoConstraints="NO" id="feB-Pl-rYU">
-                                <rect key="frame" x="579" y="246" width="240" height="128"/>
+                                <rect key="frame" x="804" y="353" width="73" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
@@ -461,7 +452,7 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rec" translatesAutoresizingMaskIntoConstraints="NO" id="W2e-Ry-PpH">
-                                <rect key="frame" x="245" y="96" width="240" height="128"/>
+                                <rect key="frame" x="776" y="342" width="88" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
@@ -671,7 +662,7 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rec" translatesAutoresizingMaskIntoConstraints="NO" id="RyR-5k-fZx">
-                                <rect key="frame" x="125" y="199" width="240" height="128"/>
+                                <rect key="frame" x="783" y="347" width="95" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
@@ -683,6 +674,9 @@
                             <outletCollection property="gestureRecognizers" destination="gQA-Nk-WZ6" appends="YES" id="qef-6p-S6B"/>
                         </connections>
                     </view>
+                    <connections>
+                        <outlet property="recClarification" destination="RyR-5k-fZx" id="vAx-l4-bYa"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m9l-v2-IBH" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="nlX-Y6-F6Q" userLabel="Exit" sceneMemberID="exit"/>
@@ -697,7 +691,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="70" y="-2089"/>
+            <point key="canvasLocation" x="69.642857142857139" y="-2089.8550724637685"/>
         </scene>
     </scenes>
     <resources>

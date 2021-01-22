@@ -11,7 +11,7 @@ import CoreMotion
 import Photos
 import AVFoundation
 class OKNViewController: UIViewController{
-    let camera = CameraAlbumController(name:"fushiki")
+    let camera = CameraAlbumEtc(name:"fushiki")
     var startTime=CFAbsoluteTimeGetCurrent()
     var lastTime=CFAbsoluteTimeGetCurrent()
     var cnt:Int = 0
@@ -24,8 +24,9 @@ class OKNViewController: UIViewController{
     var wh:CGFloat=0
     var displayLink:CADisplayLink?
     var displayLinkF:Bool=false
- 
+    var timerREC:Timer?
     
+    @IBOutlet weak var recClarification: UIImageView!
     @IBOutlet weak var speedLabel: UILabel!
     //    @IBOutlet weak var timerPara: UILabel!
     var startX:CGFloat?
@@ -102,6 +103,9 @@ class OKNViewController: UIViewController{
     func delTimer(){
         if displayLinkF==true{
             displayLink?.invalidate()
+        }
+        if timerREC?.isValid == true {
+            timerREC!.invalidate()
         }
     }
     @IBAction func doubleTap(_ sender: UITapGestureRecognizer) {
@@ -251,12 +255,20 @@ class OKNViewController: UIViewController{
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    var cntREC:Int=0
+    @objc func updateRecClarification(tm: Timer) {
+        cntREC += 1
+        recClarification.alpha=camera.updateRecClarification(tm: cntREC)
+        if cntREC==1{
+            camera.recordStart()//ここだと暗くならない
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 //        camera.recordStart()
 //        let album = CameraAlbumController(name: "fushiki")
         camera.makeAlbum()
+        camera.initSession(fps: 30)
         //       timerPara.isHidden=true
         oknSpeed = UserDefaults.standard.integer(forKey:"oknSpeed")
         oknTime = UserDefaults.standard.integer(forKey:"oknTime")
@@ -264,6 +276,8 @@ class OKNViewController: UIViewController{
         speed = oknSpeed*15
         speedLabel.isHidden=true
       //  singleRec.require(toFail: doubleRec)
+        timerREC = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: true)
+        recClarification.frame=camera.getRecClarificationRct(width: view.bounds.width, height: view.bounds.height)
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
         }
@@ -272,8 +286,6 @@ class OKNViewController: UIViewController{
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
          prefersHomeIndicatorAutoHidden()
-            //        prefersStatusBarHidden
-        camera.sessionRecStart(fps: 30)
     }
  
   
