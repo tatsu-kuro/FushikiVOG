@@ -259,9 +259,6 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     override var prefersHomeIndicatorAutoHidden: Bool {
         return true
     }
-//    override func prefersHomeIndicatorAutoHidden() -> Bool {
-//        return true
-//    }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -344,9 +341,6 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     //set data on cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath:IndexPath) -> UITableViewCell{
-//        print("set data on cell")
-//        album.getAlbumList()
-//        videoArrayCount = album.videoURL.count
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier:"cell",for :indexPath)
         let number = (indexPath.row+1).description + ") "
         cell.textLabel!.text = number + album.videoDate[indexPath.row]
