@@ -144,7 +144,7 @@ class OKPViewController: UIViewController{
     @objc func updateRecClarification(tm: Timer) {
         cntREC += 1
         recClarification.alpha=camera.updateRecClarification(tm: cntREC)
-        if cntREC==1{
+        if cntREC==5{
             camera.recordStart()//ここだと暗くならない
         }
     }
@@ -152,7 +152,7 @@ class OKPViewController: UIViewController{
         super.viewDidLoad()
 //        let album = CameraAlbumController(name:"fushiki")
         camera.makeAlbum()
-        camera.initSession(fps: 60)
+        camera.initSession(fps: 120)
         ww=view.bounds.width
         wh=view.bounds.height
         okpSpeed = UserDefaults.standard.integer(forKey: "okpSpeed")

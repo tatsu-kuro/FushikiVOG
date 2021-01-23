@@ -139,7 +139,7 @@ class CarolicETTViewController: UIViewController{
     @objc func updateRecClarification(tm: Timer) {
         cntREC += 1
         recClarification.alpha=camera.updateRecClarification(tm: cntREC)
-        if cntREC==1{
+        if cntREC==5{
             camera.recordStart()//ここだと暗くならない
         }
     }
@@ -147,7 +147,7 @@ class CarolicETTViewController: UIViewController{
         super.viewDidLoad()
 //        let album = CameraAlbumController(name:"fushiki")
         camera.makeAlbum()
-        camera.initSession(fps: 60)
+        camera.initSession(fps: 120)
         epTim.append(10)
         epTim.append(100)
         epTim.append(110)

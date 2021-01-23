@@ -260,7 +260,7 @@ class OKNViewController: UIViewController{
     @objc func updateRecClarification(tm: Timer) {
         cntREC += 1
         recClarification.alpha=camera.updateRecClarification(tm: cntREC)
-        if cntREC==1{
+        if cntREC==5{
             camera.recordStart()//ここだと暗くならない
         }
     }
@@ -269,7 +269,7 @@ class OKNViewController: UIViewController{
 //        camera.recordStart()
 //        let album = CameraAlbumController(name: "fushiki")
         camera.makeAlbum()
-        camera.initSession(fps: 60)
+        camera.initSession(fps: 120)
         //       timerPara.isHidden=true
         oknSpeed = UserDefaults.standard.integer(forKey:"oknSpeed")
         oknTime = UserDefaults.standard.integer(forKey:"oknTime")
