@@ -152,7 +152,7 @@ class OKPViewController: UIViewController{
         super.viewDidLoad()
 //        let album = CameraAlbumController(name:"fushiki")
         camera.makeAlbum()
-        camera.initSession(fps: 30)
+        camera.initSession(fps: 60)
         ww=view.bounds.width
         wh=view.bounds.height
         okpSpeed = UserDefaults.standard.integer(forKey: "okpSpeed")

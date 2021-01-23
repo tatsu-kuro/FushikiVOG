@@ -244,13 +244,18 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
                 let description = format.formatDescription as CMFormatDescription    // フォーマットの説明
                 let dimensions = CMVideoFormatDescriptionGetDimensions(description)  // 幅・高さ情報を抜き出す
                 let width = dimensions.width
-//                print(dimensions.width,dimensions.height)
-                if desiredFps == range.maxFrameRate && width == 1280{//}>= maxWidth {
+                print(dimensions.width,dimensions.height,range.maxFrameRate)
+                if desiredFps == range.maxFrameRate && width >= maxWidth {
                     selectedFormat = format
                     maxWidth = width
                 }
             }
         }
+        //ipad pro 60 1920*1440
+        //11 60 3840*2160 120 1920*1080
+        //8  60 1440*1080
+        //6s 60 1280*960
+        //SE 30
 //ipod touch 1280x720 1440*1080
 //SE 960x540 1280x720 1920x1080
 //11 192x144 352x288 480x360 640x480 1024x768 1280x720 1440x1080 1920x1080 3840x2160

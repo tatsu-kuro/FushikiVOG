@@ -268,7 +268,7 @@ class OKNViewController: UIViewController{
 //        camera.recordStart()
 //        let album = CameraAlbumController(name: "fushiki")
         camera.makeAlbum()
-        camera.initSession(fps: 30)
+        camera.initSession(fps: 60)
         //       timerPara.isHidden=true
         oknSpeed = UserDefaults.standard.integer(forKey:"oknSpeed")
         oknTime = UserDefaults.standard.integer(forKey:"oknTime")

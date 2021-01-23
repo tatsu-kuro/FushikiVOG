@@ -147,7 +147,7 @@ class CarolicETTViewController: UIViewController{
         super.viewDidLoad()
 //        let album = CameraAlbumController(name:"fushiki")
         camera.makeAlbum()
-        camera.initSession(fps: 30)
+        camera.initSession(fps: 60)
         epTim.append(10)
         epTim.append(100)
         epTim.append(110)

@@ -107,7 +107,7 @@ class PlayViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let avAsset = AVURLAsset(url: videoURL!)
-        
+//        print(avAsset.tracks.first.f description)
         let ww:CGFloat=view.bounds.width
         let wh:CGFloat=view.bounds.height
         let dw=ww/50//間隙

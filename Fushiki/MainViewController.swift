@@ -248,7 +248,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         prefersHomeIndicatorAutoHidden()
         album.getAlbumList()
         videoArrayCount = album.videoURL.count
-        print(videoArrayCount,album.videoURL.count,album.videoDate.count)
+//        print(videoArrayCount,album.videoURL.count,album.videoDate.count)
         setToppage()
         tableView.reloadData()
     }
@@ -325,7 +325,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     //nuber of cell
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("number of cell")
+//        print("number of cell")
 //        album.getAlbumList()//probably not nessesary
 //        videoArrayCount = album.videoURL.count//probably not nessesary
         setToppage()//nessesary

@@ -500,7 +500,7 @@
         <!--Play View Controller-->
         <scene sceneID="1jx-7Y-0Fx">
             <objects>
-                <viewController storyboardIdentifier="PLAY" id="qHa-wQ-wFQ" customClass="PlayViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PLAY" modalPresentationStyle="fullScreen" id="qHa-wQ-wFQ" customClass="PlayViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Q3S-Wy-6Zt">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
