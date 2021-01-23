@@ -225,8 +225,9 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
         fileOutput.startRecording(to: fileURL as URL, recordingDelegate: self)
     }
     func recordStop(){
+        captureSession.stopRunning()//下行と入れ替えても動く
         fileOutput.stopRecording()
-    }
+     }
     func setVideoFormat(desiredFps: Double)->Bool {
         var retF:Bool=false
         // 取得したフォーマットを格納する変数
@@ -265,7 +266,7 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
             do {
                 try videoDevice!.lockForConfiguration()
                 videoDevice!.activeFormat = selectedFormat
-                videoDevice!.activeVideoMaxFrameDuration = CMTimeMake(1, Int32(desiredFps))
+                videoDevice!.activeVideoMaxFrameDuration = CMTimeMake(value: 1, timescale: Int32(desiredFps))
                 videoDevice!.unlockForConfiguration()
                 
                 let description = selectedFormat.formatDescription as CMFormatDescription    // フォーマットの説明
@@ -316,8 +317,7 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
             AudioServicesCreateSystemSoundID(soundUrl as CFURL, &soundIdx)
             AudioServicesPlaySystemSound(soundIdx)
         }
-        
-        print("終了ボタン、最大を超えた時もここを通る")
+         print("終了ボタン、最大を超えた時もここを通る")
         //         motionManager.stopDeviceMotionUpdates()//ここで止めたが良さそう。
         //         //        recordedFPS=getFPS(url: outputFileURL)
         //         //        topImage=getThumb(url: outputFileURL)
@@ -359,7 +359,7 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
         while saved2album==false{
             sleep(UInt32(0.1))
         }
-        captureSession.stopRunning()
+//        captureSession.stopRunning()
         //         performSegue(withIdentifier: "fromRecordToMain", sender: self)
     }
 }

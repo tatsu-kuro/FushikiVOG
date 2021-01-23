@@ -170,12 +170,15 @@ class CarolicETTViewController: UIViewController{
         self.becomeFirstResponder()
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
-        prefersHomeIndicatorAutoHidden()
+//        prefersHomeIndicatorAutoHidden()
 //        camera.sessionRecStart(fps:30)
-        view.bringSubview(toFront: recClarification)
+        view.bringSubviewToFront(recClarification)
     }
     
-    override func prefersHomeIndicatorAutoHidden() -> Bool {
+//    override func prefersHomeIndicatorAutoHidden() -> Bool {
+//        return true
+//    }
+    override var prefersHomeIndicatorAutoHidden: Bool {
         return true
     }
     override var prefersStatusBarHidden: Bool {
@@ -205,13 +208,13 @@ class CarolicETTViewController: UIViewController{
         }
         if tcnt == epTim[0]+1{
             view.layer.sublayers?.removeLast()
-            view.bringSubview(toFront: recClarification)
+            view.bringSubviewToFront(recClarification)
         }
         if tcnt == epTim[1]{
             drawWrect()
             //            setBackcolor(color:UIColor.white.cgColor)
             drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2), cirDiameter: cirDia, color1: UIColor.black.cgColor , color2:UIColor.black.cgColor)
-            view.bringSubview(toFront: recClarification)
+            view.bringSubviewToFront(recClarification)
         }
         if tcnt == epTim[2]{
             drawBrect()
@@ -225,7 +228,8 @@ class CarolicETTViewController: UIViewController{
             startTime=CFAbsoluteTimeGetCurrent()
             displayLink = CADisplayLink(target: self, selector: #selector(self.update2))
             displayLink!.preferredFramesPerSecond = 120
-            displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
+            displayLink?.add(to: RunLoop.main, forMode: .common)
+//            displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
             displayLinkF=true
 //            view.bringSubview(toFront: recClarification)
         }

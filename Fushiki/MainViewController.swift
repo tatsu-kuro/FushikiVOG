@@ -245,7 +245,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         sound(snd:"silence")
         UIApplication.shared.beginReceivingRemoteControlEvents()
         self.becomeFirstResponder()
-        prefersHomeIndicatorAutoHidden()
+//        prefersHomeIndicatorAutoHidden()
         album.getAlbumList()
         videoArrayCount = album.videoURL.count
 //        print(videoArrayCount,album.videoURL.count,album.videoDate.count)
@@ -253,9 +253,15 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         tableView.reloadData()
     }
   
-    override func prefersHomeIndicatorAutoHidden() -> Bool {
+    override var prefersStatusBarHidden: Bool {
         return true
     }
+    override var prefersHomeIndicatorAutoHidden: Bool {
+        return true
+    }
+//    override func prefersHomeIndicatorAutoHidden() -> Bool {
+//        return true
+//    }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -283,7 +289,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let bh:CGFloat=bw*170/440
         let sp=ww*0.1/10
         let by=wh-bh-sp
-
+        tableView.frame=CGRect(x:0,y:0,width:ww,height: by)
         button0.alpha=alp
         button1.alpha=alp
         button2.alpha=alp

@@ -163,7 +163,8 @@ class OKPViewController: UIViewController{
         speed = okpSpeed*15
         displayLink = CADisplayLink(target: self, selector: #selector(self.update))
         displayLink!.preferredFramesPerSecond = 120
-        displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
+        displayLink?.add(to: RunLoop.main, forMode: .common)        
+//        displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
         displayLinkF=true
 
         if UIApplication.shared.isIdleTimerDisabled == false{
@@ -176,7 +177,7 @@ class OKPViewController: UIViewController{
         self.becomeFirstResponder()
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
-        prefersHomeIndicatorAutoHidden()
+//        prefersHomeIndicatorAutoHidden()
             //        prefersStatusBarHidden
         //        initSession(fps: 30)
 //        try? FileManager.default.removeItem(atPath: TempFilePath)
@@ -184,9 +185,12 @@ class OKPViewController: UIViewController{
 //        fileOutput.startRecording(to: fileURL as URL, recordingDelegate: self)
         }
         
-        override func prefersHomeIndicatorAutoHidden() -> Bool {
-            return true
-        }
+//        override func prefersHomeIndicatorAutoHidden() -> Bool {
+//            return true
+//        }
+    override var prefersHomeIndicatorAutoHidden: Bool {
+        return true
+    }
         override var prefersStatusBarHidden: Bool {
             return true
         }

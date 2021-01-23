@@ -84,7 +84,15 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
             }
         }
     }
-
+//    override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
+//        return UIRectEdge.bottom
+//    }
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    override var prefersHomeIndicatorAutoHidden: Bool {
+        return true
+    }
     override func viewDidAppear(_ animated: Bool) {
 
     }
@@ -120,7 +128,10 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
             displayLink = CADisplayLink(target: self, selector: #selector(self.update3))
             displayLink!.preferredFramesPerSecond = 120
         }
-        displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
+//        displayLink = CADisplayLink(target: self,
+//           selector: #selector(updateAnimation))
+         displayLink?.add(to: RunLoop.main, forMode: .common)
+//        displayLink!.add(to: RunLoop.current, forMode: RunLoop.Mode.RunLoop.Mode.common)
         displayLinkF=true
         tcount=0
         recClarification.frame=camera.getRecClarificationRct(width:view.bounds.width,height:view.bounds.height)
@@ -140,12 +151,10 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         super.viewWillDisappear(animated)
         stopDisplaylink()
     }
-    override func prefersHomeIndicatorAutoHidden() -> Bool {
-        return true
-    }
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
+//    override func prefersHomeIndicatorAutoHidden() -> Bool {
+//        return true
+//    }
+    
     var lastrand:Int=1
     var rand:Int=0
  

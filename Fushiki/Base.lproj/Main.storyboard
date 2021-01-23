@@ -535,8 +535,9 @@
                                 <rect key="frame" x="224" y="368" width="226" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2ai-kF-qQC">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2ai-kF-qQC">
                                 <rect key="frame" x="0.0" y="0.0" width="896" height="353"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="139" id="2G5-eP-MHF">
@@ -621,12 +622,6 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
-                        <constraints>
-                            <constraint firstItem="2ai-kF-qQC" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="6Hz-oq-7tI"/>
-                            <constraint firstItem="2ai-kF-qQC" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Oq7-Os-eQs"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="2ai-kF-qQC" secondAttribute="bottom" constant="40" id="UZL-Du-DOO"/>
-                            <constraint firstAttribute="trailing" secondItem="2ai-kF-qQC" secondAttribute="trailing" id="d8k-vS-E4s"/>
-                        </constraints>
                     </view>
                     <connections>
                         <outlet property="button0" destination="S68-fh-yHQ" id="GSv-1T-ZgH"/>

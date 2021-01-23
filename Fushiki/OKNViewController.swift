@@ -179,7 +179,8 @@ class OKNViewController: UIViewController{
         wh=view.bounds.height
         displayLink = CADisplayLink(target: self, selector: #selector(self.update))
         displayLink!.preferredFramesPerSecond = 120
-        displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
+        displayLink?.add(to: RunLoop.main, forMode: .common)
+//        displayLink!.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
         displayLinkF=true
         cnt=0
     }
@@ -285,13 +286,15 @@ class OKNViewController: UIViewController{
         self.becomeFirstResponder()
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
-         prefersHomeIndicatorAutoHidden()
+//         prefersHomeIndicatorAutoHidden()
     }
- 
-  
-    override func prefersHomeIndicatorAutoHidden() -> Bool {
+    override var prefersHomeIndicatorAutoHidden: Bool {
         return true
     }
+  
+//    override func prefersHomeIndicatorAutoHidden() -> Bool {
+//        return true
+//    }
     override var prefersStatusBarHidden: Bool {
         return true
     }

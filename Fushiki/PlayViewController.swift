@@ -19,12 +19,7 @@ class PlayViewController: UIViewController {
     var videoURL:URL?
     
     @objc func update(tm: Timer) {
-        let min=Int(seekBar.value/60)
-        let sec=Int(seekBar.value)%60
-        let min1=Int(duration/60)
-        let sec1=Int(duration)%60
-        currTime?.text=String(format:"%d:%02d/%d:%02d",min,sec,min1,sec1)
-
+        currTime?.text=String(format:"%.1f/%.1f",seekBar.value,duration)
     }
    
     func killTimer(){
@@ -32,78 +27,7 @@ class PlayViewController: UIViewController {
             timer!.invalidate()
         }
     }
-   /*
-    @IBAction func eraseVideo(_ sender: Any) {
- //       videoAsset[videoCurrent]
-        let requestOptions = PHImageRequestOptions()
-        requestOptions.isSynchronous = true
-        requestOptions.isNetworkAccessAllowed = false
-        requestOptions.deliveryMode = .highQualityFormat //これでもicloud上のvideoを取ってしまう
-        //アルバムをフェッチ
-        let assetFetchOptions = PHFetchOptions()
-        
-        assetFetchOptions.predicate = NSPredicate(format: "title == %@", albumName)
-        
-        let assetCollections = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .smartAlbumVideos, options: assetFetchOptions)
-//        print("asset:",assetCollections.count)
-        //アルバムが存在しない事もある？
-        var dialogStatus:Int=0
-        if (assetCollections.count > 0) {
-            //同じ名前のアルバムは一つしかないはずなので最初のオブジェクトを使用
-            let assetCollection = assetCollections.object(at:0)
-            // creationDate降順でアルバム内のアセットをフェッチ
-            let fetchOptions = PHFetchOptions()
-            fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
-            let assets = PHAsset.fetchAssets(in: assetCollection, options: fetchOptions)
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-//            var eraseAssetDate=assets[0].creationDate
-//            var eraseAssetPngNumber=0
-            for i in 0..<assets.count{
-                let date_sub=assets[i].creationDate
-                let date = formatter.string(from:date_sub!)
-//                eraseAssetPngNumber=i+1
-                if videoDate[videoCurrent].contains(date){
-                    if !assets[i].canPerform(.delete) {
-                        return
-                    }
-                    var delAssets=Array<PHAsset>()
-                    delAssets.append(assets[i])
-                    if assets[i+1].duration==0{//pngが無くて、videoが選択されてない事を確認
-                        delAssets.append(assets[i+1])//pngはその次に入っているはず
-                    }
-                    PHPhotoLibrary.shared().performChanges({
-                        PHAssetChangeRequest.deleteAssets(NSArray(array: delAssets))
-                    }, completionHandler: { success,error in//[self] _, _ in
-                        if success==true{
-                            dialogStatus = 1//YES
-                        }else{
-                            dialogStatus = -1//NO
-                        }
-                        // 削除後の処理
-                    })
-//                    break
-                }
-            }
-        }
-        while dialogStatus == 0{//dialogから抜けるまでは0
-            sleep(UInt32(0.2))
-        }
-        if dialogStatus == 1{//yesで抜けた時
-//            removeFile(delFile: videoDate[videoCurrent] + "-gyro.csv")
-            videoDate.remove(at: videoCurrent)
-            videoURL.remove(at: videoCurrent)
-            videoImg.remove(at: videoCurrent)
-            videoDura.remove(at: videoCurrent)
-            videoArrayCount -= 1
-            videoCurrent -= 1
-            showVideoIroiro(num: 0)
-            if videoImg.count==0{
-                playButton.isEnabled=false
-            }
-        }
-    }
-    */
+
     override func viewDidLoad() {
         super.viewDidLoad()
         let avAsset = AVURLAsset(url: videoURL!)
@@ -136,7 +60,7 @@ class PlayViewController: UIViewController {
         // Set SeekBar Interval
         let interval : Double = Double(0.5 * seekBar.maximumValue) / Double(seekBar.bounds.maxX)
         // ConvertCMTime
-        let time : CMTime = CMTimeMakeWithSeconds(interval, Int32(NSEC_PER_SEC))
+        let time : CMTime = CMTimeMakeWithSeconds(interval, preferredTimescale: Int32(NSEC_PER_SEC))
         // Observer
         videoPlayer.addPeriodicTimeObserver(forInterval: time, queue: nil, using: {time in
             // Change SeekBar Position
@@ -192,6 +116,12 @@ class PlayViewController: UIViewController {
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         videoPlayer.play()
     }
+    override var prefersHomeIndicatorAutoHidden: Bool {
+        return true
+    }
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 
     // Start Button Tapped
     @objc func onStartButtonTapped(){
@@ -201,7 +131,7 @@ class PlayViewController: UIViewController {
             if seekBar.value>seekBar.maximumValue-0.5{
             seekBar.value=0
             }
-            videoPlayer.seek(to: CMTimeMakeWithSeconds(Float64(seekBar.value), Int32(NSEC_PER_SEC)))
+            videoPlayer.seek(to: CMTimeMakeWithSeconds(Float64(seekBar.value), preferredTimescale: Int32(NSEC_PER_SEC)))
             videoPlayer.play()
         }
     }
@@ -209,18 +139,21 @@ class PlayViewController: UIViewController {
         if (videoPlayer.rate != 0) && (videoPlayer.error == nil) {//playing
             videoPlayer.pause()
         }
-//        }else{//stoped
-//            if seekBar.value>seekBar.maximumValue-0.5{
-//            seekBar.value=0
-//            }
-//            videoPlayer.seek(to: CMTimeMakeWithSeconds(Float64(seekBar.value), Int32(NSEC_PER_SEC)))
-//            videoPlayer.play()
-//        }
     }
     // SeekBar Value Changed
     @objc func onSliderValueChange(){
-        videoPlayer.seek(to: CMTimeMakeWithSeconds(Float64(seekBar.value), Int32(NSEC_PER_SEC)))
         videoPlayer.pause()
+        let newTime = CMTime(seconds: Double(seekBar.value), preferredTimescale: 600)
+        videoPlayer.seek(to: newTime, toleranceBefore: .zero, toleranceAfter: .zero)
+    }
+    func onNextButtonTapped(){//このようなボタンを作ってみれば良さそう。無くてもいいか？
+        var seekBarValue=seekBar.value+0.01
+        if seekBarValue>duration-0.1{
+            seekBarValue = duration-0.1
+         }
+         let newTime = CMTime(seconds: Double(seekBarValue), preferredTimescale: 600)
+         currTime!.text = String(format:"%.1f/%.1f",seekBarValue,duration)
+         videoPlayer.seek(to: newTime, toleranceBefore: .zero, toleranceAfter: .zero)
     }
     @objc func onExitButtonTapped(){//このボタンのところにsegueでunwindへ行く
         killTimer()
