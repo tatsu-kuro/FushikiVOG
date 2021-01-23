@@ -101,14 +101,14 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     @objc func updateRecClarification(tm: Timer) {
         cntREC += 1
         recClarification.alpha=camera.updateRecClarification(tm: cntREC)
-        if cntREC==1{
+        if cntREC==5{
             camera.recordStart()//ここだと暗くならない
         }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         camera.makeAlbum()
-        camera.initSession(fps: 60)
+        camera.initSession(fps: 120)
         ettMode=UserDefaults.standard.integer(forKey: "ettMode")
         ettWidth=UserDefaults.standard.integer(forKey: "ettWidth")
 //        let w=view.bounds.width/2

@@ -230,10 +230,12 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
      }
     func setVideoFormat(desiredFps: Double)->Bool {
         var retF:Bool=false
+        var fps:Double = 0
         // 取得したフォーマットを格納する変数
         var selectedFormat: AVCaptureDevice.Format! = nil
         // そのフレームレートの中で一番大きい解像度を取得する
         var maxWidth: Int32 = 0
+        var maxFPS:Double=0
         // フォーマットを探る
 //        var getDesiedformat:Bool=false
         for format in videoDevice!.formats {
@@ -245,13 +247,17 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
                 let description = format.formatDescription as CMFormatDescription    // フォーマットの説明
                 let dimensions = CMVideoFormatDescriptionGetDimensions(description)  // 幅・高さ情報を抜き出す
                 let width = dimensions.width
-                print(dimensions.width,dimensions.height,range.maxFrameRate)
-                if desiredFps == range.maxFrameRate && width >= maxWidth {
+                fps = range.maxFrameRate
+                if fps <= desiredFps && fps >= maxFPS && width >= maxWidth {
+//                if fps == desiredFps && width >= maxWidth {
                     selectedFormat = format
                     maxWidth = width
-                }
+                    maxFPS = fps
+                    print(dimensions.width,dimensions.height,maxFPS)
+                }//指定のFPS以下で、最高解像度
             }
         }
+        print("selected:",selectedFormat.videoSupportedFrameRateRanges)
         //ipad pro 60 1920*1440
         //11 60 3840*2160 120 1920*1080
         //8  60 1440*1080
@@ -266,14 +272,14 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
             do {
                 try videoDevice!.lockForConfiguration()
                 videoDevice!.activeFormat = selectedFormat
-                videoDevice!.activeVideoMaxFrameDuration = CMTimeMake(value: 1, timescale: Int32(desiredFps))
+                videoDevice!.activeVideoMaxFrameDuration = CMTimeMake(value: 1, timescale: Int32(maxFPS))
                 videoDevice!.unlockForConfiguration()
                 
                 let description = selectedFormat.formatDescription as CMFormatDescription    // フォーマットの説明
                 let dimensions = CMVideoFormatDescriptionGetDimensions(description)  // 幅・高さ情報を抜き出す
                 let iCapNYSWidth = dimensions.width
                 let iCapNYSHeight = dimensions.height
-                print("フォーマット・フレームレートを設定 : \(desiredFps) fps・\(iCapNYSWidth) px x \(iCapNYSHeight) px")
+                print("フォーマット・フレームレートを設定 : \(maxFPS) fps・\(iCapNYSWidth) px x \(iCapNYSHeight) px")
                 
                 retF=true
             }
