@@ -95,7 +95,7 @@ class PlayViewController: UIViewController {
         sample = readerOutput.copyNextSampleBuffer()
         let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample!)!
         let ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.right)
-        print(getFPS(url:videoURL!), ciImage.extent.width,ciImage.extent.height)
+        print("video_w:", ciImage.extent.width,"h:",ciImage.extent.height,"fps:",getFPS(url:videoURL!))
         //起動時表示が一巡？するまでは　slowImage.frame はちょっと違う値を示す
         let eyeRect = resizeR2(wakuEyeRect, viewRect:view.frame,image:ciImage)
         CGeye = context.createCGImage(ciImage, from: eyeRect)!
@@ -305,6 +305,8 @@ class PlayViewController: UIViewController {
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         videoPlayer.play()
         dispWakus()
+        showWakuImages()
+        print("screen_w:",view.bounds.width,"h:",view.bounds.height)
         //まずは表示だけ、まだちゃんとwakuを捉えていない
         faceWakuL_image.isHidden=true
         eyeWakuL_image.isHidden=true
