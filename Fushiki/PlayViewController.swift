@@ -17,11 +17,101 @@ class PlayViewController: UIViewController {
     lazy var seekBar = UISlider()
     var timer:Timer?
     var videoURL:URL?
+    @IBOutlet weak var eyeWaku_image: UIImageView!
+    @IBOutlet weak var faceWaku_image: UIImageView!
+    var wakuE = CGRect(x:300.0,y:100.0,width:5.0,height:5.0)
+    var wakuF = CGRect(x:300.0,y:200.0,width:5.0,height:5.0)
+    func dispWakus(){
+        let nullRect:CGRect = CGRect(x:0,y:0,width:0,height:0)
+        //        printR(str:"wakuE:",rct: wakuE)
+        eyeWaku_image.frame=CGRect(x:(wakuE.origin.x)-15,y:wakuE.origin.y-15,width:(wakuE.size.width)+30,height: wakuE.size.height+30)
+        faceWaku_image.frame=CGRect(x:(wakuF.origin.x)-15,y:wakuF.origin.y-15,width:wakuF.size.width+30,height: wakuF.size.height+30)
+        
+        eyeWaku_image.layer.borderColor = UIColor.green.cgColor
+        eyeWaku_image.backgroundColor = UIColor.clear
+        eyeWaku_image.layer.borderWidth = 1.0
+        eyeWaku_image.layer.cornerRadius = 3
+        
+        faceWaku_image.layer.borderColor = UIColor.green.cgColor
+        faceWaku_image.backgroundColor = UIColor.clear
+        faceWaku_image.layer.borderWidth = 1.0
+        faceWaku_image.layer.cornerRadius = 3
+        view.bringSubviewToFront(faceWaku_image)
+        view.bringSubviewToFront(eyeWaku_image)
+    }
+    func moveWakus
+        (rect:CGRect,stRect:CGRect,stPo:CGPoint,movePo:CGPoint,hani:CGRect) -> CGRect{
+        var r:CGRect
+        r = rect//2種類の枠を代入、変更してreturnで返す
+        let dx:CGFloat = movePo.x
+        let dy:CGFloat = movePo.y
+        r.origin.x = stRect.origin.x + dx;
+        r.origin.y = stRect.origin.y + dy;
+        //r.size.width = stRect.size
+        if r.origin.x < hani.origin.x{
+            r.origin.x = hani.origin.x
+        }else if r.origin.x > hani.origin.x+hani.width{
+            r.origin.x = hani.origin.x+hani.width
+        }
+        if r.origin.y < hani.origin.y{
+            r.origin.y = hani.origin.y
+        }
+        if r.origin.y > hani.origin.y+hani.height{
+            r.origin.y = hani.origin.y+hani.height
+        }
+        return r
+    }
+    var leftrightFlag:Bool = false
+    var rectType:Int = 0//0:eye 1:face 2:outer -1:何も選択されていない
+    var stPo:CGPoint = CGPoint(x:0,y:0)//stRect.origin tapした位置
+    var stRect:CGRect = CGRect(x:0,y:0,width:0,height:0)//tapしたrectのtapした時のrect
+    var changePo:CGPoint = CGPoint(x:0,y:0)
+    var endPo:CGPoint = CGPoint(x:0,y:0)
+    var lastslowVideo:Int = -2
+    var lastVogpoint:Int = -2
+    var lastVhitpoint:Int = -2
+    var lastmoveX:Int = -2
+    var lastmoveXgyro:Int = -2//vHIT用
+    @IBAction func panGesture(_ sender: UIPanGestureRecognizer) {
+
+        let move:CGPoint = sender.translation(in: self.view)
+        let pos = sender.location(in: self.view)
+        if sender.state == .began {
+            stPo = sender.location(in: self.view)
+        } else if sender.state == .changed {
+            
+            let ww=view.bounds.width
+            let wh=view.bounds.height
+            if rectType == 0 {
+                if true {//EyeRect
+                    let et=CGRect(x:ww/10,y:wh/20,width: ww*4/5,height:wh*3/4)
+                    wakuE = moveWakus(rect:wakuE,stRect: stRect,stPo: stPo,movePo: move,hani: et)
+                }else{//vHIT && faceF==true FaceRect
+                    let et=CGRect(x:ww/10,y:wh/20,width: ww*4/5,height:wh*3/4)
+                    wakuE = moveWakus(rect:wakuE,stRect: stRect,stPo: stPo,movePo: move,hani:et)
+                }
+            }else{
+                //let xt=wakuE.origin.x
+                //let w12=view.bounds.width/12
+                let et=CGRect(x:ww/10,y:wh/20,width: ww*4/5,height:wh*3/4)
+                wakuF = moveWakus(rect:wakuF,stRect:stRect, stPo: stPo,movePo: move,hani:et)
+            }
+            dispWakus()
+//            showWakuImages()
+   //         setUserDefaults()
+            
+        }else if sender.state == .ended{
+            
+   //         setUserDefaults()
+            
+        }
+    }
+    
     
     @objc func update(tm: Timer) {
         currTime?.text=String(format:"%.1f/%.1f",seekBar.value,duration)
     }
-   
+    
     func killTimer(){
         if timer?.isValid == true {
             timer!.invalidate()
@@ -119,6 +209,7 @@ class PlayViewController: UIViewController {
         
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         videoPlayer.play()
+        dispWakus()
     }
     override var prefersHomeIndicatorAutoHidden: Bool {
         return true
