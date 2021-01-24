@@ -506,11 +506,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="face" translatesAutoresizingMaskIntoConstraints="NO" id="n6l-PN-3ln">
-                                <rect key="frame" x="328" y="143" width="240" height="128"/>
+                                <rect key="frame" x="118" y="159" width="82" height="53"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="eye" translatesAutoresizingMaskIntoConstraints="NO" id="ETc-4Y-VEe">
-                                <rect key="frame" x="328" y="143" width="240" height="128"/>
+                                <rect key="frame" x="130" y="245" width="60" height="52"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d12-qp-QJR">
+                                <rect key="frame" x="39" y="20" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KxV-OG-VNr">
+                                <rect key="frame" x="635" y="20" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
@@ -519,10 +527,13 @@
                         <gestureRecognizers/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="q9w-qB-lzZ" appends="YES" id="bSZ-L2-WCm"/>
+                            <outletCollection property="gestureRecognizers" destination="i9a-yo-jek" appends="YES" id="8dr-lm-Ozv"/>
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="eyeWakuL_image" destination="d12-qp-QJR" id="mhZ-1G-6ep"/>
                         <outlet property="eyeWaku_image" destination="ETc-4Y-VEe" id="H7K-ga-j5C"/>
+                        <outlet property="faceWakuL_image" destination="KxV-OG-VNr" id="6Ow-dr-8ej"/>
                         <outlet property="faceWaku_image" destination="n6l-PN-3ln" id="bB8-hc-7Wm"/>
                     </connections>
                 </viewController>
@@ -532,8 +543,13 @@
                         <action selector="panGesture:" destination="qHa-wQ-wFQ" id="xIh-2i-lAi"/>
                     </connections>
                 </panGestureRecognizer>
+                <tapGestureRecognizer id="i9a-yo-jek">
+                    <connections>
+                        <action selector="tapGesture:" destination="qHa-wQ-wFQ" id="kzs-cD-UfW"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-52" y="174"/>
+            <point key="canvasLocation" x="-52.232142857142854" y="173.91304347826087"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">

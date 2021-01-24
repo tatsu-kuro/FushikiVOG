@@ -337,7 +337,7 @@
 				CURRENT_PROJECT_VERSION = 1.1.0;
 				DEVELOPMENT_TEAM = YKSHGZ7H3T;
 				INFOPLIST_FILE = Fushiki/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -358,7 +358,7 @@
 				CURRENT_PROJECT_VERSION = 1.1.0;
 				DEVELOPMENT_TEAM = YKSHGZ7H3T;
 				INFOPLIST_FILE = Fushiki/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
