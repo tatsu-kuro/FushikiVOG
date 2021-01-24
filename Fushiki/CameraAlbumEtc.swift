@@ -284,37 +284,39 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
                 retF=true
             }
             catch {
-                print("フォーマット・フレームレートが指定できなかった")
+//                print("フォーマット・フレームレートが指定できなかった")
                 retF=false
             }
         }
         else {
-            print("指定のフォーマットが取得できなかった")
+//            print("指定のフォーマットが取得できなかった")
             retF=false
         }
         return retF
     }
+    
     func initSession(fps:Double) {
-        // カメラ入力 : 背面カメラ
+        // セッション生成
+        captureSession = AVCaptureSession()
+        // 入力 : 背面カメラ
         videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front)
         let videoInput = try! AVCaptureDeviceInput.init(device: videoDevice!)
-
-        if setVideoFormat(desiredFps: fps)==false{
-            print("error******")
-        }
-        // AVCaptureSession生成
-        captureSession = AVCaptureSession()
         captureSession.addInput(videoInput)
- 
+        if setVideoFormat(desiredFps: fps) == false {
+            print("フォーマット指定できなかった")
+        }else{
+            print("フォーマットが指定できた")
+        }
         // ファイル出力設定
         fileOutput = AVCaptureMovieFileOutput()
         captureSession.addOutput(fileOutput)
-        
         let videoDataOuputConnection = fileOutput.connection(with: .video)
         let orientation = UIDevice.current.orientation
         videoDataOuputConnection!.videoOrientation = AVCaptureVideoOrientation(rawValue: orientation.rawValue)!
         // セッションを開始する (録画開始とは別)
         captureSession.startRunning()
+        //手振れ補正はデフォルトがoff
+        //        fileOutput.connections[0].preferredVideoStabilizationMode=AVCaptureVideoStabilizationMode.off
     }
     
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {

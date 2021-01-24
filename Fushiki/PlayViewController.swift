@@ -27,10 +27,15 @@ class PlayViewController: UIViewController {
             timer!.invalidate()
         }
     }
-
+    func getFPS(url:URL) -> Float{
+        let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
+        let avAsset = AVURLAsset(url: url, options: options)
+        return avAsset.tracks.first!.nominalFrameRate
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         let avAsset = AVURLAsset(url: videoURL!)
+        print("fps:",getFPS(url: videoURL!))
         let ww:CGFloat=view.bounds.width
         let wh:CGFloat=view.bounds.height
         let dw=ww/50//間隙
