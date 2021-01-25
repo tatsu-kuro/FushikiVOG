@@ -28,8 +28,14 @@ class PlayViewController: UIViewController {
     @IBOutlet weak var faceWakuL_image: UIImageView!
     @IBOutlet weak var eyeWakuL_image: UIImageView!
     
-    var wakuEyeRect = CGRect(x:300.0,y:100.0,width:5.0,height:5.0)
-    var wakuFaceRect = CGRect(x:300.0,y:200.0,width:5.0,height:5.0)
+    var eyeCenter = CGPoint(x:300.0,y:100.0)
+    var faceCenter = CGPoint(x:300.0,y:200.0)
+    var wakuLength:CGFloat=6
+    var eyeRect:CGRect!//= CGRect(x:300.0,y:100.0,width:5.0,height:5.0)
+    var faceRect:CGRect!//(x:300.0,y:200.0,width:5.0,height:5.0)
+    func getRect(pnt:CGPoint,len:CGFloat)->CGRect{
+        return(CGRect(x:pnt.x-len/2,y:pnt.y-len/2,width:len,height: len))
+    }
     func resizeR2(_ targetRect:CGRect, viewRect:CGRect, image:CIImage) -> CGRect {
         //view.frameとtargetRectとimageをもらうことでその場で縦横の比率を計算してtargetRectのimage上の位置を返す関数
         //view.frameとtargetRectは画面上の位置だが、返すのはimage上の位置なので、そこをうまく考慮する必要がある。
@@ -105,10 +111,10 @@ class PlayViewController: UIViewController {
         print("video_w:", ciImage.extent.width,"h:",ciImage.extent.height,"fps:",getFPS(url:videoURL!))
         //起動時表示が一巡？するまでは　slowImage.frame はちょっと違う値を示す
 //        let rect = CGRect(x:0,y:0,width:view.bounds.width/20,height:view.bounds.height/20)
-        let eyeRect = resizeR2(wakuEyeRect, viewRect:view.frame,image:ciImage)
-        CGeye = context.createCGImage(ciImage, from: eyeRect)!
+        let eyeRectResized = resizeR2(eyeRect, viewRect:view.frame,image:ciImage)
+        CGeye = context.createCGImage(ciImage, from: eyeRectResized)!
         UIeye = UIImage.init(cgImage: CGeye, scale:1.0, orientation:orientation)
-        eyeWakuL_image.frame=CGRect(x:5,y:5,width: eyeRect.size.width*5,height: eyeRect.size.height*5)
+        eyeWakuL_image.frame=CGRect(x:5,y:5,width: eyeRectResized.size.width*5,height: eyeRectResized.size.height*5)
         eyeWakuL_image.layer.borderColor = UIColor.black.cgColor
         eyeWakuL_image.layer.borderWidth = 1.0
         eyeWakuL_image.backgroundColor = UIColor.clear
@@ -116,10 +122,10 @@ class PlayViewController: UIViewController {
         eyeWakuL_image.image=UIeye
         view.bringSubviewToFront(eyeWakuL_image)
 
-        let faceRect = resizeR2(wakuFaceRect, viewRect:view.frame, image: ciImage)
-        CGface = context.createCGImage(ciImage, from: faceRect)!
+        let faceRectResized = resizeR2(faceRect, viewRect:view.frame, image: ciImage)
+        CGface = context.createCGImage(ciImage, from: faceRectResized)!
         UIface = UIImage.init(cgImage: CGface, scale:1.0, orientation:orientation)
-        faceWakuL_image.frame=CGRect(x:view.bounds.width - faceRect.size.width*5 - 5,y:5,width: faceRect.size.width*5,height: faceRect.size.height*5)
+        faceWakuL_image.frame=CGRect(x:view.bounds.width - faceRectResized.size.width*5 - 5,y:5,width: faceRectResized.size.width*5,height: faceRectResized.size.height*5)
         faceWakuL_image.layer.borderColor = UIColor.black.cgColor
         faceWakuL_image.layer.borderWidth = 1.0
         faceWakuL_image.backgroundColor = UIColor.clear
@@ -130,8 +136,8 @@ class PlayViewController: UIViewController {
 
     func dispWakus(){
         let nullRect:CGRect = CGRect(x:0,y:0,width:0,height:0)
-        eyeWaku_image.frame=CGRect(x:(wakuEyeRect.origin.x)-15,y:wakuEyeRect.origin.y-15,width:(wakuEyeRect.size.width)+30,height: wakuEyeRect.size.height+30)
-        faceWaku_image.frame=CGRect(x:(wakuFaceRect.origin.x)-15,y:wakuFaceRect.origin.y-15,width:wakuFaceRect.size.width+30,height: wakuFaceRect.size.height+30)
+        eyeWaku_image.frame=CGRect(x:(eyeRect.origin.x)-15,y:eyeRect.origin.y-15,width:(eyeRect.size.width)+30,height: eyeRect.size.height+30)
+        faceWaku_image.frame=CGRect(x:(faceRect.origin.x)-15,y:faceRect.origin.y-15,width:faceRect.size.width+30,height: faceRect.size.height+30)
         
         eyeWaku_image.layer.borderColor = UIColor.green.cgColor
         eyeWaku_image.backgroundColor = UIColor.clear
@@ -180,8 +186,8 @@ class PlayViewController: UIViewController {
         let move:CGPoint = sender.translation(in: self.view)
         if sender.state == .began {
             startPoint = sender.location(in: self.view)
-            startEyeRect=wakuEyeRect
-            startFaceRect=wakuFaceRect
+            startEyeRect=eyeRect
+            startFaceRect=faceRect
         } else if sender.state == .changed {
             
             let ww=view.bounds.width
@@ -189,9 +195,9 @@ class PlayViewController: UIViewController {
             
             let et=CGRect(x:ww/10,y:wh/20,width: ww*4/5,height:wh*3/4)
             if wakuType==0{
-                wakuEyeRect = moveWakus(rect:wakuFaceRect,stRect:startEyeRect, stPo: startPoint,movePo: move,hani:et)
+                eyeRect = moveWakus(rect:faceRect,stRect:startEyeRect, stPo: startPoint,movePo: move,hani:et)
             }else{
-                wakuFaceRect = moveWakus(rect:wakuFaceRect,stRect:startFaceRect, stPo: startPoint,movePo: move,hani:et)
+                faceRect = moveWakus(rect:faceRect,stRect:startFaceRect, stPo: startPoint,movePo: move,hani:et)
             }
             dispWakus()
             showWakuImages()
@@ -226,6 +232,8 @@ class PlayViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        eyeRect=getRect(pnt: eyeCenter, len: 6)
+        faceRect=getRect(pnt:faceCenter,len: 6)
         let avAsset = AVURLAsset(url: videoURL!)
         let ww:CGFloat=view.bounds.width
         let wh:CGFloat=view.bounds.height
