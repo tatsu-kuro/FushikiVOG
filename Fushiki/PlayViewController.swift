@@ -11,20 +11,22 @@ import AVFoundation
 import Photos
 @available(iOS 11.0, *)
 class PlayViewController: UIViewController {
-
+    var videoURL:URL?
+    var videoSize:CGSize!
+    var videoFps:Float!
     var videoPlayer: AVPlayer!
-    var duration:Float=0
+    var videoDuration:Float=0
+    var screenSize:CGSize!
     var currTime:UILabel?
+    var currFrameNumber:Int=0
     lazy var seekBar = UISlider()
     var timer:Timer?
-    var videoURL:URL?
+
     @IBOutlet weak var eyeWaku_image: UIImageView!
     @IBOutlet weak var faceWaku_image: UIImageView!
-    
-    
+
     @IBOutlet weak var faceWakuL_image: UIImageView!
     @IBOutlet weak var eyeWakuL_image: UIImageView!
-    
     
     var wakuEyeRect = CGRect(x:300.0,y:100.0,width:5.0,height:5.0)
     var wakuFaceRect = CGRect(x:300.0,y:200.0,width:5.0,height:5.0)
@@ -53,6 +55,12 @@ class PlayViewController: UIViewController {
                       width: (tw * iw / vw).rounded(),
                       height: (th * ih / vh).rounded())
     }
+    
+    func resolutionSizeOfVideo(url:URL) -> CGSize? {
+        guard let track = AVAsset(url: url).tracks(withMediaType: AVMediaType.video).first else { return nil }
+        let size = track.naturalSize.applying(track.preferredTransform)
+        return CGSize(width: abs(size.width), height: abs(size.height))
+    }
     func showWakuImages(){//結果が表示されていない時、画面上部1/4をタップするとWaku表示
         let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
         let avAsset = AVURLAsset(url: videoURL!, options: options)
@@ -77,9 +85,8 @@ class PlayViewController: UIViewController {
         
         reader.add(readerOutput)
         let frameRate = videoTrack.nominalFrameRate
-        let startFrame:Int=0
-        //let startframe=startPoints[vhitVideocurrent]
-        let startTime = CMTime(value: CMTimeValue(startFrame), timescale: CMTimeScale(frameRate))
+    
+        let startTime = CMTime(value: CMTimeValue(currFrameNumber), timescale: CMTimeScale(frameRate))
         let timeRange = CMTimeRange(start: startTime, end:CMTime.positiveInfinity)
         //print("time",timeRange)
         reader.timeRange = timeRange //読み込む範囲を`timeRange`で指定
@@ -97,6 +104,7 @@ class PlayViewController: UIViewController {
         let ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.right)
         print("video_w:", ciImage.extent.width,"h:",ciImage.extent.height,"fps:",getFPS(url:videoURL!))
         //起動時表示が一巡？するまでは　slowImage.frame はちょっと違う値を示す
+//        let rect = CGRect(x:0,y:0,width:view.bounds.width/20,height:view.bounds.height/20)
         let eyeRect = resizeR2(wakuEyeRect, viewRect:view.frame,image:ciImage)
         CGeye = context.createCGImage(ciImage, from: eyeRect)!
         UIeye = UIImage.init(cgImage: CGeye, scale:1.0, orientation:orientation)
@@ -122,7 +130,6 @@ class PlayViewController: UIViewController {
 
     func dispWakus(){
         let nullRect:CGRect = CGRect(x:0,y:0,width:0,height:0)
-        //        printR(str:"wakuE:",rct: wakuE)
         eyeWaku_image.frame=CGRect(x:(wakuEyeRect.origin.x)-15,y:wakuEyeRect.origin.y-15,width:(wakuEyeRect.size.width)+30,height: wakuEyeRect.size.height+30)
         faceWaku_image.frame=CGRect(x:(wakuFaceRect.origin.x)-15,y:wakuFaceRect.origin.y-15,width:wakuFaceRect.size.width+30,height: wakuFaceRect.size.height+30)
         
@@ -204,7 +211,7 @@ class PlayViewController: UIViewController {
 
     
     @objc func update(tm: Timer) {
-        currTime?.text=String(format:"%.1f/%.1f",seekBar.value,duration)
+        currTime?.text=String(format:"%.1f/%.1f",seekBar.value,videoDuration)
     }
     
     func killTimer(){
@@ -220,7 +227,6 @@ class PlayViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let avAsset = AVURLAsset(url: videoURL!)
-        print("fps:",getFPS(url: videoURL!))
         let ww:CGFloat=view.bounds.width
         let wh:CGFloat=view.bounds.height
         let dw=ww/50//間隙
@@ -229,7 +235,7 @@ class PlayViewController: UIViewController {
         let by=wh - dw - bh//ボタンy
         let seeky=by - bh - dw/2//バーy
         
-        duration=Float(CMTimeGetSeconds(avAsset.duration))
+        videoDuration=Float(CMTimeGetSeconds(avAsset.duration))
         let playerItem: AVPlayerItem = AVPlayerItem(asset: avAsset)
         // Create AVPlayer
         videoPlayer = AVPlayer(playerItem: playerItem)
@@ -243,7 +249,7 @@ class PlayViewController: UIViewController {
         seekBar.frame = CGRect(x: dw, y:seeky, width: ww - 2*dw, height: bh)
         //        seekBar.layer.position = CGPoint(x: view.bounds.midX, y: by1)
         seekBar.minimumValue = 0
-        seekBar.maximumValue = duration
+        seekBar.maximumValue = videoDuration
         seekBar.addTarget(self, action: #selector(onSliderValueChange), for: UIControl.Event.valueChanged)
         view.addSubview(seekBar)
         // Set SeekBar Interval
@@ -306,12 +312,15 @@ class PlayViewController: UIViewController {
         videoPlayer.play()
         dispWakus()
         showWakuImages()
-        print("screen_w:",view.bounds.width,"h:",view.bounds.height)
+        videoSize=resolutionSizeOfVideo(url:videoURL!)
+        screenSize=view.bounds.size
+        videoFps=getFPS(url: videoURL!)
+//        print("screen_w:",view.bounds.width,view.bounds.size.width,"h:",view.bounds.height,view.bounds.size.height)
         //まずは表示だけ、まだちゃんとwakuを捉えていない
-        faceWakuL_image.isHidden=true
-        eyeWakuL_image.isHidden=true
-        faceWaku_image.isHidden=true
-        eyeWaku_image.isHidden=true
+//        faceWakuL_image.isHidden=true
+//        eyeWakuL_image.isHidden=true
+//        faceWaku_image.isHidden=true
+//        eyeWaku_image.isHidden=true
     }
     override var prefersHomeIndicatorAutoHidden: Bool {
         return true
@@ -335,6 +344,8 @@ class PlayViewController: UIViewController {
     @objc func onStopButtonTapped(){
         if (videoPlayer.rate != 0) && (videoPlayer.error == nil) {//playing
             videoPlayer.pause()
+            currFrameNumber=Int(seekBar.value*videoFps)
+            print("curr:",currFrameNumber)
         }
     }
     // SeekBar Value Changed
@@ -342,14 +353,16 @@ class PlayViewController: UIViewController {
         videoPlayer.pause()
         let newTime = CMTime(seconds: Double(seekBar.value), preferredTimescale: 600)
         videoPlayer.seek(to: newTime, toleranceBefore: .zero, toleranceAfter: .zero)
+        currFrameNumber=Int(seekBar.value*videoFps)
+        print("curr:",currFrameNumber)
     }
     func onNextButtonTapped(){//このようなボタンを作ってみれば良さそう。無くてもいいか？
         var seekBarValue=seekBar.value+0.01
-        if seekBarValue>duration-0.1{
-            seekBarValue = duration-0.1
+        if seekBarValue>videoDuration-0.1{
+            seekBarValue = videoDuration-0.1
          }
          let newTime = CMTime(seconds: Double(seekBarValue), preferredTimescale: 600)
-         currTime!.text = String(format:"%.1f/%.1f",seekBarValue,duration)
+         currTime!.text = String(format:"%.1f/%.1f",seekBarValue,videoDuration)
          videoPlayer.seek(to: newTime, toleranceBefore: .zero, toleranceAfter: .zero)
     }
     @objc func onExitButtonTapped(){//このボタンのところにsegueでunwindへ行く

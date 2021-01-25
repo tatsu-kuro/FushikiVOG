@@ -343,7 +343,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.4;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kuroda33.FushikiETT;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kuroda33.FushikiETTopenCV;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -364,7 +364,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.4;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kuroda33.FushikiETT;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kuroda33.FushikiETTopenCV;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
