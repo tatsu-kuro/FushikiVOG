@@ -299,7 +299,7 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
         // セッション生成
         captureSession = AVCaptureSession()
         // 入力 : 背面カメラ
-        videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front)
+        videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
         let videoInput = try! AVCaptureDeviceInput.init(device: videoDevice!)
         captureSession.addInput(videoInput)
         if setVideoFormat(desiredFps: fps) == false {

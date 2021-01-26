@@ -30,11 +30,13 @@ class PlayViewController: UIViewController {
     
     var eyeCenter = CGPoint(x:300.0,y:100.0)
     var faceCenter = CGPoint(x:300.0,y:200.0)
-    var wakuLength:CGFloat=6
-    var eyeRect:CGRect!//= CGRect(x:300.0,y:100.0,width:5.0,height:5.0)
-    var faceRect:CGRect!//(x:300.0,y:200.0,width:5.0,height:5.0)
-    func getRectFromCenter(pnt:CGPoint,len:CGFloat)->CGRect{
-        return(CGRect(x:pnt.x-len/2,y:pnt.y-len/2,width:len,height: len))
+    var wakuLength:CGFloat=200//square length
+    func getRectFromCenter(center:CGPoint,len:CGFloat)->CGRect{
+        return(CGRect(x:center.x-len/2,y:center.y-len/2,width:len,height: len))
+    }
+    func transPoint(point:CGPoint,viewRect:CGRect,image:CIImage)->CGPoint{
+        let p:CGPoint=CGPoint(x:0,y:0)
+        return p
     }
     func resizeR2(_ targetRect:CGRect, viewRect:CGRect, image:CIImage) -> CGRect {
         //view.frameとtargetRectとimageをもらうことでその場で縦横の比率を計算してtargetRectのimage上の位置を返す関数
@@ -110,22 +112,23 @@ class PlayViewController: UIViewController {
         let ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.right)
         print("video_w:", ciImage.extent.width,"h:",ciImage.extent.height,"fps:",getFPS(url:videoURL!))
         //起動時表示が一巡？するまでは　slowImage.frame はちょっと違う値を示す
+        let eyeRect=getRectFromCenter(center: eyeCenter, len: wakuLength)
 //        let rect = CGRect(x:0,y:0,width:view.bounds.width/20,height:view.bounds.height/20)
-        let eyeRectResized = resizeR2(eyeRect, viewRect:view.frame,image:ciImage)
+        let eyeRectResized = eyeRect//resizeR2(eyeRect, viewRect:view.frame,image:ciImage)
         CGeye = context.createCGImage(ciImage, from: eyeRectResized)!
         UIeye = UIImage.init(cgImage: CGeye, scale:1.0, orientation:orientation)
-        eyeWakuL_image.frame=CGRect(x:5,y:5,width: eyeRectResized.size.width*5,height: eyeRectResized.size.height*5)
+        eyeWakuL_image.frame=CGRect(x:5,y:5,width: eyeRectResized.size.width,height: eyeRectResized.size.height)
         eyeWakuL_image.layer.borderColor = UIColor.black.cgColor
         eyeWakuL_image.layer.borderWidth = 1.0
         eyeWakuL_image.backgroundColor = UIColor.clear
         eyeWakuL_image.layer.cornerRadius = 3
         eyeWakuL_image.image=UIeye
         view.bringSubviewToFront(eyeWakuL_image)
-
-        let faceRectResized = resizeR2(faceRect, viewRect:view.frame, image: ciImage)
+        let faceRect=getRectFromCenter(center: faceCenter, len: wakuLength)
+        let faceRectResized = faceRect//resizeR2(faceRect, viewRect:view.frame, image: ciImage)
         CGface = context.createCGImage(ciImage, from: faceRectResized)!
         UIface = UIImage.init(cgImage: CGface, scale:1.0, orientation:orientation)
-        faceWakuL_image.frame=CGRect(x:view.bounds.width - faceRectResized.size.width*5 - 5,y:5,width: faceRectResized.size.width*5,height: faceRectResized.size.height*5)
+        faceWakuL_image.frame=CGRect(x:view.bounds.width - faceRectResized.size.width - 5,y:5,width: faceRectResized.size.width,height: faceRectResized.size.height)
         faceWakuL_image.layer.borderColor = UIColor.black.cgColor
         faceWakuL_image.layer.borderWidth = 1.0
         faceWakuL_image.backgroundColor = UIColor.clear
@@ -135,10 +138,9 @@ class PlayViewController: UIViewController {
     }
 
     func dispWakus(){
-        let nullRect:CGRect = CGRect(x:0,y:0,width:0,height:0)
-        eyeWaku_image.frame=CGRect(x:(eyeRect.origin.x)-15,y:eyeRect.origin.y-15,width:(eyeRect.size.width)+30,height: eyeRect.size.height+30)
-        faceWaku_image.frame=CGRect(x:(faceRect.origin.x)-15,y:faceRect.origin.y-15,width:faceRect.size.width+30,height: faceRect.size.height+30)
-        
+        let d=(wakuLength+20)/2//matchingArea(center,wakuLength)
+        eyeWaku_image.frame=CGRect(x:eyeCenter.x-d,y:eyeCenter.y-d,width:2*d,height:2*d)
+        faceWaku_image.frame=CGRect(x:faceCenter.x-d,y:faceCenter.y-d,width:2*d,height:2*d)
         eyeWaku_image.layer.borderColor = UIColor.green.cgColor
         eyeWaku_image.backgroundColor = UIColor.clear
         eyeWaku_image.layer.cornerRadius = 4
@@ -155,61 +157,29 @@ class PlayViewController: UIViewController {
         view.bringSubviewToFront(faceWaku_image)
         view.bringSubviewToFront(eyeWaku_image)
     }
-    func moveWakus
-        (rect:CGRect,stRect:CGRect,stPo:CGPoint,movePo:CGPoint,hani:CGRect) -> CGRect{
-        var r:CGRect
-        r = rect//2種類の枠を代入、変更してreturnで返す
-        let dx:CGFloat = movePo.x
-        let dy:CGFloat = movePo.y
-        r.origin.x = stRect.origin.x + dx;
-        r.origin.y = stRect.origin.y + dy;
-        //r.size.width = stRect.size
-        if r.origin.x < hani.origin.x{
-            r.origin.x = hani.origin.x
-        }else if r.origin.x > hani.origin.x+hani.width{
-            r.origin.x = hani.origin.x+hani.width
+
+    func moveCenter(start:CGPoint,move:CGPoint,hani:CGRect)-> CGPoint{
+        var returnPoint:CGPoint=CGPoint(x:0,y:0)//2種類の枠を代入、変更してreturnで返す
+        returnPoint.x = start.x + move.x
+        returnPoint.y = start.y + move.y
+        if returnPoint.x < hani.origin.x{
+            returnPoint.x = hani.origin.x
+        }else if returnPoint.x > hani.origin.x+hani.width{
+            returnPoint.x = hani.origin.x+hani.width
         }
-        if r.origin.y < hani.origin.y{
-            r.origin.y = hani.origin.y
+        if returnPoint.y < hani.origin.y{
+            returnPoint.y = hani.origin.y
+        }else if returnPoint.y > hani.origin.y+hani.height{
+            returnPoint.y = hani.origin.y+hani.height
         }
-        if r.origin.y > hani.origin.y+hani.height{
-            r.origin.y = hani.origin.y+hani.height
-        }
-        return r
+        return returnPoint
     }
-    /*func moveCenter(start:CGPoint,move:CGPoint,hani:CGRect)-> CGPoint{
-        var r:CGRect
-        r = rect//2種類の枠を代入、変更してreturnで返す
-        let dx:CGFloat = move.x
-        let dy:CGFloat = move.y
-        r.origin.x = stRect.origin.x + dx;
-        r.origin.y = stRect.origin.y + dy;
-        //r.size.width = stRect.size
-        if r.origin.x < hani.origin.x{
-            r.origin.x = hani.origin.x
-        }else if r.origin.x > hani.origin.x+hani.width{
-            r.origin.x = hani.origin.x+hani.width
-        }
-        if r.origin.y < hani.origin.y{
-            r.origin.y = hani.origin.y
-        }
-        if r.origin.y > hani.origin.y+hani.height{
-            r.origin.y = hani.origin.y+hani.height
-        }
-        return r
-    }*/
     var eyeORface:Int = 0//0:eye 1:face 2:outer -1:何も選択されていない
-    var startPoint:CGPoint = CGPoint(x:0,y:0)//stRect.origin tapした位置
-    var startEyeRect:CGRect = CGRect(x:0,y:0,width:0,height:0)//tapしたrectのtapした時のrect
-    var startFaceRect:CGRect = CGRect(x:0,y:0,width:0,height:0)
     var startEyeCenter:CGPoint!//tapした時のCenter
     var startFaceCenter:CGPoint!
     @IBAction func panGesture(_ sender: UIPanGestureRecognizer) {
         let move:CGPoint = sender.translation(in: self.view)
         if sender.state == .began {
-            startPoint = sender.location(in: self.view)
-            startEyeRect=eyeRect
-            startFaceRect=faceRect
             startEyeCenter=eyeCenter
             startFaceCenter=faceCenter
         } else if sender.state == .changed {
@@ -219,10 +189,9 @@ class PlayViewController: UIViewController {
             
             let et=CGRect(x:ww/10,y:wh/20,width: ww*4/5,height:wh*3/4)
             if eyeORface==0{
-//                eyeCenter=moveCenter(start:startEyeCenter,move:move,hani:et)
-                eyeRect = moveWakus(rect:eyeRect,stRect:startEyeRect, stPo: startPoint,movePo: move,hani:et)
+                eyeCenter=moveCenter(start:startEyeCenter,move:move,hani:et)
             }else{
-                faceRect = moveWakus(rect:faceRect,stRect:startFaceRect, stPo: startPoint,movePo: move,hani:et)
+                faceCenter=moveCenter(start:startFaceCenter,move:move,hani:et)
             }
             dispWakus()
             showWakuImages()
@@ -257,8 +226,6 @@ class PlayViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        eyeRect=getRectFromCenter(pnt: eyeCenter, len: 6)
-        faceRect=getRectFromCenter(pnt:faceCenter,len: 6)
         let avAsset = AVURLAsset(url: videoURL!)
         let ww:CGFloat=view.bounds.width
         let wh:CGFloat=view.bounds.height
