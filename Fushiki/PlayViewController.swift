@@ -33,7 +33,7 @@ class PlayViewController: UIViewController {
     var wakuLength:CGFloat=6
     var eyeRect:CGRect!//= CGRect(x:300.0,y:100.0,width:5.0,height:5.0)
     var faceRect:CGRect!//(x:300.0,y:200.0,width:5.0,height:5.0)
-    func getRect(pnt:CGPoint,len:CGFloat)->CGRect{
+    func getRectFromCenter(pnt:CGPoint,len:CGFloat)->CGRect{
         return(CGRect(x:pnt.x-len/2,y:pnt.y-len/2,width:len,height: len))
     }
     func resizeR2(_ targetRect:CGRect, viewRect:CGRect, image:CIImage) -> CGRect {
@@ -145,7 +145,7 @@ class PlayViewController: UIViewController {
         faceWaku_image.layer.borderColor = UIColor.green.cgColor
         faceWaku_image.backgroundColor = UIColor.clear
         faceWaku_image.layer.cornerRadius = 4
-        if wakuType==0{
+        if eyeORface==0{
             eyeWaku_image.layer.borderWidth = 2
             faceWaku_image.layer.borderWidth = 1
         }else{
@@ -177,25 +177,50 @@ class PlayViewController: UIViewController {
         }
         return r
     }
-
-    var wakuType:Int = 0//0:eye 1:face 2:outer -1:何も選択されていない
+    /*func moveCenter(start:CGPoint,move:CGPoint,hani:CGRect)-> CGPoint{
+        var r:CGRect
+        r = rect//2種類の枠を代入、変更してreturnで返す
+        let dx:CGFloat = move.x
+        let dy:CGFloat = move.y
+        r.origin.x = stRect.origin.x + dx;
+        r.origin.y = stRect.origin.y + dy;
+        //r.size.width = stRect.size
+        if r.origin.x < hani.origin.x{
+            r.origin.x = hani.origin.x
+        }else if r.origin.x > hani.origin.x+hani.width{
+            r.origin.x = hani.origin.x+hani.width
+        }
+        if r.origin.y < hani.origin.y{
+            r.origin.y = hani.origin.y
+        }
+        if r.origin.y > hani.origin.y+hani.height{
+            r.origin.y = hani.origin.y+hani.height
+        }
+        return r
+    }*/
+    var eyeORface:Int = 0//0:eye 1:face 2:outer -1:何も選択されていない
     var startPoint:CGPoint = CGPoint(x:0,y:0)//stRect.origin tapした位置
     var startEyeRect:CGRect = CGRect(x:0,y:0,width:0,height:0)//tapしたrectのtapした時のrect
     var startFaceRect:CGRect = CGRect(x:0,y:0,width:0,height:0)
+    var startEyeCenter:CGPoint!//tapした時のCenter
+    var startFaceCenter:CGPoint!
     @IBAction func panGesture(_ sender: UIPanGestureRecognizer) {
         let move:CGPoint = sender.translation(in: self.view)
         if sender.state == .began {
             startPoint = sender.location(in: self.view)
             startEyeRect=eyeRect
             startFaceRect=faceRect
+            startEyeCenter=eyeCenter
+            startFaceCenter=faceCenter
         } else if sender.state == .changed {
             
             let ww=view.bounds.width
             let wh=view.bounds.height
             
             let et=CGRect(x:ww/10,y:wh/20,width: ww*4/5,height:wh*3/4)
-            if wakuType==0{
-                eyeRect = moveWakus(rect:faceRect,stRect:startEyeRect, stPo: startPoint,movePo: move,hani:et)
+            if eyeORface==0{
+//                eyeCenter=moveCenter(start:startEyeCenter,move:move,hani:et)
+                eyeRect = moveWakus(rect:eyeRect,stRect:startEyeRect, stPo: startPoint,movePo: move,hani:et)
             }else{
                 faceRect = moveWakus(rect:faceRect,stRect:startFaceRect, stPo: startPoint,movePo: move,hani:et)
             }
@@ -207,10 +232,10 @@ class PlayViewController: UIViewController {
     
     @IBAction func tapGesture(_ sender: UITapGestureRecognizer) {
         print("tap")
-        if wakuType==0{//eye
-            wakuType=1
+        if eyeORface==0{//eye
+            eyeORface=1
         }else{
-            wakuType=0
+            eyeORface=0
         }
         dispWakus()
     }
@@ -232,8 +257,8 @@ class PlayViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        eyeRect=getRect(pnt: eyeCenter, len: 6)
-        faceRect=getRect(pnt:faceCenter,len: 6)
+        eyeRect=getRectFromCenter(pnt: eyeCenter, len: 6)
+        faceRect=getRectFromCenter(pnt:faceCenter,len: 6)
         let avAsset = AVURLAsset(url: videoURL!)
         let ww:CGFloat=view.bounds.width
         let wh:CGFloat=view.bounds.height
