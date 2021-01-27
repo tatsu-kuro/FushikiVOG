@@ -30,7 +30,7 @@ class PlayViewController: UIViewController {
     
     var eyeCenter = CGPoint(x:300.0,y:100.0)
     var faceCenter = CGPoint(x:300.0,y:200.0)
-    var wakuLength:CGFloat=4//square length
+    var wakuLength:CGFloat=6//square length
     func getRectFromCenter(center:CGPoint,len:CGFloat)->CGRect{
         return(CGRect(x:center.x-len/2,y:center.y-len/2,width:len,height: len))
     }
@@ -64,14 +64,14 @@ class PlayViewController: UIViewController {
         let vw=CGFloat(videoImage.extent.width)
         let vh=CGFloat(videoImage.extent.height)
         
-        let d=(sw-vw*sh/vh)/2
+        var d=(sw-vw*sh/vh)/2
         print(sw,sh,vh,vw,d)
-//        if d>0{
+        if d>0{
             return CGRect(x:d,y:0,width:sw-2*d,height:sh)
-//        }else{//ここがうまく行っていないようだ
-//            let d=(sh-sw*sh/vw)/2
-//            return CGRect(x:0,y:d,width:sw,height:sh-2*d)
-//        }
+        }else{//ここがうまく行っていないようだ
+            d=(sh-sw*vh/vw)/2
+            return CGRect(x:0,y:d,width:sw,height:sh-2*d)
+        }
     }
     //targetRect=eyeRect,viewRect=view.frame
     func resizeR2(_ targetRect:CGRect, viewRect:CGRect, image:CIImage) -> CGRect {
