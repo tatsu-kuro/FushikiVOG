@@ -74,13 +74,6 @@ class OKPViewController: UIViewController{
         }
         UserDefaults.standard.set(okpMode, forKey:"okpMode")
     }
-    
-    //        @available(iOS 11, *)
-//        override var prefersHomeIndicatorAutoHidden: Bool {
-//            get {
-//                return true
-//            }
-//        }
         
     @IBAction func doubleTap(_ sender: Any) {
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController

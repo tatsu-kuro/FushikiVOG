@@ -34,30 +34,7 @@ class PlayViewController: UIViewController {
     func getRectFromCenter(center:CGPoint,len:CGFloat)->CGRect{
         return(CGRect(x:center.x-len/2,y:center.y-len/2,width:len,height: len))
     }
-    /*
-    func transPoint(point:CGPoint,videoImage:CIImage)->CGPoint{
-        var p:CGPoint=CGPoint(x:0,y:0)
-        let sw=view.frame.width
-        let sh=view.frame.height
-        let vh=CGFloat(videoImage.extent.width)//90 rotate
-        let vw=CGFloat(videoImage.extent.height)
-        let d=(sw-vw*sh/vh)/2
-        if sw/sh>vw/vh{//スクリーンが細長いので左右が切れる iPhone11
-            p.x=(vw-vw*point.y/sh).rounded()
-            p.y=(vh-vh*(point.x-d)/(sw-2*d)).rounded()
-        }else{//上下が切れる
-            
-        }
-        if p.x<50{p.x=50}
-        else if p.x>vw-50{p.x=vw-50}
-        if p.y<50{p.y=50}
-        else if p.y>vh-50{p.y=vh-50}
-//        print(screenSize,vw,vh)
-//        print(d.rounded(),p,point)
-        return p
-//     screen(896.0, 414.0)video(1920.0*1080.0)) //iPhone11 左右が切れる
 
-    }*/
     func getVideoRectOnScreen(videoImage:CIImage)->CGRect{
         let sw=view.frame.width
         let sh=view.frame.height
@@ -152,7 +129,6 @@ class PlayViewController: UIViewController {
         //print("time",timeRange)
         reader.timeRange = timeRange //読み込む範囲を`timeRange`で指定
         reader.startReading()
-        
         let CGeye:CGImage!//eye
         let UIeye:UIImage!
         var CGface:CGImage!//face
@@ -162,12 +138,12 @@ class PlayViewController: UIViewController {
         var sample:CMSampleBuffer!
         sample = readerOutput.copyNextSampleBuffer()
         let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample!)!
-        let ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.up)
+        let ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.down)
         //起動時表示が一巡？するまでは　slowImage.frame はちょっと違う値を示す
 //        eyeCenter=transPoint(point: eyeCenter, videoImage: ciImage)
         let eyeRect=getRectFromCenter(center: eyeCenter, len: wakuLength)
         var eyeRectResized = resizeR2(eyeRect, viewRect:getVideoRectOnScreen(videoImage: ciImage),image:ciImage)
-//        eyeRectResized = checkRect(rect:eyeRectResized,image:ciImage)
+        eyeRectResized = checkRect(rect:eyeRectResized,image:ciImage)
         CGeye = context.createCGImage(ciImage, from: eyeRectResized)
         UIeye = UIImage.init(cgImage: CGeye, scale:1.0, orientation:orientation)
         eyeWakuL_image.frame=CGRect(x:10,y:10,width: eyeRectResized.size.width*5,height: eyeRectResized.size.height*5)
@@ -180,7 +156,7 @@ class PlayViewController: UIViewController {
 //        faceCenter=transPoint(point: faceCenter,videoImage: ciImage)
         let faceRect=getRectFromCenter(center: faceCenter, len: wakuLength)
         var faceRectResized = resizeR2(faceRect, viewRect:getVideoRectOnScreen(videoImage: ciImage), image: ciImage)
-//        faceRectResized = checkRect(rect:faceRectResized,image:ciImage)
+        faceRectResized = checkRect(rect:faceRectResized,image:ciImage)
         CGface = context.createCGImage(ciImage, from: faceRectResized)
         UIface = UIImage.init(cgImage: CGface, scale:1.0, orientation:orientation)
         faceWakuL_image.frame=CGRect(x:view.bounds.width - faceRectResized.size.width*5 - 10,y:10,width: faceRectResized.size.width*5,height: faceRectResized.size.height*5)

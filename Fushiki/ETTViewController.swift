@@ -60,7 +60,6 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
                 if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
                     print("doubleTapPlay")
                     doubleTap(0)
-                    //                    self.dismiss(animated: true, completion: nil)
                 }
                 tapInterval=CFAbsoluteTimeGetCurrent()
             case .remoteControlTogglePlayPause:
@@ -68,7 +67,6 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
                 if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
                     print("doubleTap")
                     doubleTap(0)
-                    //                    self.dismiss(animated: true, completion: nil)
                 }
                 tapInterval=CFAbsoluteTimeGetCurrent()
             case .remoteControlNextTrack:
@@ -84,9 +82,6 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
             }
         }
     }
-//    override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
-//        return UIRectEdge.bottom
-//    }
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -98,7 +93,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     }
  
     var cntREC:Int=0
-    @objc func updateRecClarification(tm: Timer) {
+    @objc func updateRecClarification(tm: Timer) {//明確に録画していることを示す必要がある
         cntREC += 1
         recClarification.alpha=camera.updateRecClarification(tm: cntREC)
         if cntREC==5{
