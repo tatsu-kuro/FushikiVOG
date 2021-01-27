@@ -105,7 +105,23 @@ class PlayViewController: UIViewController {
         return CGSize(width: abs(size.width), height: abs(size.height))
     }
     //iPhone11ではScreenSize=896*414 VideoImageSize=1920*1080
-    
+    func checkRect(rect:CGRect,image:CIImage)->CGRect{
+        var returnRect=rect
+        
+        if rect.origin.x<0{
+            returnRect.origin.x=0
+        }
+        if rect.origin.y<0{
+            returnRect.origin.y=0
+        }
+        if rect.width>image.extent.width{
+            returnRect.size.width=image.extent.width
+        }
+        if rect.height>image.extent.height{
+            returnRect.size.height=image.extent.height
+        }
+        return returnRect
+    }
     func showWakuImages(){//結果が表示されていない時、画面上部1/4をタップするとWaku表示
         let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
         let avAsset = AVURLAsset(url: videoURL!, options: options)
@@ -146,11 +162,12 @@ class PlayViewController: UIViewController {
         var sample:CMSampleBuffer!
         sample = readerOutput.copyNextSampleBuffer()
         let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample!)!
-        let ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.down)
+        let ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.up)
         //起動時表示が一巡？するまでは　slowImage.frame はちょっと違う値を示す
 //        eyeCenter=transPoint(point: eyeCenter, videoImage: ciImage)
         let eyeRect=getRectFromCenter(center: eyeCenter, len: wakuLength)
-        let eyeRectResized = resizeR2(eyeRect, viewRect:getVideoRectOnScreen(videoImage: ciImage),image:ciImage)
+        var eyeRectResized = resizeR2(eyeRect, viewRect:getVideoRectOnScreen(videoImage: ciImage),image:ciImage)
+//        eyeRectResized = checkRect(rect:eyeRectResized,image:ciImage)
         CGeye = context.createCGImage(ciImage, from: eyeRectResized)
         UIeye = UIImage.init(cgImage: CGeye, scale:1.0, orientation:orientation)
         eyeWakuL_image.frame=CGRect(x:10,y:10,width: eyeRectResized.size.width*5,height: eyeRectResized.size.height*5)
@@ -162,7 +179,8 @@ class PlayViewController: UIViewController {
         view.bringSubviewToFront(eyeWakuL_image)
 //        faceCenter=transPoint(point: faceCenter,videoImage: ciImage)
         let faceRect=getRectFromCenter(center: faceCenter, len: wakuLength)
-        let faceRectResized = resizeR2(faceRect, viewRect:getVideoRectOnScreen(videoImage: ciImage), image: ciImage)
+        var faceRectResized = resizeR2(faceRect, viewRect:getVideoRectOnScreen(videoImage: ciImage), image: ciImage)
+//        faceRectResized = checkRect(rect:faceRectResized,image:ciImage)
         CGface = context.createCGImage(ciImage, from: faceRectResized)
         UIface = UIImage.init(cgImage: CGface, scale:1.0, orientation:orientation)
         faceWakuL_image.frame=CGRect(x:view.bounds.width - faceRectResized.size.width*5 - 10,y:10,width: faceRectResized.size.width*5,height: faceRectResized.size.height*5)
