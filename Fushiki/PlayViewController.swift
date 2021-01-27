@@ -30,14 +30,50 @@ class PlayViewController: UIViewController {
     
     var eyeCenter = CGPoint(x:300.0,y:100.0)
     var faceCenter = CGPoint(x:300.0,y:200.0)
-    var wakuLength:CGFloat=200//square length
+    var wakuLength:CGFloat=4//square length
     func getRectFromCenter(center:CGPoint,len:CGFloat)->CGRect{
         return(CGRect(x:center.x-len/2,y:center.y-len/2,width:len,height: len))
     }
-    func transPoint(point:CGPoint,viewRect:CGRect,image:CIImage)->CGPoint{
-        let p:CGPoint=CGPoint(x:0,y:0)
+    /*
+    func transPoint(point:CGPoint,videoImage:CIImage)->CGPoint{
+        var p:CGPoint=CGPoint(x:0,y:0)
+        let sw=view.frame.width
+        let sh=view.frame.height
+        let vh=CGFloat(videoImage.extent.width)//90 rotate
+        let vw=CGFloat(videoImage.extent.height)
+        let d=(sw-vw*sh/vh)/2
+        if sw/sh>vw/vh{//スクリーンが細長いので左右が切れる iPhone11
+            p.x=(vw-vw*point.y/sh).rounded()
+            p.y=(vh-vh*(point.x-d)/(sw-2*d)).rounded()
+        }else{//上下が切れる
+            
+        }
+        if p.x<50{p.x=50}
+        else if p.x>vw-50{p.x=vw-50}
+        if p.y<50{p.y=50}
+        else if p.y>vh-50{p.y=vh-50}
+//        print(screenSize,vw,vh)
+//        print(d.rounded(),p,point)
         return p
+//     screen(896.0, 414.0)video(1920.0*1080.0)) //iPhone11 左右が切れる
+
+    }*/
+    func getVideoRectOnScreen(videoImage:CIImage)->CGRect{
+        let sw=view.frame.width
+        let sh=view.frame.height
+        let vw=CGFloat(videoImage.extent.width)
+        let vh=CGFloat(videoImage.extent.height)
+        
+        let d=(sw-vw*sh/vh)/2
+        print(sw,sh,vh,vw,d)
+//        if d>0{
+            return CGRect(x:d,y:0,width:sw-2*d,height:sh)
+//        }else{//ここがうまく行っていないようだ
+//            let d=(sh-sw*sh/vw)/2
+//            return CGRect(x:0,y:d,width:sw,height:sh-2*d)
+//        }
     }
+    //targetRect=eyeRect,viewRect=view.frame
     func resizeR2(_ targetRect:CGRect, viewRect:CGRect, image:CIImage) -> CGRect {
         //view.frameとtargetRectとimageをもらうことでその場で縦横の比率を計算してtargetRectのimage上の位置を返す関数
         //view.frameとtargetRectは画面上の位置だが、返すのはimage上の位置なので、そこをうまく考慮する必要がある。
@@ -49,13 +85,12 @@ class PlayViewController: UIViewController {
         let iw = CGFloat(image.extent.width)
         let ih = CGFloat(image.extent.height)
         
-        //　viewRect.originを引く事でtargetRectがview.bounds起点となる (xは0なのでやる必要はないが・・・）
+        //　viewRect.originを引く事でtargetRectがview.bounds起点となる
         let tx = CGFloat(targetRect.origin.x) - CGFloat(viewRect.origin.x)
         let ty = CGFloat(targetRect.origin.y) - CGFloat(viewRect.origin.y)
         
         let tw = CGFloat(targetRect.width)
         let th = CGFloat(targetRect.height)
-        
         // ここで返されるCGRectはCIImage/CGImage上の座標なので全て整数である必要がある
         // 端数があるまま渡すとmatchingが誤動作した
         return CGRect(x: (tx * iw / vw).rounded(),
@@ -69,6 +104,8 @@ class PlayViewController: UIViewController {
         let size = track.naturalSize.applying(track.preferredTransform)
         return CGSize(width: abs(size.width), height: abs(size.height))
     }
+    //iPhone11ではScreenSize=896*414 VideoImageSize=1920*1080
+    
     func showWakuImages(){//結果が表示されていない時、画面上部1/4をタップするとWaku表示
         let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
         let avAsset = AVURLAsset(url: videoURL!, options: options)
@@ -105,30 +142,30 @@ class PlayViewController: UIViewController {
         var CGface:CGImage!//face
         var UIface:UIImage!
         let context:CIContext = CIContext.init(options: nil)
-        let orientation = UIImage.Orientation.up//right
+        let orientation = UIImage.Orientation.up
         var sample:CMSampleBuffer!
         sample = readerOutput.copyNextSampleBuffer()
         let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample!)!
-        let ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.right)
-        print("video_w:", ciImage.extent.width,"h:",ciImage.extent.height,"fps:",getFPS(url:videoURL!))
+        let ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.down)
         //起動時表示が一巡？するまでは　slowImage.frame はちょっと違う値を示す
+//        eyeCenter=transPoint(point: eyeCenter, videoImage: ciImage)
         let eyeRect=getRectFromCenter(center: eyeCenter, len: wakuLength)
-//        let rect = CGRect(x:0,y:0,width:view.bounds.width/20,height:view.bounds.height/20)
-        let eyeRectResized = eyeRect//resizeR2(eyeRect, viewRect:view.frame,image:ciImage)
-        CGeye = context.createCGImage(ciImage, from: eyeRectResized)!
+        let eyeRectResized = resizeR2(eyeRect, viewRect:getVideoRectOnScreen(videoImage: ciImage),image:ciImage)
+        CGeye = context.createCGImage(ciImage, from: eyeRectResized)
         UIeye = UIImage.init(cgImage: CGeye, scale:1.0, orientation:orientation)
-        eyeWakuL_image.frame=CGRect(x:5,y:5,width: eyeRectResized.size.width,height: eyeRectResized.size.height)
+        eyeWakuL_image.frame=CGRect(x:10,y:10,width: eyeRectResized.size.width*5,height: eyeRectResized.size.height*5)
         eyeWakuL_image.layer.borderColor = UIColor.black.cgColor
         eyeWakuL_image.layer.borderWidth = 1.0
         eyeWakuL_image.backgroundColor = UIColor.clear
         eyeWakuL_image.layer.cornerRadius = 3
         eyeWakuL_image.image=UIeye
         view.bringSubviewToFront(eyeWakuL_image)
+//        faceCenter=transPoint(point: faceCenter,videoImage: ciImage)
         let faceRect=getRectFromCenter(center: faceCenter, len: wakuLength)
-        let faceRectResized = faceRect//resizeR2(faceRect, viewRect:view.frame, image: ciImage)
-        CGface = context.createCGImage(ciImage, from: faceRectResized)!
+        let faceRectResized = resizeR2(faceRect, viewRect:getVideoRectOnScreen(videoImage: ciImage), image: ciImage)
+        CGface = context.createCGImage(ciImage, from: faceRectResized)
         UIface = UIImage.init(cgImage: CGface, scale:1.0, orientation:orientation)
-        faceWakuL_image.frame=CGRect(x:view.bounds.width - faceRectResized.size.width - 5,y:5,width: faceRectResized.size.width,height: faceRectResized.size.height)
+        faceWakuL_image.frame=CGRect(x:view.bounds.width - faceRectResized.size.width*5 - 10,y:10,width: faceRectResized.size.width*5,height: faceRectResized.size.height*5)
         faceWakuL_image.layer.borderColor = UIColor.black.cgColor
         faceWakuL_image.layer.borderWidth = 1.0
         faceWakuL_image.backgroundColor = UIColor.clear
@@ -315,6 +352,7 @@ class PlayViewController: UIViewController {
         videoSize=resolutionSizeOfVideo(url:videoURL!)
         screenSize=view.bounds.size
         videoFps=getFPS(url: videoURL!)
+        print("video",videoSize,"screen",screenSize)
 //        print("screen_w:",view.bounds.width,view.bounds.size.width,"h:",view.bounds.height,view.bounds.size.height)
         //まずは表示だけ、まだちゃんとwakuを捉えていない
 //        faceWakuL_image.isHidden=true
