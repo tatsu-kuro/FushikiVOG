@@ -150,7 +150,7 @@ class PlayViewController: UIViewController {
 //        eyeRectResized = checkRect(rect:eyeRectResized,image:ciImage)
         CGeye = context.createCGImage(ciImage, from: eyeRectResized)
         UIeye = UIImage.init(cgImage: CGeye, scale:1.0, orientation:orientation)
-        eyeWakuL_image.frame=CGRect(x:view.bounds.width/2+10,y:5,width: eyeRectResized.size.width*4,height: eyeRectResized.size.height*4)
+        eyeWakuL_image.frame=CGRect(x:view.bounds.width/4+10,y:5,width: eyeRectResized.size.width*4,height: eyeRectResized.size.height*4)
         eyeWakuL_image.layer.borderColor = UIColor.black.cgColor
         eyeWakuL_image.layer.borderWidth = 1.0
         eyeWakuL_image.backgroundColor = UIColor.clear
@@ -163,7 +163,7 @@ class PlayViewController: UIViewController {
 //        faceRectResized = checkRect(rect:faceRectResized,image:ciImage)
         CGface = context.createCGImage(ciImage, from: faceRectResized)
         UIface = UIImage.init(cgImage: CGface, scale:1.0, orientation:orientation)
-        faceWakuL_image.frame=CGRect(x:view.bounds.width/2 - faceRectResized.size.width*4 - 10,y:5,width: faceRectResized.size.width*4,height: faceRectResized.size.height*4)
+        faceWakuL_image.frame=CGRect(x:view.bounds.width/4 - faceRectResized.size.width*4 - 10,y:5,width: faceRectResized.size.width*4,height: faceRectResized.size.height*4)
         faceWakuL_image.layer.borderColor = UIColor.black.cgColor
         faceWakuL_image.layer.borderWidth = 1.0
         faceWakuL_image.backgroundColor = UIColor.clear
