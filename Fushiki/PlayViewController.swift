@@ -11,6 +11,7 @@ import AVFoundation
 import Photos
 @available(iOS 11.0, *)
 class PlayViewController: UIViewController {
+    let openCV = OpenCVManager()
     var videoURL:URL?
     var videoSize:CGSize!
     var videoFps:Float!
@@ -22,9 +23,14 @@ class PlayViewController: UIViewController {
     lazy var seekBar = UISlider()
     var timer:Timer?
 
+    
+     @IBOutlet weak var wakuEye: UIImageView!
+     @IBOutlet weak var wakuEyeb: UIImageView!
+     @IBOutlet weak var wakuFac: UIImageView!
+     @IBOutlet weak var wakuFacb: UIImageView!
+    
     @IBOutlet weak var eyeWaku_image: UIImageView!
     @IBOutlet weak var faceWaku_image: UIImageView!
-
     @IBOutlet weak var faceWakuL_image: UIImageView!
     @IBOutlet weak var eyeWakuL_image: UIImageView!
     
@@ -163,6 +169,8 @@ class PlayViewController: UIViewController {
         faceWakuL_image.backgroundColor = UIColor.clear
         faceWakuL_image.layer.cornerRadius = 3
         faceWakuL_image.image=UIface
+//        let grayFace=openCV.grayScale(UIface)
+//        faceWakuL_image.image=grayFace
         view.bringSubviewToFront(faceWakuL_image)
     }
 
@@ -500,7 +508,7 @@ class PlayViewController: UIViewController {
         if timer?.isValid == true {
             timer!.invalidate()
         }
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.update_vog), userInfo: nil, repeats: true)
+//        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.update_vog), userInfo: nil, repeats: true)
     }
     var calcFlag:Bool=false
     var openCVstopFlag:Bool=false
@@ -669,10 +677,10 @@ class PlayViewController: UIViewController {
                             self.wakuEyeb.frame=CGRect(x:x,y:y,width:eyeWithBorderRect.size.width*2,height:eyeWithBorderRect.size.height*2)
                             self.wakuEyeb.image=eyeWithBorderUIImage
                             x += eyeWithBorderRect.size.width*2
-                            if self.faceF==0 || self.isVHIT==false{
+//                            if self.faceF==0 || self.isVHIT==false{
                                 self.wakuFacb.frame=CGRect(x:x,y:y,width:eyebR0.size.width*2,height:eyebR0.size.height*2)
                                 self.wakuFacb.image=eye0UIImage
-                            }
+//                            }
                         }
                         #endif
                         maxV=self.openCV.matching(eyeWithBorderUIImage,
@@ -696,12 +704,12 @@ class PlayViewController: UIViewController {
                             eyeWithBorderRect.origin.y += ey
                             eyePos = eyeWithBorderRect.origin.x - eyebR0.origin.x + ex
                             
-                            if self.faceF==1 && self.isVHIT==true{
+                            if self.faceF==1{
                                 faceWithBorderCGImage = context.createCGImage(ciImage, from:faceWithBorderRect)!
                                 faceWithBorderUIImage = UIImage.init(cgImage: faceWithBorderCGImage)
                                 #if DEBUG
                                 DispatchQueue.main.async {
-                                    if self.faceF==1&&self.isVHIT==true{
+                                    if self.faceF==1{
                                         self.wakuFac.frame=CGRect(x:x,y:y,width:faceRect.size.width*2,height:faceRect.size.height*2)
                                         self.wakuFac.image=faceUIImage
                                         x += faceRect.size.width*2
@@ -730,13 +738,13 @@ class PlayViewController: UIViewController {
                         context.clearCaches()
                     }
                     
-                    if self.faceF==1{
+//                    if self.faceF==1{
                         self.faceVeloOrig.append(fx)
                         self.faceVeloFiltered.append(-12.0*self.Kalman(value: fx,num: 0))
-                    }else{
-                        self.faceVeloOrig.append(0)
-                        self.faceVeloFiltered.append(0)
-                    }
+//                    }else{
+//                        self.faceVeloOrig.append(0)
+//                        self.faceVeloFiltered.append(0)
+//                    }
                     // eyePos, ey, fyをそれぞれ配列に追加
                     // vogをkalmanにかけ配列に追加
                     self.eyePosOrig.append(eyePos)
@@ -746,11 +754,11 @@ class PlayViewController: UIViewController {
                     let eye5 = -12.0*self.Kalman(value: ex,num:2)//そのままではずれる
                     self.eyeVeloFiltered.append(eye5-self.faceVeloFiltered.last!)
                     
-                    vHITcnt += 1
+        
                     while reader.status != AVAssetReader.Status.reading {
                         sleep(UInt32(0.1))
                     }
-                    self.fps120(is120: fpsIs120)
+//                    self.fps120(is120: fpsIs120)
                     //eyeのみでチェックしているが。。。。
                     if eyeWithBorderRect.origin.x < 5 ||
                         eyeWithBorderRect.origin.x > maxWidthWithBorder ||
@@ -768,9 +776,9 @@ class PlayViewController: UIViewController {
             }
             //            print("time:",CFAbsoluteTimeGetCurrent()-st)
             self.calcFlag = false
-            if self.waveTuple.count > 0{
-                self.nonsavedFlag = true
-            }
+//            if self.waveTuple.count > 0{
+//                self.nonsavedFlag = true
+//            }
         }
     }
 }
