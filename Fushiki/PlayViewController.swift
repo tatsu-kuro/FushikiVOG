@@ -83,8 +83,8 @@ class PlayViewController: UIViewController {
     }
     //iPhone11ではScreenSize=896*414 VideoImageSize=1920*1080
     func checkRect(rect:CGRect,image:CIImage)->CGRect{
+        //範囲をチェックしたつもりだが、バグがありそう
         var returnRect=rect
-        
         if rect.origin.x<0{
             returnRect.origin.x=0
         }
@@ -138,15 +138,15 @@ class PlayViewController: UIViewController {
         var sample:CMSampleBuffer!
         sample = readerOutput.copyNextSampleBuffer()
         let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample!)!
-        let ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.down)
+        let ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.up)//4行上ともupで良いような？
         //起動時表示が一巡？するまでは　slowImage.frame はちょっと違う値を示す
 //        eyeCenter=transPoint(point: eyeCenter, videoImage: ciImage)
         let eyeRect=getRectFromCenter(center: eyeCenter, len: wakuLength)
-        var eyeRectResized = resizeR2(eyeRect, viewRect:getVideoRectOnScreen(videoImage: ciImage),image:ciImage)
-        eyeRectResized = checkRect(rect:eyeRectResized,image:ciImage)
+        let eyeRectResized = resizeR2(eyeRect, viewRect:getVideoRectOnScreen(videoImage: ciImage),image:ciImage)
+//        eyeRectResized = checkRect(rect:eyeRectResized,image:ciImage)
         CGeye = context.createCGImage(ciImage, from: eyeRectResized)
         UIeye = UIImage.init(cgImage: CGeye, scale:1.0, orientation:orientation)
-        eyeWakuL_image.frame=CGRect(x:10,y:10,width: eyeRectResized.size.width*5,height: eyeRectResized.size.height*5)
+        eyeWakuL_image.frame=CGRect(x:view.bounds.width/2+10,y:5,width: eyeRectResized.size.width*4,height: eyeRectResized.size.height*4)
         eyeWakuL_image.layer.borderColor = UIColor.black.cgColor
         eyeWakuL_image.layer.borderWidth = 1.0
         eyeWakuL_image.backgroundColor = UIColor.clear
@@ -155,11 +155,11 @@ class PlayViewController: UIViewController {
         view.bringSubviewToFront(eyeWakuL_image)
 //        faceCenter=transPoint(point: faceCenter,videoImage: ciImage)
         let faceRect=getRectFromCenter(center: faceCenter, len: wakuLength)
-        var faceRectResized = resizeR2(faceRect, viewRect:getVideoRectOnScreen(videoImage: ciImage), image: ciImage)
-        faceRectResized = checkRect(rect:faceRectResized,image:ciImage)
+        let faceRectResized = resizeR2(faceRect, viewRect:getVideoRectOnScreen(videoImage: ciImage), image: ciImage)
+//        faceRectResized = checkRect(rect:faceRectResized,image:ciImage)
         CGface = context.createCGImage(ciImage, from: faceRectResized)
         UIface = UIImage.init(cgImage: CGface, scale:1.0, orientation:orientation)
-        faceWakuL_image.frame=CGRect(x:view.bounds.width - faceRectResized.size.width*5 - 10,y:10,width: faceRectResized.size.width*5,height: faceRectResized.size.height*5)
+        faceWakuL_image.frame=CGRect(x:view.bounds.width/2 - faceRectResized.size.width*4 - 10,y:5,width: faceRectResized.size.width*4,height: faceRectResized.size.height*4)
         faceWakuL_image.layer.borderColor = UIColor.black.cgColor
         faceWakuL_image.layer.borderWidth = 1.0
         faceWakuL_image.backgroundColor = UIColor.clear
