@@ -66,10 +66,8 @@
 		69DB12BF23AEF297000C733A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				69DB2C4125C3C8F0001EC81F /* OpenCVWrapper.h */,
-				69DB2C4225C3C8F0001EC81F /* OpenCVWrapper.mm */,
-				69C7640B25C2EAEB008AECAD /* Fushiki-Bridging-Header.h */,
 				69DB12C023AEF297000C733A /* GameController.framework */,
+				69C7640B25C2EAEB008AECAD /* Fushiki-Bridging-Header.h */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -110,6 +108,8 @@
 				8EE77ECC20EF742E00517DEC /* Assets.xcassets */,
 				8EE77ECE20EF742E00517DEC /* LaunchScreen.storyboard */,
 				8EE77ED120EF742E00517DEC /* Info.plist */,
+				69DB2C4225C3C8F0001EC81F /* OpenCVWrapper.mm */,
+				69DB2C4125C3C8F0001EC81F /* OpenCVWrapper.h */,
 			);
 			path = Fushiki;
 			sourceTree = "<group>";
