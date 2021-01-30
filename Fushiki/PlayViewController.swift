@@ -37,6 +37,7 @@ class PlayViewController: UIViewController {
     var currFrameNumber:Int=0
     lazy var seekBar = UISlider()
     var timer:Timer?
+    var timer_vog:Timer?
     var wave3View:UIImageView?
     var vogLineView:UIImageView?//vog
     var vogImage:UIImage?
@@ -45,10 +46,10 @@ class PlayViewController: UIViewController {
     var vogBoxYcenter:CGFloat=0
     var mailWidth:CGFloat=2400//VOG
     var mailHeight:CGFloat=1600//VOG
-    @IBOutlet weak var wakuEye: UIImageView!
-    @IBOutlet weak var wakuEyeb: UIImageView!
-    @IBOutlet weak var wakuFac: UIImageView!
-    @IBOutlet weak var wakuFacb: UIImageView!
+    @IBOutlet weak var debugEye: UIImageView!
+    @IBOutlet weak var debugEyeb: UIImageView!
+    @IBOutlet weak var debugFace: UIImageView!
+    @IBOutlet weak var debugFaceb: UIImageView!
     
     @IBOutlet weak var eyeWaku_image: UIImageView!
     @IBOutlet weak var faceWaku_image: UIImageView!
@@ -57,7 +58,7 @@ class PlayViewController: UIViewController {
     
     var eyeCenter = CGPoint(x:300.0,y:100.0)
     var faceCenter = CGPoint(x:300.0,y:200.0)
-    var wakuLength:CGFloat=6//square length
+    var wakuLength:CGFloat=3//rectの縦横幅
     var eyeLargeRect:CGRect!
     var faceLargeRect:CGRect!
     func getRectFromCenter(center:CGPoint,len:CGFloat)->CGRect{
@@ -66,7 +67,6 @@ class PlayViewController: UIViewController {
     func getCenterInScreen(point:CGPoint)->CGPoint{//centerをscreen上に納める
         let screen=getVideoRectOnScreen()
         var retPoint=point
-//        var retRect=getRectFromCenter(center: point, len: wakuLength)
         if retPoint.x<screen.origin.x+wakuLength{
             retPoint.x=screen.origin.x+wakuLength
         }else if retPoint.x>screen.origin.x+screen.width-wakuLength{
@@ -86,7 +86,7 @@ class PlayViewController: UIViewController {
         let vh=videoSize.height//CGFloat(videoImage.extent.height)
         
         var d=(sw-vw*sh/vh)/2
-        print(sw,sh,vh,vw,d)
+//        print(sw,sh,vh,vw,d)
         if d>0{
             return CGRect(x:d,y:0,width:sw-2*d,height:sh)
         }else{//ここがうまく行っていないようだ
@@ -433,12 +433,12 @@ class PlayViewController: UIViewController {
             return
         }
         if calcFlag == false {//終わったらここ
-            timer!.invalidate()
+            timer_vog!.invalidate()
             //            setButtons(mode: true)
             UIApplication.shared.isIdleTimerDisabled = false
-            vogImage=addwaveImage(startingImage: vogImage!, sn: lastArraycount-100, en: eyeVeloOrig.count)
+//            vogImage=addwaveImage(startingImage: vogImage!, sn: lastArraycount-100, en: eyeVeloOrig.count)
             
-            drawVogall_new()
+//            drawVogall_new()
             if vogLineView != nil{
                 vogLineView?.removeFromSuperview()//waveを消して
                 //                drawVogtext()//文字を表示
@@ -448,25 +448,14 @@ class PlayViewController: UIViewController {
             #if DEBUG
             print("debug-update",timercnt)
             #endif
+            print("veloCount:",eyeVeloOrig.count)
             drawVog(startcount: eyeVeloOrig.count)
-            vogImage=addwaveImage(startingImage: vogImage!, sn: lastArraycount-100, en: eyeVeloOrig.count)
+//            vogImage=addwaveImage(startingImage: vogImage!, sn: lastArraycount-100, en: eyeVeloOrig.count)
             //            vogCurpoint=vHITeye.count
             lastArraycount=eyeVeloOrig.count
         }
     }
-    
-    //    func setEyeFaceLargeRect(){
-    //        let vw = screenSize.width
-    //        let vh = screenSize.height
-    //        let iw = videoSize.width
-    //        let ih = videoSize.height
-    //        let tw = getRectFromCenter(center: eyeCenter, len: wakuLength).width
-    //        let th = getRectFromCenter(center: eyeCenter, len: wakuLength).height
-    //        let width=(tw * iw / vw)
-    //        let height=(th * ih / vh)
-    //        eyeLargeRect = CGRect(x:vw/4+10,y:5,width:width*4,height: height*4)
-    //        faceLargeRect = CGRect(x:vw/4 - width*4 - 10,y:5,width:width*4,height: height*4)
-    //    }
+  
     func resolutionSizeOfVideo(url:URL) -> CGSize? {
         guard let track = AVAsset(url: url).tracks(withMediaType: AVMediaType.video).first else { return nil }
         let size = track.naturalSize.applying(track.preferredTransform)
@@ -553,9 +542,9 @@ class PlayViewController: UIViewController {
         faceWakuL_image.layer.borderWidth = 1.0
         faceWakuL_image.backgroundColor = UIColor.clear
         faceWakuL_image.layer.cornerRadius = 3
-        //        faceWakuL_image.image=UIface
-        let grayFace=openCV.grayScale(UIface)
-        faceWakuL_image.image=grayFace
+        faceWakuL_image.image=UIface
+//        let grayFace=openCV.grayScale(UIface)
+//        faceWakuL_image.image=grayFace
         view.bringSubviewToFront(faceWakuL_image)
     }
     
@@ -732,16 +721,16 @@ class PlayViewController: UIViewController {
         exitButton.addTarget(self, action: #selector(onExitButtonTapped), for: UIControl.Event.touchUpInside)
         view.addSubview(exitButton)
         
-        let calcButton = UIButton(frame:CGRect(x: dw*4+bw*3, y: by, width: bw, height: bh))
+        let calcButton = UIButton(frame:CGRect(x: dw*4+bw*3, y: by-bh, width: bw, height: bh))
         calcButton.layer.masksToBounds = true
         calcButton.layer.cornerRadius = 5.0
         calcButton.backgroundColor = UIColor.darkGray
-        calcButton.setTitle("戻る", for:UIControl.State.normal)
+        calcButton.setTitle("Calc", for:UIControl.State.normal)
         calcButton.isEnabled=true
         calcButton.layer.borderColor = UIColor.black.cgColor
         calcButton.layer.borderWidth = 1.0
         calcButton.addTarget(self, action: #selector(onCalcButtonTapped), for: UIControl.Event.touchUpInside)
-        view.addSubview(exitButton)
+        view.addSubview(calcButton)
         
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         videoPlayer.play()
@@ -756,7 +745,7 @@ class PlayViewController: UIViewController {
         vogBoxHeight=ww*16/24
         vogBoxYmin=wh/2-vogBoxHeight/2
         vogBoxYcenter=wh/2
-        print("video",videoSize,"screen",screenSize)
+//        print("video",videoSize,"screen",screenSize)
         //        print("screen_w:",view.bounds.width,view.bounds.size.width,"h:",view.bounds.height,view.bounds.size.height)
         //まずは表示だけ、まだちゃんとwakuを捉えていない
         //        faceWakuL_image.isHidden=true
@@ -796,7 +785,7 @@ class PlayViewController: UIViewController {
         let newTime = CMTime(seconds: Double(seekBar.value), preferredTimescale: 600)
         videoPlayer.seek(to: newTime, toleranceBefore: .zero, toleranceAfter: .zero)
         currFrameNumber=Int(seekBar.value*videoFps)
-        print("curr:",currFrameNumber)
+        print("curr/slider:",currFrameNumber)
     }
     func onNextButtonTapped(){//このようなボタンを作ってみれば良さそう。無くてもいいか？
         var seekBarValue=seekBar.value+0.01
@@ -898,10 +887,13 @@ class PlayViewController: UIViewController {
     }
     
     func startTimer() {
-        if timer?.isValid == true {
-            timer!.invalidate()
+//        if timer?.isValid == true {
+//            timer!.invalidate()
+//        }
+        if timer_vog?.isValid == true{
+            timer_vog!.invalidate()
         }
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.update_vog), userInfo: nil, repeats: true)
+        timer_vog = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.update_vog), userInfo: nil, repeats: true)
     }
     var calcFlag:Bool=false
     var openCVstopFlag:Bool=false
@@ -926,27 +918,19 @@ class PlayViewController: UIViewController {
         faceVeloFiltered.removeAll()
         eyePosOrig.removeAll()
         eyePosFiltered.removeAll()
-        
         KalmanInit()
         //        showBoxies(f: true)
         //        vogImage = drawWakulines(width:mailWidth*18,height:mailHeight)//枠だけ
-        
         openCVstopFlag = false
         UIApplication.shared.isIdleTimerDisabled = true
         let eyeborder:CGFloat = CGFloat(eyeBorder)
-        //        print("eyeborder:",eyeBorder,faceF)
         startTimer()//resizerectのチェックの時はここをコメントアウト*********************
-        //       let fileURL = URL(fileURLWithPath: vidPath[vidCurrent])
-        
-        //         let fileURL = getfileURL(path: vidPath[vidCurrent])
         let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
         let avAsset = AVURLAsset(url: videoURL!, options: options)
         calcDate = avAsset.creationDate!.description
         //        print("calcdate:",calcDate)
         var fpsIs120:Bool=false
-        //        if getFPS(url: videoURL!)<200.0{
-        //            fpsIs120=true
-        //        }
+   
         var reader: AVAssetReader! = nil
         do {
             reader = try AVAssetReader(asset: avAsset)
@@ -972,7 +956,6 @@ class PlayViewController: UIViewController {
         let timeRange = CMTimeRange(start: startTime, end:CMTime.positiveInfinity)
         reader.timeRange = timeRange //読み込む範囲を`timeRange`で指定
         reader.startReading()
-        
         // UnsafeとMutableはまあ調べてもらうとして、eX, eY等は<Int32>が一つ格納されている場所へのポインタとして宣言される。
         let eX = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
         let eY = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
@@ -986,46 +969,44 @@ class PlayViewController: UIViewController {
         var faceUIImage:UIImage!
         var faceWithBorderCGImage:CGImage!
         var faceWithBorderUIImage:UIImage!
-        let wakuE=getRectFromCenter(center: eyeCenter, len: wakuLength)
-        let eyeRectOnScreen=CGRect(x:wakuE.origin.x, y:wakuE.origin.y, width: wakuE.width, height: wakuE.height)
+        let eyeRectOnScreen=getRectFromCenter(center: eyeCenter, len: wakuLength)
         let eyeWithBorderRectOnScreen = expandRectWithBorderWide(rect: eyeRectOnScreen, border: eyeborder)
-        let wakuF=getRectFromCenter(center: faceCenter, len: wakuLength)
-        let faceRectOnScreen=CGRect(x:wakuF.origin.x,y:wakuF.origin.y,width: wakuF.width,height: wakuF.height)
+        let faceRectOnScreen=getRectFromCenter(center: faceCenter, len: wakuLength)
         let faceWithBorderRectOnScreen = expandRectWithBorderWide(rect: faceRectOnScreen, border: eyeborder)
         
         let context:CIContext = CIContext.init(options: nil)
-        //            let up = UIImage.Orientation.right
+        let orientation = UIImage.Orientation.up
         var sample:CMSampleBuffer!
-        //        stopButton.isEnabled = true
         sample = readerOutput.copyNextSampleBuffer()
+        let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample!)!
+        let ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.up)//4行上ともupで良いような？
         
-        let pixelBuffer:CVPixelBuffer = CMSampleBufferGetImageBuffer(sample!)!
-        let ciImage:CIImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.right)
         let maxWidth=ciImage.extent.size.width
         let maxHeight=ciImage.extent.size.height
-        let eyeRect = resizeR2(eyeRectOnScreen, viewRect:view.frame, image:ciImage)
-        var eyeWithBorderRect = resizeR2(eyeWithBorderRectOnScreen, viewRect:view.frame, image:ciImage)
+ 
+        let eyeRect = resizeR2(eyeRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
+        var eyeWithBorderRect = resizeR2(eyeWithBorderRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
+        
+//        let eyeRectResized = resizeR2(eyeRect, viewRect:getVideoRectOnScreen(),image:ciImage)
+        
+        let faceRect = resizeR2(faceRectOnScreen, viewRect:getVideoRectOnScreen() /*view.frame*/, image:ciImage)
+        var faceWithBorderRect = resizeR2(faceWithBorderRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
         
         let maxWidthWithBorder=maxWidth-eyeWithBorderRect.width-5
         let maxHeightWithBorder=maxHeight-eyeWithBorderRect.height-5
-        let faceRect = resizeR2(faceRectOnScreen, viewRect: view.frame, image:ciImage)
-        var faceWithBorderRect = resizeR2(faceWithBorderRectOnScreen, viewRect:view.frame, image:ciImage)
-        
         let eyebR0 = eyeWithBorderRect
         let facbR0 = faceWithBorderRect
         
         eyeCGImage = context.createCGImage(ciImage, from: eyeRect)!
-        
         eyeUIImage = UIImage.init(cgImage: eyeCGImage)
         faceCGImage = context.createCGImage(ciImage, from: faceRect)!
-        
         faceUIImage = UIImage.init(cgImage:faceCGImage)
         
-        
-        let osEyeX:CGFloat = (eyeWithBorderRect.size.width - eyeRect.size.width) / 2.0//上下方向
-        let osEyeY:CGFloat = (eyeWithBorderRect.size.height - eyeRect.size.height) / 2.0//左右方向
-        let osFacX:CGFloat = (faceWithBorderRect.size.width - faceRect.size.width) / 2.0//上下方向
-        let osFacY:CGFloat = (faceWithBorderRect.size.height - faceRect.size.height) / 2.0//左右方向
+        let osEyeX:CGFloat = (eyeWithBorderRect.size.width - eyeRect.size.width) / 2.0//上下方向への差
+        let osEyeY:CGFloat = (eyeWithBorderRect.size.height - eyeRect.size.height) / 2.0//左右方向への差
+        let osFacX:CGFloat = (faceWithBorderRect.size.width - faceRect.size.width) / 2.0//上下方向への差
+        let osFacY:CGFloat = (faceWithBorderRect.size.height - faceRect.size.height) / 2.0//左右方向への差
+   //   "ofset:" osEyeX=osFac,osEyeY=osFacY eyeとface同じ
         
         var maxV:Double = 0
         var maxVf:Double = 0
@@ -1043,7 +1024,7 @@ class PlayViewController: UIViewController {
                 //for test display
                 #if DEBUG
                 var x:CGFloat = 0.0
-                let y:CGFloat = 500.0
+                let y:CGFloat = 0.0
                 #endif
                 autoreleasepool{
                     let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample)!//27sec:10sec
@@ -1051,29 +1032,25 @@ class PlayViewController: UIViewController {
                     if cvError < 0{
                         //orientation.upとrightは所要時間同じ
                         let ciImage: CIImage =
-                            CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.right)
+                            CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.up)
                         eyeWithBorderCGImage = context.createCGImage(ciImage, from: eyeWithBorderRect)!
                         eyeWithBorderUIImage = UIImage.init(cgImage: eyeWithBorderCGImage)
                         
                         #if DEBUG
-                        //                        画面表示はmain threadで行う
-                        
+                        //画面表示はmain threadで行う
                         let eye0CGImage = context.createCGImage(ciImage, from:eyebR0)!
-                        //                        let eye0CGImage = context.createCGImage(ciImage, from:eyeErrorRect)!
                         let eye0UIImage = UIImage.init(cgImage: eye0CGImage)
                         
                         DispatchQueue.main.async {
-                            self.wakuEye.frame=CGRect(x:x,y:y,width:eyeRect.size.width*2,height:eyeRect.size.height*2)
-                            self.wakuEye.image=eyeUIImage
-                            x += eyeRect.size.width*2
-                            
-                            self.wakuEyeb.frame=CGRect(x:x,y:y,width:eyeWithBorderRect.size.width*2,height:eyeWithBorderRect.size.height*2)
-                            self.wakuEyeb.image=eyeWithBorderUIImage
-                            x += eyeWithBorderRect.size.width*2
-                            //                            if self.faceF==0 || self.isVHIT==false{
-                            self.wakuFacb.frame=CGRect(x:x,y:y,width:eyebR0.size.width*2,height:eyebR0.size.height*2)
-                            self.wakuFacb.image=eye0UIImage
-                            //                            }
+                            self.debugEye.frame=CGRect(x:x,y:y,width:eyeRect.size.width*4,height:eyeRect.size.height*4)
+                            self.debugEye.image=eyeUIImage
+                            x += eyeRect.size.width*4 + 10
+                            self.debugEyeb.frame=CGRect(x:x,y:y,width:eyeWithBorderRect.size.width*4,height:eyeWithBorderRect.size.height*4)
+                            self.debugEyeb.image=eyeWithBorderUIImage
+//                            print(eyeRect,eyeWithBorderRect)
+//                            x += eyeWithBorderRect.size.width*2 + 10
+//                            self.debugFaceb.frame=CGRect(x:x,y:y,width:eyebR0.size.width*2,height:eyebR0.size.height*2)
+//                            self.debugFaceb.image=eye0UIImage
                         }
                         #endif
                         maxV=self.openCV.matching(eyeWithBorderUIImage,
@@ -1097,36 +1074,36 @@ class PlayViewController: UIViewController {
                             eyeWithBorderRect.origin.y += ey
                             eyePos = eyeWithBorderRect.origin.x - eyebR0.origin.x + ex
                             
-                            if self.faceF==1{
-                                faceWithBorderCGImage = context.createCGImage(ciImage, from:faceWithBorderRect)!
-                                faceWithBorderUIImage = UIImage.init(cgImage: faceWithBorderCGImage)
-                                #if DEBUG
-                                DispatchQueue.main.async {
-                                    if self.faceF==1{
-                                        self.wakuFac.frame=CGRect(x:x,y:y,width:faceRect.size.width*2,height:faceRect.size.height*2)
-                                        self.wakuFac.image=faceUIImage
-                                        x += faceRect.size.width*2
-                                        self.wakuFacb.frame=CGRect(x:x,y:y,width:faceWithBorderRect.size.width*2,height:faceWithBorderRect.size.height*2)
-                                        self.wakuFacb.image=faceWithBorderUIImage
-                                    }
-                                }
-                                #endif
-                                
-                                maxVf=self.openCV.matching(faceWithBorderUIImage, narrow: faceUIImage, x: fX, y: fY)
-                                while self.openCVstopFlag == true{//vHITeyeを使用中なら待つ
-                                    usleep(1)
-                                }
-                                if maxVf<0.7{
-                                    cvError=5
-                                    faceWithBorderRect=facbR0
-                                    eyeWithBorderRect=eyebR0
-                                }else{
-                                    fx = CGFloat(fX.pointee) - osFacX
-                                    fy = faceWithBorderRect.height - CGFloat(fY.pointee) - faceRect.height - osFacY
-                                    faceWithBorderRect.origin.x += fx
-                                    faceWithBorderRect.origin.y += fy
-                                }
+                            
+                            faceWithBorderCGImage = context.createCGImage(ciImage, from:faceWithBorderRect)!
+                            faceWithBorderUIImage = UIImage.init(cgImage: faceWithBorderCGImage)
+                            #if DEBUG
+//                            DispatchQueue.main.async {
+//                                if self.faceF==1{
+//                                    self.debugFace.frame=CGRect(x:x,y:y,width:faceRect.size.width*2,height:faceRect.size.height*2)
+//                                    self.debugFace.image=faceUIImage
+//                                    x += faceRect.size.width*2
+//                                    self.debugFaceb.frame=CGRect(x:x,y:y,width:faceWithBorderRect.size.width*2,height:faceWithBorderRect.size.height*2)
+//                                    self.debugFaceb.image=faceWithBorderUIImage
+//                                }
+//                            }
+                            #endif
+                            
+                            maxVf=self.openCV.matching(faceWithBorderUIImage, narrow: faceUIImage, x: fX, y: fY)
+                            while self.openCVstopFlag == true{//vHITeyeを使用中なら待つ
+                                usleep(1)
                             }
+                            if maxVf<0.7{
+                                cvError=5
+                                faceWithBorderRect=facbR0
+                                eyeWithBorderRect=eyebR0
+                            }else{
+                                fx = CGFloat(fX.pointee) - osFacX
+                                fy = faceWithBorderRect.height - CGFloat(fY.pointee) - faceRect.height - osFacY
+                                faceWithBorderRect.origin.x += fx
+                                faceWithBorderRect.origin.y += fy
+                            }
+                            
                         }
                         context.clearCaches()
                     }
