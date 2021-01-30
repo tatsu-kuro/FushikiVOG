@@ -58,7 +58,7 @@ class PlayViewController: UIViewController {
     
     var eyeCenter = CGPoint(x:300.0,y:100.0)
     var faceCenter = CGPoint(x:300.0,y:200.0)
-    var wakuLength:CGFloat=3//rectの縦横幅
+    var wakuLength:CGFloat=5//rectの縦横幅
     var eyeLargeRect:CGRect!
     var faceLargeRect:CGRect!
     func getRectFromCenter(center:CGPoint,len:CGFloat)->CGRect{
@@ -512,11 +512,13 @@ class PlayViewController: UIViewController {
         var CGface:CGImage!//face
         var UIface:UIImage!
         let context:CIContext = CIContext.init(options: nil)
+        //landscape right homeに固定すると、
+        //UIImage.Orientation.up CIImage(....Orientation.down)で向きが一致する。
         let orientation = UIImage.Orientation.up
         var sample:CMSampleBuffer!
         sample = readerOutput.copyNextSampleBuffer()
         let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample!)!
-        let ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.up)//4行上ともupで良いような？
+        let ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.down)//4行上ともupで良いような？
         //起動時表示が一巡？するまでは　slowImage.frame はちょっと違う値を示す
         //        eyeCenter=transPoint(point: eyeCenter, videoImage: ciImage)
         let eyeRect=getRectFromCenter(center: eyeCenter, len: wakuLength)
@@ -868,13 +870,13 @@ class PlayViewController: UIViewController {
                       height:rect.size.height + border * 2)
     }
     func expandRectWithBorder(rect:CGRect, border:CGFloat) -> CGRect {
-        //左右には border 、上下には border/2 を広げる
+        //左右上下に border　を広げる
         //この関数も上と同じようにroundした方がいいかもしれないが、
         //現状ではscreen座標のみで使っているのでfloatのまま。
         return CGRect(x:rect.origin.x - border,
-                      y:rect.origin.y - border / 4,
+                      y:rect.origin.y - border,
                       width:rect.size.width + border * 2,
-                      height:rect.size.height + border / 2)
+                      height:rect.size.height + border * 2)
     }
     func expandRectError(rect:CGRect, border:CGFloat) -> CGRect {
         //左右には border 、上下には border/2 を広げる
@@ -979,7 +981,7 @@ class PlayViewController: UIViewController {
         var sample:CMSampleBuffer!
         sample = readerOutput.copyNextSampleBuffer()
         let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample!)!
-        let ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.up)//4行上ともupで良いような？
+        let ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.down)//4行上ともupで良いような？
         
         let maxWidth=ciImage.extent.size.width
         let maxHeight=ciImage.extent.size.height
@@ -1032,7 +1034,7 @@ class PlayViewController: UIViewController {
                     if cvError < 0{
                         //orientation.upとrightは所要時間同じ
                         let ciImage: CIImage =
-                            CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.up)
+                            CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.down)
                         eyeWithBorderCGImage = context.createCGImage(ciImage, from: eyeWithBorderRect)!
                         eyeWithBorderUIImage = UIImage.init(cgImage: eyeWithBorderCGImage)
                         
@@ -1042,11 +1044,13 @@ class PlayViewController: UIViewController {
                         let eye0UIImage = UIImage.init(cgImage: eye0CGImage)
                         
                         DispatchQueue.main.async {
-                            self.debugEye.frame=CGRect(x:x,y:y,width:eyeRect.size.width*4,height:eyeRect.size.height*4)
+                            self.debugEye.frame=CGRect(x:x,y:y,width:eyeRect.size.width,height:eyeRect.size.height)
                             self.debugEye.image=eyeUIImage
-                            x += eyeRect.size.width*4 + 10
-                            self.debugEyeb.frame=CGRect(x:x,y:y,width:eyeWithBorderRect.size.width*4,height:eyeWithBorderRect.size.height*4)
+                            x += eyeRect.size.width + 10
+                            self.debugEyeb.frame=CGRect(x:x,y:y,width:eyeWithBorderRect.size.width,height:eyeWithBorderRect.size.height)
                             self.debugEyeb.image=eyeWithBorderUIImage
+                            
+                            self.view.bringSubviewToFront(self.debugEyeb)
 //                            print(eyeRect,eyeWithBorderRect)
 //                            x += eyeWithBorderRect.size.width*2 + 10
 //                            self.debugFaceb.frame=CGRect(x:x,y:y,width:eyebR0.size.width*2,height:eyebR0.size.height*2)
