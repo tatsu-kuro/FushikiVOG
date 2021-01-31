@@ -294,7 +294,9 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
         }
         return retF
     }
-    
+    //    videoConnection.videoOrientation = .Portrait
+    //    AVCaptureVideoOrientation.LandscapeRight.rawValue と同値
+    //    AVCaptureVideoOrientation.landscapeRight.rawValue
     func initSession(fps:Double) {
         // セッション生成
         captureSession = AVCaptureSession()
@@ -308,11 +310,13 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
             print("フォーマットが指定できた")
         }
         // ファイル出力設定
+        //orientation.rawValue
         fileOutput = AVCaptureMovieFileOutput()
         captureSession.addOutput(fileOutput)
         let videoDataOuputConnection = fileOutput.connection(with: .video)
         let orientation = UIDevice.current.orientation
-        videoDataOuputConnection!.videoOrientation = AVCaptureVideoOrientation(rawValue: orientation.rawValue)!
+        videoDataOuputConnection!.videoOrientation = AVCaptureVideoOrientation(rawValue: AVCaptureVideoOrientation.landscapeRight.rawValue)!//AVCaptureVideoOrientation(rawValue: orientation.rawValue)!
+//        videoDataOuputConnection!.videoOrientation = AVCaptureVideoOrientation(rawValue: orientation.rawValue)!
         // セッションを開始する (録画開始とは別)
         captureSession.startRunning()
         //手振れ補正はデフォルトがoff

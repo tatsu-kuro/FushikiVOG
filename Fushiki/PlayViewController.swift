@@ -58,7 +58,8 @@ class PlayViewController: UIViewController {
     
     var eyeCenter = CGPoint(x:300.0,y:100.0)
     var faceCenter = CGPoint(x:300.0,y:200.0)
-    var wakuLength:CGFloat=5//rectの縦横幅
+    var wakuLength:CGFloat=8//rectの縦横幅
+    var eyeBorder:Int = 40
     var eyeLargeRect:CGRect!
     var faceLargeRect:CGRect!
     func getRectFromCenter(center:CGPoint,len:CGFloat)->CGRect{
@@ -440,7 +441,7 @@ class PlayViewController: UIViewController {
             
 //            drawVogall_new()
             if vogLineView != nil{
-                vogLineView?.removeFromSuperview()//waveを消して
+//                vogLineView?.removeFromSuperview()//waveを消して
                 //                drawVogtext()//文字を表示
             }
             //終わり直前で認識されたvhitdataが認識されないこともあるかもしれない
@@ -448,7 +449,7 @@ class PlayViewController: UIViewController {
             #if DEBUG
             print("debug-update",timercnt)
             #endif
-            print("veloCount:",eyeVeloOrig.count)
+//            print("veloCount:",eyeVeloOrig.count)
             drawVog(startcount: eyeVeloOrig.count)
 //            vogImage=addwaveImage(startingImage: vogImage!, sn: lastArraycount-100, en: eyeVeloOrig.count)
             //            vogCurpoint=vHITeye.count
@@ -626,7 +627,15 @@ class PlayViewController: UIViewController {
     
     
     @objc func update(tm: Timer) {
-        currTime?.text=String(format:"%.1f/%.1f",seekBar.value,videoDuration)
+//        currTime?.text=String(format:"%.1f/%.1f",seekBar.value,videoDuration)
+        currTime?.numberOfLines=0
+        currTime?.text=String(format:"%.1f/%.1f\n%d,%d,%d",seekBar.value,videoDuration,Int(videoFps),Int(videoSize.width),Int(videoSize.height))
+        if !((videoPlayer.rate != 0) && (videoPlayer.error == nil)) {//notplaying
+            if seekBar.value>videoDuration-0.01{
+                seekBar.value=0
+                videoPlayer.seek(to: CMTimeMakeWithSeconds(Float64(seekBar.value), preferredTimescale: Int32(NSEC_PER_SEC)))
+            }
+        }
     }
     
     func killTimer(){
@@ -644,11 +653,11 @@ class PlayViewController: UIViewController {
         let avAsset = AVURLAsset(url: videoURL!)
         let ww:CGFloat=view.bounds.width
         let wh:CGFloat=view.bounds.height
-        let dw=ww/50//間隙
-        let bw=(ww-dw*5)/4//ボタン幅
+        let dw=ww/100//間隙
+        let bw=(ww-dw*6)/5//ボタン幅
         let bh=bw/4//ボタン厚さ
-        let by=wh - dw - bh//ボタンy
-        let seeky=by - bh - dw/2//バーy
+        let seeky=wh - bh
+        let by=seeky - bh
         
         videoDuration=Float(CMTimeGetSeconds(avAsset.duration))
         let playerItem: AVPlayerItem = AVPlayerItem(asset: avAsset)
@@ -691,28 +700,28 @@ class PlayViewController: UIViewController {
         currTime!.layer.borderWidth = 1.0
         view.addSubview(currTime!)
         
-        let stopButton = UIButton(frame: CGRect(x: dw*2+bw*1, y: by, width: bw, height: bh))
-        stopButton.layer.masksToBounds = true
-        stopButton.layer.cornerRadius = 5.0
-        stopButton.backgroundColor = UIColor.orange
-        stopButton.setTitle("停止", for: UIControl.State.normal)
-        stopButton.layer.borderColor = UIColor.black.cgColor
-        stopButton.layer.borderWidth = 1.0
-        stopButton.addTarget(self, action: #selector(onStopButtonTapped), for: UIControl.Event.touchUpInside)
-        view.addSubview(stopButton)
+//        let stopButton = UIButton(frame: CGRect(x: dw*2+bw*1, y: by, width: bw, height: bh))
+//        stopButton.layer.masksToBounds = true
+//        stopButton.layer.cornerRadius = 5.0
+//        stopButton.backgroundColor = UIColor.orange
+//        stopButton.setTitle("再生・停止", for: UIControl.State.normal)
+//        stopButton.layer.borderColor = UIColor.black.cgColor
+//        stopButton.layer.borderWidth = 1.0
+//        stopButton.addTarget(self, action: #selector(onStopButtonTapped), for: UIControl.Event.touchUpInside)
+//        view.addSubview(stopButton)
         
         // Create Movie Start Button
-        let startButton = UIButton(frame:CGRect(x: dw*3+bw*2, y: by, width: bw, height: bh))
+        let startButton = UIButton(frame:CGRect(x: dw*2+bw*1, y: by, width: bw, height: bh))
         startButton.layer.masksToBounds = true
         startButton.layer.cornerRadius = 5.0
         startButton.backgroundColor = UIColor.orange
-        startButton.setTitle("再生", for: UIControl.State.normal)
+        startButton.setTitle("再生・停止", for: UIControl.State.normal)
         startButton.layer.borderColor = UIColor.black.cgColor
         startButton.layer.borderWidth = 1.0
         startButton.addTarget(self, action: #selector(onStartButtonTapped), for: UIControl.Event.touchUpInside)
         view.addSubview(startButton)
         
-        let exitButton = UIButton(frame:CGRect(x: dw*4+bw*3, y: by, width: bw, height: bh))
+        let exitButton = UIButton(frame:CGRect(x: dw*5+bw*4, y: by, width: bw, height: bh))
         exitButton.layer.masksToBounds = true
         exitButton.layer.cornerRadius = 5.0
         exitButton.backgroundColor = UIColor.darkGray
@@ -723,10 +732,10 @@ class PlayViewController: UIViewController {
         exitButton.addTarget(self, action: #selector(onExitButtonTapped), for: UIControl.Event.touchUpInside)
         view.addSubview(exitButton)
         
-        let calcButton = UIButton(frame:CGRect(x: dw*4+bw*3, y: by-bh, width: bw, height: bh))
+        let calcButton = UIButton(frame:CGRect(x: dw*4+bw*3, y: by, width: bw, height: bh))
         calcButton.layer.masksToBounds = true
         calcButton.layer.cornerRadius = 5.0
-        calcButton.backgroundColor = UIColor.darkGray
+        calcButton.backgroundColor = UIColor.blue
         calcButton.setTitle("Calc", for:UIControl.State.normal)
         calcButton.isEnabled=true
         calcButton.layer.borderColor = UIColor.black.cgColor
@@ -735,7 +744,7 @@ class PlayViewController: UIViewController {
         view.addSubview(calcButton)
         
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
-        videoPlayer.play()
+//        videoPlayer.play()
         
         videoSize=resolutionSizeOfVideo(url:videoURL!)
         screenSize=view.bounds.size
@@ -761,11 +770,21 @@ class PlayViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    
+    /*
+     if (videoPlayer.rate != 0) && (videoPlayer.error == nil) {//playing
+         videoPlayer.pause()
+     }else{//stoped
+         if seekBar.value>seekBar.maximumValue-0.5{
+         seekBar.value=0
+         }
+         videoPlayer.seek(to: CMTimeMakeWithSeconds(Float64(seekBar.value), preferredTimescale: Int32(NSEC_PER_SEC)))
+         videoPlayer.play()
+     }
+     */
     // Start Button Tapped
     @objc func onStartButtonTapped(){
         if (videoPlayer.rate != 0) && (videoPlayer.error == nil) {//playing
-            return//videoPlayer.pause()
+            videoPlayer.pause()
         }else{//stoped
             if seekBar.value>seekBar.maximumValue-0.5{
                 seekBar.value=0
@@ -895,11 +914,11 @@ class PlayViewController: UIViewController {
         if timer_vog?.isValid == true{
             timer_vog!.invalidate()
         }
-        timer_vog = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.update_vog), userInfo: nil, repeats: true)
+        timer_vog = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.update_vog), userInfo: nil, repeats: true)
     }
     var calcFlag:Bool=false
     var openCVstopFlag:Bool=false
-    var eyeBorder:Int = 20
+//    var eyeBorder:Int = 50
     var posRatio:Int = 100//vog
     var veloRatio:Int = 100//vog
     var faceF:Int = 0
@@ -1049,10 +1068,11 @@ class PlayViewController: UIViewController {
                             x += eyeRect.size.width + 10
                             self.debugEyeb.frame=CGRect(x:x,y:y,width:eyeWithBorderRect.size.width,height:eyeWithBorderRect.size.height)
                             self.debugEyeb.image=eyeWithBorderUIImage
-                            
+                            self.view.bringSubviewToFront(self.debugEye)
                             self.view.bringSubviewToFront(self.debugEyeb)
+                            
 //                            print(eyeRect,eyeWithBorderRect)
-//                            x += eyeWithBorderRect.size.width*2 + 10
+                            x += eyeWithBorderRect.size.width + 10
 //                            self.debugFaceb.frame=CGRect(x:x,y:y,width:eyebR0.size.width*2,height:eyebR0.size.height*2)
 //                            self.debugFaceb.image=eye0UIImage
                         }
@@ -1082,15 +1102,15 @@ class PlayViewController: UIViewController {
                             faceWithBorderCGImage = context.createCGImage(ciImage, from:faceWithBorderRect)!
                             faceWithBorderUIImage = UIImage.init(cgImage: faceWithBorderCGImage)
                             #if DEBUG
-//                            DispatchQueue.main.async {
-//                                if self.faceF==1{
-//                                    self.debugFace.frame=CGRect(x:x,y:y,width:faceRect.size.width*2,height:faceRect.size.height*2)
-//                                    self.debugFace.image=faceUIImage
-//                                    x += faceRect.size.width*2
-//                                    self.debugFaceb.frame=CGRect(x:x,y:y,width:faceWithBorderRect.size.width*2,height:faceWithBorderRect.size.height*2)
-//                                    self.debugFaceb.image=faceWithBorderUIImage
-//                                }
-//                            }
+                            DispatchQueue.main.async {
+                                self.debugFace.frame=CGRect(x:x,y:y,width:faceRect.size.width,height:faceRect.size.height)
+                                self.debugFace.image=faceUIImage
+                                x += faceRect.size.width + 10
+                                self.debugFaceb.frame=CGRect(x:x,y:y,width:faceWithBorderRect.size.width,height:faceWithBorderRect.size.height)
+                                self.debugFaceb.image=faceWithBorderUIImage
+                                self.view.bringSubviewToFront(self.debugFace)
+                                self.view.bringSubviewToFront(self.debugFaceb)
+                            }
                             #endif
                             
                             maxVf=self.openCV.matching(faceWithBorderUIImage, narrow: faceUIImage, x: fX, y: fY)
