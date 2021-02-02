@@ -563,7 +563,6 @@ class PlayViewController: UIViewController {
         //        faceCenter=transPoint(point: faceCenter,videoImage: ciImage)
         let faceRect=getRectFromCenter(center: faceCenter, len: wakuLength)
         let faceRectResized = resizeR2(faceRect, viewRect:getVideoRectOnScreen(), image: ciImage)
-//        let faceRectResized = checkRect(rect:faceRectResized1,image:ciImage)
         CGface = context.createCGImage(ciImage, from: faceRectResized)
         UIface = UIImage.init(cgImage: CGface, scale:1.0, orientation:.up)
         faceWakuL_image.frame=CGRect(x:view.bounds.width/4 - faceRectResized.size.width*4 - 10,y:5,width: faceRectResized.size.width*4,height: faceRectResized.size.height*4)
@@ -573,7 +572,6 @@ class PlayViewController: UIViewController {
         faceWakuL_image.layer.cornerRadius = 3
         faceWakuL_image.image=UIface
         view.bringSubviewToFront(faceWakuL_image)
-//        view.bringSubviewToFront(fpsLabel)
     }
     
     func dispWakus(){
@@ -791,7 +789,8 @@ class PlayViewController: UIViewController {
         fpsLabel.layer.cornerRadius = 2.0
         fpsLabel.layer.borderColor = UIColor.black.cgColor
         fpsLabel.layer.borderWidth = 1.0
-        view.bringSubviewToFront(fpsLabel)//これが見えないのは何故？
+        fpsLabel.textColor = UIColor.black
+        view.bringSubviewToFront(fpsLabel)
         vogBoxHeight=ww*16/24
         vogBoxYmin=wh/2-vogBoxHeight/2
         vogBoxYcenter=wh/2
