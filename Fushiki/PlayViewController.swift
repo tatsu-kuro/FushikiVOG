@@ -46,6 +46,14 @@ class PlayViewController: UIViewController {
     var vogBoxYcenter:CGFloat=0
     var mailWidth:CGFloat=2400//VOG
     var mailHeight:CGFloat=1600//VOG
+    @IBOutlet weak var waveButton: UIButton!
+    @IBOutlet weak var mailButton: UIButton!
+    
+    @IBOutlet weak var calcButton: UIButton!
+    @IBOutlet weak var exitButton: UIButton!
+    @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var setteiButton: UIButton!
     @IBOutlet weak var debugEye: UIImageView!
     @IBOutlet weak var debugEyeb: UIImageView!
     @IBOutlet weak var debugFace: UIImageView!
@@ -56,6 +64,40 @@ class PlayViewController: UIViewController {
     @IBOutlet weak var faceWakuL_image: UIImageView!
     @IBOutlet weak var eyeWakuL_image: UIImageView!
     
+    @IBOutlet weak var fpsLabel: UILabel!
+    
+    @IBAction func onMailButton(_ sender: Any) {
+    }
+    
+    @IBAction func onSaveButton(_ sender: Any) {
+    }
+    
+    @IBAction func onWaveButton(_ sender: Any) {
+    }
+    
+    @IBAction func onSetteiButton(_ sender: Any) {
+    }
+    @IBAction func onPlayButton(_ sender: Any) {
+        if (videoPlayer.rate != 0) && (videoPlayer.error == nil) {//playing
+            videoPlayer.pause()
+            videoPlayer.seek(to: CMTimeMakeWithSeconds(Float64(seekBar.value), preferredTimescale: Int32(NSEC_PER_SEC)))
+        }else{//stoped
+            if seekBar.value>seekBar.maximumValue-0.5{
+                seekBar.value=0
+            }
+            videoPlayer.seek(to: CMTimeMakeWithSeconds(Float64(seekBar.value), preferredTimescale: Int32(NSEC_PER_SEC)))
+            videoPlayer.play()
+        }
+    }
+  
+    @IBAction func onExitButton(_ sender: Any) {
+        killTimer()
+        let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
+        if UIApplication.shared.isIdleTimerDisabled == true{
+            UIApplication.shared.isIdleTimerDisabled = false//スリープする
+        }
+        self.present(mainView, animated: false, completion: nil)
+    }
     var eyeCenter = CGPoint(x:300.0,y:100.0)
     var faceCenter = CGPoint(x:300.0,y:200.0)
     var wakuLength:CGFloat=8//rectの縦横幅
@@ -193,14 +235,14 @@ class PlayViewController: UIViewController {
         let dx = 1// xの間隔
         
         for i in 0..<Int(w) {
-            if i < eyePosXfiltered_s.count - 4{
+            if i < eyePosXfiltered.count - 4{
                 let px = CGFloat(dx * i)
-                let py = eyePosXfiltered_s[i] * CGFloat(posRatio)/20.0 + (h-240)/4 + 120
-                let py2 = eyeVeloFiltered[i] * CGFloat(veloRatio)/10.0 + (h-240)*3/4 + 120
+                let py = eyePosXfiltered[i] * CGFloat(posRatio)/20.0 + (h-240)/4 + 120
+//                let py2 = eyeVeloFiltered[i] * CGFloat(veloRatio)/10.0 + (h-240)*3/4 + 120
                 let point = CGPoint(x: px, y: py)
-                let point2 = CGPoint(x: px, y: py2)
+//                let point2 = CGPoint(x: px, y: py2)
                 pointList.append(point)
-                pointList2.append(point2)
+//                pointList2.append(point2)
             }
         }
         // 始点に移動する
@@ -211,13 +253,11 @@ class PlayViewController: UIViewController {
         for pt in pointList {
             drawPath.addLine(to: pt)
         }
-        drawPath.move(to: pointList2[0])
-        // 配列から始点の値を取り除く
-        pointList2.removeFirst()
-        // 配列から点を取り出して連結していく
-        for pt in pointList2 {
-            drawPath.addLine(to: pt)
-        }
+//        drawPath.move(to: pointList2[0])
+//        pointList2.removeFirst()
+//        for pt in pointList2 {
+//            drawPath.addLine(to: pt)
+//        }
         // 線の色
         UIColor.black.setStroke()
         // 線を描く
@@ -254,36 +294,50 @@ class PlayViewController: UIViewController {
         drawPath.addLine(to: CGPoint(x:w,y:h-120))
         drawPath.stroke()
         drawPath.removeAllPoints()
-        var pointList = Array<CGPoint>()
-        var pointList2 = Array<CGPoint>()
-        let eyeVeloFilteredCnt=eyeVeloFiltered.count
+        var pointX = Array<CGPoint>()
+        var pointXd = Array<CGPoint>()
+        var pointY = Array<CGPoint>()
+        var pointYd = Array<CGPoint>()
+        let dataCnt=eyePosXfiltered.count
+//        let xarray=sample(width:wI,start: startp, x: eyePosXfiltered_s)
         let dx = 1// xの間隔
         //        print("vogPos5,vHITEye5,vHITeye",vogPos5.count,vHITEye5.count,vHITEye.count)
         for n in 1..<wI {
-            if startp + n < eyeVeloFilteredCnt {//-20としてみたがエラー。関係なさそう。
+            if startp + n < dataCnt - 1{//-20としてみたがエラー。関係なさそう。
                 let px = CGFloat(dx * n)
-                let py = eyePosXfiltered_s[startp + n] * CGFloat(posRatio)/20.0 + (h-240)/4 + 120
-                let py2 = eyeVeloFiltered[startp + n] * CGFloat(veloRatio)/10.0 + (h-240)*3/4 + 120
-                let point = CGPoint(x: px, y: py)
+                
+                let py1 = eyePosXfiltered[startp + n] * CGFloat(posRatio)/20.0 + (h-240)/5
+                let py2 = eyeVelXfiltered[startp + n] * CGFloat(veloRatio) + (h-240)*2/5
+                let py3 = eyePosYfiltered[startp + n] * CGFloat(posRatio)/20.0 + (h-240)*3/5
+                let py4 = eyeVelYfiltered[startp + n] * CGFloat(veloRatio) + (h-240)*4/5
+                let point1 = CGPoint(x: px, y: py1)
                 let point2 = CGPoint(x: px, y: py2)
-                pointList.append(point)
-                pointList2.append(point2)
-                //                print("VOGdata:",px,py,py2)
+                let point3 = CGPoint(x: px, y: py3)
+                let point4 = CGPoint(x: px, y: py4)
+                pointX.append(point1)
+                pointXd.append(point2)
+                pointY.append(point3)
+                pointYd.append(point4)
             }
         }
-        // 始点に移動する
-        drawPath.move(to: pointList[0])
-        // 配列から始点の値を取り除く
-        pointList.removeFirst()
-        // 配列から点を取り出して連結していく
-        for pt in pointList {
+        drawPath.move(to: pointX[0])// 始点に移動する
+        pointX.removeFirst()// 配列から始点の値を取り除く
+        for pt in pointX {// 配列から点を取り出して連結していく
             drawPath.addLine(to: pt)
         }
-        drawPath.move(to: pointList2[0])
-        // 配列から始点の値を取り除く
-        pointList2.removeFirst()
-        // 配列から点を取り出して連結していく
-        for pt in pointList2 {
+        drawPath.move(to: pointXd[0])
+        pointXd.removeFirst()
+        for pt in pointXd {
+            drawPath.addLine(to: pt)
+        }
+        drawPath.move(to: pointY[0])
+        pointY.removeFirst()
+        for pt in pointY {
+            drawPath.addLine(to: pt)
+        }
+        drawPath.move(to: pointYd[0])
+        pointYd.removeFirst()
+        for pt in pointYd {
             drawPath.addLine(to: pt)
         }
         // 線の色
@@ -296,7 +350,26 @@ class PlayViewController: UIViewController {
         UIGraphicsEndImageContext()
         return image!
     }
- 
+//    func getPointList(width:CGFloat,height:CGFloat,start:Int,x: [CGFloat],type:Bool)->[CGPoint] {
+//        var pointList = Array<CGPoint>()
+//        let w=Int(width)
+//        let cnt=x.count
+//        var py:CGFloat=0
+//        for n in 1..<w {
+//            if start + n < cnt - 1{
+//                let px = CGFloat(n)
+//                if(type==false){
+//                    py = x[start + n] * CGFloat(posRatio)/20.0 + (height-240)/4 + 120
+//                }else{
+//                py = (x[start + n + 1] - x[start + n]) * CGFloat(veloRatio) + (height-240)*3/4 + 120
+//                }
+//                let point = CGPoint(x: px, y: py)
+//                pointList.append(point)
+//            }
+//        }
+//        return pointList
+//    }
+   
     func drawVog(startcount:Int){//startcountまでのvogを画面に表示
         if vogLineView != nil{
             vogLineView?.removeFromSuperview()
@@ -305,7 +378,7 @@ class PlayViewController: UIViewController {
             wave3View?.removeFromSuperview()
         }
         let dImage = drawVogwaves(timeflag:true,num:startcount,width:mailWidth,height:mailHeight)
-        let drawImage = dImage.resize(size: CGSize(width:view.bounds.width, height:vogBoxHeight))
+        let drawImage = dImage.resize(size: CGSize(width:view.bounds.width, height:vogBoxHeight*2/3))
         vogLineView = UIImageView(image: drawImage)
         vogLineView?.center =  CGPoint(x:view.bounds.width/2,y:view.bounds.height/2)
         // 画面に表示する
@@ -331,17 +404,17 @@ class PlayViewController: UIViewController {
         var pointList = Array<CGPoint>()
         var pointList2 = Array<CGPoint>()
         let h=startingImage.size.height
-        let vogPos_count=eyeVeloFiltered.count//eyePosOrig.count
+        let vogPos_count=eyePosXfiltered.count//eyePosOrig.count
         let dx = 1// xの間隔
         for i in stn..<en {
             if i < vogPos_count{
                 let px = CGFloat(dx * i)
-                let py = eyePosXfiltered_s[i] * CGFloat(posRatio)/20.0 + (h-240)/4 + 120
-                let py2 = eyeVeloFiltered[i] * CGFloat(veloRatio)/10.0 + (h-240)*3/4 + 120
+                let py = eyePosXfiltered[i] * CGFloat(posRatio)/20.0 + (h-240)/4 + 120
+//                let py2 = eyeVeloFiltered[i] * CGFloat(veloRatio)/10.0 + (h-240)*3/4 + 120
                 let point = CGPoint(x: px, y: py)
-                let point2 = CGPoint(x: px, y: py2)
+//                let point2 = CGPoint(x: px, y: py2)
                 pointList.append(point)
-                pointList2.append(point2)
+//                pointList2.append(point2)
             }
         }
         // 始点に移動する
@@ -352,13 +425,13 @@ class PlayViewController: UIViewController {
         for pt in pointList {
             context.addLine(to: pt)
         }
-        context.move(to: pointList2[0])
-        // 配列から始点の値を取り除く
-        pointList2.removeFirst()
-        // 配列から点を取り出して連結していく
-        for pt in pointList2 {
-            context.addLine(to: pt)
-        }
+//        context.move(to: pointList2[0])
+//        // 配列から始点の値を取り除く
+//        pointList2.removeFirst()
+//        // 配列から点を取り出して連結していく
+//        for pt in pointList2 {
+//            context.addLine(to: pt)
+//        }
         // 線の色
         context.strokePath()
         
@@ -372,7 +445,7 @@ class PlayViewController: UIViewController {
     var lastArraycount:Int = 0
     @objc func update_vog(tm: Timer) {
         timercnt += 1
-        if eyePosXfiltered_s.count < 5 {//} eyeVeloOrig.count < 5 {
+        if eyePosXfiltered.count < 5 {
             return
         }
         if calcFlag == false {//終わったらここ
@@ -392,10 +465,10 @@ class PlayViewController: UIViewController {
             print("debug-update",timercnt)
             #endif
 //            print("veloCount:",eyeVeloOrig.count)
-            drawVog(startcount: eyePosXfiltered_s.count)
+            drawVog(startcount: eyePosXfiltered.count)
 //            vogImage=addwaveImage(startingImage: vogImage!, sn: lastArraycount-100, en: eyeVeloOrig.count)
             //            vogCurpoint=vHITeye.count
-            lastArraycount=eyePosXfiltered_s.count
+            lastArraycount=eyePosXfiltered.count
         }
     }
   
@@ -491,6 +564,7 @@ class PlayViewController: UIViewController {
 //        let grayFace=openCV.grayScale(UIface)
 //        faceWakuL_image.image=grayFace
         view.bringSubviewToFront(faceWakuL_image)
+//        fpsLabel.frame=CGRect(x:100,y:100,width:100,height: 100)
     }
     
     func dispWakus(){
@@ -569,9 +643,7 @@ class PlayViewController: UIViewController {
     
     
     @objc func update(tm: Timer) {
-//        currTime?.text=String(format:"%.1f/%.1f",seekBar.value,videoDuration)
-        currTime?.numberOfLines=0
-        currTime?.text=String(format:"%.1f/%.1f\n%d,%d,%d",seekBar.value,videoDuration,Int(videoFps),Int(videoSize.width),Int(videoSize.height))
+        currTime?.text=String(format:"%.1f/%.1f",seekBar.value,videoDuration)
         if !((videoPlayer.rate != 0) && (videoPlayer.error == nil)) {//notplaying
             if seekBar.value>videoDuration-0.01{
                 seekBar.value=0
@@ -603,11 +675,11 @@ class PlayViewController: UIViewController {
         let avAsset = AVURLAsset(url: videoURL!)
         let ww:CGFloat=view.bounds.width
         let wh:CGFloat=view.bounds.height
-        let dw=ww/100//間隙
-        let bw=(ww-dw*6)/5//ボタン幅
-        let bh=bw/4//ボタン厚さ
-        let seeky=wh - bh
-        let by=seeky - bh
+        let dw=ww/120//間隙
+        let bw=(ww-dw*8)/7//ボタン幅
+        let bh=bw/3.5//ボタン厚さ
+        let by = wh - bh - dw
+        let seeky = by - bh
         
         videoDuration=Float(CMTimeGetSeconds(avAsset.duration))
         let playerItem: AVPlayerItem = AVPlayerItem(asset: avAsset)
@@ -621,7 +693,7 @@ class PlayViewController: UIViewController {
         view.layer.addSublayer(layer)
         // Create Movie SeekBar
         seekBar.frame = CGRect(x: dw, y:seeky, width: ww - 2*dw, height: bh)
-        //        seekBar.layer.position = CGPoint(x: view.bounds.midX, y: by1)
+        seekBar.thumbTintColor=UIColor.orange
         seekBar.minimumValue = 0
         seekBar.maximumValue = videoDuration
         seekBar.addTarget(self, action: #selector(onSliderValueChange), for: UIControl.Event.valueChanged)
@@ -639,7 +711,7 @@ class PlayViewController: UIViewController {
             self.seekBar.value = value
         })
         
-        currTime = UILabel(frame:CGRect(x: dw, y: by, width: bw, height: bh))
+        currTime = UILabel(frame:CGRect(x: dw, y: 5, width: bw, height: bh))
         currTime!.backgroundColor = UIColor.white
         currTime!.layer.masksToBounds = true
         currTime!.layer.cornerRadius = 5
@@ -651,51 +723,53 @@ class PlayViewController: UIViewController {
         view.addSubview(currTime!)
 
         // Create Movie Start Button
-        let startButton = UIButton(frame:CGRect(x: dw*2+bw*1, y: by, width: bw, height: bh))
-        startButton.layer.masksToBounds = true
-        startButton.layer.cornerRadius = 5.0
-        startButton.backgroundColor = UIColor.orange
-        startButton.setTitle("再生・停止", for: UIControl.State.normal)
-        startButton.layer.borderColor = UIColor.black.cgColor
-        startButton.layer.borderWidth = 1.0
-        startButton.addTarget(self, action: #selector(onStartButtonTapped), for: UIControl.Event.touchUpInside)
-        view.addSubview(startButton)
-        
-        let exitButton = UIButton(frame:CGRect(x: dw*5+bw*4, y: by, width: bw, height: bh))
-        exitButton.layer.masksToBounds = true
-        exitButton.layer.cornerRadius = 5.0
-        exitButton.backgroundColor = UIColor.darkGray
-        exitButton.setTitle("戻る", for:UIControl.State.normal)
-        exitButton.isEnabled=true
-        exitButton.layer.borderColor = UIColor.black.cgColor
-        exitButton.layer.borderWidth = 1.0
-        exitButton.addTarget(self, action: #selector(onExitButtonTapped), for: UIControl.Event.touchUpInside)
-        view.addSubview(exitButton)
-        
-        let calcButton = UIButton(frame:CGRect(x: dw*4+bw*3, y: by, width: bw, height: bh))
-        calcButton.layer.masksToBounds = true
-        calcButton.layer.cornerRadius = 5.0
-        calcButton.backgroundColor = UIColor.blue
-        calcButton.setTitle("Calc", for:UIControl.State.normal)
-        calcButton.isEnabled=true
-        calcButton.layer.borderColor = UIColor.black.cgColor
-        calcButton.layer.borderWidth = 1.0
-        calcButton.addTarget(self, action: #selector(onCalcButtonTapped), for: UIControl.Event.touchUpInside)
-        view.addSubview(calcButton)
-        
+ 
+        mailButton.frame = CGRect(x:dw*1+bw*0,y:by,width:bw,height:bh)
+        setButtonProperty(button: mailButton, txt: "Mail", color: UIColor.darkGray)
+        view.bringSubviewToFront(mailButton)
+        saveButton.frame = CGRect(x:dw*2+bw*1,y:by,width:bw,height:bh)
+        setButtonProperty(button: saveButton, txt: "Save", color: UIColor.darkGray)
+        view.bringSubviewToFront(saveButton)
+        waveButton.frame = CGRect(x:dw*3+bw*2,y:by,width:bw,height:bh)
+        setButtonProperty(button: waveButton, txt: "Wave", color: UIColor.darkGray)
+        view.bringSubviewToFront(waveButton)
+        calcButton.frame = CGRect(x: dw*4+bw*3, y: by, width: bw, height: bh)
+        setButtonProperty(button: calcButton, txt: "Calc", color: UIColor.blue)
+        view.bringSubviewToFront(calcButton)
+        playButton.frame = CGRect(x: dw*5+bw*4, y: by, width: bw, height: bh)
+        setButtonProperty(button: playButton, txt: "", color: UIColor.orange)
+        view.bringSubviewToFront(playButton)
+        setteiButton.frame = CGRect(x:dw*6+bw*5,y:by,width:bw,height:bh)
+        setButtonProperty(button: setteiButton, txt: "", color: UIColor.darkGray)
+        view.bringSubviewToFront(setteiButton)
+        exitButton.frame = CGRect(x: dw*7+bw*6, y: by, width: bw, height: bh)
+        setButtonProperty(button: exitButton, txt: "Exit", color: UIColor.darkGray)
+        view.bringSubviewToFront(exitButton)
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
-//        videoPlayer.play()
         videoSize=resolutionSizeOfVideo(url:videoURL!)
         screenSize=view.bounds.size
         videoFps=getFPS(url: videoURL!)
-        //        setEyeFaceLargeRect()
         dispWakus()
         showWakuImages()
-        
+        fpsLabel.frame=CGRect(x:ww - bw*2,y:5,width: bw*2-dw,height: bh)
+        fpsLabel.text = String(format:"fps:%.0f w:%.0f h:%.0f",videoFps,screenSize.width,screenSize.height)
+        fpsLabel.layer.cornerRadius = 2.0
+        fpsLabel.layer.borderColor = UIColor.black.cgColor
+        fpsLabel.layer.borderWidth = 1.0
+        view.bringSubviewToFront(fpsLabel)
         vogBoxHeight=ww*16/24
         vogBoxYmin=wh/2-vogBoxHeight/2
         vogBoxYcenter=wh/2
     }
+    func setButtonProperty(button:UIButton,txt:String,color:UIColor){
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 1.0
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 5.0
+        button.backgroundColor = color
+        button.setTitle(txt, for:UIControl.State.normal)
+    }
+ 
     override var prefersHomeIndicatorAutoHidden: Bool {
         return true
     }
@@ -704,24 +778,24 @@ class PlayViewController: UIViewController {
     }
    
     // Start Button Tapped
-    @objc func onStartButtonTapped(){
-        if (videoPlayer.rate != 0) && (videoPlayer.error == nil) {//playing
-            videoPlayer.pause()
-        }else{//stoped
-            if seekBar.value>seekBar.maximumValue-0.5{
-                seekBar.value=0
-            }
-            videoPlayer.seek(to: CMTimeMakeWithSeconds(Float64(seekBar.value), preferredTimescale: Int32(NSEC_PER_SEC)))
-            videoPlayer.play()
-        }
-    }
-    @objc func onStopButtonTapped(){
-        if (videoPlayer.rate != 0) && (videoPlayer.error == nil) {//playing
-            videoPlayer.pause()
-            currFrameNumber=Int(seekBar.value*videoFps)
-            print("curr:",currFrameNumber)
-        }
-    }
+//    @objc func onStartButtonTapped(){
+//        if (videoPlayer.rate != 0) && (videoPlayer.error == nil) {//playing
+//            videoPlayer.pause()
+//        }else{//stoped
+//            if seekBar.value>seekBar.maximumValue-0.5{
+//                seekBar.value=0
+//            }
+//            videoPlayer.seek(to: CMTimeMakeWithSeconds(Float64(seekBar.value), preferredTimescale: Int32(NSEC_PER_SEC)))
+//            videoPlayer.play()
+//        }
+//    }
+//    @objc func onStopButtonTapped(){
+//        if (videoPlayer.rate != 0) && (videoPlayer.error == nil) {//playing
+//            videoPlayer.pause()
+//            currFrameNumber=Int(seekBar.value*videoFps)
+//            print("curr:",currFrameNumber)
+//        }
+//    }
     // SeekBar Value Changed
     @objc func onSliderValueChange(){
         videoPlayer.pause()
@@ -730,23 +804,18 @@ class PlayViewController: UIViewController {
         currFrameNumber=Int(seekBar.value*videoFps)
         print("curr/slider:",currFrameNumber)
     }
-    func onNextButtonTapped(){//このようなボタンを作ってみれば良さそう。無くてもいいか？
-        var seekBarValue=seekBar.value+0.01
-        if seekBarValue>videoDuration-0.1{
-            seekBarValue = videoDuration-0.1
-        }
-        let newTime = CMTime(seconds: Double(seekBarValue), preferredTimescale: 600)
-        currTime!.text = String(format:"%.1f/%.1f",seekBarValue,videoDuration)
-        videoPlayer.seek(to: newTime, toleranceBefore: .zero, toleranceAfter: .zero)
-    }
-    @objc func onExitButtonTapped(){//このボタンのところにsegueでunwindへ行く
-        killTimer()
-        let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
-        if UIApplication.shared.isIdleTimerDisabled == true{
-            UIApplication.shared.isIdleTimerDisabled = false//スリープする
-        }
-        self.present(mainView, animated: false, completion: nil)
-    }
+//    func onNextButtonTapped(){//このようなボタンを作ってみれば良さそう。無くてもいいか？
+//        var seekBarValue=seekBar.value+0.01
+//        if seekBarValue>videoDuration-0.1{
+//            seekBarValue = videoDuration-0.1
+//        }
+//        let newTime = CMTime(seconds: Double(seekBarValue), preferredTimescale: 600)
+//        currTime!.text = String(format:"%.1f/%.1f",seekBarValue,videoDuration)
+//        videoPlayer.seek(to: newTime, toleranceBefore: .zero, toleranceAfter: .zero)
+//    }
+//    @objc func onExitButtonTapped(){//このボタンのところにsegueでunwindへ行く
+
+//    }
     
     var kalVs:[[CGFloat]]=[[0.0001,0.001,0,1,2],[0.0001,0.001,3,4,5],[0.0001,0.001,6,7,8],[0.0001,0.001,10,11,12],[0.0001,0.001,13,14,15]]
     func KalmanS(Q:CGFloat,R:CGFloat,num:Int){
@@ -805,22 +874,23 @@ class PlayViewController: UIViewController {
     var veloRatio:Int = 100//vog
     var faceF:Int = 0
     var calcDate:String = ""
-    var eyePosX_s = Array<CGFloat>()
-    var eyePosY_s = Array<CGFloat>()
-    var eyePosYfiltered_s = Array<CGFloat>()
-    var eyePosXfiltered_s = Array<CGFloat>()//eyePosFiltered
-    var eyeVeloFiltered = Array<CGFloat>()//eyeVeloFiltered
-    var faceVeloFiltered = Array<CGFloat>()//faceVeloFiltered
-    
-    @objc func onCalcButtonTapped(){
+    var eyePosX = Array<CGFloat>()
+    var eyePosY = Array<CGFloat>()
+    var eyePosYfiltered = Array<CGFloat>()
+    var eyePosXfiltered = Array<CGFloat>()
+//    var eyeVeloFiltered = Array<CGFloat>()
+    var eyeVelXfiltered = Array<CGFloat>()
+    var eyeVelYfiltered = Array<CGFloat>()
+    @IBAction func onCalcButton(_ sender: Any) {
+//    }
+//    @objc func onCalcButtonTapped(){
         calcFlag = true
-        eyeVeloFiltered.removeAll()
-        faceVeloFiltered.removeAll()
-        eyePosXfiltered_s.removeAll()
-        eyePosX_s.removeAll()
-        eyePosXfiltered_s.removeAll()
-        eyePosY_s.removeAll()
-        eyePosYfiltered_s.removeAll()
+//        eyeVeloFiltered.removeAll()
+        eyePosXfiltered.removeAll()
+        eyePosX.removeAll()
+        eyePosXfiltered.removeAll()
+        eyePosY.removeAll()
+        eyePosYfiltered.removeAll()
 
         KalmanInit()
         //        showBoxies(f: true)
@@ -910,10 +980,11 @@ class PlayViewController: UIViewController {
         let yDiffer=faceWithBorderRect.origin.y - eyeWithBorderRect.origin.y
         var maxEyeV:Double = 0
         var maxFaceV:Double = 0
+        var frameCnt:Int=0
         while reader.status != AVAssetReader.Status.reading {
             sleep(UInt32(0.1))
         }
-        DispatchQueue.global(qos: .default).async { [self] in//resizerectのチェックの時はここをコメントアウト下がいいかな？
+        DispatchQueue.global(qos: .default).async { [self] in
             while let sample = readerOutput.copyNextSampleBuffer(), self.calcFlag != false {
                 var ex:CGFloat = 0
                 var ey:CGFloat = 0
@@ -981,20 +1052,19 @@ class PlayViewController: UIViewController {
                     }
                     #endif
                     context.clearCaches()
-                    self.eyePosX_s.append(ex)
-                    self.eyePosY_s.append(ey)
-                    self.eyePosXfiltered_s.append(-1*self.Kalman(value: ex,num: 0))
-                    self.eyePosYfiltered_s.append(-1*self.Kalman(value: ey,num: 1))
-                    var velosity=eyePosXfiltered_s.last
-                    if self.eyePosXfiltered_s.count>1{
-                        velosity! -= self.eyePosXfiltered_s[self.eyePosXfiltered_s.count-2]
+          
+                    self.eyePosX.append(ex)
+                    self.eyePosY.append(ey)
+                    self.eyePosXfiltered.append(-1*self.Kalman(value: ex,num: 0))
+                    self.eyePosYfiltered.append(-1*self.Kalman(value: ey,num: 1))
+                    let cnt=eyePosX.count
+                    if cnt == 1{
+                        self.eyeVelXfiltered.append(self.Kalman(value:self.eyePosXfiltered[cnt-1],num:2))
+                        self.eyeVelYfiltered.append(self.Kalman(value:self.eyePosYfiltered[cnt-1],num:3))
+                    }else{
+                        self.eyeVelXfiltered.append(self.Kalman(value:self.eyePosXfiltered[cnt-1]-self.eyePosXfiltered[cnt-2],num:2))
+                        self.eyeVelYfiltered.append(self.Kalman(value:self.eyePosYfiltered[cnt-1]-self.eyePosYfiltered[cnt-2],num:3))
                     }
-
-                    self.faceVeloFiltered.append(-1*self.Kalman(value: fx,num: 2))
- 
-                    let eye5 = -1.0*self.Kalman(value: ex,num:4)//そのままではずれる
-                    self.eyeVeloFiltered.append(eye5-self.faceVeloFiltered.last!)
-                    
                     while reader.status != AVAssetReader.Status.reading {
                         sleep(UInt32(0.1))
                     }
@@ -1004,7 +1074,7 @@ class PlayViewController: UIViewController {
                         eyeWithBorderRect.origin.y < 5 ||
                         eyeWithBorderRect.origin.y > maxHeightWithBorder
                     {
-                        self.calcFlag=false//quit
+                        self.calcFlag=false
                     }
                 }
                 //マッチングデバッグ用スリープ、デバッグが終わったら削除
