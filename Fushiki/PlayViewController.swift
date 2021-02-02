@@ -80,7 +80,9 @@ class PlayViewController: UIViewController {
     @IBAction func onPlayButton(_ sender: Any) {
         if (videoPlayer.rate != 0) && (videoPlayer.error == nil) {//playing
             videoPlayer.pause()
+            currFrameNumber=Int(seekBar.value*videoFps)
             videoPlayer.seek(to: CMTimeMakeWithSeconds(Float64(seekBar.value), preferredTimescale: Int32(NSEC_PER_SEC)))
+            
         }else{//stoped
             if seekBar.value>seekBar.maximumValue-0.5{
                 seekBar.value=0
@@ -299,17 +301,22 @@ class PlayViewController: UIViewController {
         var pointY = Array<CGPoint>()
         var pointYd = Array<CGPoint>()
         let dataCnt=eyePosXfiltered.count
+        let dataCnt2=eyePosYfiltered.count
+        let dataCnt3=eyeVelXfiltered.count
+        let dataCnt4=eyeVelYfiltered.count
 //        let xarray=sample(width:wI,start: startp, x: eyePosXfiltered_s)
+        let posR=CGFloat(posRatio)/20.0
+        let veloR=CGFloat(veloRatio)
         let dx = 1// xの間隔
-        //        print("vogPos5,vHITEye5,vHITeye",vogPos5.count,vHITEye5.count,vHITEye.count)
+        //print("vogPos5,vHITEye5,vHITeye",vogPos5.count,vHITEye5.count,vHITEye.count)
         for n in 1..<wI {
             if startp + n < dataCnt - 1{//-20としてみたがエラー。関係なさそう。
                 let px = CGFloat(dx * n)
                 
-                let py1 = eyePosXfiltered[startp + n] * CGFloat(posRatio)/20.0 + (h-240)/5
-                let py2 = eyeVelXfiltered[startp + n] * CGFloat(veloRatio) + (h-240)*2/5
-                let py3 = eyePosYfiltered[startp + n] * CGFloat(posRatio)/20.0 + (h-240)*3/5
-                let py4 = eyeVelYfiltered[startp + n] * CGFloat(veloRatio) + (h-240)*4/5
+                let py1 = eyePosXfiltered[startp + n] * posR + (h-240)/5
+                let py2 = eyeVelXfiltered[startp + n] * veloR + (h-240)*2/5
+                let py3 = eyePosYfiltered[startp + n] * posR + (h-240)*3/5
+                let py4 = eyeVelYfiltered[startp + n] * veloR + (h-240)*4/5
                 let point1 = CGPoint(x: px, y: py1)
                 let point2 = CGPoint(x: px, y: py2)
                 let point3 = CGPoint(x: px, y: py3)
@@ -445,6 +452,10 @@ class PlayViewController: UIViewController {
     var lastArraycount:Int = 0
     @objc func update_vog(tm: Timer) {
         timercnt += 1
+    
+        currTime?.text=String(format:"%.1f/%.1f",seekBar.value + Float(eyePosX.count)/videoFps,videoDuration)
+ 
+        return
         if eyePosXfiltered.count < 5 {
             return
         }
@@ -561,10 +572,8 @@ class PlayViewController: UIViewController {
         faceWakuL_image.backgroundColor = UIColor.clear
         faceWakuL_image.layer.cornerRadius = 3
         faceWakuL_image.image=UIface
-//        let grayFace=openCV.grayScale(UIface)
-//        faceWakuL_image.image=grayFace
         view.bringSubviewToFront(faceWakuL_image)
-//        fpsLabel.frame=CGRect(x:100,y:100,width:100,height: 100)
+//        view.bringSubviewToFront(fpsLabel)
     }
     
     func dispWakus(){
@@ -643,7 +652,11 @@ class PlayViewController: UIViewController {
     
     
     @objc func update(tm: Timer) {
-        currTime?.text=String(format:"%.1f/%.1f",seekBar.value,videoDuration)
+        if timer_vog?.isValid == true{
+            currTime?.text=String(format:"%.1f/%.1f",seekBar.value + Float(eyePosX.count)/videoFps,videoDuration)
+        }else{
+            currTime?.text=String(format:"%.1f/%.1f",seekBar.value,videoDuration)
+        }
         if !((videoPlayer.rate != 0) && (videoPlayer.error == nil)) {//notplaying
             if seekBar.value>videoDuration-0.01{
                 seekBar.value=0
@@ -662,15 +675,37 @@ class PlayViewController: UIViewController {
         let avAsset = AVURLAsset(url: url, options: options)
         return avAsset.tracks.first!.nominalFrameRate
     }
+    func getUserDefault(str:String,ret:Int) -> Int{//getUserDefault_one
+        if (UserDefaults.standard.object(forKey: str) != nil){//keyが設定してなければretをセット
+            return UserDefaults.standard.integer(forKey:str)
+        }else{
+            UserDefaults.standard.set(ret, forKey: str)
+            return ret
+        }
+    }
+    
+    func getUserDefaults(){
+        eyeCenter.x = CGFloat(getUserDefault(str: "eyeCenterX", ret: 320))
+        eyeCenter.y = CGFloat(getUserDefault(str: "eyeCenterY", ret: 100))
+        faceCenter.x = CGFloat(getUserDefault(str: "faceCenterX", ret: 300))
+        faceCenter.y = CGFloat(getUserDefault(str: "faceCenterY", ret: 100))
+    }
+    func setUserDefaults(){
+        UserDefaults.standard.set(eyeCenter.x, forKey: "eyeCenterX")
+        UserDefaults.standard.set(eyeCenter.y, forKey: "eyeCenterY")
+        UserDefaults.standard.set(faceCenter.x, forKey: "faceCenterX")
+        UserDefaults.standard.set(faceCenter.y, forKey: "faceCenterY")
+     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        getUserDefaults()
         //setteiしてなければ、以下
         if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
             wakuLength = 6
             eyeBorder = 20
         }else{//iphone
             wakuLength=3
-            eyeBorder=10
+            eyeBorder=9
         }
         let avAsset = AVURLAsset(url: videoURL!)
         let ww:CGFloat=view.bounds.width
@@ -756,7 +791,7 @@ class PlayViewController: UIViewController {
         fpsLabel.layer.cornerRadius = 2.0
         fpsLabel.layer.borderColor = UIColor.black.cgColor
         fpsLabel.layer.borderWidth = 1.0
-        view.bringSubviewToFront(fpsLabel)
+        view.bringSubviewToFront(fpsLabel)//これが見えないのは何故？
         vogBoxHeight=ww*16/24
         vogBoxYmin=wh/2-vogBoxHeight/2
         vogBoxYcenter=wh/2
@@ -882,10 +917,13 @@ class PlayViewController: UIViewController {
     var eyeVelXfiltered = Array<CGFloat>()
     var eyeVelYfiltered = Array<CGFloat>()
     @IBAction func onCalcButton(_ sender: Any) {
-//    }
-//    @objc func onCalcButtonTapped(){
+        if calcFlag==true{
+            calcFlag=false
+            return
+        }
+        setUserDefaults()//eyeCenter,faceCenter
+        
         calcFlag = true
-//        eyeVeloFiltered.removeAll()
         eyePosXfiltered.removeAll()
         eyePosX.removeAll()
         eyePosXfiltered.removeAll()
@@ -993,8 +1031,8 @@ class PlayViewController: UIViewController {
                 
                 //for test display
                 #if DEBUG
-                var x:CGFloat = 40.0
-                let y:CGFloat = 0.0
+                var x:CGFloat = 50.0
+                let y:CGFloat = 50.0
                 #endif
                 autoreleasepool{
                     let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample)!
@@ -1017,11 +1055,12 @@ class PlayViewController: UIViewController {
                     DispatchQueue.main.async {
                         self.debugEye.frame=CGRect(x:x,y:y,width:eyeRect.size.width,height:eyeRect.size.height)
                         self.debugEye.image=eyeUIImage
-                        self.debugEyeb.frame=CGRect(x:x,y:eyeRect.size.width + 10,width:eyeWithBorderRect.size.width,height:eyeWithBorderRect.size.height)
+                        x += eyeRect.size.width
+                        self.debugEyeb.frame=CGRect(x:x,y:y,width:eyeWithBorderRect.size.width,height:eyeWithBorderRect.size.height)
                         self.debugEyeb.image=eyeWithBorderUIImage
                         self.view.bringSubviewToFront(self.debugEye)
                         self.view.bringSubviewToFront(self.debugEyeb)
-                        x += eyeWithBorderRect.size.width + 10
+                        x += eyeWithBorderRect.size.width + 5
                     }
                     #endif
                     
@@ -1032,6 +1071,7 @@ class PlayViewController: UIViewController {
                     if maxEyeV < 0.7{
                         ex = 0
                         ey = 0
+                        print("error 0.7",eyePosX.count)///Int(videoFps))
                     }else{//検出できた時
             //eXはポインタなので、".pointee"でそのポインタの内容が取り出せる。Cでいうところの"*"
             //上で宣言しているとおりInt32が返ってくるのでCGFloatに変換して代入
@@ -1044,8 +1084,8 @@ class PlayViewController: UIViewController {
                     DispatchQueue.main.async {
                         self.debugFace.frame=CGRect(x:x,y:y,width:faceRect.size.width,height:faceRect.size.height)
                         self.debugFace.image=faceUIImage
-//                        x += faceRect.size.width + 10
-                        self.debugFaceb.frame=CGRect(x:x,y:faceRect.size.width + 10,width:faceWithBorderRect.size.width,height:faceWithBorderRect.size.height)
+                        x += faceRect.size.width
+                        self.debugFaceb.frame=CGRect(x:x,y:y,width:faceWithBorderRect.size.width,height:faceWithBorderRect.size.height)
                         self.debugFaceb.image=faceWithBorderUIImage
                         self.view.bringSubviewToFront(self.debugFace)
                         self.view.bringSubviewToFront(self.debugFaceb)
@@ -1083,6 +1123,9 @@ class PlayViewController: UIViewController {
                 #endif
             }
             self.calcFlag = false
+            if timer_vog?.isValid==true{
+                timer_vog?.invalidate()
+            }
         }
     }
 }
