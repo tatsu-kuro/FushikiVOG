@@ -93,7 +93,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     }
  
     var cntREC:Int=0
-    @objc func updateRecClarification(tm: Timer) {//明確に録画していることを示す必要がある
+    @objc func updateRecClarification(tm: Timer) {//録画していることを明確に示す必要がある
         cntREC += 1
         recClarification.alpha=camera.updateRecClarification(tm: cntREC)
         if cntREC==5{
