@@ -656,7 +656,127 @@ class PlayViewController: UIViewController {
         }else if sender.state == .ended{
         }
     }
-    
+    /*
+     @IBAction func panGesture(_ sender: UIPanGestureRecognizer) {
+         if calcFlag == true{
+             return
+         }
+         let move:CGPoint = sender.translation(in: self.view)
+         let pos = sender.location(in: self.view)
+         if sender.state == .began {
+             stPo = sender.location(in: self.view)
+             if vhitBoxView?.isHidden == true && vogBoxView?.isHidden  == true{
+                 //タップして動かすと、ここに来る
+                 //                rectType = checkWaks(po: pos)//0:枠設定 -1:違う
+                 if isVHIT==false{
+                     rectType=0
+                 }
+                 if rectType==0{
+                     stRect=wakuE
+                 }else{
+                     stRect=wakuF
+                 }
+             }
+         } else if sender.state == .changed {
+             if isVHIT == true && vhitBoxView?.isHidden == false{//vhit
+                 let h=self.view.bounds.height
+                 //let hI=Int(h)
+                 //let posyI=Int(pos.y)
+                 //                if isVHIT == true{//vhit
+                 if pos.y > h/2{//下半分の時
+                     var dd=Int(10)
+                     if pos.y < h/2 + h/6{//dd < 10{
+                         dd = 2
+                     }else if pos.y > h/2 + h*2/6{
+                         dd = 20
+                     }
+                     if Int(move.x) > lastmoveX + dd{
+                         vhitCurpoint -= dd*4
+                         lastmoveX = Int(move.x)
+                     }else if Int(move.x) < lastmoveX - dd{
+                         vhitCurpoint += dd*4
+                         lastmoveX = Int(move.x)
+                     }
+                     //print("all",dd,Int(move.x),lastmoveX,vhitCurpoint)// Int(move.x/10.0),movex)
+                     if vhitCurpoint<0{
+                         vhitCurpoint = 0
+                     }else if vhitCurpoint > eyeVeloFiltered.count - Int(self.view.bounds.width){
+                         vhitCurpoint = eyeVeloFiltered.count - Int(self.view.bounds.width)
+                     }
+                     if vhitCurpoint != lastVhitpoint{
+                         drawOnewave(startcount: vhitCurpoint)
+                         lastVhitpoint = vhitCurpoint
+                         if waveTuple.count>0{
+                             checksetPos(pos: lastVhitpoint + Int(self.view.bounds.width/2), mode:1)
+                             drawVHITwaves()
+                         }
+                     }
+                 }else{
+                     
+                 }
+             }else if isVHIT == false && vogBoxView?.isHidden == false{//vog
+                 if eyePosFiltered.count<240*10{//||okpMode==1{//240*10以下なら動けない。
+                     return
+                 }
+                 let dd:Int=1
+                 if Int(move.x) > lastmoveX + dd{
+                     vogCurpoint += dd*10
+                     lastmoveX = Int(move.x)
+                 }else if Int(move.x) < lastmoveX - dd{
+                     vogCurpoint -= dd*10
+                     lastmoveX = Int(move.x)
+                 }
+                 let temp=Int(240*10-eyePosFiltered.count)
+                 
+                 if vogCurpoint < temp*Int(view.bounds.width)/Int(mailWidth){
+                     vogCurpoint = temp*Int(view.bounds.width)/Int(mailWidth)
+                 }else if vogCurpoint>0{//240*10以下には動けない
+                     vogCurpoint = 0
+                 }
+                                 print("vogcur",vogCurpoint)
+                 
+                 wave3View!.frame=CGRect(x:CGFloat(vogCurpoint),y:vogBoxYmin,width:view.bounds.width*18,height:vogBoxHeight)
+              }else{//枠 changed
+                 if rectType > -1 {//枠の設定の場合
+                     //                    let w3=view.bounds.width/3
+                     let ww=view.bounds.width
+                     let wh=view.bounds.height
+                     if rectType == 0 {
+                         if faceF==0 || isVHIT==false{//EyeRect
+                             let et=CGRect(x:ww/10,y:wh/20,width: ww*4/5,height:wh*3/4)
+                             wakuE = moveWakus(rect:wakuE,stRect: stRect,stPo: stPo,movePo: move,hani: et)
+                         }else{//vHIT && faceF==true FaceRect
+                             let et=CGRect(x:ww/10,y:wh/20,width: ww*4/5,height:wh*3/4)
+                             wakuE = moveWakus(rect:wakuE,stRect: stRect,stPo: stPo,movePo: move,hani:et)
+                         }
+                     }else{
+                         //let xt=wakuE.origin.x
+                         //let w12=view.bounds.width/12
+                         let et=CGRect(x:ww/10,y:wh/20,width: ww*4/5,height:wh*3/4)
+                         wakuF = moveWakus(rect:wakuF,stRect:stRect, stPo: stPo,movePo: move,hani:et)
+                     }
+                     dispWakus()
+                     showWakuImages()
+                     setUserDefaults()
+                 }
+             }
+         }else if sender.state == .ended{
+             
+             setUserDefaults()
+             if vhitBoxView?.isHidden == false{//結果が表示されている時
+                 if waveTuple.count>0 {
+                     for i in 0..<waveTuple.count{
+                         if waveTuple[i].3 == 1{
+                             waveTuple[i].3 = 2
+                         }
+                     }
+                     drawVHITwaves()
+                 }
+             }
+         }
+     }
+     
+     */
     @IBAction func tapGesture(_ sender: UITapGestureRecognizer) {
         print("tap")
         if eyeORface==0{//eye
