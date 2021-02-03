@@ -33,6 +33,18 @@ class PlayParaViewController: UIViewController {
         setScreen()
     }
   
+    @IBAction func onDefaultButton(_ sender: Any) {
+        paraInt1=100
+        paraInt2=100
+        if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
+            paraInt3 = 6
+            paraInt4 = 20
+        }else{//iphone
+            paraInt3 = 3
+            paraInt4 = 9
+        }
+        setUserDefaults()
+    }
     func setUserDefaults(){
         UserDefaults.standard.set(paraInt1, forKey: "posRatio")
         UserDefaults.standard.set(paraInt2, forKey: "veloRatio")
@@ -61,21 +73,24 @@ class PlayParaViewController: UIViewController {
             return 0
         }
     }
-    @IBAction func inputPara1(_ sender: Any) {
+    func setParas(){
         paraInt1 = Field2value(field:para1)
-        setUserDefaults()
-    }
-    @IBAction func inputPara2(_ sender: Any) {
         paraInt2 = Field2value(field:para2)
-        setUserDefaults()
-    }
-    @IBAction func inputPara3(_ sender: Any) {
         paraInt3 = Field2value(field:para3)
-        setUserDefaults()
-    }
-    @IBAction func inputPara4(_ sender: Any) {
         paraInt4 = Field2value(field:para4)
         setUserDefaults()
+    }
+    @IBAction func inputPara1(_ sender: Any) {
+        setParas()
+    }
+    @IBAction func inputPara2(_ sender: Any) {
+        setParas()
+    }
+    @IBAction func inputPara3(_ sender: Any) {
+       setParas()
+    }
+    @IBAction func inputPara4(_ sender: Any) {
+       setParas()
     }
     func setScreen(){
         let ww=view.bounds.width

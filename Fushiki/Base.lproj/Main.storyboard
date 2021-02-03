@@ -674,6 +674,9 @@
                                 <rect key="frame" x="85" y="339" width="130" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="default"/>
+                                <connections>
+                                    <action selector="onDefaultButton:" destination="lpw-bn-NhA" eventType="touchUpInside" id="rd2-6g-kxN"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="123" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Yjf-ek-oMJ">
                                 <rect key="frame" x="62" y="26" width="97" height="34"/>

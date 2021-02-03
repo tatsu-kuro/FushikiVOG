@@ -230,8 +230,13 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         else if(rand/3==1){yn = 0}
         else {yn=1}
         let x0=view.bounds.width/2
+        let xd=CGFloat(ettWidth)*x0/100
         let y0=view.bounds.height/2
-        let cPoint:CGPoint = CGPoint(x:x0 + CGFloat(xn*ettWidth)*x0/100, y: y0 + CGFloat(yn*ettWidth)*y0/100)
+        var yd=xd
+        if CGFloat(ettWidth)*x0/100>(y0-cirDiameter/2){
+            yd=y0-cirDiameter/2
+        }
+        let cPoint:CGPoint = CGPoint(x:x0 + CGFloat(xn)*xd, y: y0 + CGFloat(yn)*yd)
         drawCircle(cPoint:cPoint)
     }
     @objc func update1() {//pursuit
