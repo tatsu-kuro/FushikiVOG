@@ -495,9 +495,10 @@ class PlayViewController: UIViewController {
             #endif
 //            print("veloCount:",eyeVeloOrig.count)
             drawVog(startcount: eyePosXfiltered.count)
-            vogImage=addVogWave(startingImage: vogImage!, sn: lastArraycount-100, en: eyePosX.count)
+            let lastArraycountTemp=eyePosX.count
+            vogImage=addVogWave(startingImage: vogImage!, sn: lastArraycount, en: eyePosX.count)
 //            vogCurpoint=eyePosX.count
-            lastArraycount=eyePosXfiltered.count
+            lastArraycount=lastArraycountTemp
         }
     }
   
@@ -951,7 +952,7 @@ class PlayViewController: UIViewController {
             return
         }
         setUserDefaults()//eyeCenter,faceCenter
-        
+        lastArraycount=0
         calcFlag = true
         eyePosXfiltered.removeAll()
         eyePosX.removeAll()
