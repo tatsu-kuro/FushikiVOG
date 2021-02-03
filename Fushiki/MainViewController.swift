@@ -377,8 +377,10 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
     }
     @IBAction func unwindAction(segue: UIStoryboardSegue) {
+//        func unwindAction(segue: UIStoryboardSegue) {
         UIApplication.shared.isIdleTimerDisabled = false//スリープする
-//        album.getAlbumList()
+        print("unwindAction")
+        //        album.getAlbumList()
 //        tableView.reloadData()
 //        videoArrayCount=album.videoURL.count
 //        setToppage()//not effective

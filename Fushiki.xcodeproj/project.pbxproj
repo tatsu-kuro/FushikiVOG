@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		691613B625C9F328009AAB64 /* PlayParaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691613B525C9F328009AAB64 /* PlayParaViewController.swift */; };
 		6938C23C24C103370066CD69 /* SetteiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6938C23B24C103370066CD69 /* SetteiViewController.swift */; };
 		693DBADA25B31F3E00E9B534 /* PlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693DBAD925B31F3E00E9B534 /* PlayViewController.swift */; };
 		69C7640925C2EA55008AECAD /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69DB12C023AEF297000C733A /* GameController.framework */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		691613B525C9F328009AAB64 /* PlayParaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayParaViewController.swift; sourceTree = "<group>"; };
 		6938C23B24C103370066CD69 /* SetteiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetteiViewController.swift; sourceTree = "<group>"; };
 		693DBAD925B31F3E00E9B534 /* PlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewController.swift; sourceTree = "<group>"; };
 		69C7640B25C2EAEB008AECAD /* Fushiki-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Fushiki-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				6938C23B24C103370066CD69 /* SetteiViewController.swift */,
 				8E3BD05E22C839A300454D93 /* HelpViewController.swift */,
 				8EE77EC920EF742C00517DEC /* Main.storyboard */,
+				691613B525C9F328009AAB64 /* PlayParaViewController.swift */,
 				693DBAD925B31F3E00E9B534 /* PlayViewController.swift */,
 				8EE77ECC20EF742E00517DEC /* Assets.xcassets */,
 				8EE77ECE20EF742E00517DEC /* LaunchScreen.storyboard */,
@@ -196,6 +199,7 @@
 				8ECD87C22116875E0084CDB1 /* ETTViewController.swift in Sources */,
 				8E3BD05F22C839A300454D93 /* HelpViewController.swift in Sources */,
 				693DBADA25B31F3E00E9B534 /* PlayViewController.swift in Sources */,
+				691613B625C9F328009AAB64 /* PlayParaViewController.swift in Sources */,
 				8E4EDD532285BD4A00B0D306 /* OKPViewController.swift in Sources */,
 				8E4EDD552285C0E500B0D306 /* CarolicOKNViewController.swift in Sources */,
 				8E2604122134237D00714C67 /* OKNViewController.swift in Sources */,

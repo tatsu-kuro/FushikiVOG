@@ -683,6 +683,15 @@ class PlayViewController: UIViewController {
     }
     
     func getUserDefaults(){
+        if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
+            wakuLength = CGFloat(getUserDefault(str: "wakuLength", ret: 6))
+            eyeBorder = getUserDefault(str: "eyeBorder", ret: 20)
+        }else{//iphone
+            wakuLength = CGFloat(getUserDefault(str: "wakuLength", ret: 3))
+            eyeBorder = getUserDefault(str: "eyeBorder", ret: 9)
+        }
+        posRatio = getUserDefault(str: "posRatio", ret:100)
+        veloRatio = getUserDefault(str:"veloRatio",ret :100)
         eyeCenter.x = CGFloat(getUserDefault(str: "eyeCenterX", ret: 320))
         eyeCenter.y = CGFloat(getUserDefault(str: "eyeCenterY", ret: 100))
         faceCenter.x = CGFloat(getUserDefault(str: "faceCenterX", ret: 300))
@@ -698,13 +707,7 @@ class PlayViewController: UIViewController {
         super.viewDidLoad()
         getUserDefaults()
         //setteiしてなければ、以下
-        if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
-            wakuLength = 6
-            eyeBorder = 20
-        }else{//iphone
-            wakuLength=3
-            eyeBorder=9
-        }
+    
         let avAsset = AVURLAsset(url: videoURL!)
         let ww:CGFloat=view.bounds.width
         let wh:CGFloat=view.bounds.height
@@ -921,7 +924,7 @@ class PlayViewController: UIViewController {
             return
         }
         setUserDefaults()//eyeCenter,faceCenter
-        
+
         calcFlag = true
         eyePosXfiltered.removeAll()
         eyePosX.removeAll()
@@ -1067,6 +1070,7 @@ class PlayViewController: UIViewController {
                                                  narrow: eyeUIImage,
                                                  x: eX,
                                                  y: eY)
+                    print("OpenV",maxEyeV)
                     if maxEyeV < 0.7{
                         ex = 0
                         ey = 0
@@ -1126,5 +1130,10 @@ class PlayViewController: UIViewController {
                 timer_vog?.invalidate()
             }
         }
+    }
+    @IBAction func unwindPlay(segue: UIStoryboardSegue) {
+//        UIApplication.shared.isIdleTimerDisabled = false//スリープする
+        print("unwindPlay")
+        getUserDefaults()
     }
 }
