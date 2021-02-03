@@ -16,12 +16,12 @@ class PlayParaViewController: UIViewController {
     @IBOutlet weak var para3: UITextField!
     @IBOutlet weak var para2: UITextField!
     @IBOutlet weak var para1: UITextField!
+    var paraInt1:Int=0
+    var paraInt2:Int=0
+    var paraInt3:Int=0
+    var paraInt4:Int=0
     override func viewDidLoad() {
         super.viewDidLoad()
-//        para1.keyboardType = UIKeyboardType.numbersAndPunctuation
-//        para2.keyboardType = UIKeyboardType.numbersAndPunctuation
-//        para3.keyboardType = UIKeyboardType.numbersAndPunctuation
-//        para4.keyboardType = UIKeyboardType.numbersAndPunctuation
         paraInt1=UserDefaults.standard.integer(forKey:"posRatio")
         paraInt2=UserDefaults.standard.integer(forKey:"veloRatio")
         paraInt3=UserDefaults.standard.integer(forKey:"wakuLength")
@@ -31,52 +31,32 @@ class PlayParaViewController: UIViewController {
         para3.text = "\(paraInt3)"
         para4.text = "\(paraInt4)"
         setScreen()
-        
-        let toolbar: UIToolbar = UIToolbar()
-        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
-                                    target: nil,
-                                    action: nil)
-        let done = UIBarButtonItem(title: "done",
-                                   style: .done,
-                                   target: self,
-                                   action: #selector(doSomething))
-        toolbar.items = [space, done]
-        toolbar.sizeToFit()
-        para1.inputAccessoryView = toolbar
-        para1.keyboardType = .numberPad
-        para2.inputAccessoryView = toolbar
-        para2.keyboardType = .numberPad
-        para3.inputAccessoryView = toolbar
-        para3.keyboardType = .numberPad
-        para4.inputAccessoryView = toolbar
-        para4.keyboardType = .numberPad
     }
-    @objc func doSomething(){
-        print("something")
-        para1.resignFirstResponder()
-        para2.resignFirstResponder()
-        para3.resignFirstResponder()
-        para4.resignFirstResponder()
-        paraInt1 = Field2value(field:para1)
-        paraInt2 = Field2value(field:para2)
-        paraInt3 = Field2value(field:para3)
-        paraInt4 = Field2value(field:para4)
-        setUserDefaults()
-    }
-    var paraInt1:Int=0
-    var paraInt2:Int=0
-    var paraInt3:Int=0
-    var paraInt4:Int=0
+  
     func setUserDefaults(){
         UserDefaults.standard.set(paraInt1, forKey: "posRatio")
         UserDefaults.standard.set(paraInt2, forKey: "veloRatio")
         UserDefaults.standard.set(paraInt3, forKey: "wakuLength")
         UserDefaults.standard.set(paraInt4, forKey: "eyeBorder")
+        para1.text = "\(paraInt1)"
+        para2.text = "\(paraInt2)"
+        para3.text = "\(paraInt3)"
+        para4.text = "\(paraInt4)"
      }
-
+    func isAlphanumeric(text:String) -> Bool {
+        if text.range(of: "[^0-9]+", options: .regularExpression) == nil && text != ""{
+            return true
+        }else{
+            return false
+        }
+    }
     func Field2value(field:UITextField) -> Int {
+        if isAlphanumeric(text: field.text!){
         if field.text?.count != 0 {
             return Int(field.text!)!
+        }else{
+            return 0
+        }
         }else{
             return 0
         }
