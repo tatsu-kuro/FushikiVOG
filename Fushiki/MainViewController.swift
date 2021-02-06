@@ -352,6 +352,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         let nextView = storyboard.instantiateViewController(withIdentifier: "PLAY") as! PlayViewController
         nextView.videoURL = album.videoURL[indexPath.row]
+        nextView.calcDate = album.videoDate[indexPath.row]
         self.present(nextView, animated: true, completion: nil)
     }
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {

@@ -38,6 +38,7 @@ class PlayViewController: UIViewController {
     var timer:Timer?
     var timer_vog:Timer?
     var vogImageView:UIImageView?
+    var vogImageViewFlag:Bool=false
     var vogLineView:UIImageView?//vog
     var vogImage:UIImage?
     var vogBoxHeight:CGFloat=0
@@ -47,6 +48,8 @@ class PlayViewController: UIViewController {
     var vogBoxYcenter:CGFloat=0
     var mailWidth:CGFloat=2400//VOG
     var mailHeight:CGFloat=1600//VOG
+    var idNumber:Int = 0
+    var savedFlag:Bool = false
     @IBOutlet weak var waveButton: UIButton!
     @IBOutlet weak var mailButton: UIButton!
     
@@ -70,9 +73,82 @@ class PlayViewController: UIViewController {
     
     @IBAction func onMailButton(_ sender: Any) {
     }
-    
-    @IBAction func onSaveButton(_ sender: Any) {
+    func Field2value(field:UITextField) -> Int {
+        if field.text?.count != 0 {
+            return Int(field.text!)!
+        }else{
+            return 0
+        }
     }
+    @IBAction func onSaveButton(_ sender: Any) {
+        
+        if calcFlag == true{
+            return
+        }
+        let alert = UIAlertController(title: "FushikiETT", message: "Input ID number", preferredStyle: .alert)
+        let saveAction = UIAlertAction(title: "OK", style: .default) { [self] (action:UIAlertAction!) -> Void in
+            
+            // 入力したテキストをコンソールに表示
+            let textField = alert.textFields![0] as UITextField
+            #if DEBUG
+            print("\(String(describing: textField.text))")
+            #endif
+            self.idNumber = self.Field2value(field: textField)
+            let img = getVogOnePage(count: vogCurPoint)
+            // イメージビューに設定する
+            UIImageWriteToSavedPhotosAlbum(img, nil, nil, nil)
+            //self.drawVHITwaves()
+//            self.drawVogtext()//ここが無くてもIDはsaveされるが、ないとIDが表示されない。
+//            self.nonsavedFlag = false //解析結果がsaveされたのでfalse
+//            //           self.calcDrawVHIT()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (action:UIAlertAction!) -> Void in
+            self.idNumber = 1//キャンセルしてもここは通らない？
+        }
+        
+        // UIAlertControllerにtextFieldを追加
+        alert.addTextField { (textField:UITextField!) -> Void in
+            textField.keyboardType = UIKeyboardType.numberPad
+        }
+        alert.addAction(cancelAction)//この行と下の行の並びを変えるとCancelとOKの左右が入れ替わる。
+        alert.addAction(saveAction)
+        present(alert, animated: true, completion: nil)
+    }
+
+    func getNamedImage(startingImage:UIImage) ->UIImage{
+        // Create a context of the starting image size and set it as the current one
+        UIGraphicsBeginImageContext(startingImage.size)
+        // Draw the starting image in the current context as background
+        startingImage.draw(at: CGPoint.zero)
+        // Get the current context
+        let context = UIGraphicsGetCurrentContext()!
+        // Draw a red line
+        context.setLineWidth(2.0)
+        context.setStrokeColor(UIColor.black.cgColor)
+        // パスの初期化
+        let drawPath = UIBezierPath()
+        let w=startingImage.size.width
+        let h=startingImage.size.height
+        let str1 = calcDate.components(separatedBy: ":")
+        let str2 = "ID:" + String(format: "%08d", idNumber) + "  " + str1[0] + ":" + str1[1]
+        let str3 = "FushikiETT"
+        
+        str2.draw(at: CGPoint(x: 20, y: h-100), withAttributes: [
+                    NSAttributedString.Key.foregroundColor : UIColor.black,
+                    NSAttributedString.Key.font : UIFont.monospacedDigitSystemFont(ofSize: 70, weight: UIFont.Weight.regular)])
+        str3.draw(at: CGPoint(x: w-360, y: h-100), withAttributes: [
+                    NSAttributedString.Key.foregroundColor : UIColor.black,
+                    NSAttributedString.Key.font : UIFont.monospacedDigitSystemFont(ofSize: 70, weight: UIFont.Weight.regular)])
+        
+        UIColor.black.setStroke()
+        // イメージコンテキストからUIImageを作る
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        // イメージ処理の終了
+        UIGraphicsEndImageContext()
+        return image!
+    }
+ 
     @IBAction func onPlayButton(_ sender: Any) {
         if (videoPlayer.rate != 0) && (videoPlayer.error == nil) {//playing
             videoPlayer.pause()
@@ -231,11 +307,18 @@ class PlayViewController: UIViewController {
         UIGraphicsEndImageContext()
         return image!
     }
-  
-    func drawVogOnePage(count:Int){//すべてのvogを画面に表示
-        if vogLineView != nil{
-            vogLineView?.removeFromSuperview()
+    func getVogOnePage(count:Int)->UIImage{
+        var cnt=count-240*10
+        if cnt<0{
+            cnt=0
         }
+        let clipRect = CGRect(x:CGFloat(cnt) , y: 0, width: mailWidth, height: mailHeight)
+        let cripImageRef = vogImage?.cgImage!.cropping(to: clipRect)
+        let crippedImage = UIImage(cgImage: cripImageRef!)
+        let crippedNamedImage = getNamedImage(startingImage: crippedImage)
+        return crippedNamedImage
+    }
+    func drawVogOnePage(count:Int){//countまでの波を表示
         if vogImageView != nil{
             vogImageView?.removeFromSuperview()
         }
@@ -246,7 +329,7 @@ class PlayViewController: UIViewController {
         let clipRect = CGRect(x:CGFloat(cnt) , y: 0, width: mailWidth, height: mailHeight)
         let cripImageRef = vogImage?.cgImage!.cropping(to: clipRect)
         let crippedImage = UIImage(cgImage: cripImageRef!)
-        
+        print("clipRect:",cnt,count,clipRect)
         let drawImage = crippedImage.resize(size: CGSize(width:view.bounds.width, height:view.bounds.height*4/5))
         vogImageView = UIImageView(image: drawImage)
         vogImageView?.center =  CGPoint(x:view.bounds.width/2,y:view.bounds.height/2)
@@ -295,6 +378,8 @@ class PlayViewController: UIViewController {
         timercnt += 1
         if timercnt==1{//vogImageの背景の白、縦横線を作る
             vogImage = initVogImage(width:mailWidth*18,height:mailHeight)//枠だけ
+            vogImageViewFlag=true
+            vogCurPoint=0
         }
         currTimeLabel.text=String(format:"%.1f/%.1f",seekBar.value + Float(eyePosX.count)/videoFps,videoDuration)
         if eyePosXfiltered.count < 5 {
@@ -343,16 +428,14 @@ class PlayViewController: UIViewController {
         if calcFlag == true{
             return
         }
-        vogImage=addVogWave(startingImage: vogImage!, startn: 0, end: 200)
-        vogBoxView = UIImageView(image: vogImage)
-        vogBoxView?.center = CGPoint(x:0,y:view.bounds.height/2-100)
-//        view.addSubview(vogBoxView!)
-        
-//        if vogBoxView?.isHidden==false{
-//            showBox(f: false)
-//        }else{
-//            showBox(f: true)
-//        }
+        if vogImageViewFlag==true{
+            vogImageViewFlag=false
+            vogImageView?.isHidden=true
+        }else{
+            vogImageViewFlag=true
+            vogImageView?.isHidden=false
+        }
+  
     }
   
     func resolutionSizeOfVideo(url:URL) -> CGSize? {
@@ -488,35 +571,36 @@ class PlayViewController: UIViewController {
     var startFaceCenter:CGPoint!
     var lastmoveX:Int = 0
     @IBAction func panGesture(_ sender: UIPanGestureRecognizer) {
+        if calcFlag==true{
+            return
+        }
         let move:CGPoint = sender.translation(in: self.view)
-//        let pos = sender.location(in: self.view)
+        let pos = sender.location(in: self.view)
         if sender.state == .began {
             startEyeCenter=eyeCenter
             startFaceCenter=faceCenter
         } else if sender.state == .changed {
             
-            if vogBoxView?.isHidden == false{//vog
+            if vogImageViewFlag == true{//vog波形表示中
                 if eyePosX.count<240*10{//||okpMode==1{//240*10以下なら動けない。
                     return
                 }
-                let dd:Int=1
+                let ratio=pos.y/view.bounds.height
+                let dd = Int(15*ratio)
                 if Int(move.x) > lastmoveX + dd{
-                    vogCurPoint += dd*10
-                    lastmoveX = Int(move.x)
-                }else if Int(move.x) < lastmoveX - dd{
                     vogCurPoint -= dd*10
                     lastmoveX = Int(move.x)
+                }else if Int(move.x) < lastmoveX - dd{
+                    vogCurPoint += dd*10
+                    lastmoveX = Int(move.x)
                 }
-                let temp=Int(240*10-eyePosX.count)
-                
-                if vogCurPoint < temp*Int(view.bounds.width)/Int(mailWidth){
-                    vogCurPoint = temp*Int(view.bounds.width)/Int(mailWidth)
-                }else if vogCurPoint>0{//240*10以下には動けない
-                    vogCurPoint = 0
+                if vogCurPoint>eyePosX.count{
+                    vogCurPoint=eyePosX.count
+                }else if vogCurPoint<240*10{
+                    vogCurPoint=240*10
                 }
                 print("vogcur",vogCurPoint)
-                
-                vogImageView!.frame=CGRect(x:CGFloat(vogCurPoint),y:vogBoxYmin,width:view.bounds.width*18,height:vogBoxHeight)
+                drawVogOnePage(count: vogCurPoint)
             }else{//枠
                 let ww=view.bounds.width
                 let wh=view.bounds.height
@@ -535,127 +619,7 @@ class PlayViewController: UIViewController {
         }else if sender.state == .ended{
         }
     }
-    /*
-     @IBAction func panGesture(_ sender: UIPanGestureRecognizer) {
-         if calcFlag == true{
-             return
-         }
-         let move:CGPoint = sender.translation(in: self.view)
-         let pos = sender.location(in: self.view)
-         if sender.state == .began {
-             stPo = sender.location(in: self.view)
-             if vhitBoxView?.isHidden == true && vogBoxView?.isHidden  == true{
-                 //タップして動かすと、ここに来る
-                 //                rectType = checkWaks(po: pos)//0:枠設定 -1:違う
-                 if isVHIT==false{
-                     rectType=0
-                 }
-                 if rectType==0{
-                     stRect=wakuE
-                 }else{
-                     stRect=wakuF
-                 }
-             }
-         } else if sender.state == .changed {
-             if isVHIT == true && vhitBoxView?.isHidden == false{//vhit
-                 let h=self.view.bounds.height
-                 //let hI=Int(h)
-                 //let posyI=Int(pos.y)
-                 //                if isVHIT == true{//vhit
-                 if pos.y > h/2{//下半分の時
-                     var dd=Int(10)
-                     if pos.y < h/2 + h/6{//dd < 10{
-                         dd = 2
-                     }else if pos.y > h/2 + h*2/6{
-                         dd = 20
-                     }
-                     if Int(move.x) > lastmoveX + dd{
-                         vhitCurpoint -= dd*4
-                         lastmoveX = Int(move.x)
-                     }else if Int(move.x) < lastmoveX - dd{
-                         vhitCurpoint += dd*4
-                         lastmoveX = Int(move.x)
-                     }
-                     //print("all",dd,Int(move.x),lastmoveX,vhitCurpoint)// Int(move.x/10.0),movex)
-                     if vhitCurpoint<0{
-                         vhitCurpoint = 0
-                     }else if vhitCurpoint > eyeVeloFiltered.count - Int(self.view.bounds.width){
-                         vhitCurpoint = eyeVeloFiltered.count - Int(self.view.bounds.width)
-                     }
-                     if vhitCurpoint != lastVhitpoint{
-                         drawOnewave(startcount: vhitCurpoint)
-                         lastVhitpoint = vhitCurpoint
-                         if waveTuple.count>0{
-                             checksetPos(pos: lastVhitpoint + Int(self.view.bounds.width/2), mode:1)
-                             drawVHITwaves()
-                         }
-                     }
-                 }else{
-                     
-                 }
-             }else if isVHIT == false && vogBoxView?.isHidden == false{//vog
-                 if eyePosFiltered.count<240*10{//||okpMode==1{//240*10以下なら動けない。
-                     return
-                 }
-                 let dd:Int=1
-                 if Int(move.x) > lastmoveX + dd{
-                     vogCurpoint += dd*10
-                     lastmoveX = Int(move.x)
-                 }else if Int(move.x) < lastmoveX - dd{
-                     vogCurpoint -= dd*10
-                     lastmoveX = Int(move.x)
-                 }
-                 let temp=Int(240*10-eyePosFiltered.count)
-                 
-                 if vogCurpoint < temp*Int(view.bounds.width)/Int(mailWidth){
-                     vogCurpoint = temp*Int(view.bounds.width)/Int(mailWidth)
-                 }else if vogCurpoint>0{//240*10以下には動けない
-                     vogCurpoint = 0
-                 }
-                                 print("vogcur",vogCurpoint)
-                 
-                 wave3View!.frame=CGRect(x:CGFloat(vogCurpoint),y:vogBoxYmin,width:view.bounds.width*18,height:vogBoxHeight)
-              }else{//枠 changed
-                 if rectType > -1 {//枠の設定の場合
-                     //                    let w3=view.bounds.width/3
-                     let ww=view.bounds.width
-                     let wh=view.bounds.height
-                     if rectType == 0 {
-                         if faceF==0 || isVHIT==false{//EyeRect
-                             let et=CGRect(x:ww/10,y:wh/20,width: ww*4/5,height:wh*3/4)
-                             wakuE = moveWakus(rect:wakuE,stRect: stRect,stPo: stPo,movePo: move,hani: et)
-                         }else{//vHIT && faceF==true FaceRect
-                             let et=CGRect(x:ww/10,y:wh/20,width: ww*4/5,height:wh*3/4)
-                             wakuE = moveWakus(rect:wakuE,stRect: stRect,stPo: stPo,movePo: move,hani:et)
-                         }
-                     }else{
-                         //let xt=wakuE.origin.x
-                         //let w12=view.bounds.width/12
-                         let et=CGRect(x:ww/10,y:wh/20,width: ww*4/5,height:wh*3/4)
-                         wakuF = moveWakus(rect:wakuF,stRect:stRect, stPo: stPo,movePo: move,hani:et)
-                     }
-                     dispWakus()
-                     showWakuImages()
-                     setUserDefaults()
-                 }
-             }
-         }else if sender.state == .ended{
-             
-             setUserDefaults()
-             if vhitBoxView?.isHidden == false{//結果が表示されている時
-                 if waveTuple.count>0 {
-                     for i in 0..<waveTuple.count{
-                         if waveTuple[i].3 == 1{
-                             waveTuple[i].3 = 2
-                         }
-                     }
-                     drawVHITwaves()
-                 }
-             }
-         }
-     }
-     
-     */
+   
     @IBAction func tapGesture(_ sender: UITapGestureRecognizer) {
         print("tap")
         if eyeORface==0{//eye
@@ -934,6 +898,7 @@ class PlayViewController: UIViewController {
             timer_vog!.invalidate()
         }
         timer_vog = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.update_vog), userInfo: nil, repeats: true)
+        timercnt=0
     }
     var calcFlag:Bool=false
     var posRatio:Int = 100//vog
@@ -969,8 +934,8 @@ class PlayViewController: UIViewController {
         startTimer()//resizerectのチェックの時はここをコメントアウト*********************
         let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
         let avAsset = AVURLAsset(url: videoURL!, options: options)
-        calcDate = avAsset.creationDate!.description
-        //        print("calcdate:",calcDate)
+//        calcDate = avAsset.creationDate!.description
+//                print("calcdate:",calcDate)
         var reader: AVAssetReader! = nil
         do {
             reader = try AVAssetReader(asset: avAsset)
