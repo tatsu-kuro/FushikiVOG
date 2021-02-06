@@ -80,6 +80,79 @@ class PlayViewController: UIViewController {
             return 0
         }
     }
+    
+    var path2albumDoneFlag:Bool=false//不必要かもしれないが念の為
+    func savePath2album(path:String){
+        path2albumDoneFlag=false
+        savePath2album_sub(path: path)
+        while path2albumDoneFlag==false{
+            sleep(UInt32(0.2))
+        }
+    }
+    func getPHAssetcollection(albumTitle:String)->PHAssetCollection{
+        let requestOptions = PHImageRequestOptions()
+        requestOptions.isSynchronous = true
+        requestOptions.isNetworkAccessAllowed = false
+        requestOptions.deliveryMode = .highQualityFormat //これでもicloud上のvideoを取ってしまう
+        //アルバムをフェッチ
+        let assetFetchOptions = PHFetchOptions()
+        assetFetchOptions.predicate = NSPredicate(format: "title == %@", "vHIT_VOG")
+        let assetCollections = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .smartAlbumVideos, options: assetFetchOptions)
+        //ここはunwindから呼ばれる。アルバムはprepareで作っているはず？
+//        if (assetCollections.count > 0) {
+        //同じ名前のアルバムは一つしかないはずなので最初のオブジェクトを使用
+        return assetCollections.object(at:0)
+    }
+    func savePath2album_sub(path:String){
+        
+        if let dir = FileManager.default.urls( for: .documentDirectory, in: .userDomainMask ).first {
+            
+            let fileURL = dir.appendingPathComponent( path )
+            
+            PHPhotoLibrary.shared().performChanges({ [self] in
+                let assetRequest = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: fileURL)!
+                let albumChangeRequest = PHAssetCollectionChangeRequest(for: getPHAssetcollection(albumTitle: "vHIT_VOG"))
+                let placeHolder = assetRequest.placeholderForCreatedAsset
+                albumChangeRequest?.addAssets([placeHolder!] as NSArray)
+            }) { (isSuccess, error) in
+                if isSuccess {
+                    self.path2albumDoneFlag=true
+                    // 保存成功
+                } else {
+                    self.path2albumDoneFlag=true
+                    // 保存失敗
+                }
+            }
+        }
+    }
+
+    func saveImage2path(image:UIImage,path:String) {//imageを保存
+        if let dir = FileManager.default.urls( for: .documentDirectory, in: .userDomainMask ).first {
+            let path_url = dir.appendingPathComponent( path )
+            let pngImageData = image.pngData()
+            do {
+                try pngImageData!.write(to: path_url, options: .atomic)
+//                saving2pathFlag=false
+            } catch {
+                print("gyroData.txt write err")//エラー処理
+            }
+        }
+    }
+    
+    func existFile(aFile:String)->Bool{
+        if let dir = FileManager.default.urls( for: .documentDirectory, in: .userDomainMask ).first {
+            
+            let path_url = dir.appendingPathComponent( aFile )
+            let fileManager = FileManager.default
+            if fileManager.fileExists(atPath: path_url.path){
+                return true
+            }else{
+                return false
+            }
+            
+        }
+        return false
+    }
     @IBAction func onSaveButton(_ sender: Any) {
         
         if calcFlag == true{
@@ -96,11 +169,14 @@ class PlayViewController: UIViewController {
             self.idNumber = self.Field2value(field: textField)
             let img = getVogOnePage(count: vogCurPoint)
             // イメージビューに設定する
-            UIImageWriteToSavedPhotosAlbum(img, nil, nil, nil)
-            //self.drawVHITwaves()
-//            self.drawVogtext()//ここが無くてもIDはsaveされるが、ないとIDが表示されない。
-//            self.nonsavedFlag = false //解析結果がsaveされたのでfalse
-//            //           self.calcDrawVHIT()
+//            UIImageWriteToSavedPhotosAlbum(img, nil, nil, nil)
+
+            //まずtemp.pngに保存して、それをvHIT_VOGアルバムにコピーする
+            saveImage2path(image: img, path: "temp.png")
+            while existFile(aFile: "temp.png")==false{
+                sleep(UInt32(0.1))
+            }
+            savePath2album(path: "temp.png")
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (action:UIAlertAction!) -> Void in
