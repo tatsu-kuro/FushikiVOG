@@ -154,11 +154,11 @@ class PlayViewController: UIViewController {
             print("\(String(describing: textField.text))")
             #endif
             self.idNumber = self.Field2value(field: textField)
-            let img = getVogOnePage(count: vogCurPoint)
+            drawVogOnePage(count:vogCurPoint)//countまでの波を表示
             // イメージビューに設定する
 //            UIImageWriteToSavedPhotosAlbum(img, nil, nil, nil)
             //まずtemp.pngに保存して、それをvHIT_VOGアルバムにコピーする
-            saveImage2path(image: img, path: "temp.png")
+            saveImage2path(image: getVogOnePage(count: vogCurPoint), path: "temp.png")
             while existFile(aFile: "temp.png")==false{
                 sleep(UInt32(0.1))
             }
