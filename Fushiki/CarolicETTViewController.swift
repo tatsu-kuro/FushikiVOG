@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import Photos
 class CarolicETTViewController: UIViewController{
-    let camera = CameraAlbumEtc(name:"fushiki")
+    let camera = CameraAlbumEtc(name:"Fushiki")
 //    var videoDevice: AVCaptureDevice?
 //    var captureSession: AVCaptureSession!
 //    var fileOutput = AVCaptureMovieFileOutput()

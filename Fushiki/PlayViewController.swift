@@ -26,6 +26,7 @@ extension UIImage {
     }
 }
 class PlayViewController: UIViewController {
+    let album = CameraAlbumEtc(name:"Fushiki")
     let openCV = OpenCVWrapper()
     var videoURL:URL?
     var videoSize:CGSize!
@@ -39,7 +40,7 @@ class PlayViewController: UIViewController {
     var timer_vog:Timer?
     var vogImageView:UIImageView?
     var vogImageViewFlag:Bool=false
-    var vogLineView:UIImageView?//vog
+//    var vogTextView:UIImageView?//vog
     var vogImage:UIImage?
     var vogBoxHeight:CGFloat=0
     var vogBoxYmin:CGFloat=0
@@ -80,7 +81,6 @@ class PlayViewController: UIViewController {
             return 0
         }
     }
-    
     var path2albumDoneFlag:Bool=false//不必要かもしれないが念の為
     func savePath2album(path:String){
         path2albumDoneFlag=false
@@ -89,20 +89,7 @@ class PlayViewController: UIViewController {
             sleep(UInt32(0.2))
         }
     }
-    func getPHAssetcollection(albumTitle:String)->PHAssetCollection{
-        let requestOptions = PHImageRequestOptions()
-        requestOptions.isSynchronous = true
-        requestOptions.isNetworkAccessAllowed = false
-        requestOptions.deliveryMode = .highQualityFormat //これでもicloud上のvideoを取ってしまう
-        //アルバムをフェッチ
-        let assetFetchOptions = PHFetchOptions()
-        assetFetchOptions.predicate = NSPredicate(format: "title == %@", "vHIT_VOG")
-        let assetCollections = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .smartAlbumVideos, options: assetFetchOptions)
-        //ここはunwindから呼ばれる。アルバムはprepareで作っているはず？
-//        if (assetCollections.count > 0) {
-        //同じ名前のアルバムは一つしかないはずなので最初のオブジェクトを使用
-        return assetCollections.object(at:0)
-    }
+ 
     func savePath2album_sub(path:String){
         
         if let dir = FileManager.default.urls( for: .documentDirectory, in: .userDomainMask ).first {
@@ -111,7 +98,7 @@ class PlayViewController: UIViewController {
             
             PHPhotoLibrary.shared().performChanges({ [self] in
                 let assetRequest = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: fileURL)!
-                let albumChangeRequest = PHAssetCollectionChangeRequest(for: getPHAssetcollection(albumTitle: "vHIT_VOG"))
+                let albumChangeRequest = PHAssetCollectionChangeRequest(for:  album.getPHAssetcollection())
                 let placeHolder = assetRequest.placeholderForCreatedAsset
                 albumChangeRequest?.addAssets([placeHolder!] as NSArray)
             }) { (isSuccess, error) in
@@ -170,19 +157,16 @@ class PlayViewController: UIViewController {
             let img = getVogOnePage(count: vogCurPoint)
             // イメージビューに設定する
 //            UIImageWriteToSavedPhotosAlbum(img, nil, nil, nil)
-
             //まずtemp.pngに保存して、それをvHIT_VOGアルバムにコピーする
             saveImage2path(image: img, path: "temp.png")
             while existFile(aFile: "temp.png")==false{
                 sleep(UInt32(0.1))
             }
             savePath2album(path: "temp.png")
-        }
-        
+         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (action:UIAlertAction!) -> Void in
             self.idNumber = 1//キャンセルしてもここは通らない？
         }
-        
         // UIAlertControllerにtextFieldを追加
         alert.addTextField { (textField:UITextField!) -> Void in
             textField.keyboardType = UIKeyboardType.numberPad
@@ -383,6 +367,7 @@ class PlayViewController: UIViewController {
         UIGraphicsEndImageContext()
         return image!
     }
+   
     func getVogOnePage(count:Int)->UIImage{
         var cnt=count-240*10
         if cnt<0{
@@ -405,8 +390,10 @@ class PlayViewController: UIViewController {
         let clipRect = CGRect(x:CGFloat(cnt) , y: 0, width: mailWidth, height: mailHeight)
         let cripImageRef = vogImage?.cgImage!.cropping(to: clipRect)
         let crippedImage = UIImage(cgImage: cripImageRef!)
-        print("clipRect:",cnt,count,clipRect)
-        let drawImage = crippedImage.resize(size: CGSize(width:view.bounds.width, height:view.bounds.height*4/5))
+//        print("clipRect:",cnt,count,clipRect)
+        let namedImage = getNamedImage(startingImage: crippedImage)
+        let drawImage = namedImage.resize(size: CGSize(width:view.bounds.width, height:view.bounds.height*4/5))
+//        let namedImage =
         vogImageView = UIImageView(image: drawImage)
         vogImageView?.center =  CGPoint(x:view.bounds.width/2,y:view.bounds.height/2)
         // 画面に表示する
@@ -469,10 +456,6 @@ class PlayViewController: UIViewController {
         vogImage=addVogWave(startingImage: vogImage!, startn: lastArraycount-1, end:cntTemp)
         lastArraycount=cntTemp
 //        drawVogall_new()
-        if vogLineView != nil{
-            //                vogLineView?.removeFromSuperview()//waveを消して
-            //                drawVogtext()//文字を表示
-        }
         #if DEBUG
         print("debug-update",timercnt,calcFlagTemp)
         #endif
@@ -491,12 +474,10 @@ class PlayViewController: UIViewController {
         if f==true{//vog wave
 //            boxF=true
             vogBoxView?.isHidden = false
-            vogLineView?.isHidden = false
             vogImageView?.isHidden=false
         }else{//no wave
 //            boxF=false
             vogBoxView?.isHidden = true
-            vogLineView?.isHidden = true
             vogImageView?.isHidden=true
         }
     }
@@ -506,9 +487,11 @@ class PlayViewController: UIViewController {
         }
         if vogImageViewFlag==true{
             vogImageViewFlag=false
+    
             vogImageView?.isHidden=true
         }else{
             vogImageViewFlag=true
+    
             vogImageView?.isHidden=false
         }
   
@@ -675,7 +658,7 @@ class PlayViewController: UIViewController {
                 }else if vogCurPoint<240*10{
                     vogCurPoint=240*10
                 }
-                print("vogcur",vogCurPoint)
+//                print("vogcur",vogCurPoint)
                 drawVogOnePage(count: vogCurPoint)
             }else{//枠
                 let ww=view.bounds.width
@@ -705,7 +688,6 @@ class PlayViewController: UIViewController {
         }
         dispWakus()
     }
-    
     
     @objc func update(tm: Timer) {
         if timer_vog?.isValid == true{
@@ -842,32 +824,7 @@ class PlayViewController: UIViewController {
         vogBoxYcenter=wh/2
 
     }
-    /*
-    func makeBox(width w:CGFloat,height h:CGFloat) -> UIImage{
-        let size = CGSize(width:w, height:h)
-        UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
-        let context = UIGraphicsGetCurrentContext()
-        let drawRect = CGRect(x:0, y:0, width:w, height:h)
-        let drawPath = UIBezierPath(rect:drawRect)
-        context?.setFillColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        drawPath.fill()
-        
-        
-//
-//        drawPath.move(to:CGPoint(x:10,y:10))
-//        drawPath.addLine(to: CGPoint(x:300,y:200))
-//        //UIColor.blue.setStroke()
-//        drawPath.lineWidth = 5.0//1.0
-//        drawPath.stroke()
-//
-        
-        
-//        context?.setStrokeColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
-//        drawPath.stroke()
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return image!
-    }*/
+  
     func setButtonProperty(button:UIButton,color:UIColor){
         button.layer.borderColor = UIColor.black.cgColor
         button.layer.borderWidth = 1.0
@@ -883,25 +840,6 @@ class PlayViewController: UIViewController {
         return true
     }
    
-    // Start Button Tapped
-//    @objc func onStartButtonTapped(){
-//        if (videoPlayer.rate != 0) && (videoPlayer.error == nil) {//playing
-//            videoPlayer.pause()
-//        }else{//stoped
-//            if seekBar.value>seekBar.maximumValue-0.5{
-//                seekBar.value=0
-//            }
-//            videoPlayer.seek(to: CMTimeMakeWithSeconds(Float64(seekBar.value), preferredTimescale: Int32(NSEC_PER_SEC)))
-//            videoPlayer.play()
-//        }
-//    }
-//    @objc func onStopButtonTapped(){
-//        if (videoPlayer.rate != 0) && (videoPlayer.error == nil) {//playing
-//            videoPlayer.pause()
-//            currFrameNumber=Int(seekBar.value*videoFps)
-//            print("curr:",currFrameNumber)
-//        }
-//    }
     // SeekBar Value Changed
     @objc func onSliderValueChange(){
         videoPlayer.pause()
@@ -910,18 +848,6 @@ class PlayViewController: UIViewController {
         currFrameNumber=Int(seekBar.value*videoFps)
         print("curr/slider:",currFrameNumber)
     }
-//    func onNextButtonTapped(){//このようなボタンを作ってみれば良さそう。無くてもいいか？
-//        var seekBarValue=seekBar.value+0.01
-//        if seekBarValue>videoDuration-0.1{
-//            seekBarValue = videoDuration-0.1
-//        }
-//        let newTime = CMTime(seconds: Double(seekBarValue), preferredTimescale: 600)
-//        currTime!.text = String(format:"%.1f/%.1f",seekBarValue,videoDuration)
-//        videoPlayer.seek(to: newTime, toleranceBefore: .zero, toleranceAfter: .zero)
-//    }
-//    @objc func onExitButtonTapped(){//このボタンのところにsegueでunwindへ行く
-
-//    }
     
     var kalVs:[[CGFloat]]=[[0.0001,0.001,0,1,2],[0.0001,0.001,3,4,5],[0.0001,0.001,6,7,8],[0.0001,0.001,10,11,12],[0.0001,0.001,13,14,15]]
     func KalmanS(Q:CGFloat,R:CGFloat,num:Int){

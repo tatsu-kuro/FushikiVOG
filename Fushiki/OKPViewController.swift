@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import Photos
 class OKPViewController: UIViewController{
-    let camera = CameraAlbumEtc(name:"fushiki")
+    let camera = CameraAlbumEtc(name:"Fushiki")
     @IBOutlet weak var speedLabel: UILabel!
     
     @IBOutlet var singleRec: UITapGestureRecognizer!

@@ -18,6 +18,8 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
     var albumName:String = ""
     var videoDate = Array<String>()
     var videoURL = Array<URL>()
+    var stillDate = Array<String>()
+    var stillURL = Array<URL>()
     var albumExist:Bool = false
     var dialogStatus:Int=0
     init(name: String) {
@@ -144,6 +146,72 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
                     if let urlAsset = asset as? AVURLAsset{//not on iCloud
                         videoURL.append(urlAsset.url)
                         videoDate.append(date + "(" + duration + ")")
+                        if i == assets.count - 1{
+                            gettingAlbumF=false
+                        }
+                    }else{//on icloud
+                        if i == assets.count - 1{
+                            gettingAlbumF=false
+                        }
+                    }
+                }
+            }
+        }else{
+            albumExist=false
+            gettingAlbumF=false
+        }
+    }
+    func getAlbumStillList(){//最後のvideoを取得するまで待つ
+        gettingAlbumF = true
+        getAlbumStillList_sub()
+        while gettingAlbumF == true{
+            sleep(UInt32(0.1))
+        }
+    }
+    func getAlbumStillList_sub(){
+        //     let imgManager = PHImageManager.default()
+        let requestOptions = PHImageRequestOptions()
+        videoURL.removeAll()
+        videoDate.removeAll()
+        requestOptions.isSynchronous = true
+        requestOptions.isNetworkAccessAllowed = false//これでもicloud上のvideoを取ってしまう
+        requestOptions.deliveryMode = .highQualityFormat
+        // アルバムをフェッチ
+        let assetFetchOptions = PHFetchOptions()
+        assetFetchOptions.predicate = NSPredicate(format: "title == %@", albumName)
+        let assetCollections = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .smartAlbumVideos, options: assetFetchOptions)
+        
+        //アルバムが存在しない事もある？
+        if (assetCollections.count > 0) {
+            //同じ名前のアルバムは一つしかないはずなので最初のオブジェクトを使用
+            let assetCollection = assetCollections.object(at:0)
+            // creationDate降順でアルバム内のアセットをフェッチ
+            let fetchOptions = PHFetchOptions()
+            fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+            let assets = PHAsset.fetchAssets(in: assetCollection, options: fetchOptions)
+            albumExist=true
+            if assets.count == 0{
+                gettingAlbumF=false
+                albumExist=false
+            }
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            for i in 0..<assets.count{
+                let asset=assets[i]
+                if assets[i].duration != 0{//still -> duration==0
+                    continue//video
+                }
+                let date_sub = asset.creationDate
+                let date = formatter.string(from: date_sub!)
+                let duration = String(format:"%.1fs",asset.duration)
+                let options=PHVideoRequestOptions()
+                options.version = .original
+                PHImageManager.default().requestAVAsset(forVideo:asset,
+                                                        options: options){ [self](asset:AVAsset?,audioMix, info:[AnyHashable:Any]?)->Void in
+                    
+                    if let urlAsset = asset as? AVURLAsset{//not on iCloud
+                        stillURL.append(urlAsset.url)
+                        stillDate.append(date + "(" + duration + ")")
                         if i == assets.count - 1{
                             gettingAlbumF=false
                         }

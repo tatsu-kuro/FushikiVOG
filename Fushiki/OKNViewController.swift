@@ -11,7 +11,7 @@ import CoreMotion
 import Photos
 import AVFoundation
 class OKNViewController: UIViewController{
-    let camera = CameraAlbumEtc(name:"fushiki")
+    let camera = CameraAlbumEtc(name:"Fushiki")
     var startTime=CFAbsoluteTimeGetCurrent()
     var lastTime=CFAbsoluteTimeGetCurrent()
     var cnt:Int = 0
