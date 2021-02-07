@@ -10,7 +10,7 @@ import UIKit
 
 class PlayParaViewController: UIViewController {
     @IBOutlet weak var defaultButton: UIButton!
-    
+    @IBOutlet weak var faceMark: UISwitch!
     @IBOutlet weak var exitButton: UIButton!
     @IBOutlet weak var para4: UITextField!
     @IBOutlet weak var para3: UITextField!
@@ -20,16 +20,33 @@ class PlayParaViewController: UIViewController {
     var paraInt2:Int=0
     var paraInt3:Int=0
     var paraInt4:Int=0
+    var paraInt5:Int=0
+    
+    
+    @IBAction func onFaceMark(_ sender: Any) {
+        if faceMark.isOn{
+            paraInt5=1
+        }else{
+            paraInt5=0
+        }
+        setUserDefaults()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         paraInt1=UserDefaults.standard.integer(forKey:"posRatio")
         paraInt2=UserDefaults.standard.integer(forKey:"veloRatio")
         paraInt3=UserDefaults.standard.integer(forKey:"wakuLength")
         paraInt4=UserDefaults.standard.integer(forKey:"eyeBorder")
+        paraInt5=UserDefaults.standard.integer(forKey:"faceMark")
         para1.text = "\(paraInt1)"
         para2.text = "\(paraInt2)"
         para3.text = "\(paraInt3)"
         para4.text = "\(paraInt4)"
+        if paraInt5==0{
+            faceMark.isOn=false
+        }else{
+            faceMark.isOn=true
+        }
         setScreen()
     }
   
@@ -43,6 +60,7 @@ class PlayParaViewController: UIViewController {
             paraInt3 = 3
             paraInt4 = 9
         }
+        paraInt5=1
         setUserDefaults()
     }
     func setUserDefaults(){
@@ -50,10 +68,16 @@ class PlayParaViewController: UIViewController {
         UserDefaults.standard.set(paraInt2, forKey: "veloRatio")
         UserDefaults.standard.set(paraInt3, forKey: "wakuLength")
         UserDefaults.standard.set(paraInt4, forKey: "eyeBorder")
+        UserDefaults.standard.set(paraInt5, forKey: "faceMark")
         para1.text = "\(paraInt1)"
         para2.text = "\(paraInt2)"
         para3.text = "\(paraInt3)"
         para4.text = "\(paraInt4)"
+        if paraInt5==0{
+            faceMark.isOn=false
+        }else{
+            faceMark.isOn=true
+        }
      }
     func isAlphanumeric(text:String) -> Bool {
         if text.range(of: "[^0-9]+", options: .regularExpression) == nil && text != ""{

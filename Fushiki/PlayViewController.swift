@@ -35,16 +35,17 @@ class PlayViewController: UIViewController {
     var videoDuration:Float=0
     var screenSize:CGSize!
     var currFrameNumber:Int=0
+    var faceMark:Bool=true
     lazy var seekBar = UISlider()
     var timer:Timer?
     var timer_vog:Timer?
     var vogImageView:UIImageView?
-    var vogImageViewFlag:Bool=false
+//    var vogImageViewFlag:Bool=false
 //    var vogTextView:UIImageView?//vog
     var vogImage:UIImage?
     var vogBoxHeight:CGFloat=0
     var vogBoxYmin:CGFloat=0
-    var vogBoxView:UIImageView?//vog
+//    var vogBoxView:UIImageView?//vog
     var vogCurPoint:Int=0
     var vogBoxYcenter:CGFloat=0
     var mailWidth:CGFloat=2400//VOG
@@ -53,7 +54,6 @@ class PlayViewController: UIViewController {
     var savedFlag:Bool = false
     @IBOutlet weak var waveButton: UIButton!
     @IBOutlet weak var mailButton: UIButton!
-    
     @IBOutlet weak var calcButton: UIButton!
     @IBOutlet weak var exitButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
@@ -441,7 +441,7 @@ class PlayViewController: UIViewController {
         timercnt += 1
         if timercnt==1{//vogImageの背景の白、縦横線を作る
             vogImage = initVogImage(width:mailWidth*18,height:mailHeight)//枠だけ
-            vogImageViewFlag=true
+//            vogImageViewFlag=true
             vogCurPoint=0
         }
         currTimeLabel.text=String(format:"%.1f/%.1f",seekBar.value + Float(eyePosX.count)/videoFps,videoDuration)
@@ -467,34 +467,30 @@ class PlayViewController: UIViewController {
             drawVogOnePage(count: 0)
             print("calcend")
             timer_vog!.invalidate()
+            setButtons(flag: true)
         }
     }
 
-    func showBox(f:Bool){
-        if f==true{//vog wave
-//            boxF=true
-            vogBoxView?.isHidden = false
-            vogImageView?.isHidden=false
-        }else{//no wave
-//            boxF=false
-            vogBoxView?.isHidden = true
-            vogImageView?.isHidden=true
-        }
-    }
+//    func showBox(f:Bool){
+//        if f==true{//vog wave
+////            boxF=true
+////            vogBoxView?.isHidden = false
+//            vogImageView?.isHidden=false
+//        }else{//no wave
+////            boxF=false
+////            vogBoxView?.isHidden = true
+//            vogImageView?.isHidden=true
+//        }
+//    }
     @IBAction func onWaveButton(_ sender: Any) {//saveresult record-unwind の２箇所
-        if calcFlag == true{
+        if vogImageView == nil{
             return
         }
-        if vogImageViewFlag==true{
-            vogImageViewFlag=false
-    
+        if vogImageView!.isHidden == false{
             vogImageView?.isHidden=true
         }else{
-            vogImageViewFlag=true
-    
             vogImageView?.isHidden=false
         }
-  
     }
   
     func resolutionSizeOfVideo(url:URL) -> CGSize? {
@@ -586,10 +582,18 @@ class PlayViewController: UIViewController {
         faceWakuL_image.layer.cornerRadius = 3
         faceWakuL_image.image=UIface
         view.bringSubviewToFront(faceWakuL_image)
+        if faceMark==false{
+            faceWakuL_image.isHidden=true
+        }else{
+            faceWakuL_image.isHidden=false
+        }
     }
     
     func dispWakus(){
         let d=(wakuLength+20)/2//matchingArea(center,wakuLength)
+        if faceMark==false{
+            eyeORface=0
+        }
         eyeWaku_image.frame=CGRect(x:eyeCenter.x-d,y:eyeCenter.y-d,width:2*d,height:2*d)
         faceWaku_image.frame=CGRect(x:faceCenter.x-d,y:faceCenter.y-d,width:2*d,height:2*d)
         eyeWaku_image.layer.borderColor = UIColor.green.cgColor
@@ -607,6 +611,11 @@ class PlayViewController: UIViewController {
         }
         view.bringSubviewToFront(faceWaku_image)
         view.bringSubviewToFront(eyeWaku_image)
+        if faceMark==false{
+            faceWaku_image.isHidden=true
+        }else{
+            faceWaku_image.isHidden=false
+        }
     }
     
     func moveCenter(start:CGPoint,move:CGPoint,hani:CGRect)-> CGPoint{
@@ -640,7 +649,8 @@ class PlayViewController: UIViewController {
             startFaceCenter=faceCenter
         } else if sender.state == .changed {
             
-            if vogImageViewFlag == true{//vog波形表示中
+            if vogImageView?.isHidden == false{//vog波形表示中
+//                if vogImageViewFlag == true{//vog波形表示中
                 if eyePosX.count<240*10{//||okpMode==1{//240*10以下なら動けない。
                     return
                 }
@@ -681,11 +691,15 @@ class PlayViewController: UIViewController {
    
     @IBAction func tapGesture(_ sender: UITapGestureRecognizer) {
         print("tap")
+ 
         if eyeORface==0{//eye
             eyeORface=1
         }else{
             eyeORface=0
         }
+//        if faceMark==false{
+//             eyeORface=0
+//        }
         dispWakus()
     }
     
@@ -736,6 +750,11 @@ class PlayViewController: UIViewController {
         eyeCenter.y = CGFloat(getUserDefault(str: "eyeCenterY", ret: 100))
         faceCenter.x = CGFloat(getUserDefault(str: "faceCenterX", ret: 300))
         faceCenter.y = CGFloat(getUserDefault(str: "faceCenterY", ret: 100))
+        if getUserDefault(str: "faceMark", ret:1)==1{
+            faceMark=true
+        }else{
+            faceMark=false
+        }
     }
     func setUserDefaults(){
         UserDefaults.standard.set(eyeCenter.x, forKey: "eyeCenterX")
@@ -914,11 +933,23 @@ class PlayViewController: UIViewController {
 //    var eyeVeloFiltered = Array<CGFloat>()
     var eyeVelXfiltered = Array<CGFloat>()
     var eyeVelYfiltered = Array<CGFloat>()
+    var buttonsArray:[Bool]!
+    func setButtons(flag:Bool){
+        mailButton.isEnabled=flag
+        saveButton.isEnabled=flag
+        waveButton.isEnabled=flag
+//        calcButton.isEnabled=flag
+        playButton.isEnabled=flag
+        setteiButton.isEnabled=flag
+        exitButton.isEnabled=flag
+    }
     @IBAction func onCalcButton(_ sender: Any) {
         if calcFlag==true{
             calcFlag=false
+            setButtons(flag: true)
             return
         }
+        setButtons(flag: false)
         setUserDefaults()//eyeCenter,faceCenter
         lastArraycount=0
         calcFlag = true
@@ -1141,8 +1172,11 @@ class PlayViewController: UIViewController {
         veloRatio=UserDefaults.standard.integer(forKey:"veloRatio")
         wakuLength=CGFloat(UserDefaults.standard.integer(forKey:"wakuLength"))
         eyeBorder=UserDefaults.standard.integer(forKey:"eyeBorder")
-
-//        getUserDefaults()
+        if UserDefaults.standard.integer(forKey:"faceMark")==1{
+            faceMark=true
+        }else{
+            faceMark=false
+        }
         dispWakus()
         showWakuImages()
     }
