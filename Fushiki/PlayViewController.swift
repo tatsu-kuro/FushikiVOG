@@ -1190,22 +1190,27 @@ class PlayViewController: UIViewController {
         
         KalmanInit()
         //        showBoxies(f: true)
-//        vogImage = drawWakulines(width:mailWidth*18,height:mailHeight)//枠だけ
+        //        vogImage = drawWakulines(width:mailWidth*18,height:mailHeight)//枠だけ
         UIApplication.shared.isIdleTimerDisabled = true
         let eyeborder:CGFloat = CGFloat(eyeBorder)
         startTimer()//resizerectのチェックの時はここをコメントアウト*********************
         let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
         let avAsset = AVURLAsset(url: videoURL!, options: options)
-//        calcDate = avAsset.creationDate!.description
-//                print("calcdate:",calcDate)
+        //        calcDate = avAsset.creationDate!.description
+        //                print("calcdate:",calcDate)
         var reader: AVAssetReader! = nil
         do {
             reader = try AVAssetReader(asset: avAsset)
         } catch {
- 
+            #if DEBUG
+            print("could not initialize reader.")
+            #endif
             return
         }
         guard let videoTrack = avAsset.tracks(withMediaType: AVMediaType.video).last else {
+            #if DEBUG
+            print("could not retrieve the video track.")
+            #endif
             return
         }
         
@@ -1221,21 +1226,16 @@ class PlayViewController: UIViewController {
         // UnsafeとMutableはまあ調べてもらうとして、eX, eY等は<Int32>が一つ格納されている場所へのポインタとして宣言される。
         let eX = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
         let eY = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
-//        let fX = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
-//        let fY = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
+        //        let fX = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
+        //        let fY = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
         var eyeCGImage:CGImage!
         let eyeUIImage:UIImage!
         var eyeWithBorderCGImage:CGImage!
         var eyeWithBorderUIImage:UIImage!
-//        var faceCGImage:CGImage!
-//        var faceUIImage:UIImage!
-//        var faceWithBorderCGImage:CGImage!
-//        var faceWithBorderUIImage:UIImage!
+ 
         let eyeRectOnScreen=getRectFromCenter(center: eyeCenter, len: wakuLength)
         let eyeWithBorderRectOnScreen = expandRectWithBorderWide(rect: eyeRectOnScreen, border: eyeborder)
-//        let faceRectOnScreen=getRectFromCenter(center: faceCenter, len: wakuLength)
-//        let faceWithBorderRectOnScreen = expandRectWithBorderWide(rect: faceRectOnScreen, border: eyeborder)
-//
+
         let context:CIContext = CIContext.init(options: nil)
         //        let orientation = UIImage.Orientation.up
         var sample:CMSampleBuffer!
@@ -1243,35 +1243,20 @@ class PlayViewController: UIViewController {
         let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample!)!
         let ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.down)//4行上ともupで良いような？
         
-        let maxWidth=ciImage.extent.size.width
-        let maxHeight=ciImage.extent.size.height
-        
+
         let eyeRect = resizeR2(eyeRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
         var eyeWithBorderRect = resizeR2(eyeWithBorderRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
-//        let faceRect = resizeR2(faceRectOnScreen, viewRect:getVideoRectOnScreen() /*view.frame*/, image:ciImage)
-//        var faceWithBorderRect = resizeR2(faceWithBorderRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
-        //eyeWithBorderRectとeyeRect の差、faceでの差も同じ
+        
         let borderRectDiffer=eyeWithBorderRect.width-eyeRect.width
-        let maxWidthWithBorder=maxWidth-eyeWithBorderRect.width-5
-        let maxHeightWithBorder=maxHeight-eyeWithBorderRect.height-5
-        //        let eyebR0 = eyeWithBorderRect
-        //        let facbR0 = faceWithBorderRect
         
         eyeCGImage = context.createCGImage(ciImage, from: eyeRect)!
         eyeUIImage = UIImage.init(cgImage: eyeCGImage)
-//        faceCGImage = context.createCGImage(ciImage, from: faceRect)!
-//        faceUIImage = UIImage.init(cgImage:faceCGImage)
         
         let osEyeX:CGFloat = (eyeWithBorderRect.size.width - eyeRect.size.width) / 2.0//上下方向への差
         let osEyeY:CGFloat = (eyeWithBorderRect.size.height - eyeRect.size.height) / 2.0//左右方向への差
-//        let osFacX:CGFloat = (faceWithBorderRect.size.width - faceRect.size.width) / 2.0//上下方向への差
-//        let osFacY:CGFloat = (faceWithBorderRect.size.height - faceRect.size.height) / 2.0//左右方向への差
-        //   "ofset:" osEyeX=osFac,osEyeY=osFacY eyeとface同じ
-//        let xDiffer=faceWithBorderRect.origin.x - eyeWithBorderRect.origin.x
-//        let yDiffer=faceWithBorderRect.origin.y - eyeWithBorderRect.origin.y
-//        var maxEyeV:Double = 0
-//        var maxFaceV:Double = 0
-        var frameCnt:Int=0
+        
+        var maxEyeV:Double = 0
+        
         while reader.status != AVAssetReader.Status.reading {
             sleep(UInt32(0.1))
         }
@@ -1280,6 +1265,11 @@ class PlayViewController: UIViewController {
                 var ex:CGFloat = 0
                 var ey:CGFloat = 0
                 
+                //for test display
+                #if DEBUG
+                var x:CGFloat = 50.0
+                let y:CGFloat = 50.0
+                #endif
                 autoreleasepool{
                     let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample)!
                     
@@ -1288,10 +1278,24 @@ class PlayViewController: UIViewController {
                     eyeWithBorderCGImage = context.createCGImage(ciImage, from: eyeWithBorderRect)!
                     eyeWithBorderUIImage = UIImage.init(cgImage: eyeWithBorderCGImage)
                     
-                    var maxEyeV=self.openCV.matching(eyeWithBorderUIImage,
-                                                     narrow: eyeUIImage,
-                                                     x: eX,
-                                                     y: eY)
+                    #if DEBUG
+                    //画面表示はmain threadで行う
+                    DispatchQueue.main.async {
+                        self.debugEye.frame=CGRect(x:x,y:y,width:eyeRect.size.width,height:eyeRect.size.height)
+                        self.debugEye.image=eyeUIImage
+                        x += eyeRect.size.width
+                        self.debugEyeb.frame=CGRect(x:x,y:y,width:eyeWithBorderRect.size.width,height:eyeWithBorderRect.size.height)
+                        self.debugEyeb.image=eyeWithBorderUIImage
+                        self.view.bringSubviewToFront(self.debugEye)
+                        self.view.bringSubviewToFront(self.debugEyeb)
+                        x += eyeWithBorderRect.size.width + 5
+                    }
+                    #endif
+                    
+                    maxEyeV=self.openCV.matching(eyeWithBorderUIImage,
+                                                 narrow: eyeUIImage,
+                                                 x: eX,
+                                                 y: eY)
                     //                    print("OpenV",maxEyeV)
                     if maxEyeV < 0.7{
                         ex = 0
@@ -1321,18 +1325,16 @@ class PlayViewController: UIViewController {
                     while reader.status != AVAssetReader.Status.reading {
                         sleep(UInt32(0.1))
                     }
-//                    //マッチングデバッグ用スリープ、デバッグが終わったら削除
-//                    #if DEBUG
-//                    usleep(200)
-//                    #endif
+                    //マッチングデバッグ用スリープ、デバッグが終わったら削除
+                    #if DEBUG
+                    usleep(200)
+                    #endif
                 }
             }
             self.calcFlag = false
-            //            if timer_vog?.isValid==true{
-            //                timer_vog?.invalidate()
-            //            }
         }
     }
+
     @IBAction func unwindPlay(segue: UIStoryboardSegue) {
 //        UIApplication.shared.isIdleTimerDisabled = false//スリープする
         print("unwindPlay")
