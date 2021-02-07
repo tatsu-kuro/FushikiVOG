@@ -490,6 +490,7 @@ class PlayViewController: UIViewController {
             vogImageView?.isHidden=true
         }else{
             vogImageView?.isHidden=false
+            view.bringSubviewToFront(vogImageView!)
         }
     }
   
@@ -691,7 +692,9 @@ class PlayViewController: UIViewController {
    
     @IBAction func tapGesture(_ sender: UITapGestureRecognizer) {
         print("tap")
- 
+        if vogImageView?.isHidden==false{
+            return
+        }
         if eyeORface==0{//eye
             eyeORface=1
         }else{
@@ -944,6 +947,10 @@ class PlayViewController: UIViewController {
         exitButton.isEnabled=flag
     }
     @IBAction func onCalcButton(_ sender: Any) {
+        if faceMark==false{
+            onCalcButton()
+            return
+        }
         if calcFlag==true{
             calcFlag=false
             setButtons(flag: true)
@@ -1165,6 +1172,167 @@ class PlayViewController: UIViewController {
 //            }
         }
     }
+    func onCalcButton() {
+        if calcFlag==true{
+            calcFlag=false
+            setButtons(flag: true)
+            return
+        }
+        setButtons(flag: false)
+        setUserDefaults()//eyeCenter,faceCenter
+        lastArraycount=0
+        calcFlag = true
+        eyePosXfiltered.removeAll()
+        eyePosX.removeAll()
+        eyePosXfiltered.removeAll()
+        eyePosY.removeAll()
+        eyePosYfiltered.removeAll()
+        
+        KalmanInit()
+        //        showBoxies(f: true)
+//        vogImage = drawWakulines(width:mailWidth*18,height:mailHeight)//枠だけ
+        UIApplication.shared.isIdleTimerDisabled = true
+        let eyeborder:CGFloat = CGFloat(eyeBorder)
+        startTimer()//resizerectのチェックの時はここをコメントアウト*********************
+        let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
+        let avAsset = AVURLAsset(url: videoURL!, options: options)
+//        calcDate = avAsset.creationDate!.description
+//                print("calcdate:",calcDate)
+        var reader: AVAssetReader! = nil
+        do {
+            reader = try AVAssetReader(asset: avAsset)
+        } catch {
+ 
+            return
+        }
+        guard let videoTrack = avAsset.tracks(withMediaType: AVMediaType.video).last else {
+            return
+        }
+        
+        let readerOutputSettings: [String: Any] = [kCVPixelBufferPixelFormatTypeKey as String : Int(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)]
+        let readerOutput = AVAssetReaderTrackOutput(track: videoTrack, outputSettings: readerOutputSettings)
+        
+        reader.add(readerOutput)
+        let frameRate = videoTrack.nominalFrameRate
+        let startTime = CMTime(value: CMTimeValue(currFrameNumber), timescale: CMTimeScale(frameRate))
+        let timeRange = CMTimeRange(start: startTime, end:CMTime.positiveInfinity)
+        reader.timeRange = timeRange //読み込む範囲を`timeRange`で指定
+        reader.startReading()
+        // UnsafeとMutableはまあ調べてもらうとして、eX, eY等は<Int32>が一つ格納されている場所へのポインタとして宣言される。
+        let eX = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
+        let eY = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
+//        let fX = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
+//        let fY = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
+        var eyeCGImage:CGImage!
+        let eyeUIImage:UIImage!
+        var eyeWithBorderCGImage:CGImage!
+        var eyeWithBorderUIImage:UIImage!
+//        var faceCGImage:CGImage!
+//        var faceUIImage:UIImage!
+//        var faceWithBorderCGImage:CGImage!
+//        var faceWithBorderUIImage:UIImage!
+        let eyeRectOnScreen=getRectFromCenter(center: eyeCenter, len: wakuLength)
+        let eyeWithBorderRectOnScreen = expandRectWithBorderWide(rect: eyeRectOnScreen, border: eyeborder)
+//        let faceRectOnScreen=getRectFromCenter(center: faceCenter, len: wakuLength)
+//        let faceWithBorderRectOnScreen = expandRectWithBorderWide(rect: faceRectOnScreen, border: eyeborder)
+//
+        let context:CIContext = CIContext.init(options: nil)
+        //        let orientation = UIImage.Orientation.up
+        var sample:CMSampleBuffer!
+        sample = readerOutput.copyNextSampleBuffer()
+        let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample!)!
+        let ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.down)//4行上ともupで良いような？
+        
+        let maxWidth=ciImage.extent.size.width
+        let maxHeight=ciImage.extent.size.height
+        
+        let eyeRect = resizeR2(eyeRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
+        var eyeWithBorderRect = resizeR2(eyeWithBorderRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
+//        let faceRect = resizeR2(faceRectOnScreen, viewRect:getVideoRectOnScreen() /*view.frame*/, image:ciImage)
+//        var faceWithBorderRect = resizeR2(faceWithBorderRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
+        //eyeWithBorderRectとeyeRect の差、faceでの差も同じ
+        let borderRectDiffer=eyeWithBorderRect.width-eyeRect.width
+        let maxWidthWithBorder=maxWidth-eyeWithBorderRect.width-5
+        let maxHeightWithBorder=maxHeight-eyeWithBorderRect.height-5
+        //        let eyebR0 = eyeWithBorderRect
+        //        let facbR0 = faceWithBorderRect
+        
+        eyeCGImage = context.createCGImage(ciImage, from: eyeRect)!
+        eyeUIImage = UIImage.init(cgImage: eyeCGImage)
+//        faceCGImage = context.createCGImage(ciImage, from: faceRect)!
+//        faceUIImage = UIImage.init(cgImage:faceCGImage)
+        
+        let osEyeX:CGFloat = (eyeWithBorderRect.size.width - eyeRect.size.width) / 2.0//上下方向への差
+        let osEyeY:CGFloat = (eyeWithBorderRect.size.height - eyeRect.size.height) / 2.0//左右方向への差
+//        let osFacX:CGFloat = (faceWithBorderRect.size.width - faceRect.size.width) / 2.0//上下方向への差
+//        let osFacY:CGFloat = (faceWithBorderRect.size.height - faceRect.size.height) / 2.0//左右方向への差
+        //   "ofset:" osEyeX=osFac,osEyeY=osFacY eyeとface同じ
+//        let xDiffer=faceWithBorderRect.origin.x - eyeWithBorderRect.origin.x
+//        let yDiffer=faceWithBorderRect.origin.y - eyeWithBorderRect.origin.y
+//        var maxEyeV:Double = 0
+//        var maxFaceV:Double = 0
+        var frameCnt:Int=0
+        while reader.status != AVAssetReader.Status.reading {
+            sleep(UInt32(0.1))
+        }
+        DispatchQueue.global(qos: .default).async { [self] in
+            while let sample = readerOutput.copyNextSampleBuffer(), self.calcFlag != false {
+                var ex:CGFloat = 0
+                var ey:CGFloat = 0
+                
+                autoreleasepool{
+                    let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample)!
+                    
+                    let ciImage: CIImage =
+                        CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.down)
+                    eyeWithBorderCGImage = context.createCGImage(ciImage, from: eyeWithBorderRect)!
+                    eyeWithBorderUIImage = UIImage.init(cgImage: eyeWithBorderCGImage)
+                    
+                    var maxEyeV=self.openCV.matching(eyeWithBorderUIImage,
+                                                     narrow: eyeUIImage,
+                                                     x: eX,
+                                                     y: eY)
+                    //                    print("OpenV",maxEyeV)
+                    if maxEyeV < 0.7{
+                        ex = 0
+                        ey = 0
+                        print("error 0.7",eyePosX.count)///Int(videoFps))
+                    }else{//検出できた時
+                        //eXはポインタなので、".pointee"でそのポインタの内容が取り出せる。Cでいうところの"*"
+                        //上で宣言しているとおりInt32が返ってくるのでCGFloatに変換して代入
+                        ex = CGFloat(eX.pointee) - osEyeX
+                        ey = borderRectDiffer - CGFloat(eY.pointee) - osEyeY
+                    }
+                    
+                    context.clearCaches()
+                    
+                    self.eyePosX.append(ex)
+                    self.eyePosY.append(ey)
+                    self.eyePosXfiltered.append(-1*self.Kalman(value: ex,num: 0))
+                    self.eyePosYfiltered.append(-1*self.Kalman(value: ey,num: 1))
+                    let cnt=eyePosX.count
+                    if cnt == 1{
+                        self.eyeVelXfiltered.append(self.Kalman(value:self.eyePosXfiltered[cnt-1],num:2))
+                        self.eyeVelYfiltered.append(self.Kalman(value:self.eyePosYfiltered[cnt-1],num:3))
+                    }else{
+                        self.eyeVelXfiltered.append(self.Kalman(value:self.eyePosXfiltered[cnt-1]-self.eyePosXfiltered[cnt-2],num:2))
+                        self.eyeVelYfiltered.append(self.Kalman(value:self.eyePosYfiltered[cnt-1]-self.eyePosYfiltered[cnt-2],num:3))
+                    }
+                    while reader.status != AVAssetReader.Status.reading {
+                        sleep(UInt32(0.1))
+                    }
+//                    //マッチングデバッグ用スリープ、デバッグが終わったら削除
+//                    #if DEBUG
+//                    usleep(200)
+//                    #endif
+                }
+            }
+            self.calcFlag = false
+            //            if timer_vog?.isValid==true{
+            //                timer_vog?.invalidate()
+            //            }
+        }
+    }
     @IBAction func unwindPlay(segue: UIStoryboardSegue) {
 //        UIApplication.shared.isIdleTimerDisabled = false//スリープする
         print("unwindPlay")
@@ -1179,6 +1347,9 @@ class PlayViewController: UIViewController {
         }
         dispWakus()
         showWakuImages()
+        if vogImageView?.isHidden==false{//wakuimageなどの前に持ってくる
+            view.bringSubviewToFront(vogImageView!)
+        }
     }
     func drawWakulines(width w:CGFloat,height h:CGFloat) ->UIImage{
         let size = CGSize(width:w, height:h)
