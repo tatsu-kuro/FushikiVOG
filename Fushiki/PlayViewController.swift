@@ -31,6 +31,7 @@ class PlayViewController: UIViewController {
     var videoURL:URL?
     var videoSize:CGSize!
     var videoFps:Float!
+    var fpsXd:Int=2//240/videoFPS 1dataのピクセル数
     var videoPlayer: AVPlayer!
     var videoDuration:Float=0
     var screenSize:CGSize!
@@ -320,10 +321,12 @@ class PlayViewController: UIViewController {
         let veloR=CGFloat(veloRatio)
         let h=startingImage.size.height
 //        let vogPos_count=eyePosXfiltered.count//eyePosOrig.count
-        let dx = 1// xの間隔
+//        var dx = Int((240/videoFps).rounded())// 1// xの間隔
+//        print("dx:",dx)
+//        dx = 1
         for i in start..<end {
 //            if i < vogPos_count{
-                let px = CGFloat(dx * i)
+                let px = CGFloat(fpsXd * i)
                 let py1 = eyePosXfiltered[i] * posR + (h-240)/5
                 let py2 = eyeVelXfiltered[i] * veloR + (h-240)*2/5
                 let py3 = eyePosYfiltered[i] * posR + (h-240)*3/5
@@ -369,7 +372,7 @@ class PlayViewController: UIViewController {
     }
    
     func getVogOnePage(count:Int)->UIImage{
-        var cnt=count-240*10
+        var cnt=count*fpsXd-240*10
         if cnt<0{
             cnt=0
         }
@@ -383,7 +386,7 @@ class PlayViewController: UIViewController {
         if vogImageView != nil{
             vogImageView?.removeFromSuperview()
         }
-        var cnt=count-240*10
+        var cnt=count*fpsXd - 2400
         if cnt<0{
             cnt=0
         }
@@ -652,7 +655,7 @@ class PlayViewController: UIViewController {
             
             if vogImageView?.isHidden == false{//vog波形表示中
 //                if vogImageViewFlag == true{//vog波形表示中
-                if eyePosX.count<240*10{//||okpMode==1{//240*10以下なら動けない。
+                if fpsXd*eyePosX.count<240*10{//||okpMode==1{//240*10以下なら動けない。
                     return
                 }
                 let ratio=pos.y/view.bounds.height
@@ -666,8 +669,8 @@ class PlayViewController: UIViewController {
                 }
                 if vogCurPoint>eyePosX.count{
                     vogCurPoint=eyePosX.count
-                }else if vogCurPoint<240*10{
-                    vogCurPoint=240*10
+                }else if fpsXd*vogCurPoint<2400{
+                    vogCurPoint=2400/fpsXd
                 }
 //                print("vogcur",vogCurPoint)
                 drawVogOnePage(count: vogCurPoint)
@@ -844,7 +847,8 @@ class PlayViewController: UIViewController {
         vogBoxHeight=ww*16/25
         vogBoxYmin=wh/2-vogBoxHeight/2
         vogBoxYcenter=wh/2
-
+        fpsXd=Int((240.0/videoFps).rounded())
+//        print(fpsXd)
     }
   
     func setButtonProperty(button:UIButton,color:UIColor){
