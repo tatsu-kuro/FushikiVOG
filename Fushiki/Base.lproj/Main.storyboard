@@ -775,12 +775,27 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GYL-dS-vAD">
+                                <rect key="frame" x="62" y="234" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="onCheckRects:" destination="lpw-bn-NhA" eventType="valueChanged" id="eJ9-Qn-fYg"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="check rects( for debug)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JYq-gJ-daQ">
+                                <rect key="frame" x="169" y="239" width="376" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="W7G-pV-8rj"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="nU6-lH-hJ7"/>
                     <connections>
+                        <outlet property="checkRects" destination="GYL-dS-vAD" id="tgC-cf-DMa"/>
                         <outlet property="defaultButton" destination="7PF-TW-04E" id="4qd-6U-kBx"/>
                         <outlet property="exitButton" destination="Nlq-Qa-G8v" id="FEp-Ld-2r8"/>
                         <outlet property="faceMark" destination="Xmb-Ie-gpm" id="2jw-kj-a9a"/>

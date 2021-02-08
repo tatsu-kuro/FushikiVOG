@@ -11,18 +11,28 @@ import UIKit
 class PlayParaViewController: UIViewController {
     @IBOutlet weak var defaultButton: UIButton!
     @IBOutlet weak var faceMark: UISwitch!
+    @IBOutlet weak var checkRects: UISwitch!
     @IBOutlet weak var exitButton: UIButton!
     @IBOutlet weak var para4: UITextField!
     @IBOutlet weak var para3: UITextField!
     @IBOutlet weak var para2: UITextField!
     @IBOutlet weak var para1: UITextField!
+
     var paraInt1:Int=0
     var paraInt2:Int=0
     var paraInt3:Int=0
     var paraInt4:Int=0
     var paraInt5:Int=0
+    var paraInt6:Int=0
     
-    
+    @IBAction func onCheckRects(_ sender: Any) {
+        if checkRects.isOn{
+            paraInt6=1
+        }else{
+            paraInt6=0
+        }
+        setUserDefaults()
+    }
     @IBAction func onFaceMark(_ sender: Any) {
         if faceMark.isOn{
             paraInt5=1
@@ -38,6 +48,7 @@ class PlayParaViewController: UIViewController {
         paraInt3=UserDefaults.standard.integer(forKey:"wakuLength")
         paraInt4=UserDefaults.standard.integer(forKey:"eyeBorder")
         paraInt5=UserDefaults.standard.integer(forKey:"faceMark")
+        paraInt6=UserDefaults.standard.integer(forKey: "checkRects")
         para1.text = "\(paraInt1)"
         para2.text = "\(paraInt2)"
         para3.text = "\(paraInt3)"
@@ -46,6 +57,11 @@ class PlayParaViewController: UIViewController {
             faceMark.isOn=false
         }else{
             faceMark.isOn=true
+        }
+        if paraInt6==0{
+            checkRects.isOn=false
+        }else{
+            checkRects.isOn=true
         }
         setScreen()
     }
@@ -61,6 +77,7 @@ class PlayParaViewController: UIViewController {
             paraInt4 = 9
         }
         paraInt5=1
+        paraInt6=0
         setUserDefaults()
     }
     func setUserDefaults(){
@@ -69,6 +86,7 @@ class PlayParaViewController: UIViewController {
         UserDefaults.standard.set(paraInt3, forKey: "wakuLength")
         UserDefaults.standard.set(paraInt4, forKey: "eyeBorder")
         UserDefaults.standard.set(paraInt5, forKey: "faceMark")
+        UserDefaults.standard.set(paraInt6, forKey: "checkRects")
         para1.text = "\(paraInt1)"
         para2.text = "\(paraInt2)"
         para3.text = "\(paraInt3)"
@@ -77,6 +95,11 @@ class PlayParaViewController: UIViewController {
             faceMark.isOn=false
         }else{
             faceMark.isOn=true
+        }
+        if paraInt6==0{
+            checkRects.isOn=false
+        }else{
+            checkRects.isOn=true
         }
      }
     func isAlphanumeric(text:String) -> Bool {

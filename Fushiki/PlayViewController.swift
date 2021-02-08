@@ -31,6 +31,7 @@ class PlayViewController: UIViewController {
     var videoURL:URL?
     var videoSize:CGSize!
     var videoFps:Float!
+    var startTime=CFAbsoluteTimeGetCurrent()
     var fpsXd:Int=2//240/videoFPS 1dataのピクセル数
     var videoPlayer: AVPlayer!
     var videoDuration:Float=0
@@ -440,6 +441,7 @@ class PlayViewController: UIViewController {
     }
     var timercnt:Int = 0
     var lastArraycount:Int = 0
+    var elapsedTime:Double=0
     @objc func update_vog(tm: Timer) {
         timercnt += 1
         if timercnt==1{//vogImageの背景の白、縦横線を作る
@@ -447,7 +449,11 @@ class PlayViewController: UIViewController {
 //            vogImageViewFlag=true
             vogCurPoint=0
         }
-        currTimeLabel.text=String(format:"%.1f/%.1f",seekBar.value + Float(eyePosX.count)/videoFps,videoDuration)
+//        static ela time = CFAbsoluteTimeGetCurrent() - startTime
+        if calcFlag==true{
+            elapsedTime=CFAbsoluteTimeGetCurrent()-startTime
+        }
+        currTimeLabel.text=String(format:"%.1f/%.1f (%.0f)",seekBar.value + Float(eyePosX.count)/videoFps,videoDuration,elapsedTime)
         if eyePosXfiltered.count < 5 {
             return
         }
@@ -711,9 +717,11 @@ class PlayViewController: UIViewController {
     
     @objc func update(tm: Timer) {
         if timer_vog?.isValid == true{
-            currTimeLabel.text=String(format:"%.1f/%.1f",seekBar.value + Float(eyePosX.count)/videoFps,videoDuration)
+            currTimeLabel.text=String(format:"%.1f/%.1f (%.0f)",seekBar.value + Float(eyePosX.count)/videoFps,videoDuration,elapsedTime)
+//            currTimeLabel.text=String(format:"%.1f/%.1f",seekBar.value + Float(eyePosX.count)/videoFps,videoDuration)
         }else{
-            currTimeLabel.text=String(format:"%.1f/%.1f",seekBar.value,videoDuration)
+            currTimeLabel.text=String(format:"%.1f/%.1f (%.0f)",seekBar.value + Float(eyePosX.count)/videoFps,videoDuration,elapsedTime)
+            //            currTimeLabel.text=String(format:"%.1f/%.1f",seekBar.value,videoDuration)
         }
         if !((videoPlayer.rate != 0) && (videoPlayer.error == nil)) {//notplaying
             if seekBar.value>videoDuration-0.01{
@@ -811,7 +819,7 @@ class PlayViewController: UIViewController {
             let value = Float(self.seekBar.maximumValue - self.seekBar.minimumValue) * Float(time) / Float(duration) + Float(self.seekBar.minimumValue)
             self.seekBar.value = value
         })
-        currTimeLabel.frame = CGRect(x: dw, y: 5, width: bw, height: bh)
+        currTimeLabel.frame = CGRect(x: dw, y: 5, width: bw*1.3, height: bh)
         view.bringSubviewToFront(currTimeLabel)
         // Create Movie Start Button
         mailButton.frame = CGRect(x:dw*1+bw*0,y:by,width:bw,height:bh)
@@ -960,6 +968,7 @@ class PlayViewController: UIViewController {
             setButtons(flag: true)
             return
         }
+        startTime=CFAbsoluteTimeGetCurrent()
         setButtons(flag: false)
         setUserDefaults()//eyeCenter,faceCenter
         lastArraycount=0
@@ -1182,6 +1191,8 @@ class PlayViewController: UIViewController {
             setButtons(flag: true)
             return
         }
+        startTime=CFAbsoluteTimeGetCurrent()
+        elapsedTime=0
         setButtons(flag: false)
         setUserDefaults()//eyeCenter,faceCenter
         lastArraycount=0
