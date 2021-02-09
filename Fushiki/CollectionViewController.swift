@@ -27,7 +27,7 @@ class CheckBoxView: UIView {
         let ovalFrameColor:UIColor
         let checkColor:UIColor
         
-//        let RectCheck = CGRectMake(5, 5, rect.width - 10, rect.height - 10)
+        //        let RectCheck = CGRectMake(5, 5, rect.width - 10, rect.height - 10)
         let RectCheck = CGRect(x:5,y:5,width:rect.width - 10,height:rect.height - 10)
         if self.selected {
             ovalColor = UIColor(red: 85/255, green: 185/255, blue: 1/255, alpha: 1)
@@ -74,13 +74,24 @@ class CheckBoxView: UIView {
     }
 }
 
-class CollectionViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate {
+class CollectionViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
     
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     
     let photos = ["ett","sankaku","sikaku", "okp","okn"]
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photos.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+       
+        let width: CGFloat = view.frame.width / 3 - 2
+        let height: CGFloat = width
+        print("cgsize:*****")
+        return CGSize(width: width, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -99,14 +110,8 @@ class CollectionViewController: UIViewController,UICollectionViewDataSource,UICo
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
-//            if actRow == indexPath.row {
-//               actRow = -1
-//           }else{
-//               actRow = indexPath.row
-//           }
-//        setButtons()
-//        collectionView.reloadData()
     }
+    
     func setButtons()
     {
         let ww=view.bounds.width
@@ -117,15 +122,16 @@ class CollectionViewController: UIViewController,UICollectionViewDataSource,UICo
         let by=wh-bh-sp
         print("setbuttons")
         
-//        defaultButton.frame=CGRect(x:bw*5+sp*7,y:by,width:bw,height:bh)
+        //        defaultButton.frame=CGRect(x:bw*5+sp*7,y:by,width:bw,height:bh)
         exitButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height:bh)
         // Do any additional setup after loading the view.
-   
     }
+    
     @IBOutlet weak var exitButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         print("viewdidload")
         setButtons()
+        collectionView.delegate = self
     }
 }
