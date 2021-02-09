@@ -10,6 +10,7 @@ import UIKit
 import Photos
 import AssetsLibrary
 import MessageUI
+/*
 class CheckBoxView: UIView {
     var selected = false
     init(frame: CGRect,selected: Bool) {
@@ -72,50 +73,24 @@ class CheckBoxView: UIView {
         checkmark.stroke()
     }
 }
-
-class MailViewController: UIViewController{//}, MFMailComposeViewControllerDelegate,UICollectionViewDelegate,UICollectionViewDataSource   {
-    
-    
-//    @IBOutlet weak var collectionView: UICollectionView!
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return 0
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        <#code#>
-//    }
-    
+*/
+class MailViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate  {
+  
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+           return 18 // 表示するセルの数
+       }
+       
+       func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+           let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) // 表示するセルを登録(先程命名した"Cell")
+           cell.backgroundColor = .red  // セルの色
+           return cell
+       }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {//errorの時に通る
-        
-        switch result {
-        case .cancelled:
-            print("cancel")
-        case .saved:
-            print("save")
-        case .sent:
-            print("send")
-        case .failed:
-            print("fail")
-        @unknown default:
-            print("unknown error")
-        }
-        self.dismiss(animated: true, completion: nil)
-    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+  
 
 }
