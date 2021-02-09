@@ -10,7 +10,7 @@ import UIKit
 import Photos
 import AssetsLibrary
 import MessageUI
-/*
+
 class CheckBoxView: UIView {
     var selected = false
     init(frame: CGRect,selected: Bool) {
@@ -73,24 +73,59 @@ class CheckBoxView: UIView {
         checkmark.stroke()
     }
 }
-*/
-class MailViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate  {
-  
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-           return 18 // 表示するセルの数
-       }
-       
-       func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-           let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) // 表示するセルを登録(先程命名した"Cell")
-           cell.backgroundColor = .red  // セルの色
-           return cell
-       }
 
+class CollectionViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate {
+    
+    @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+    
+    let photos = ["ett","sankaku","sikaku", "okp","okn"]
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return photos.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        // "Cell" はストーリーボードで設定したセルのID
+        let testCell:UICollectionViewCell =
+            collectionView.dequeueReusableCell(withReuseIdentifier: "cell",
+                                               for: indexPath)
+        // Tag番号を使ってImageViewのインスタンス生成
+        let imageView = testCell.contentView.viewWithTag(1) as! UIImageView
+        // 画像配列の番号で指定された要素の名前の画像をUIImageとする
+        let cellImage = UIImage(named: photos[indexPath.row])
+        // UIImageをUIImageViewのimageとして設定
+        imageView.image = cellImage
+        return testCell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath.row)
+//            if actRow == indexPath.row {
+//               actRow = -1
+//           }else{
+//               actRow = indexPath.row
+//           }
+//        setButtons()
+//        collectionView.reloadData()
+    }
+    func setButtons()
+    {
+        let ww=view.bounds.width
+        let wh=view.bounds.height
+        let bw=ww*0.9/7
+        let bh=bw*170/440
+        let sp=ww*0.1/10
+        let by=wh-bh-sp
+        print("setbuttons")
+        
+//        defaultButton.frame=CGRect(x:bw*5+sp*7,y:by,width:bw,height:bh)
+        exitButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height:bh)
+        // Do any additional setup after loading the view.
+   
+    }
+    @IBOutlet weak var exitButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        print("viewdidload")
+        setButtons()
     }
-  
-
 }

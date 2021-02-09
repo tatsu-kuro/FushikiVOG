@@ -931,52 +931,63 @@
             </objects>
             <point key="canvasLocation" x="-760.71428571428567" y="-1491.304347826087"/>
         </scene>
-        <!--Mail View Controller-->
+        <!--Collection View Controller-->
         <scene sceneID="D0w-7V-0Nh">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="3OQ-RC-qrq" customClass="MailViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="3OQ-RC-qrq" customClass="CollectionViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iWI-av-ltt">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ywL-bW-mgs">
-                                <rect key="frame" x="437" y="218" width="387" height="160"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Exit"/>
-                                <connections>
-                                    <segue destination="tP9-bG-3i9" kind="unwind" unwindAction="unwindPlayWithSegue:" id="ZDD-2Z-IHt"/>
-                                </connections>
-                            </button>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dhO-Nx-Sd4">
-                                <rect key="frame" x="43" y="20" width="829" height="373"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hkz-ON-bYo">
+                                <rect key="frame" x="0.0" y="0.0" width="896" height="218"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="rQE-0b-HMV">
-                                    <size key="itemSize" width="128" height="128"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="V5C-C6-8oK">
+                                    <size key="itemSize" width="510" height="234"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="uFf-vw-fIc">
-                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="ITd-ae-p8m">
+                                        <rect key="frame" x="193" y="0.0" width="510" height="234"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Iqn-Ts-lto">
-                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="FfA-mG-pfn">
+                                            <rect key="frame" x="0.0" y="0.0" width="510" height="234"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0OE-Nz-EfM">
+                                                    <rect key="frame" x="0.0" y="0.0" width="502" height="234"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                            </subviews>
                                         </collectionViewCellContentView>
+                                        <size key="customSize" width="510" height="234"/>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
-                                    <outlet property="dataSource" destination="3OQ-RC-qrq" id="DFG-aN-taa"/>
-                                    <outlet property="delegate" destination="3OQ-RC-qrq" id="kGE-Ry-NcW"/>
+                                    <outlet property="dataSource" destination="3OQ-RC-qrq" id="qSi-aG-Uh1"/>
+                                    <outlet property="delegate" destination="3OQ-RC-qrq" id="BnO-Ck-AeK"/>
                                 </connections>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ywL-bW-mgs">
+                                <rect key="frame" x="786" y="354" width="100" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" backgroundImage="exit"/>
+                                <connections>
+                                    <segue destination="tP9-bG-3i9" kind="unwind" unwindAction="unwindPlayWithSegue:" id="ZDD-2Z-IHt"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="g24-AI-cTd"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="MES-Im-RxF"/>
+                    <connections>
+                        <outlet property="exitButton" destination="ywL-bW-mgs" id="KUH-js-ByZ"/>
+                        <outlet property="flowLayout" destination="V5C-C6-8oK" id="ODt-Yg-Wo3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IBf-p4-Nih" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="tP9-bG-3i9" userLabel="Exit" sceneMemberID="exit"/>

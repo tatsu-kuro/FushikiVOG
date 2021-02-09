@@ -10,7 +10,7 @@
 		691613B625C9F328009AAB64 /* PlayParaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691613B525C9F328009AAB64 /* PlayParaViewController.swift */; };
 		6938C23C24C103370066CD69 /* SetteiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6938C23B24C103370066CD69 /* SetteiViewController.swift */; };
 		693DBADA25B31F3E00E9B534 /* PlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693DBAD925B31F3E00E9B534 /* PlayViewController.swift */; };
-		6959E1C025CEDF4D00617C64 /* MailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6959E1BF25CEDF4D00617C64 /* MailViewController.swift */; };
+		6959E1C025CEDF4D00617C64 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6959E1BF25CEDF4D00617C64 /* CollectionViewController.swift */; };
 		69C7640925C2EA55008AECAD /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69DB12C023AEF297000C733A /* GameController.framework */; };
 		69D0D83225AAFC3B00658D61 /* CameraAlbumEtc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D0D83125AAFC3B00658D61 /* CameraAlbumEtc.swift */; };
 		69DB2C3125C3C510001EC81F /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69DB2C3025C3C510001EC81F /* opencv2.framework */; };
@@ -32,7 +32,7 @@
 		691613B525C9F328009AAB64 /* PlayParaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayParaViewController.swift; sourceTree = "<group>"; };
 		6938C23B24C103370066CD69 /* SetteiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetteiViewController.swift; sourceTree = "<group>"; };
 		693DBAD925B31F3E00E9B534 /* PlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewController.swift; sourceTree = "<group>"; };
-		6959E1BF25CEDF4D00617C64 /* MailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailViewController.swift; sourceTree = "<group>"; };
+		6959E1BF25CEDF4D00617C64 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		69C7640B25C2EAEB008AECAD /* Fushiki-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Fushiki-Bridging-Header.h"; sourceTree = "<group>"; };
 		69D0D83125AAFC3B00658D61 /* CameraAlbumEtc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraAlbumEtc.swift; sourceTree = "<group>"; };
 		69DB12C023AEF297000C733A /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
@@ -108,7 +108,7 @@
 				6938C23B24C103370066CD69 /* SetteiViewController.swift */,
 				8E3BD05E22C839A300454D93 /* HelpViewController.swift */,
 				8EE77EC920EF742C00517DEC /* Main.storyboard */,
-				6959E1BF25CEDF4D00617C64 /* MailViewController.swift */,
+				6959E1BF25CEDF4D00617C64 /* CollectionViewController.swift */,
 				691613B525C9F328009AAB64 /* PlayParaViewController.swift */,
 				693DBAD925B31F3E00E9B534 /* PlayViewController.swift */,
 				8EE77ECC20EF742E00517DEC /* Assets.xcassets */,
@@ -198,7 +198,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8EE77EC620EF742C00517DEC /* AppDelegate.swift in Sources */,
-				6959E1C025CEDF4D00617C64 /* MailViewController.swift in Sources */,
+				6959E1C025CEDF4D00617C64 /* CollectionViewController.swift in Sources */,
 				8ECD87C02116865C0084CDB1 /* CarolicETTViewController.swift in Sources */,
 				8ECD87C22116875E0084CDB1 /* ETTViewController.swift in Sources */,
 				8E3BD05F22C839A300454D93 /* HelpViewController.swift in Sources */,
