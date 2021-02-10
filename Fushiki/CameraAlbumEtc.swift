@@ -21,6 +21,7 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
     var stillDate = Array<String>()
     var stillURL = Array<URL>()
     var stillAsset = Array<PHAsset>()
+    var stillImage = Array<UIImageView>()
     var albumExist:Bool = false
     var dialogStatus:Int=0
     init(name: String) {
@@ -162,6 +163,23 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
             gettingAlbumF=false
         }
     }
+    fileprivate var imageManager = PHCachingImageManager()
+    fileprivate var targetSize = CGSize.zero
+    func getImages(){
+        stillImage.removeAll()
+        //        var imageCell:UIImageView?
+        for i in 0 ..< stillAsset.count{
+            let photoAsset = stillAsset[i]
+            imageManager.requestImage(for: photoAsset, targetSize: targetSize, contentMode: .aspectFill, options: nil) { [self] (image, info) -> Void in
+                            let oneImage = UIImageView(image: image)
+                stillImage.append(oneImage)
+                
+                //            imageCell!.frame.size = cell.frame.size
+                //            imageCell!.contentMode = .scaleToFill //.scaleAspectFit// .scaleAspectFill
+                //            imageCell!.clipsToBounds = false//true
+            }
+        }
+    }
     func getAlbumStillList(){//最後のvideoを取得するまで待つ
         gettingAlbumF = true
         getAlbumStillList_sub()
@@ -178,9 +196,7 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
         //fetchResult = PHAsset.fetchAssets(with: .image, options: options)
 //        fetchResult = []
         stillAsset.removeAll()
-        
         // 画像をすべて取得
-        
         let assets: PHFetchResult = PHAsset.fetchAssets(with: .image, options: options)
         assets.enumerateObjects { (asset, index, stop) -> Void in
             let str = String(describing:asset)
@@ -189,10 +205,9 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
                 self.stillAsset.append(asset as PHAsset)
 //                self.fetchResult.append(asset as PHAsset)
                 print("stillAsset:",self.stillAsset.count)
+//                self.stillImage.append((asset as PHAsset).i
             }
-            
         }
-        
     }
    
     func getAlbumStillList_sub(){

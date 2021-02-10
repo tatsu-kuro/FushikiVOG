@@ -852,6 +852,7 @@ class PlayViewController: UIViewController {
         vogBoxYcenter=wh/2
         fpsXd=Int((240.0/videoFps).rounded())
 //        print(fpsXd)
+        mailButton.isEnabled=false
     }
   
     func setButtonProperty(button:UIButton,color:UIColor){

@@ -939,7 +939,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hkz-ON-bYo">
+                            <collectionView clipsSubviews="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hkz-ON-bYo">
                                 <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="3" minimumInteritemSpacing="3" id="V5C-C6-8oK">
@@ -949,7 +949,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="ITd-ae-p8m">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" contentMode="center" reuseIdentifier="cell" id="ITd-ae-p8m">
                                         <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="FfA-mG-pfn">
@@ -978,6 +978,14 @@
                                     <segue destination="tP9-bG-3i9" kind="unwind" unwindAction="unwindPlayWithSegue:" id="ZDD-2Z-IHt"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e37-qg-MW6">
+                                <rect key="frame" x="611" y="354" width="135" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" backgroundImage="default"/>
+                                <connections>
+                                    <action selector="onMailButton:" destination="3OQ-RC-qrq" eventType="touchUpInside" id="948-O2-ez9"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="g24-AI-cTd"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -993,6 +1001,7 @@
                         <outlet property="collectionView" destination="hkz-ON-bYo" id="5uB-i1-Atb"/>
                         <outlet property="exitButton" destination="ywL-bW-mgs" id="KUH-js-ByZ"/>
                         <outlet property="flowLayout" destination="V5C-C6-8oK" id="ODt-Yg-Wo3"/>
+                        <outlet property="mailButton" destination="e37-qg-MW6" id="any-Tb-2wx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IBf-p4-Nih" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
