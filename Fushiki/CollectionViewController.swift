@@ -78,10 +78,12 @@ class CollectionViewController: UIViewController,UICollectionViewDataSource,UICo
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
-    
+    let album = CameraAlbumEtc(name:"Fushiki")
+
     let photos = ["ett","sankaku","sikaku", "okp","okn"]
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
+//        print("phots.count",photos.count)
+        return album.stillAsset.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -93,18 +95,30 @@ class CollectionViewController: UIViewController,UICollectionViewDataSource,UICo
         print("cgsize:*****")
         return CGSize(width: width, height: height)
     }
-    
+    fileprivate var imageManager = PHCachingImageManager()
+    fileprivate var targetSize = CGSize.zero
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // "Cell" はストーリーボードで設定したセルのID
         let testCell:UICollectionViewCell =
             collectionView.dequeueReusableCell(withReuseIdentifier: "cell",
                                                for: indexPath)
         // Tag番号を使ってImageViewのインスタンス生成
+        var imageCell:UIImageView?
+        
+        let photoAsset = album.stillAsset[indexPath.item]
+        imageManager.requestImage(for: photoAsset, targetSize: targetSize, contentMode: .aspectFill, options: nil) { (image, info) -> Void in
+            imageCell = UIImageView(image: image)
+            imageCell!.frame.size = testCell.frame.size
+            imageCell!.contentMode = .scaleAspectFill
+            imageCell!.clipsToBounds = true
+        }
+        
         let imageView = testCell.contentView.viewWithTag(1) as! UIImageView
         // 画像配列の番号で指定された要素の名前の画像をUIImageとする
-        let cellImage = UIImage(named: photos[indexPath.row])
+        let cellImage = imageCell// UIImage(named: photos[indexPath.row])
         // UIImageをUIImageViewのimageとして設定
-        imageView.image = cellImage
+        imageView.image = cellImage?.image
         return testCell
     }
     
@@ -130,7 +144,7 @@ class CollectionViewController: UIViewController,UICollectionViewDataSource,UICo
     @IBOutlet weak var exitButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("viewdidload")
+        album.loadPhotos()
         setButtons()
         collectionView.delegate = self
     }

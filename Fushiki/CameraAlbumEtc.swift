@@ -20,6 +20,7 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
     var videoURL = Array<URL>()
     var stillDate = Array<String>()
     var stillURL = Array<URL>()
+    var stillAsset = Array<PHAsset>()
     var albumExist:Bool = false
     var dialogStatus:Int=0
     init(name: String) {
@@ -168,11 +169,37 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
             sleep(UInt32(0.1))
         }
     }
+//    fileprivate var fetchResult = [PHAsset]()
+    func loadPhotos() {
+        let options = PHFetchOptions()
+        options.sortDescriptors = [
+            NSSortDescriptor(key: "creationDate", ascending: false)
+        ]
+        //fetchResult = PHAsset.fetchAssets(with: .image, options: options)
+//        fetchResult = []
+        stillAsset.removeAll()
+        
+        // 画像をすべて取得
+        
+        let assets: PHFetchResult = PHAsset.fetchAssets(with: .image, options: options)
+        assets.enumerateObjects { (asset, index, stop) -> Void in
+            let str = String(describing:asset)
+            if str.contains("2400x1600")//vog
+            {
+                self.stillAsset.append(asset as PHAsset)
+//                self.fetchResult.append(asset as PHAsset)
+                print("stillAsset:",self.stillAsset.count)
+            }
+            
+        }
+        
+    }
+   
     func getAlbumStillList_sub(){
         //     let imgManager = PHImageManager.default()
         let requestOptions = PHImageRequestOptions()
-        videoURL.removeAll()
-        videoDate.removeAll()
+        stillURL.removeAll()
+        stillDate.removeAll()
         requestOptions.isSynchronous = true
         requestOptions.isNetworkAccessAllowed = false//これでもicloud上のvideoを取ってしまう
         requestOptions.deliveryMode = .highQualityFormat
@@ -197,29 +224,60 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             for i in 0..<assets.count{
+                print("i:",i,assets.count)
                 let asset=assets[i]
-                if assets[i].duration != 0{//still -> duration==0
-                    continue//video
+                if assets[i].duration == 0{//still -> duration==0
+                    print("continue//still")
+//                    print(assets[i].)
                 }
                 let date_sub = asset.creationDate
                 let date = formatter.string(from: date_sub!)
                 let duration = String(format:"%.1fs",asset.duration)
-                let options=PHVideoRequestOptions()
-                options.version = .original
-                PHImageManager.default().requestAVAsset(forVideo:asset,
-                                                        options: options){ [self](asset:AVAsset?,audioMix, info:[AnyHashable:Any]?)->Void in
-                    
-                    if let urlAsset = asset as? AVURLAsset{//not on iCloud
-                        stillURL.append(urlAsset.url)
-                        stillDate.append(date + "(" + duration + ")")
+                let option = PHImageRequestOptions()
+
+//                options.version = .original
+                option.deliveryMode = .highQualityFormat
+
+                
+                PHImageManager.default().requestImage(for: asset,
+                                                      targetSize: CGSize(width: asset.pixelWidth, height: asset.pixelHeight),
+                                                      contentMode: .aspectFill,
+                                                      options: option) { (image, info) in
+//                    print(asset)
+                
+                    if let url = info?["PHImageFileURLKey"] as? URL {
+                        print(url.lastPathComponent)
+                        print(url.pathExtension)
+                        self.stillURL.append(url)
+                        self.stillDate.append(date + "(" + duration + ")")
                         if i == assets.count - 1{
-                            gettingAlbumF=false
+                            self.gettingAlbumF=false
                         }
-                    }else{//on icloud
+                    }else{
                         if i == assets.count - 1{
-                            gettingAlbumF=false
+                            self.gettingAlbumF=false
                         }
                     }
+                    
+                
+                
+                
+//                PHImageManager.default().requestAVAsset(forVideo:asset,
+//                                                        options: options){ [self](asset:AVAsset?,audioMix, info:[AnyHashable:Any]?)->Void in
+//
+//                    if let urlAsset = asset as? AVURLAsset{//not on iCloud
+//                        if assets[i].duration != 0{
+//                            self.stillURL.append(urlAsset.url)
+//                            self.stillDate.append(date + "(" + duration + ")")
+//                        }
+//                        if i == assets.count - 1{
+//                            self.gettingAlbumF=false
+//                        }
+//                    }else{//on icloud
+//                        if i == assets.count - 1{
+//                            self.gettingAlbumF=false
+//                        }
+//                    }
                 }
             }
         }else{
@@ -227,6 +285,82 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
             gettingAlbumF=false
         }
     }
+    /*
+     @IBAction func eraseVideo(_ sender: Any) {
+  //       videoAsset[videoCurrent]
+         let requestOptions = PHImageRequestOptions()
+         requestOptions.isSynchronous = true
+         requestOptions.isNetworkAccessAllowed = false
+         requestOptions.deliveryMode = .highQualityFormat //これでもicloud上のvideoを取ってしまう
+         //アルバムをフェッチ
+         let assetFetchOptions = PHFetchOptions()
+         
+         assetFetchOptions.predicate = NSPredicate(format: "title == %@", albumName)
+         
+         let assetCollections = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .smartAlbumVideos, options: assetFetchOptions)
+ //        print("asset:",assetCollections.count)
+         //アルバムが存在しない事もある？
+         var dialogStatus:Int=0
+         if (assetCollections.count > 0) {
+             //同じ名前のアルバムは一つしかないはずなので最初のオブジェクトを使用
+             let assetCollection = assetCollections.object(at:0)
+             // creationDate降順でアルバム内のアセットをフェッチ
+             let fetchOptions = PHFetchOptions()
+             fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+             let assets = PHAsset.fetchAssets(in: assetCollection, options: fetchOptions)
+             let formatter = DateFormatter()
+             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+ //            var eraseAssetDate=assets[0].creationDate
+ //            var eraseAssetPngNumber=0
+             for i in 0..<assets.count{
+                 let date_sub=assets[i].creationDate
+                 let date = formatter.string(from:date_sub!)
+ //                eraseAssetPngNumber=i+1
+                 if videoDate[videoCurrent].contains(date){
+                     if !assets[i].canPerform(.delete) {
+                         return
+                     }
+                     var delAssets=Array<PHAsset>()
+                     delAssets.append(assets[i])
+                     if assets[i+1].duration==0{//pngが無くて、videoが選択されてない事を確認
+                         delAssets.append(assets[i+1])//pngはその次に入っているはず
+                     }
+                     PHPhotoLibrary.shared().performChanges({
+                         PHAssetChangeRequest.deleteAssets(NSArray(array: delAssets))
+                     }, completionHandler: { success,error in//[self] _, _ in
+                         if success==true{
+                             dialogStatus = 1//YES
+                         }else{
+                             dialogStatus = -1//NO
+                         }
+                         // 削除後の処理
+                     })
+ //                    break
+                 }
+             }
+         }
+         while dialogStatus == 0{//dialogから抜けるまでは0
+             sleep(UInt32(0.2))
+         }
+         if dialogStatus == 1{//yesで抜けた時
+ //            removeFile(delFile: videoDate[videoCurrent] + "-gyro.csv")
+             videoDate.remove(at: videoCurrent)
+             videoURL.remove(at: videoCurrent)
+             videoImg.remove(at: videoCurrent)
+             videoDura.remove(at: videoCurrent)
+             videoArrayCount -= 1
+             videoCurrent -= 1
+             showVideoIroiro(num: 0)
+             if videoImg.count==0{
+                 playButton.isEnabled=false
+             }
+         }
+     }
+     */
+    
+    
+    
+    
     func eraseVideo(number:Int) {
         dialogStatus=0
         let requestOptions = PHImageRequestOptions()

@@ -940,11 +940,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hkz-ON-bYo">
-                                <rect key="frame" x="0.0" y="0.0" width="896" height="346"/>
+                                <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="hkz-ON-bYo" secondAttribute="height" multiplier="448:173" id="9wG-Lk-UlY"/>
-                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="3" minimumInteritemSpacing="3" id="V5C-C6-8oK">
                                     <size key="itemSize" width="200" height="200"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -985,9 +982,10 @@
                         <viewLayoutGuide key="safeArea" id="g24-AI-cTd"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="hkz-ON-bYo" firstAttribute="top" secondItem="g24-AI-cTd" secondAttribute="top" id="7VX-72-Jia"/>
-                            <constraint firstAttribute="trailing" secondItem="hkz-ON-bYo" secondAttribute="trailing" id="Ch4-Ah-FwA"/>
-                            <constraint firstItem="hkz-ON-bYo" firstAttribute="leading" secondItem="iWI-av-ltt" secondAttribute="leading" id="DyD-iz-HfU"/>
+                            <constraint firstItem="hkz-ON-bYo" firstAttribute="top" secondItem="g24-AI-cTd" secondAttribute="top" id="mlf-wx-QCG"/>
+                            <constraint firstAttribute="trailing" secondItem="hkz-ON-bYo" secondAttribute="trailing" id="nHt-oC-ZbH"/>
+                            <constraint firstItem="hkz-ON-bYo" firstAttribute="leading" secondItem="iWI-av-ltt" secondAttribute="leading" id="xft-vy-Twz"/>
+                            <constraint firstAttribute="bottom" secondItem="hkz-ON-bYo" secondAttribute="bottom" id="yAS-Me-NMh"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="MES-Im-RxF"/>
