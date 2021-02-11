@@ -99,6 +99,11 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         if cntREC==5{
             camera.recordStart()//ここだと暗くならない
         }
+//        if cntREC==6{
+//            camera.setFocus(focus: 0.1)
+//        }else if cntREC==20{
+//            camera.setFocus(focus: 0.9)
+//        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()

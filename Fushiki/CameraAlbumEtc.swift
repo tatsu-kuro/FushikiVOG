@@ -163,6 +163,23 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
             gettingAlbumF=false
         }
     }
+    func setFocus(focus:Float) {//focus 0:最接近　0-1.0
+        if let device = videoDevice{
+            do {
+                try device.lockForConfiguration()
+                device.focusMode = .locked
+                device.setFocusModeLocked(lensPosition: focus, completionHandler: { _ in
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
+                        device.unlockForConfiguration()
+                    })
+                })
+                device.unlockForConfiguration()
+            }
+            catch {
+                // just ignore
+            }
+        }
+    }
     fileprivate var imageManager = PHCachingImageManager()
     fileprivate var targetSize = CGSize.zero
     func getImages(){

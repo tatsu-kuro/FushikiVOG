@@ -19,6 +19,7 @@ class SetteiViewController: UIViewController {
     var ettWidth:Int=50
     var targetMode:Int=0
     
+    @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var paraCnt0: UISegmentedControl!
     @IBOutlet weak var paraCnt1: UISlider!
     @IBOutlet weak var paraCnt2: UISlider!
@@ -268,7 +269,7 @@ class SetteiViewController: UIViewController {
         bh=bw*170/440
         sp=ww*0.1/10
         let by=wh-bh-sp
-        
+        cameraButton.frame = CGRect(x:bw*4.5+sp*6,y:by,width:bw/2,height: bh)
         defaultButton.frame=CGRect(x:bw*5+sp*7,y:by,width:bw,height:bh)
         exitButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height:bh)
     }

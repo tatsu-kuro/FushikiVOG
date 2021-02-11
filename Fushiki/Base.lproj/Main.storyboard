@@ -92,8 +92,18 @@
                                     <action selector="paraAct7:" destination="gOS-fU-nK5" eventType="valueChanged" id="RSa-GC-wDv"/>
                                 </connections>
                             </slider>
+                            <button opaque="NO" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dd6-zp-sxW">
+                                <rect key="frame" x="405" y="338" width="25" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="camera" catalog="system"/>
+                                <connections>
+                                    <segue destination="c63-hm-Ug5" kind="show" id="xIn-md-1DA"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wIu-wr-ffr">
-                                <rect key="frame" x="518" y="327" width="172" height="57"/>
+                                <rect key="frame" x="524" y="319" width="172" height="57"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="default"/>
                                 <connections>
@@ -173,6 +183,7 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="cameraButton" destination="dd6-zp-sxW" id="pCm-gY-tMP"/>
                         <outlet property="defaultButton" destination="wIu-wr-ffr" id="akP-bM-J7O"/>
                         <outlet property="exitButton" destination="vji-3f-Tqg" id="4tC-Qb-6z9"/>
                         <outlet property="paraCnt0" destination="grl-Cp-esh" id="u9I-8p-Acp"/>
@@ -1009,6 +1020,101 @@
             </objects>
             <point key="canvasLocation" x="-795.53571428571422" y="-804.34782608695662"/>
         </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="Gid-Gl-xnP">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="c63-hm-Ug5" customClass="CameraViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3to-29-k6Y">
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oPE-nE-3TS">
+                                <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9oI-63-ISV">
+                                <rect key="frame" x="716" y="353" width="116" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="exit"/>
+                                <connections>
+                                    <segue destination="RQA-Mq-mfo" kind="unwind" unwindAction="unwindActionWithSegue:" id="RiQ-Rj-NWp"/>
+                                </connections>
+                            </button>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="bKh-nU-99c">
+                                <rect key="frame" x="134" y="353" width="161" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </slider>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="8Wh-vx-bUz">
+                                <rect key="frame" x="422" y="358" width="159" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="focus" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="txO-YV-qtb">
+                                <rect key="frame" x="467" y="329" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="zoom" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IbT-Qc-U1W">
+                                <rect key="frame" x="193" y="324" width="43" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="IGF-X7-hOJ">
+                                <rect key="frame" x="600" y="358" width="99" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <segments>
+                                    <segment title="front"/>
+                                    <segment title="back"/>
+                                </segments>
+                                <connections>
+                                    <action selector="onCameraChan:" destination="c63-hm-Ug5" eventType="valueChanged" id="nw1-AA-MRl"/>
+                                </connections>
+                            </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="120fps" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l7C-ol-six">
+                                <rect key="frame" x="623" y="324" width="52" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="OtL-Et-enG"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="oPE-nE-3TS" secondAttribute="trailing" id="XVq-xi-Ebu"/>
+                            <constraint firstItem="oPE-nE-3TS" firstAttribute="leading" secondItem="3to-29-k6Y" secondAttribute="leading" id="fta-PB-NJI"/>
+                            <constraint firstItem="oPE-nE-3TS" firstAttribute="top" secondItem="OtL-Et-enG" secondAttribute="top" id="vuV-Os-yjM"/>
+                            <constraint firstAttribute="bottom" secondItem="oPE-nE-3TS" secondAttribute="bottom" id="yc5-gW-XuA"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Dwi-dG-ECm"/>
+                    <connections>
+                        <outlet property="cameraChan" destination="IGF-X7-hOJ" id="7Ql-kA-cXk"/>
+                        <outlet property="cameraView" destination="oPE-nE-3TS" id="HdR-E8-rF9"/>
+                        <outlet property="exitButton" destination="9oI-63-ISV" id="TwE-rD-xHs"/>
+                        <outlet property="focusBar" destination="8Wh-vx-bUz" id="LgS-Rj-5qL"/>
+                        <outlet property="focusLabel" destination="txO-YV-qtb" id="Vd1-jV-K4e"/>
+                        <outlet property="fpsLabel" destination="l7C-ol-six" id="9Rk-Zl-NH6"/>
+                        <outlet property="zoomBar" destination="bKh-nU-99c" id="ubs-On-QWB"/>
+                        <outlet property="zoomLabel" destination="IbT-Qc-U1W" id="JAM-oJ-hFT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3pX-u9-AiO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="RQA-Mq-mfo" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="-795.53571428571422" y="-4.3478260869565224"/>
+        </scene>
         <!--CarolicOKN View Controller-->
         <scene sceneID="aNt-ze-EGK">
             <objects>
@@ -1059,6 +1165,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="camera" catalog="system" width="128" height="94"/>
         <image name="carolicett" width="440" height="150"/>
         <image name="carolicokn" width="440" height="150"/>
         <image name="default" width="440" height="150"/>
@@ -1082,6 +1189,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
