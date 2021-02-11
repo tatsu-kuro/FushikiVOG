@@ -9,6 +9,7 @@
 import UIKit
 
 class SetteiViewController: UIViewController {
+    let camera = CameraAlbumEtc(name:"Fushiki")
     var oknMode:Int=0
     var oknSpeed:Int = 50
     var oknTime:Int = 50
@@ -198,14 +199,7 @@ class SetteiViewController: UIViewController {
         paraTxt5.text="OKN-TIME:" + String(Int(oknTime)) + "sec"
         paraTxt7.text="ETT-WIDTH:" + String(Int(ettWidth)) + "%"
     }
-//    func getUserDefault(str:String,ret:Int) -> Int{//getUserDefault_one
-//        if (UserDefaults.standard.object(forKey: str) != nil){//keyが設定してなければretをセット
-//            return UserDefaults.standard.integer(forKey:str)
-//        }else{
-//            UserDefaults.standard.set(ret, forKey: str)
-//            return ret
-//        }
-//    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         okpMode = UserDefaults.standard.integer(forKey: "okpMode")
@@ -239,12 +233,6 @@ class SetteiViewController: UIViewController {
         let b5y=b4y+bh+sp
         let b6y=b5y+bh+sp*3
         let b7y=b6y+bh+sp
-//        paraCnt0.frame  = CGRect(x:x0,   y: b0y ,width: bw, height: bh)
-//        paraTxt0.frame  = CGRect(x:x1,   y: b0y ,width: bw*5, height: bh)
-//        paraCnt1.frame  = CGRect(x:x0,   y: b1y ,width: bw, height: bh)
-//        paraTxt1.frame  = CGRect(x:x1,   y: b1y ,width: bw*5, height: bh)
-//        paraCnt2.frame  = CGRect(x:x0,   y: b2y ,width: bw,height:bh)
-//        paraTxt2.frame  = CGRect(x:x1,   y: b2y ,width: bw*5,height:bh)
         paraCnt3.frame  = CGRect(x:x0,   y: b0y ,width: bw, height: bh)
         paraTxt3.frame  = CGRect(x:x1,   y: b0y ,width: bw*5, height: bh)
         paraCnt4.frame  = CGRect(x:x0,   y: b1y ,width: bw, height: bh)
@@ -269,7 +257,7 @@ class SetteiViewController: UIViewController {
         bh=bw*170/440
         sp=ww*0.1/10
         let by=wh-bh-sp
-        cameraButton.frame = CGRect(x:bw*4.5+sp*6,y:by,width:bw/2,height: bh)
+        camera.setButtonProperty(cameraButton,x:bw*4.5+sp*6,y:by,w:bw/2,h: bh,UIColor.orange)
         defaultButton.frame=CGRect(x:bw*5+sp*7,y:by,width:bw,height:bh)
         exitButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height:bh)
     }

@@ -10,7 +10,6 @@ import UIKit
 import Photos
 import AVFoundation
 class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegate {
-//    let camera = RecordController()
     let camera = CameraAlbumEtc(name:"Fushiki")
     var cirDiameter:CGFloat = 0
     var startTime=CFAbsoluteTimeGetCurrent()
@@ -96,7 +95,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     @objc func updateRecClarification(tm: Timer) {//録画していることを明確に示す必要がある
         cntREC += 1
         recClarification.alpha=camera.updateRecClarification(tm: cntREC)
-        if cntREC==5{
+        if cntREC==20{
             camera.recordStart()//ここだと暗くならない
         }
 //        if cntREC==6{
