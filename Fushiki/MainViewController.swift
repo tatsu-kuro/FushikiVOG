@@ -13,6 +13,7 @@ import Photos
 //import GameController
 class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 //    var FushikiAlbum: PHAssetCollection? // アルバムをオブジェクト化
+    let camera = CameraAlbumEtc(name:"Fushiki")
     var controllerF:Bool=false
     @IBOutlet weak var titleImage: UIImageView!
     //    var timer: Timer!
@@ -299,8 +300,9 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         button2.frame=CGRect(x:bw*2+sp*4,y:by,width:bw,height:bh)
         button3.frame=CGRect(x:bw*3+sp*5,y:by,width:bw,height:bh)
         button4.frame=CGRect(x:bw*4+sp*6,y:by,width:bw,height:bh)
-        helpButton.frame=CGRect(x:bw*5+sp*7,y:by,width:bw,height:bh)
-        setteiButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height:bh)
+        camera.setButtonProperty(helpButton,x:bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
+//        setteiButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height:bh)
+        camera.setButtonProperty(setteiButton,x:bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
 
         let logoY = ww/13
         if view.bounds.width/2 > by - logoY{

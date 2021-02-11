@@ -899,7 +899,9 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SgL-BM-Dbh">
                                 <rect key="frame" x="432" y="305" width="77" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" backgroundImage="carolicokn"/>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="CaloricOKN"/>
                                 <connections>
                                     <action selector="doMode4:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YZr-Wi-gpK"/>
                                 </connections>
@@ -907,15 +909,19 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="deG-Tq-o9U">
                                 <rect key="frame" x="547" y="305" width="100" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" backgroundImage="help"/>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="HELP"/>
                                 <connections>
                                     <action selector="doHelp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IhA-EU-kmL"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CTI-eK-yKu" userLabel="Settei Button">
-                                <rect key="frame" x="682" y="305" width="154" height="48"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CTI-eK-yKu" userLabel="Settei Button">
+                                <rect key="frame" x="749" y="318" width="59" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" backgroundImage="settei"/>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="gearshape.fill" catalog="system"/>
                                 <connections>
                                     <action selector="doSettei:" destination="BYZ-38-t0r" eventType="touchUpInside" id="N5J-fQ-EGh"/>
                                 </connections>
@@ -1036,7 +1042,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="exit"/>
+                                <state key="normal" title="EXIT"/>
                                 <connections>
                                     <segue destination="RQA-Mq-mfo" kind="unwind" unwindAction="unwindActionWithSegue:" id="RiQ-Rj-NWp"/>
                                 </connections>
@@ -1046,10 +1052,10 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </slider>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="8Wh-vx-bUz">
-                                <rect key="frame" x="422" y="358" width="159" height="30"/>
+                                <rect key="frame" x="422" y="193.4832214765097" width="150" height="30.000000000000064"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </slider>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="focus" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="txO-YV-qtb">
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="focus" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="txO-YV-qtb">
                                 <rect key="frame" x="467" y="329" width="42" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1058,7 +1064,7 @@
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="zoom" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IbT-Qc-U1W">
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="zoom" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IbT-Qc-U1W">
                                 <rect key="frame" x="193" y="324" width="43" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1088,6 +1094,15 @@
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XCC-bL-WBw">
+                                <rect key="frame" x="504" y="256" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="fps"/>
+                                <connections>
+                                    <action selector="onFpsButton:" destination="c63-hm-Ug5" eventType="touchUpInside" id="Ug4-UY-med"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="OtL-Et-enG"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1105,6 +1120,7 @@
                         <outlet property="exitButton" destination="9oI-63-ISV" id="TwE-rD-xHs"/>
                         <outlet property="focusBar" destination="8Wh-vx-bUz" id="LgS-Rj-5qL"/>
                         <outlet property="focusLabel" destination="txO-YV-qtb" id="Vd1-jV-K4e"/>
+                        <outlet property="fpsButton" destination="XCC-bL-WBw" id="xCP-xB-FFx"/>
                         <outlet property="fpsLabel" destination="l7C-ol-six" id="9Rk-Zl-NH6"/>
                         <outlet property="zoomBar" destination="bKh-nU-99c" id="ubs-On-QWB"/>
                         <outlet property="zoomLabel" destination="IbT-Qc-U1W" id="JAM-oJ-hFT"/>
@@ -1167,7 +1183,6 @@
     <resources>
         <image name="camera" catalog="system" width="128" height="94"/>
         <image name="carolicett" width="440" height="150"/>
-        <image name="carolicokn" width="440" height="150"/>
         <image name="default" width="440" height="150"/>
         <image name="ett" width="440" height="150"/>
         <image name="etthelp" width="1334" height="750"/>
@@ -1176,14 +1191,13 @@
         <image name="face" width="212" height="212"/>
         <image name="fushiki_e" width="1168" height="577"/>
         <image name="gearshape" catalog="system" width="128" height="121"/>
-        <image name="help" width="440" height="150"/>
+        <image name="gearshape.fill" catalog="system" width="128" height="121"/>
         <image name="logomejiro" width="1300" height="100"/>
         <image name="okn" width="440" height="150"/>
         <image name="okp" width="440" height="150"/>
         <image name="playpause.fill" catalog="system" width="128" height="70"/>
         <image name="rec" width="257" height="112"/>
         <image name="sankaku" width="225" height="225"/>
-        <image name="settei" width="440" height="150"/>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

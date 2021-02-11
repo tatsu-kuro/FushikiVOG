@@ -15,6 +15,7 @@ class CameraViewController: UIViewController {
     let camera = CameraAlbumEtc(name:"Fushiki")
     @IBOutlet weak var fpsLabel: UILabel!
     @IBOutlet weak var cameraView: UIImageView!
+    @IBOutlet weak var fpsButton: UIButton!
     @IBOutlet weak var cameraChan: UISegmentedControl!
     @IBOutlet weak var zoomBar: UISlider!
     @IBOutlet weak var focusBar: UISlider!
@@ -22,6 +23,8 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var focusLabel: UILabel!
      @IBOutlet weak var exitButton: UIButton!
 
+    @IBAction func onFpsButton(_ sender: Any) {
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         setButtons()
@@ -73,11 +76,12 @@ class CameraViewController: UIViewController {
         let sp=ww*0.1/10
         let by=wh-bh-sp
         camera.setButtonProperty(exitButton,x:bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
-        camera.setLabelProperty( fpsLabel,x:bw*5+sp*7,y:by-bh-sp/3,w:bw,h:bh,UIColor.darkGray)
-        camera.setLabelProperty( zoomLabel,x:bw*4.5+sp*6,y:by-bh-sp/3,w:bw/2,h:bh,UIColor.darkGray)
-        camera.setLabelProperty(focusLabel,x:bw*4.5+sp*6,y:by,w:bw/2,h:bh,UIColor.darkGray)
-        focusBar.frame=CGRect(x:sp,y:by,width:bw*4.5+sp*4,height:bh)
-        zoomBar.frame=CGRect(x:sp,y:by-sp/3-bh,width:bw*4.5+sp*4,height:bh)
+        camera.setButtonProperty(fpsButton,x:bw*4+sp*6,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setLabelProperty( fpsLabel,x:bw*2+sp*5,y:by,w:bw*2,h:bh,UIColor.white)
+        camera.setLabelProperty( zoomLabel,x:bw*6+sp*8,y:by-sp/3-bh,w:bw,h:bh,UIColor.white)
+        camera.setLabelProperty(focusLabel,x:bw*6+sp*8,y:by-sp*2/3-2*bh,w:bw,h:bh,UIColor.white)
+        focusBar.frame=CGRect(x:sp,y:by-sp*2/3-2*bh,width:ww-2*sp,height:bh)
+        zoomBar.frame=CGRect(x:sp,y:by-sp/3-bh,width:ww-2*sp,height:bh)
         cameraChan.frame=CGRect(x:bw*5+sp*7,y:by,width:bw,height:bh)
      }
 }
