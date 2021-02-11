@@ -11,17 +11,14 @@ import AVFoundation
 import Photos
 class CarolicOKNViewController: UIViewController{
     let camera = CameraAlbumEtc(name:"Fushiki")
-//    var ettWidth:Int = 0//1:narrow,2:wide
     var oknSpeed:Int = 0
     var oknMode:Int=0
-//    var oknDirection:Int = 0
     var targetMode:Int = 0
     var cirDia:CGFloat = 0
     var timer: Timer!
     var tierREC:Timer?
     var timer1Interval:Int = 2
     var startTime=CFAbsoluteTimeGetCurrent()
-//    var startTime=CFAbsoluteTimeGetCurrent()
      var lastTime=CFAbsoluteTimeGetCurrent()
 
     @IBOutlet weak var recClarification: UIImageView!
@@ -30,9 +27,7 @@ class CarolicOKNViewController: UIViewController{
     var displayLinkF:Bool=false
 
     var tcnt:Int = 0
-//    var tcnt2:Int = 0
     var epTim = Array<Int>()
-//    @IBOutlet weak var timerCnt: UILabel!
     var tapInterval=CFAbsoluteTimeGetCurrent()
     func stopDisplaylink(){
           if displayLinkF==true{
@@ -45,7 +40,6 @@ class CarolicOKNViewController: UIViewController{
         mainView.targetMode=targetMode
         delTimer()
         camera.recordStop()
-//        self.present(mainView, animated: false, completion: nil)
         performSegue(withIdentifier: "fromCarolicOKN", sender: self)
     }
     
@@ -111,11 +105,6 @@ class CarolicOKNViewController: UIViewController{
         }
     }
 
-//    @IBOutlet weak var timerCnt: UILabel!
-    /*    func setBackcolor(color c:CGColor){
-        let boximage  = makeBox(width: self.view.bounds.width, height:self.view.bounds.height,color:c)
-        cameraView.image=boximage
-    }*/
     var ww:CGFloat=0
     var wh:CGFloat=0
     var bandB=CAShapeLayer()
@@ -176,9 +165,19 @@ class CarolicOKNViewController: UIViewController{
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let album = CameraAlbumController(name:"fushiki")
         camera.makeAlbum()
-        camera.initSession(fps: 120)
+//        camera.initSession(camera: 0, bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
+        
+        let cameraMode = camera.getUserDefault(str: "cameraMode", ret: 0)
+        camera.initSession(camera: Int(cameraMode), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
+      
+        let zoomValue=camera.getUserDefault(str: "zoomValue", ret:0)
+        camera.setZoom(level: zoomValue)
+        let focusValue=camera.getUserDefault(str: "focusValue", ret: 0)
+        camera.setFocus(focus: focusValue)
+        
+        
+
         ww=view.bounds.width
         wh=view.bounds.height
         oknSpeed = UserDefaults.standard.integer(forKey:"oknSpeed")
@@ -227,19 +226,6 @@ class CarolicOKNViewController: UIViewController{
         return true
     }
 
-    /*       setBackcolor(color:UIColor.black.cgColor)
-     timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
-     if UIApplication.shared.isIdleTimerDisabled == false{
-         UIApplication.shared.isIdleTimerDisabled = true//スリープしない
-     }
-     UIApplication.shared.beginReceivingRemoteControlEvents()
-     self.becomeFirstResponder()
-     tapInterval=CFAbsoluteTimeGetCurrent()-1
-     self.setNeedsStatusBarAppearanceUpdate()
-*/
-//    override var prefersStatusBarHidden: Bool {
-//        return true
-//    }
     @objc func update() {
         tcnt += 1
         cirDia=view.bounds.width/25.0
@@ -306,25 +292,7 @@ class CarolicOKNViewController: UIViewController{
         super.viewWillDisappear(animated)
         stopDisplaylink()
     }
- /*   var initf:Bool=false
-    @objc func update2() {
-        tcnt2 += 1
-        if initf {
-            for _ in 0..<6{
-                view.layer.sublayers?.removeLast()
-            }
-        }
-        initf=true
-        let elapset=CFAbsoluteTimeGetCurrent()-startTime
-        var xd=ww*CGFloat(elapset)/3.2
-        let x0=ww/5.0
-        while xd>0 {
-            xd -= ww/5
-        }
-        for i in 0..<6 {
-            drawBand(rectB:CGRect(x:CGFloat(i)*x0+xd,y:0,width:ww/10,height:wh))
-        }
-    }*/
+ 
     var lastx:CGFloat=0
      var currentSpeed:Double = 0
      var initf:Bool=false
@@ -340,26 +308,12 @@ class CarolicOKNViewController: UIViewController{
          let currentTime=CFAbsoluteTimeGetCurrent()
          let dTime = currentTime - lastTime
          lastTime = currentTime
-//         if currentTime - startTime>120{
-//             if UIApplication.shared.isIdleTimerDisabled == true{
-//                 UIApplication.shared.isIdleTimerDisabled = false//スリープする
-//             }
-//         }
-//         if oknMode<2 && Int(currentTime - startTime)>oknTime{
-//             //stopTimer()
-//             drawBand(rectB:CGRect(x:0,y:0,width:ww,height:wh))
-//             return
-//         }
+
          if oknMode == 0 || oknMode == 2{
              currentSpeed = Double(oknSpeed*15)
          }else{
              currentSpeed = -Double(oknSpeed*15)
          }
-//         if tcnt2%10 == 0 {
-//             //            print("dx:",currentSpeed*dTime,oknSpeed ,oknTime,oknMode)//okpSpeed, "cuSpe:",currentSpeed)
-//             //            print("dt:",dTime)//okpSpeed, "cuSpe:",currentSpeed)
-//             print(String(format: "dtime: %.5f %",dTime))
-//         }
          
          var x = lastx + CGFloat(currentSpeed * dTime)
          

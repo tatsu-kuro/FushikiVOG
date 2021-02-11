@@ -108,7 +108,14 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         camera.makeAlbum()
-        camera.initSession(fps: 120)
+        let cameraMode = camera.getUserDefault(str: "cameraMode", ret: 0)
+        camera.initSession(camera: Int(cameraMode), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
+      
+        let zoomValue=camera.getUserDefault(str: "zoomValue", ret:0)
+        camera.setZoom(level: zoomValue)
+        let focusValue=camera.getUserDefault(str: "focusValue", ret: 0)
+        camera.setFocus(focus: focusValue)
+        
         ettMode=UserDefaults.standard.integer(forKey: "ettMode")
         ettWidth=UserDefaults.standard.integer(forKey: "ettWidth")
 //        let w=view.bounds.width/2

@@ -24,6 +24,7 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
     var stillImage = Array<UIImageView>()
     var albumExist:Bool = false
     var dialogStatus:Int=0
+    var fpsCurrent:Int=0
     init(name: String) {
         // 全てのプロパティを初期化する前にインスタンスメソッドを実行することはできない
         self.albumName = name
@@ -163,23 +164,38 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
             gettingAlbumF=false
         }
     }
-    func setFocus(focus:Float) {//focus 0:最接近　0-1.0
-        if let device = videoDevice{
-            do {
-                try device.lockForConfiguration()
-                device.focusMode = .locked
-                device.setFocusModeLocked(lensPosition: focus, completionHandler: { _ in
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
-                        device.unlockForConfiguration()
-                    })
-                })
-                device.unlockForConfiguration()
-            }
-            catch {
-                // just ignore
+    func setZoom(level:Float){//ledとなっているので要変更！！！
+        if let device = videoDevice {
+        do {
+            try device.lockForConfiguration()
+                device.ramp(
+                    toVideoZoomFactor: (device.minAvailableVideoZoomFactor) + CGFloat(level) * ((device.maxAvailableVideoZoomFactor) - (device.minAvailableVideoZoomFactor)),
+                    withRate: 30.0)
+            device.unlockForConfiguration()
+            } catch {
+                print("Failed to change zoom.")
             }
         }
     }
+    
+    func setFocus(focus:Float){//focus 0:最接近　0-1.0
+        if let device = videoDevice {
+            do {
+                try! device.lockForConfiguration()
+                if device.isFocusPointOfInterestSupported{
+                    //Add Focus on Point
+                    device.focusMode = .locked
+                    device.setFocusModeLocked(lensPosition: focus, completionHandler: { _ in
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
+                            device.unlockForConfiguration()
+                        })
+                    })
+                }
+                device.unlockForConfiguration()
+            }
+        }
+    }
+
     fileprivate var imageManager = PHCachingImageManager()
     fileprivate var targetSize = CGSize.zero
     func getImages(){
@@ -290,26 +306,6 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
                             self.gettingAlbumF=false
                         }
                     }
-                    
-                
-                
-                
-//                PHImageManager.default().requestAVAsset(forVideo:asset,
-//                                                        options: options){ [self](asset:AVAsset?,audioMix, info:[AnyHashable:Any]?)->Void in
-//
-//                    if let urlAsset = asset as? AVURLAsset{//not on iCloud
-//                        if assets[i].duration != 0{
-//                            self.stillURL.append(urlAsset.url)
-//                            self.stillDate.append(date + "(" + duration + ")")
-//                        }
-//                        if i == assets.count - 1{
-//                            self.gettingAlbumF=false
-//                        }
-//                    }else{//on icloud
-//                        if i == assets.count - 1{
-//                            self.gettingAlbumF=false
-//                        }
-//                    }
                 }
             }
         }else{
@@ -317,81 +313,6 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
             gettingAlbumF=false
         }
     }
-    /*
-     @IBAction func eraseVideo(_ sender: Any) {
-  //       videoAsset[videoCurrent]
-         let requestOptions = PHImageRequestOptions()
-         requestOptions.isSynchronous = true
-         requestOptions.isNetworkAccessAllowed = false
-         requestOptions.deliveryMode = .highQualityFormat //これでもicloud上のvideoを取ってしまう
-         //アルバムをフェッチ
-         let assetFetchOptions = PHFetchOptions()
-         
-         assetFetchOptions.predicate = NSPredicate(format: "title == %@", albumName)
-         
-         let assetCollections = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .smartAlbumVideos, options: assetFetchOptions)
- //        print("asset:",assetCollections.count)
-         //アルバムが存在しない事もある？
-         var dialogStatus:Int=0
-         if (assetCollections.count > 0) {
-             //同じ名前のアルバムは一つしかないはずなので最初のオブジェクトを使用
-             let assetCollection = assetCollections.object(at:0)
-             // creationDate降順でアルバム内のアセットをフェッチ
-             let fetchOptions = PHFetchOptions()
-             fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
-             let assets = PHAsset.fetchAssets(in: assetCollection, options: fetchOptions)
-             let formatter = DateFormatter()
-             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
- //            var eraseAssetDate=assets[0].creationDate
- //            var eraseAssetPngNumber=0
-             for i in 0..<assets.count{
-                 let date_sub=assets[i].creationDate
-                 let date = formatter.string(from:date_sub!)
- //                eraseAssetPngNumber=i+1
-                 if videoDate[videoCurrent].contains(date){
-                     if !assets[i].canPerform(.delete) {
-                         return
-                     }
-                     var delAssets=Array<PHAsset>()
-                     delAssets.append(assets[i])
-                     if assets[i+1].duration==0{//pngが無くて、videoが選択されてない事を確認
-                         delAssets.append(assets[i+1])//pngはその次に入っているはず
-                     }
-                     PHPhotoLibrary.shared().performChanges({
-                         PHAssetChangeRequest.deleteAssets(NSArray(array: delAssets))
-                     }, completionHandler: { success,error in//[self] _, _ in
-                         if success==true{
-                             dialogStatus = 1//YES
-                         }else{
-                             dialogStatus = -1//NO
-                         }
-                         // 削除後の処理
-                     })
- //                    break
-                 }
-             }
-         }
-         while dialogStatus == 0{//dialogから抜けるまでは0
-             sleep(UInt32(0.2))
-         }
-         if dialogStatus == 1{//yesで抜けた時
- //            removeFile(delFile: videoDate[videoCurrent] + "-gyro.csv")
-             videoDate.remove(at: videoCurrent)
-             videoURL.remove(at: videoCurrent)
-             videoImg.remove(at: videoCurrent)
-             videoDura.remove(at: videoCurrent)
-             videoArrayCount -= 1
-             videoCurrent -= 1
-             showVideoIroiro(num: 0)
-             if videoImg.count==0{
-                 playButton.isEnabled=false
-             }
-         }
-     }
-     */
-    
-    
-    
     
     func eraseVideo(number:Int) {
         dialogStatus=0
@@ -444,15 +365,7 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
             }
         }
     }
-    func setSession(fps:Double){
-        initSession(fps:fps)
-    }
-    func sessionRecStart(fps:Double){
-        initSession(fps: fps)
-        try? FileManager.default.removeItem(atPath: TempFilePath)
-        let fileURL = NSURL(fileURLWithPath: TempFilePath)
-        fileOutput.startRecording(to: fileURL as URL, recordingDelegate: self)
-    }
+
     func recordStart(){
         try? FileManager.default.removeItem(atPath: TempFilePath)
         let fileURL = NSURL(fileURLWithPath: TempFilePath)
@@ -462,101 +375,108 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
         captureSession.stopRunning()//下行と入れ替えても動く
         fileOutput.stopRecording()
      }
-    func setVideoFormat(desiredFps: Double)->Bool {
-        var retF:Bool=false
-        var fps:Double = 0
-        // 取得したフォーマットを格納する変数
-        var selectedFormat: AVCaptureDevice.Format! = nil
-        // そのフレームレートの中で一番大きい解像度を取得する
-        var maxWidth: Int32 = 0
-        var maxFPS:Double=0
-        // フォーマットを探る
-//        var getDesiedformat:Bool=false
-        for format in videoDevice!.formats {
-            // フォーマット内の情報を抜き出す (for in と書いているが1つの format につき1つの range しかない)
-//            if getDesiedformat==true{
-//                break
-//            }
-            for range: AVFrameRateRange in format.videoSupportedFrameRateRanges {
-                let description = format.formatDescription as CMFormatDescription    // フォーマットの説明
-                let dimensions = CMVideoFormatDescriptionGetDimensions(description)  // 幅・高さ情報を抜き出す
-                let width = dimensions.width
-                fps = range.maxFrameRate
-                if fps <= desiredFps && fps >= maxFPS && width >= maxWidth {
-//                if fps == desiredFps && width >= maxWidth {
-                    selectedFormat = format
-                    maxWidth = width
-                    maxFPS = fps
-                    print(dimensions.width,dimensions.height,maxFPS)
-                }//指定のFPS以下で、最高解像度
-            }
-        }
-        print("selected:",selectedFormat.videoSupportedFrameRateRanges)
-        //ipad pro 60 1920*1440
-        //11 60 3840*2160 120 1920*1080
-        //8  60 1440*1080
-        //6s 60 1280*960
-        //SE 30
-//ipod touch 1280x720 1440*1080
-//SE 960x540 1280x720 1920x1080
-//11 192x144 352x288 480x360 640x480 1024x768 1280x720 1440x1080 1920x1080 3840x2160
-//1280に設定すると上手く行く。合成のところには1920x1080で飛んでくるようだ。？
-        // フォーマットが取得できていれば設定する
-        if selectedFormat != nil {
-            do {
-                try videoDevice!.lockForConfiguration()
-                videoDevice!.activeFormat = selectedFormat
-                videoDevice!.activeVideoMaxFrameDuration = CMTimeMake(value: 1, timescale: Int32(maxFPS))
-                videoDevice!.unlockForConfiguration()
-                
-                let description = selectedFormat.formatDescription as CMFormatDescription    // フォーマットの説明
-                let dimensions = CMVideoFormatDescriptionGetDimensions(description)  // 幅・高さ情報を抜き出す
-                let iCapNYSWidth = dimensions.width
-                let iCapNYSHeight = dimensions.height
-                print("フォーマット・フレームレートを設定 : \(maxFPS) fps・\(iCapNYSWidth) px x \(iCapNYSHeight) px")
-                
-                retF=true
-            }
-            catch {
-//                print("フォーマット・フレームレートが指定できなかった")
-                retF=false
-            }
-        }
-        else {
-//            print("指定のフォーマットが取得できなかった")
-            retF=false
-        }
-        return retF
+    func stopRunning(){
+        captureSession.stopRunning()
     }
-    //    videoConnection.videoOrientation = .Portrait
-    //    AVCaptureVideoOrientation.LandscapeRight.rawValue と同値
-    //    AVCaptureVideoOrientation.landscapeRight.rawValue
-    func initSession(fps:Double) {
+
+    func initSession(camera:Int,bounds:CGRect,cameraView:UIImageView) {
         // セッション生成
         captureSession = AVCaptureSession()
         // 入力 : 背面カメラ
+        if camera==0{
         videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front)
+        }else{
+            videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
+        }
         let videoInput = try! AVCaptureDeviceInput.init(device: videoDevice!)
         captureSession.addInput(videoInput)
-        if setVideoFormat(desiredFps: fps) == false {
-            print("フォーマット指定できなかった")
-        }else{
-            print("フォーマットが指定できた")
-        }
+
+//        if switchFormat(desiredFps: 240.0)==false{
+            if switchFormat(desiredFps: 120.0)==false{
+                if switchFormat(desiredFps: 60.0)==false{
+                    if switchFormat(desiredFps: 30.0)==false{
+                        print("set fps error")
+                    }
+                }
+            }
+//        }
+//        print("fps:",fpsCurrent)
         // ファイル出力設定
         //orientation.rawValue
         fileOutput = AVCaptureMovieFileOutput()
         captureSession.addOutput(fileOutput)
         let videoDataOuputConnection = fileOutput.connection(with: .video)
-        let orientation = UIDevice.current.orientation
-        videoDataOuputConnection!.videoOrientation = AVCaptureVideoOrientation(rawValue: AVCaptureVideoOrientation.landscapeRight.rawValue)!//AVCaptureVideoOrientation(rawValue: orientation.rawValue)!
-//        videoDataOuputConnection!.videoOrientation = AVCaptureVideoOrientation(rawValue: orientation.rawValue)!
+        videoDataOuputConnection!.videoOrientation = AVCaptureVideoOrientation(rawValue: AVCaptureVideoOrientation.landscapeRight.rawValue)!
+        if bounds.width != 0{//previewしない時は、bounds.width==0とする
+            let videoLayer : AVCaptureVideoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+            videoLayer.frame = bounds
+            videoLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill//無くても同じ
+            videoLayer.connection!.videoOrientation = .landscapeRight//　orientation
+            cameraView.layer.addSublayer(videoLayer)
+        }
         // セッションを開始する (録画開始とは別)
         captureSession.startRunning()
         //手振れ補正はデフォルトがoff
         //        fileOutput.connections[0].preferredVideoStabilizationMode=AVCaptureVideoStabilizationMode.off
     }
-    
+ 
+    func switchFormat(desiredFps: Double)->Bool {
+        // セッションが始動しているかどうか
+        var retF:Bool=false
+        let isRunning = captureSession.isRunning
+        
+        // セッションが始動中なら止める
+        if isRunning {
+            print("isrunning")
+            captureSession.stopRunning()
+        }
+        
+        // 取得したフォーマットを格納する変数
+        var selectedFormat: AVCaptureDevice.Format! = nil
+        // そのフレームレートの中で一番大きい解像度を取得する
+        var maxWidth: Int32 = 0
+        
+        // フォーマットを探る
+        for format in videoDevice!.formats {
+            // フォーマット内の情報を抜き出す (for in と書いているが1つの format につき1つの range しかない)
+            for range: AVFrameRateRange in format.videoSupportedFrameRateRanges {
+                let description = format.formatDescription as CMFormatDescription    // フォーマットの説明
+                let dimensions = CMVideoFormatDescriptionGetDimensions(description)  // 幅・高さ情報を抜き出す
+                let width = dimensions.width
+                if desiredFps == range.maxFrameRate && width >= maxWidth {
+                    selectedFormat = format
+                    maxWidth = width
+                }
+            }
+        }
+        fpsCurrent=0
+        // フォーマットが取得できていれば設定する
+        if selectedFormat != nil {
+            do {
+                try videoDevice!.lockForConfiguration()
+                videoDevice!.activeFormat = selectedFormat
+                videoDevice!.activeVideoMinFrameDuration = CMTimeMake(value: 1, timescale: Int32(desiredFps))
+                videoDevice!.activeVideoMaxFrameDuration = CMTimeMake(value: 1, timescale: Int32(desiredFps))
+                videoDevice!.unlockForConfiguration()
+                print("フォーマット・フレームレートを設定 : \(desiredFps) fps・\(maxWidth) px")
+                retF=true
+                fpsCurrent=Int(desiredFps)
+            }
+            catch {
+                print("フォーマット・フレームレートが指定できなかった")
+                retF=false
+            }
+        }
+        else {
+            print("指定のフォーマットが取得できなかった")
+            retF=false
+        }
+        // セッションが始動中だったら再開する
+        if isRunning {
+            captureSession.startRunning()
+        }
+        return retF
+    }
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         if let soundUrl = URL(string:
                                 "/System/Library/Audio/UISounds/end_record.caf"/*photoShutter.caf*/){
@@ -607,5 +527,29 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
         }
 //        captureSession.stopRunning()
         //         performSegue(withIdentifier: "fromRecordToMain", sender: self)
+    }
+    func setLabelProperty(_ label:UILabel,x:CGFloat,y:CGFloat,w:CGFloat,h:CGFloat,_ color:UIColor){
+        label.frame = CGRect(x:x, y:y, width: w, height: h)
+        label.layer.borderColor = UIColor.black.cgColor
+        label.layer.borderWidth = 1.0
+        label.layer.masksToBounds = true
+        label.layer.cornerRadius = 5
+        label.backgroundColor = color
+    }
+    //button.backgroundColor = color
+    func setButtonProperty(_ button:UIButton,x:CGFloat,y:CGFloat,w:CGFloat,h:CGFloat,_ color:UIColor){
+        button.frame   = CGRect(x:x, y:y, width: w, height: h)
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 1.0
+        button.layer.cornerRadius = 5
+        button.backgroundColor = color
+    }
+    func getUserDefault(str:String,ret:Float) -> Float{
+        if (UserDefaults.standard.object(forKey: str) != nil){
+            return UserDefaults.standard.float(forKey: str)
+        }else{//keyが設定してなければretをセット
+            UserDefaults.standard.set(ret, forKey: str)
+            return ret
+        }
     }
 }

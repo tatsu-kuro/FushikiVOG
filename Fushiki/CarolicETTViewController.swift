@@ -11,10 +11,6 @@ import AVFoundation
 import Photos
 class CarolicETTViewController: UIViewController{
     let camera = CameraAlbumEtc(name:"Fushiki")
-//    var videoDevice: AVCaptureDevice?
-//    var captureSession: AVCaptureSession!
-//    var fileOutput = AVCaptureMovieFileOutput()
-//    let TempFilePath: String = "\(NSTemporaryDirectory())temp.mp4"
     var ettWidth:Int = 0//1:narrow,2:wide
     var targetMode:Int = 0
     var cirDia:CGFloat = 0
@@ -145,9 +141,21 @@ class CarolicETTViewController: UIViewController{
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let album = CameraAlbumController(name:"fushiki")
         camera.makeAlbum()
-        camera.initSession(fps: 120)
+//        camera.initSession(camera: 0, bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
+//        
+        
+        let cameraMode = camera.getUserDefault(str: "cameraMode", ret: 0)
+        camera.initSession(camera: Int(cameraMode), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
+      
+        let zoomValue=camera.getUserDefault(str: "zoomValue", ret:0)
+        camera.setZoom(level: zoomValue)
+        let focusValue=camera.getUserDefault(str: "focusValue", ret: 0)
+        camera.setFocus(focus: focusValue)
+        
+        
+        
+        
         epTim.append(10)
         epTim.append(100)
         epTim.append(110)
@@ -170,14 +178,9 @@ class CarolicETTViewController: UIViewController{
         self.becomeFirstResponder()
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
-//        prefersHomeIndicatorAutoHidden()
-//        camera.sessionRecStart(fps:30)
         view.bringSubviewToFront(recClarification)
     }
-    
-//    override func prefersHomeIndicatorAutoHidden() -> Bool {
-//        return true
-//    }
+
     override var prefersHomeIndicatorAutoHidden: Bool {
         return true
     }
@@ -253,24 +256,6 @@ class CarolicETTViewController: UIViewController{
         }
         stopDisplaylink()
     }
-//    func setBackcolor(color c:CGColor){
-////        let boximage  = makeBox(width: self.view.bounds.width, height:self.view.bounds.height,color:c)
-////        cameraView.image=boximage
-//    }
-//    func makeBox(width w:CGFloat,height h:CGFloat,color c:CGColor) -> UIImage{
-//        let size = CGSize(width:w, height:h)
-//        UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
-//        let context = UIGraphicsGetCurrentContext()
-//        let drawRect = CGRect(x:0, y:0, width:w, height:h)
-//        let drawPath = UIBezierPath(rect:drawRect)
-//        context?.setFillColor(c)
-//        drawPath.fill()
-//        context?.setStrokeColor(c)
-//        drawPath.stroke()
-//        let image = UIGraphicsGetImageFromCurrentImageContext()
-//        UIGraphicsEndImageContext()
-//        return image!
-//    }
     
     func drawCircle(cPoint:CGPoint,cirDiameter:CGFloat,color1:CGColor,color2:CGColor){
         /* --- 円を描画 --- */

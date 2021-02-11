@@ -269,7 +269,22 @@ class OKNViewController: UIViewController{
 //        camera.recordStart()
 //        let album = CameraAlbumController(name: "fushiki")
         camera.makeAlbum()
-        camera.initSession(fps: 120)
+//        camera.initSession(camera: 0, bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
+//
+        let cameraMode = camera.getUserDefault(str: "cameraMode", ret: 0)
+        camera.initSession(camera: Int(cameraMode), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
+      
+        let zoomValue=camera.getUserDefault(str: "zoomValue", ret:0)
+        camera.setZoom(level: zoomValue)
+        let focusValue=camera.getUserDefault(str: "focusValue", ret: 0)
+        camera.setFocus(focus: focusValue)
+        
+        
+        
+        
+        
+        
+//        camera.initSession(fps: 120)
         //       timerPara.isHidden=true
         oknSpeed = UserDefaults.standard.integer(forKey:"oknSpeed")
         oknTime = UserDefaults.standard.integer(forKey:"oknTime")
