@@ -26,6 +26,7 @@ extension UIImage {
     }
 }
 class PlayViewController: UIViewController {
+    var cameraMode:Int!
     let album = CameraAlbumEtc(name:"Fushiki")
     let openCV = OpenCVWrapper()
     var videoURL:URL?
@@ -75,6 +76,16 @@ class PlayViewController: UIViewController {
     @IBOutlet weak var fpsLabel: UILabel!
     
     @IBAction func onMailButton(_ sender: Any) {
+    }
+    
+    @IBOutlet weak var cameraButton: UISegmentedControl!
+    
+    @IBAction func onCameraButton(_ sender: Any) {
+        cameraMode=cameraButton.selectedSegmentIndex
+        UserDefaults.standard.set(cameraMode, forKey: "video_cameraMode")
+        print("cameraMode:",cameraMode)
+        dispWakus()
+        showWakuImages()
     }
     func Field2value(field:UITextField) -> Int {
         if field.text?.count != 0 {
@@ -553,23 +564,25 @@ class PlayViewController: UIViewController {
         var UIface:UIImage!
         let context:CIContext = CIContext.init(options: nil)
         //landscape right homeに固定すると、
-        //UIImage.Orientation.up CIImage(....Orientation.down)で向きが一致する。
-//        let orientation = UIImage.Orientation.up
-//        var sample:CMSampleBuffer!
         guard let sample = readerOutput.copyNextSampleBuffer() else{
             print("get sample error")
             return
         }
         let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample)!
-        
-        let ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.down)//4行上ともupで良いような？
+        var ciImage:CIImage!
+        if cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
+            ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
+        }else{
+            ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
+        }
         //起動時表示が一巡？するまでは　slowImage.frame はちょっと違う値を示す
-        //        eyeCenter=transPoint(point: eyeCenter, videoImage: ciImage)
+        
         let eyeRect=getRectFromCenter(center: eyeCenter, len: wakuLength)
         let eyeRectResized = resizeR2(eyeRect, viewRect:getVideoRectOnScreen(),image:ciImage)
-//        let eyeRectResized = checkRect(rect:eyeRectResized1,image:ciImage)
         CGeye = context.createCGImage(ciImage, from: eyeRectResized)
-        UIeye = UIImage.init(cgImage: CGeye, scale:1.0, orientation:.down)//orientation)
+
+        UIeye = UIImage.init(cgImage: CGeye, scale:1.0, orientation:.up)//orientation)
+
         eyeWakuL_image.frame=CGRect(x:view.bounds.width/2+10,y:5,width: eyeRectResized.size.width*4,height: eyeRectResized.size.height*4)
         eyeWakuL_image.layer.borderColor = UIColor.black.cgColor
         eyeWakuL_image.layer.borderWidth = 1.0
@@ -577,11 +590,10 @@ class PlayViewController: UIViewController {
         eyeWakuL_image.layer.cornerRadius = 3
         eyeWakuL_image.image=UIeye
         view.bringSubviewToFront(eyeWakuL_image)
-        //        faceCenter=transPoint(point: faceCenter,videoImage: ciImage)
         let faceRect=getRectFromCenter(center: faceCenter, len: wakuLength)
         let faceRectResized = resizeR2(faceRect, viewRect:getVideoRectOnScreen(), image: ciImage)
         CGface = context.createCGImage(ciImage, from: faceRectResized)
-        UIface = UIImage.init(cgImage: CGface, scale:1.0, orientation:.down)
+        UIface = UIImage.init(cgImage: CGface, scale:1.0, orientation:.up)
         faceWakuL_image.frame=CGRect(x:view.bounds.width/2 - faceRectResized.size.width*4 - 10,y:5,width: faceRectResized.size.width*4,height: faceRectResized.size.height*4)
         faceWakuL_image.layer.borderColor = UIColor.black.cgColor
         faceWakuL_image.layer.borderWidth = 1.0
@@ -751,6 +763,7 @@ class PlayViewController: UIViewController {
             wakuLength = CGFloat(getUserDefault(str: "wakuLength", ret: 3))
             eyeBorder = getUserDefault(str: "eyeBorder", ret: 9)
         }
+        cameraMode = getUserDefault(str: "video_cameraMode", ret: 0)
         posRatio = getUserDefault(str: "posRatio", ret:100)
         veloRatio = getUserDefault(str:"veloRatio",ret :100)
         eyeCenter.x = CGFloat(getUserDefault(str: "eyeCenterX", ret: 320))
@@ -772,6 +785,7 @@ class PlayViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getUserDefaults()
+        cameraButton.selectedSegmentIndex = cameraMode
         //setteiしてなければ、以下
     
         let avAsset = AVURLAsset(url: videoURL!)
@@ -779,7 +793,8 @@ class PlayViewController: UIViewController {
         let wh:CGFloat=view.bounds.height
         let sp=ww/120//間隙
         let bw=(ww-sp*10)/7//ボタン幅
-        let bh=bw/3//ボタン厚さ
+//        let bh=bw/3//ボタン厚さ
+        let bh=bw*170/440
         let by = wh - bh - sp
         let seeky = by - bh
         
@@ -851,6 +866,9 @@ class PlayViewController: UIViewController {
         fpsXd=Int((240.0/videoFps).rounded())
 //        print(fpsXd)
         mailButton.isEnabled=false
+
+        cameraButton.frame = CGRect(x:  sp*7+bw*5, y: by-bh*2, width: bw*2+sp, height:bh)
+        view.bringSubviewToFront(cameraButton)
     }
   
     func setButtonProperty(button:UIButton,color:UIColor){
@@ -1031,12 +1049,16 @@ class PlayViewController: UIViewController {
         let faceWithBorderRectOnScreen = expandRectWithBorderWide(rect: faceRectOnScreen, border: eyeborder)
         
         let context:CIContext = CIContext.init(options: nil)
-        //        let orientation = UIImage.Orientation.up
         var sample:CMSampleBuffer!
         sample = readerOutput.copyNextSampleBuffer()
         let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample!)!
-        let ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.down)//4行上ともupで良いような？
-        
+        var ciImage:CIImage!
+        if cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
+            ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
+        }else{
+            ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
+        }
+//        let ciImage = CIImage(cvPixelBuffer:pixelBuffer).oriented(CGImagePropertyOrientation.down)
         let maxWidth=ciImage.extent.size.width
         let maxHeight=ciImage.extent.size.height
         
@@ -1104,8 +1126,15 @@ class PlayViewController: UIViewController {
                         eyeWithBorderRect.origin.x = faceWithBorderRect.origin.x - xDiffer
                         eyeWithBorderRect.origin.y = faceWithBorderRect.origin.y - yDiffer
                         
-                        let ciImage: CIImage =
-                            CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.down)
+                        if cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
+                            ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
+                        }else{
+                            ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
+                        }
+                        
+                        
+//                        let ciImage: CIImage =
+//                            CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.down)
                         eyeWithBorderCGImage = context.createCGImage(ciImage, from: eyeWithBorderRect)!
                         eyeWithBorderUIImage = UIImage.init(cgImage: eyeWithBorderCGImage)
                         
@@ -1256,13 +1285,18 @@ class PlayViewController: UIViewController {
         let eyeWithBorderRectOnScreen = expandRectWithBorderWide(rect: eyeRectOnScreen, border: eyeborder)
 
         let context:CIContext = CIContext.init(options: nil)
-        //        let orientation = UIImage.Orientation.up
         var sample:CMSampleBuffer!
         sample = readerOutput.copyNextSampleBuffer()
         let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample!)!
-        let ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.down)//4行上ともupで良いような？
+//        let ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.down)
+        var ciImage:CIImage!
+        if cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
+            ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
+        }else{
+            ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
+        }
         
-
+        
         let eyeRect = resizeR2(eyeRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
         var eyeWithBorderRect = resizeR2(eyeWithBorderRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
         
@@ -1292,8 +1326,14 @@ class PlayViewController: UIViewController {
                 autoreleasepool{
                     let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample)!
                     
-                    let ciImage: CIImage =
-                        CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.down)
+                    if cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
+                        ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
+                    }else{
+                        ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
+                    }
+                    
+//                    let ciImage: CIImage =
+//                        CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.down)
                     eyeWithBorderCGImage = context.createCGImage(ciImage, from: eyeWithBorderRect)!
                     eyeWithBorderUIImage = UIImage.init(cgImage: eyeWithBorderCGImage)
                     

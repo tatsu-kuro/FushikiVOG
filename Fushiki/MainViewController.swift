@@ -291,8 +291,8 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 //        let wh:CGFloat=view.bounds.height
         let sp=ww/120//間隙
         let bw=(ww-sp*10)/7//ボタン幅
-        let bh=bw/3//ボタン厚さ
-        
+//        let bh=bw/3//ボタン厚さ
+        let bh=bw*170/440
         let by=wh-bh-sp
 
         

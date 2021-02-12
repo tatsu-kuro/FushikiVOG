@@ -362,8 +362,9 @@
                             <button opaque="NO" contentMode="scaleAspectFill" semanticContentAttribute="playback" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n7m-sE-d1T">
                                 <rect key="frame" x="777" y="47" width="59" height="67"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" backgroundImage="sankaku"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="next"/>
                                 <connections>
                                     <action selector="globeBut:" destination="YRo-aS-cBq" eventType="touchUpInside" id="2d2-v6-V8F"/>
                                 </connections>
@@ -523,6 +524,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="lG2-CX-0aU">
+                                <rect key="frame" x="708" y="301" width="131" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <segments>
+                                    <segment title="front camera"/>
+                                    <segment title="back camera"/>
+                                </segments>
+                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="selectedSegmentTintColor" systemColor="systemOrangeColor"/>
+                                <connections>
+                                    <action selector="onCameraButton:" destination="qHa-wQ-wFQ" eventType="valueChanged" id="wbh-zh-VAx"/>
+                                </connections>
+                            </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fCB-dg-Pfm">
                                 <rect key="frame" x="721" y="22" width="42" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -655,6 +670,7 @@
                     </view>
                     <connections>
                         <outlet property="calcButton" destination="ryP-oe-phP" id="IEs-DN-S5y"/>
+                        <outlet property="cameraButton" destination="lG2-CX-0aU" id="tlE-bZ-nOX"/>
                         <outlet property="currTimeLabel" destination="fCB-dg-Pfm" id="oB5-o4-fYb"/>
                         <outlet property="debugEye" destination="6QA-2Y-Eoa" id="yTr-OJ-nQb"/>
                         <outlet property="debugEyeb" destination="08B-ab-fp8" id="wPp-o8-6JK"/>
@@ -1094,13 +1110,15 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="IGF-X7-hOJ">
-                                <rect key="frame" x="600" y="358" width="99" height="32"/>
+                                <rect key="frame" x="551" y="358" width="197" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <segments>
-                                    <segment title="front"/>
-                                    <segment title="back"/>
+                                    <segment title="front camera"/>
+                                    <segment title="back camera"/>
                                 </segments>
+                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="selectedSegmentTintColor" systemColor="systemOrangeColor"/>
                                 <connections>
                                     <action selector="onCameraChan:" destination="c63-hm-Ug5" eventType="valueChanged" id="nw1-AA-MRl"/>
                                 </connections>
@@ -1211,7 +1229,6 @@
         <image name="logomejiro" width="1300" height="100"/>
         <image name="playpause.fill" catalog="system" width="128" height="70"/>
         <image name="rec" width="257" height="112"/>
-        <image name="sankaku" width="225" height="225"/>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
