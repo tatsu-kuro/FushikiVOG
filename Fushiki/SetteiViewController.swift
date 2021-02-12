@@ -258,8 +258,8 @@ class SetteiViewController: UIViewController {
         sp=ww*0.1/10
         let by=wh-bh-sp
         camera.setButtonProperty(cameraButton,x:bw*4.5+sp*6,y:by,w:bw/2,h: bh,UIColor.orange)
-        defaultButton.frame=CGRect(x:bw*5+sp*7,y:by,width:bw,height:bh)
-        exitButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height:bh)
+        camera.setButtonProperty(defaultButton,x:bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(exitButton,x:bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
     }
 
 }

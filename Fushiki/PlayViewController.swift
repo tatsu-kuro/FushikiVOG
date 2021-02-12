@@ -569,7 +569,7 @@ class PlayViewController: UIViewController {
         let eyeRectResized = resizeR2(eyeRect, viewRect:getVideoRectOnScreen(),image:ciImage)
 //        let eyeRectResized = checkRect(rect:eyeRectResized1,image:ciImage)
         CGeye = context.createCGImage(ciImage, from: eyeRectResized)
-        UIeye = UIImage.init(cgImage: CGeye, scale:1.0, orientation:.up)//orientation)
+        UIeye = UIImage.init(cgImage: CGeye, scale:1.0, orientation:.down)//orientation)
         eyeWakuL_image.frame=CGRect(x:view.bounds.width/2+10,y:5,width: eyeRectResized.size.width*4,height: eyeRectResized.size.height*4)
         eyeWakuL_image.layer.borderColor = UIColor.black.cgColor
         eyeWakuL_image.layer.borderWidth = 1.0
@@ -581,7 +581,7 @@ class PlayViewController: UIViewController {
         let faceRect=getRectFromCenter(center: faceCenter, len: wakuLength)
         let faceRectResized = resizeR2(faceRect, viewRect:getVideoRectOnScreen(), image: ciImage)
         CGface = context.createCGImage(ciImage, from: faceRectResized)
-        UIface = UIImage.init(cgImage: CGface, scale:1.0, orientation:.up)
+        UIface = UIImage.init(cgImage: CGface, scale:1.0, orientation:.down)
         faceWakuL_image.frame=CGRect(x:view.bounds.width/2 - faceRectResized.size.width*4 - 10,y:5,width: faceRectResized.size.width*4,height: faceRectResized.size.height*4)
         faceWakuL_image.layer.borderColor = UIColor.black.cgColor
         faceWakuL_image.layer.borderWidth = 1.0
@@ -777,10 +777,10 @@ class PlayViewController: UIViewController {
         let avAsset = AVURLAsset(url: videoURL!)
         let ww:CGFloat=view.bounds.width
         let wh:CGFloat=view.bounds.height
-        let dw=ww/120//間隙
-        let bw=(ww-dw*8)/7//ボタン幅
-        let bh=bw/3.5//ボタン厚さ
-        let by = wh - bh - dw
+        let sp=ww/120//間隙
+        let bw=(ww-sp*10)/7//ボタン幅
+        let bh=bw/3//ボタン厚さ
+        let by = wh - bh - sp
         let seeky = by - bh
         
         videoDuration=Float(CMTimeGetSeconds(avAsset.duration))
@@ -794,7 +794,7 @@ class PlayViewController: UIViewController {
         layer.frame = view.bounds
         view.layer.addSublayer(layer)
         // Create Movie SeekBar
-        seekBar.frame = CGRect(x: dw, y:seeky, width: ww - 2*dw, height: bh)
+        seekBar.frame = CGRect(x: sp, y:seeky, width: ww - 2*sp, height: bh)
         seekBar.thumbTintColor=UIColor.orange
         seekBar.minimumValue = 0
         seekBar.maximumValue = videoDuration
@@ -812,28 +812,28 @@ class PlayViewController: UIViewController {
             let value = Float(self.seekBar.maximumValue - self.seekBar.minimumValue) * Float(time) / Float(duration) + Float(self.seekBar.minimumValue)
             self.seekBar.value = value
         })
-        currTimeLabel.frame = CGRect(x: dw, y: 5, width: bw*2, height: bh)
+        currTimeLabel.frame = CGRect(x: sp*2, y: 5, width: bw*2, height: bh)
         currTimeLabel!.font=UIFont.monospacedDigitSystemFont(ofSize: 15, weight: .medium)
         view.bringSubviewToFront(currTimeLabel)
         // Create Movie Start Button
-        mailButton.frame = CGRect(x:dw*1+bw*0,y:by,width:bw,height:bh)
+        mailButton.frame = CGRect(x:sp*2+bw*0,y:by,width:bw,height:bh)
         setButtonProperty(button: mailButton, color: UIColor.darkGray)
         view.bringSubviewToFront(mailButton)
-        saveButton.frame = CGRect(x:dw*2+bw*1,y:by,width:bw,height:bh)
+        saveButton.frame = CGRect(x:sp*3+bw*1,y:by,width:bw,height:bh)
         setButtonProperty(button: saveButton, color: UIColor.darkGray)
         view.bringSubviewToFront(saveButton)
-        waveButton.frame = CGRect(x:dw*3+bw*2,y:by,width:bw,height:bh)
+        waveButton.frame = CGRect(x:sp*4+bw*2,y:by,width:bw,height:bh)
         setButtonProperty(button: waveButton, color: UIColor.darkGray)
         view.bringSubviewToFront(waveButton)
-        calcButton.frame = CGRect(x: dw*4+bw*3, y: by, width: bw, height: bh)
+        calcButton.frame = CGRect(x: sp*5+bw*3, y: by, width: bw, height: bh)
         setButtonProperty(button: calcButton, color: UIColor.blue)
         view.bringSubviewToFront(calcButton)
-        playButton.frame = CGRect(x: dw*5+bw*4, y: by, width: bw, height: bh)
+        playButton.frame = CGRect(x: sp*6+bw*4, y: by, width: bw, height: bh)
         setButtonProperty(button: playButton, color: UIColor.orange)
         view.bringSubviewToFront(playButton)
-        album.setButtonProperty(setteiButton,x:dw*6+bw*5,y:by,w:bw,h:bh,UIColor.darkGray)
+        album.setButtonProperty(setteiButton,x:sp*7+bw*5,y:by,w:bw,h:bh,UIColor.darkGray)
         view.bringSubviewToFront(setteiButton)
-        album.setButtonProperty(exitButton,x: dw*7+bw*6,y:by, w:bw,h:bh,UIColor.darkGray)
+        album.setButtonProperty(exitButton,x: sp*8+bw*6,y:by, w:bw,h:bh,UIColor.darkGray)
         view.bringSubviewToFront(exitButton)
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         videoSize=resolutionSizeOfVideo(url:videoURL!)
@@ -841,7 +841,7 @@ class PlayViewController: UIViewController {
         videoFps=getFPS(url: videoURL!)
         dispWakus()
         showWakuImages()
-        fpsLabel.frame=CGRect(x:ww - bw*2,y:5,width: bw*2-dw,height: bh)
+        fpsLabel.frame=CGRect(x:ww - bw*2,y:5,width: bw*2-sp*2,height: bh)
         fpsLabel.text = String(format:"fps:%.0f w:%.0f h:%.0f",videoFps,videoSize.width,videoSize.height)
         fpsLabel!.font=UIFont.monospacedDigitSystemFont(ofSize: 15, weight: .medium)
         view.bringSubviewToFront(fpsLabel)

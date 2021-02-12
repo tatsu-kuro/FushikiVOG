@@ -103,6 +103,7 @@ class HelpViewController: UIViewController {
      }
     override func viewDidLoad() {
         super.viewDidLoad()
+        let camera = CameraAlbumEtc(name:"Fushiki")
         let ww:CGFloat=view.bounds.width
         let wh:CGFloat=view.bounds.height
        
@@ -110,8 +111,10 @@ class HelpViewController: UIViewController {
         let bh=bw*170/440
         let sp=ww*0.1/10
         let by=wh-bh-sp
-        exitButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height:bh)
-        nextButton.frame=CGRect(x:sp,y:wh-bh-sp,width:bh,height: bh)
+//        exitButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height:bh)
+        camera.setButtonProperty(exitButton,x:bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(nextButton,x:sp,y:wh-bh-sp,w:bh,h:bh,UIColor.darkGray)
+//        nextButton.frame=CGRect(x:sp,y:wh-bh-sp,width:bh,height: bh)
         if UIApplication.shared.isIdleTimerDisabled == true{
             UIApplication.shared.isIdleTimerDisabled = false//監視する
         }

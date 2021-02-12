@@ -283,10 +283,19 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
  //       print("setrotate")
         let ww:CGFloat=view.bounds.width
         let wh:CGFloat=view.bounds.height
-        let bw:CGFloat=ww*0.9/7
-        let bh:CGFloat=bw*170/440
-        let sp=ww*0.1/10
+//        let bw:CGFloat=ww*0.9/7
+//        let bh:CGFloat=bw*170/440
+//        let sp=ww*0.1/10
+
+//        let ww:CGFloat=view.bounds.width
+//        let wh:CGFloat=view.bounds.height
+        let sp=ww/120//間隙
+        let bw=(ww-sp*10)/7//ボタン幅
+        let bh=bw/3//ボタン厚さ
+        
         let by=wh-bh-sp
+
+        
         tableView.frame=CGRect(x:0,y:0,width:ww,height: by)
         button0.alpha=alp
         button1.alpha=alp
@@ -295,18 +304,17 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         button4.alpha=alp
         helpButton.alpha=alp
         setteiButton.alpha=alp
-        button0.frame=CGRect(x:sp*2,y:by,width:bw,height:bh)
-        button1.frame=CGRect(x:bw*1+sp*3,y:by,width:bw,height:bh)
-        button2.frame=CGRect(x:bw*2+sp*4,y:by,width:bw,height:bh)
-        button3.frame=CGRect(x:bw*3+sp*5,y:by,width:bw,height:bh)
-        button4.frame=CGRect(x:bw*4+sp*6,y:by,width:bw,height:bh)
+        camera.setButtonProperty(button0,x:sp*2,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(button1,x:bw*1+sp*3,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(button2,x:bw*2+sp*4,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(button3,x:bw*3+sp*5,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(button4,x:bw*4+sp*6,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(helpButton,x:bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
 //        setteiButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height:bh)
         camera.setButtonProperty(setteiButton,x:bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
 
         let logoY = ww/13
         if view.bounds.width/2 > by - logoY{
-
             titleImage.frame.origin.y = logoY
             //view.bounds.width*56/730
             titleImage.frame.size.width = (by - logoY)*2

@@ -9,6 +9,7 @@
 import UIKit
 
 class PlayParaViewController: UIViewController {
+    let camera = CameraAlbumEtc(name:"Fushiki")
     @IBOutlet weak var defaultButton: UIButton!
     @IBOutlet weak var faceMark: UISwitch!
     @IBOutlet weak var checkRects: UISwitch!
@@ -147,9 +148,10 @@ class PlayParaViewController: UIViewController {
         let bh=bw*170/440
         let sp=ww*0.1/10
         let by=wh-bh-sp
-        
-        defaultButton.frame=CGRect(x:bw*5+sp*7,y:by,width:bw,height:bh)
-        exitButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height:bh)
+        camera.setButtonProperty(defaultButton,x:bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(exitButton,x:bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
+//        camera.defaultButton.frame=CGRect(x:bw*5+sp*7,y:by,width:bw,height:bh)
+//        exitButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height:bh)
     }
 
 }
