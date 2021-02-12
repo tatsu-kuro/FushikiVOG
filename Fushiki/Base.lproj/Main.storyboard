@@ -735,36 +735,40 @@
                                 <rect key="frame" x="62" y="26" width="97" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 <connections>
-                                    <action selector="inputPara1:" destination="lpw-bn-NhA" eventType="editingDidEndOnExit" id="hY2-ll-M9m"/>
+                                    <action selector="editingChanged:" destination="lpw-bn-NhA" eventType="editingChanged" id="dx4-lK-W9Q"/>
+                                    <action selector="editingDidBegin:" destination="lpw-bn-NhA" eventType="editingDidBegin" id="Lz8-BC-Igr"/>
                                 </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="123" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NLJ-Id-a9c">
                                 <rect key="frame" x="62" y="68" width="97" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 <connections>
-                                    <action selector="inputPara2:" destination="lpw-bn-NhA" eventType="editingDidEndOnExit" id="b09-qL-Ih7"/>
+                                    <action selector="editingChanged:" destination="lpw-bn-NhA" eventType="editingChanged" id="BTO-tw-MQR"/>
+                                    <action selector="editingDidBegin:" destination="lpw-bn-NhA" eventType="editingDidBegin" id="Nod-Il-WcT"/>
                                 </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="123" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tOQ-zk-OCJ">
                                 <rect key="frame" x="62" y="111" width="97" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 <connections>
-                                    <action selector="inputPara3:" destination="lpw-bn-NhA" eventType="editingDidEndOnExit" id="0Ev-Hh-Oar"/>
+                                    <action selector="editingChanged:" destination="lpw-bn-NhA" eventType="editingChanged" id="ack-Xk-4fV"/>
+                                    <action selector="editingDidBegin:" destination="lpw-bn-NhA" eventType="editingDidBegin" id="7tI-Op-fc4"/>
                                 </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="123" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4Co-yi-BEg">
                                 <rect key="frame" x="62" y="153" width="97" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 <connections>
-                                    <action selector="inputPara4:" destination="lpw-bn-NhA" eventType="editingDidEndOnExit" id="X3r-Q2-jD4"/>
+                                    <action selector="editingChanged:" destination="lpw-bn-NhA" eventType="editingChanged" id="Poe-Bg-HPW"/>
+                                    <action selector="editingDidBegin:" destination="lpw-bn-NhA" eventType="editingDidBegin" id="Ahg-ig-JZi"/>
                                 </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="(%)  position wave height" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7SE-Hs-5uN">
@@ -826,9 +830,23 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f2P-e7-0Ay">
+                                <rect key="frame" x="682" y="80" width="119" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="pad down"/>
+                                <connections>
+                                    <action selector="onKeyPadDownButton:" destination="lpw-bn-NhA" eventType="touchUpInside" id="FtR-yu-4EJ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="W7G-pV-8rj"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="9P9-R0-hMf" appends="YES" id="Tu8-bx-wxd"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="nU6-lH-hJ7"/>
                     <connections>
@@ -836,14 +854,26 @@
                         <outlet property="defaultButton" destination="7PF-TW-04E" id="4qd-6U-kBx"/>
                         <outlet property="exitButton" destination="Nlq-Qa-G8v" id="FEp-Ld-2r8"/>
                         <outlet property="faceMark" destination="Xmb-Ie-gpm" id="2jw-kj-a9a"/>
+                        <outlet property="keyPadDownButton" destination="f2P-e7-0Ay" id="41k-C8-430"/>
                         <outlet property="para1" destination="Yjf-ek-oMJ" id="TsU-6V-0Lc"/>
                         <outlet property="para2" destination="NLJ-Id-a9c" id="yNP-7L-lxH"/>
                         <outlet property="para3" destination="tOQ-zk-OCJ" id="GRG-Pn-ikF"/>
                         <outlet property="para4" destination="4Co-yi-BEg" id="gJR-jE-UOs"/>
+                        <outlet property="paraText1" destination="7SE-Hs-5uN" id="mob-hc-LAE"/>
+                        <outlet property="paraText2" destination="fW5-cC-8PD" id="eM9-8x-3Gk"/>
+                        <outlet property="paraText3" destination="UAG-8Q-itb" id="G6y-Gd-6z7"/>
+                        <outlet property="paraText4" destination="Opw-Lc-peG" id="z0c-Lt-iJF"/>
+                        <outlet property="paraText5" destination="h6x-uh-nhk" id="yvs-Xo-7Vx"/>
+                        <outlet property="paraText6" destination="JYq-gJ-daQ" id="erC-KS-PDP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bF2-jJ-AI1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="zWb-EH-foO" userLabel="Exit" sceneMemberID="exit"/>
+                <tapGestureRecognizer id="9P9-R0-hMf">
+                    <connections>
+                        <action selector="tapAction:" destination="lpw-bn-NhA" id="bRi-8R-D6m"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-56.25" y="853.62318840579712"/>
         </scene>

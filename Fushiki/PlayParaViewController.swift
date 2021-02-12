@@ -19,6 +19,12 @@ class PlayParaViewController: UIViewController {
     @IBOutlet weak var para2: UITextField!
     @IBOutlet weak var para1: UITextField!
 
+    @IBOutlet weak var paraText1: UILabel!
+    @IBOutlet weak var paraText2: UILabel!
+    @IBOutlet weak var paraText3: UILabel!
+    @IBOutlet weak var paraText4: UILabel!
+    @IBOutlet weak var paraText5: UILabel!
+    @IBOutlet weak var paraText6: UILabel!
     var paraInt1:Int=0
     var paraInt2:Int=0
     var paraInt3:Int=0
@@ -44,6 +50,7 @@ class PlayParaViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+//        paraInt1.delegate = self
         paraInt1=UserDefaults.standard.integer(forKey:"posRatio")
         paraInt2=UserDefaults.standard.integer(forKey:"veloRatio")
         paraInt3=UserDefaults.standard.integer(forKey:"wakuLength")
@@ -65,6 +72,7 @@ class PlayParaViewController: UIViewController {
             checkRects.isOn=true
         }
         setScreen()
+        keyPadDownButton.isHidden=true
     }
   
     @IBAction func onDefaultButton(_ sender: Any) {
@@ -127,19 +135,29 @@ class PlayParaViewController: UIViewController {
         paraInt3 = Field2value(field:para3)
         paraInt4 = Field2value(field:para4)
         setUserDefaults()
+        keyPadDownButton.isHidden=false
     }
-    @IBAction func inputPara1(_ sender: Any) {
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        keyPadDownButton.isHidden = false
+//    }
+    @IBOutlet weak var keyPadDownButton: UIButton!
+    @IBAction func onKeyPadDownButton(_ sender: Any) {
+        tapAction(0)
+    }
+    @IBAction func tapAction(_ sender: Any){
+        para1.endEditing(true)
+        para2.endEditing(true)
+        para3.endEditing(true)
+        para4.endEditing(true)
+        keyPadDownButton.isHidden=true
+    }
+    @IBAction func editingDidBegin(_ sender: Any){
+        keyPadDownButton.isHidden=false
+    }
+    @IBAction func editingChanged(_ sender: Any) {
         setParas()
     }
-    @IBAction func inputPara2(_ sender: Any) {
-        setParas()
-    }
-    @IBAction func inputPara3(_ sender: Any) {
-       setParas()
-    }
-    @IBAction func inputPara4(_ sender: Any) {
-       setParas()
-    }
+  
     func setScreen(){
         let ww=view.bounds.width
         let wh=view.bounds.height
@@ -148,10 +166,21 @@ class PlayParaViewController: UIViewController {
         let bh=bw*170/440
         let sp=ww*0.1/10
         let by=wh-bh-sp
-        camera.setButtonProperty(defaultButton,x:bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
+        let lw=ww-bw*2
+        camera.setButtonProperty(keyPadDownButton, x: bw*6+sp*8, y: sp, w: bw, h: bh, UIColor.darkGray)
         camera.setButtonProperty(exitButton,x:bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
-//        camera.defaultButton.frame=CGRect(x:bw*5+sp*7,y:by,width:bw,height:bh)
-//        exitButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height:bh)
+        camera.setButtonProperty(defaultButton, x: bw*5+sp*7, y: by, w: bw, h: bh, UIColor.darkGray)
+        para1.frame=CGRect(x:2*sp,y:sp,width:bw,height: bh)
+        para2.frame=CGRect(x:2*sp,y:sp*2+bh,width:bw,height: bh)
+        para3.frame=CGRect(x:2*sp,y:sp*3+bh*2,width:bw,height: bh)
+        para4.frame=CGRect(x:2*sp,y:sp*4+bh*3,width:bw,height: bh)
+        faceMark.frame=CGRect(x:2*sp,y:sp*5+bh*4,width:bw,height: bh)
+        checkRects.frame=CGRect(x:2*sp,y:sp*6+bh*5,width:bw,height: bh)
+        paraText1.frame=CGRect(x:bw+3*sp,y:sp,width:lw,height: bh)
+        paraText2.frame=CGRect(x:bw+3*sp,y:sp*2+bh,width:lw,height: bh)
+        paraText3.frame=CGRect(x:bw+3*sp,y:sp*3+bh*2,width:lw,height: bh)
+        paraText4.frame=CGRect(x:bw+3*sp,y:sp*4+bh*3,width:lw,height: bh)
+        paraText5.frame=CGRect(x:bw+3*sp,y:sp*5+bh*4,width:lw,height: bh)
+        paraText6.frame=CGRect(x:bw+3*sp,y:sp*6+bh*5,width:lw,height: bh)
     }
-
 }
