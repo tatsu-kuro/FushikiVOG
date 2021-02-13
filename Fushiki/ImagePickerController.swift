@@ -74,7 +74,7 @@ class ImagePickerController: UIViewController,MFMailComposeViewControllerDelegat
         ] // Title color
         button = UIButton()
         button.addTarget(self, action: #selector(touchUpInside(_:)), for: UIControl.Event.touchUpInside)
-        let size = view.frame.width * 0.8
+        let size = view.frame.width * 0.48
         button.setTitle("", for: UIControl.State.normal)
         button.frame.size = CGSize(width: size, height: size)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 28)
@@ -83,6 +83,14 @@ class ImagePickerController: UIViewController,MFMailComposeViewControllerDelegat
         view.addSubview(button)
         touchUpInside(button)
         setButtons()
+        self.setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override var prefersHomeIndicatorAutoHidden: Bool {
+        return true
+    }
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
     func setButtons(){
         let album = CameraAlbumEtc(name:"Fushiki")
