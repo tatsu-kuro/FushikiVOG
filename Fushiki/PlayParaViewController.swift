@@ -162,25 +162,26 @@ class PlayParaViewController: UIViewController {
         let ww=view.bounds.width
         let wh=view.bounds.height
 
-        let bw=ww*0.9/7
+        let sp=ww/120//間隙
+        let bw=(ww-sp*10)/7//ボタン幅
         let bh=bw*170/440
-        let sp=ww*0.1/10
         let by=wh-bh-sp
         let lw=ww-bw*2
+        let head=sp*1.5
         camera.setButtonProperty(keyPadDownButton, x: bw*6+sp*8, y: sp, w: bw, h: bh, UIColor.darkGray)
         camera.setButtonProperty(exitButton,x:bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(defaultButton, x: bw*5+sp*7, y: by, w: bw, h: bh, UIColor.darkGray)
-        para1.frame=CGRect(x:2*sp,y:sp,width:bw,height: bh)
-        para2.frame=CGRect(x:2*sp,y:sp*2+bh,width:bw,height: bh)
-        para3.frame=CGRect(x:2*sp,y:sp*3+bh*2,width:bw,height: bh)
-        para4.frame=CGRect(x:2*sp,y:sp*4+bh*3,width:bw,height: bh)
-        faceMark.frame=CGRect(x:2*sp,y:sp*5+bh*4,width:bw,height: bh)
-        checkRects.frame=CGRect(x:2*sp,y:sp*6+bh*5,width:bw,height: bh)
-        paraText1.frame=CGRect(x:bw+3*sp,y:sp,width:lw,height: bh)
-        paraText2.frame=CGRect(x:bw+3*sp,y:sp*2+bh,width:lw,height: bh)
-        paraText3.frame=CGRect(x:bw+3*sp,y:sp*3+bh*2,width:lw,height: bh)
-        paraText4.frame=CGRect(x:bw+3*sp,y:sp*4+bh*3,width:lw,height: bh)
-        paraText5.frame=CGRect(x:bw+3*sp,y:sp*5+bh*4,width:lw,height: bh)
-        paraText6.frame=CGRect(x:bw+3*sp,y:sp*6+bh*5,width:lw,height: bh)
+        para1.frame=CGRect(x:head+2*sp,y:sp,width:bw,height: bh)
+        para2.frame=CGRect(x:head+2*sp,y:sp*2+bh,width:bw,height: bh)
+        para3.frame=CGRect(x:head+2*sp,y:sp*3+bh*2,width:bw,height: bh)
+        para4.frame=CGRect(x:head+2*sp,y:sp*4+bh*3,width:bw,height: bh)
+        faceMark.frame=CGRect(x:head+2*sp,y:sp*5+bh*4,width:bw,height: bh)
+        checkRects.frame=CGRect(x:head+2*sp,y:sp*6+bh*5,width:bw,height: bh)
+        paraText1.frame=CGRect(x:head+bw+3*sp,y:sp,width:lw,height: bh)
+        paraText2.frame=CGRect(x:head+bw+3*sp,y:sp*2+bh,width:lw,height: bh)
+        paraText3.frame=CGRect(x:head+bw+3*sp,y:sp*3+bh*2,width:lw,height: bh)
+        paraText4.frame=CGRect(x:head+bw+3*sp,y:sp*4+bh*3,width:lw,height: bh)
+        paraText5.frame=CGRect(x:head+bw+3*sp,y:sp*5+bh*4,width:lw,height: bh)
+        paraText6.frame=CGRect(x:head+bw+3*sp,y:sp*6+bh*5,width:lw,height: bh)
     }
 }

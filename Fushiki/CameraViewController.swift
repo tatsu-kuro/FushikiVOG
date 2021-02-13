@@ -71,19 +71,18 @@ class CameraViewController: UIViewController {
         // recording button
         let ww=view.bounds.width
         let wh=view.bounds.height
-        let bw=ww*0.9/7
+        let sp=ww/120//間隙
+        let bw=(ww-sp*10)/7//ボタン幅
         let bh=bw*170/440
-        let sp=ww*0.1/10
         let by=wh-bh-sp
-        
+    
         camera.setButtonProperty(exitButton,x:bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
-//        camera.setButtonProperty(fpsButton,x:bw*4+sp*6,y:by,w:bw,h:bh,UIColor.darkGray)
         fpsButton.isHidden=true
         camera.setLabelProperty( fpsLabel,x:bw*2+sp*5,y:by,w:bw*2,h:bh,UIColor.white)
-        camera.setLabelProperty( zoomLabel,x:bw*6+sp*8,y:by-sp/3-bh,w:bw,h:bh,UIColor.white)
+        camera.setLabelProperty(zoomLabel,x:bw*6+sp*8,y:by-sp/3-bh,w:bw,h:bh,UIColor.white)
         camera.setLabelProperty(focusLabel,x:bw*6+sp*8,y:by-sp*2/3-2*bh,w:bw,h:bh,UIColor.white)
-        focusBar.frame=CGRect(x:sp,y:by-sp*2/3-2*bh,width:ww-2*sp,height:bh)
-        zoomBar.frame=CGRect(x:sp,y:by-sp/3-bh,width:ww-2*sp,height:bh)
+        focusBar.frame=CGRect(x:2*sp,y:by-sp*2/3-2*bh,width:ww-4*sp,height:bh)
+        zoomBar.frame=CGRect(x:2*sp,y:by-sp/3-bh,width:ww-4*sp,height:bh)
         cameraChan.frame=CGRect(x:bw*4+sp*6,y:by,width:bw*2+sp,height:bh)
      }
 }

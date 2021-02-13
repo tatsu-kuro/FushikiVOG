@@ -219,6 +219,11 @@ class SetteiViewController: UIViewController {
     func setScreen(){
         let ww=view.bounds.width
         let wh=view.bounds.height
+        
+        
+        
+        
+        
         let x0=ww/25
         var bw=ww/4
         let x1=x0+bw+x0/2
@@ -252,10 +257,10 @@ class SetteiViewController: UIViewController {
         paraTxt6.frame  = CGRect(x:x1,   y: b6y ,width: bw*5,height:bh)
         paraCnt7.frame  = CGRect(x:x0,   y: b7y ,width: bw,height:bh)
         paraTxt7.frame  = CGRect(x:x1,   y: b7y ,width: bw*5,height:bh)
-        
-        bw=ww*0.9/7
+    
+        sp=ww/120//間隙
+        bw=(ww-sp*10)/7//ボタン幅
         bh=bw*170/440
-        sp=ww*0.1/10
         let by=wh-bh-sp
         camera.setButtonProperty(cameraButton,x:bw*4+sp*6,y:by,w:bw,h: bh,UIColor.orange)
         camera.setButtonProperty(defaultButton,x:bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)

@@ -793,7 +793,6 @@ class PlayViewController: UIViewController {
         let wh:CGFloat=view.bounds.height
         let sp=ww/120//間隙
         let bw=(ww-sp*10)/7//ボタン幅
-//        let bh=bw/3//ボタン厚さ
         let bh=bw*170/440
         let by = wh - bh - sp
         let seeky = by - bh
@@ -864,9 +863,7 @@ class PlayViewController: UIViewController {
         vogBoxYmin=wh/2-vogBoxHeight/2
         vogBoxYcenter=wh/2
         fpsXd=Int((240.0/videoFps).rounded())
-//        print(fpsXd)
         mailButton.isEnabled=false
-
         cameraButton.frame = CGRect(x:  sp*7+bw*5, y: by-bh*2, width: bw*2+sp, height:bh)
         view.bringSubviewToFront(cameraButton)
     }
