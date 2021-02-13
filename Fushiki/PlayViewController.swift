@@ -808,7 +808,7 @@ class PlayViewController: UIViewController {
         layer.frame = view.bounds
         view.layer.addSublayer(layer)
         // Create Movie SeekBar
-        seekBar.frame = CGRect(x: sp, y:seeky, width: ww - 2*sp, height: bh)
+        seekBar.frame = CGRect(x: sp*2, y:seeky, width: ww - 4*sp, height: bh)
         seekBar.thumbTintColor=UIColor.orange
         seekBar.minimumValue = 0
         seekBar.maximumValue = videoDuration
