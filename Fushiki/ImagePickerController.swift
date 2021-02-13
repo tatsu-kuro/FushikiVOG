@@ -63,7 +63,7 @@ class ImagePickerController: UIViewController,MFMailComposeViewControllerDelegat
         picker = UIImagePickerController()
         picker.delegate = self
         picker.sourceType = UIImagePickerController.SourceType.photoLibrary
-        picker.allowsEditing = true // Whether to make it possible to edit the size etc after selecting the image
+        picker.allowsEditing = false // Whether to make it possible to edit the size etc after selecting the image
         // set picker's navigationBar appearance
         picker.view.backgroundColor = .white
         picker.navigationBar.isTranslucent = false
