@@ -391,7 +391,7 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
         let videoInput = try! AVCaptureDeviceInput.init(device: videoDevice!)
         captureSession.addInput(videoInput)
 
-//        if switchFormat(desiredFps: 240.0)==false{
+        if switchFormat(desiredFps: 240.0)==false{
             if switchFormat(desiredFps: 120.0)==false{
                 if switchFormat(desiredFps: 60.0)==false{
                     if switchFormat(desiredFps: 30.0)==false{
@@ -399,7 +399,7 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
                     }
                 }
             }
-//        }
+        }
 //        print("fps:",fpsCurrent)
         // ファイル出力設定
         //orientation.rawValue

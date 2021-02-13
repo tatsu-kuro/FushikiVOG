@@ -18,8 +18,8 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3SM-bs-rsz">
                                 <rect key="frame" x="10" y="30" width="647" height="315"/>
-                                <string key="text">Fushiki Caloric ETT
- Version 2.4  2021-1-17</string>
+                                <string key="text">Fushiki VOG 
+2021-2-15</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -28,10 +28,10 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="3SM-bs-rsz" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="4W4-8T-sZb"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="3SM-bs-rsz" secondAttribute="trailing" constant="10" id="5Bu-eF-ZcQ"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="3SM-bs-rsz" secondAttribute="bottom" constant="30" id="Jjf-E5-GuF"/>
-                            <constraint firstItem="3SM-bs-rsz" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="30" id="QCb-iH-4Xo"/>
+                            <constraint firstItem="3SM-bs-rsz" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="30" id="9S4-gB-l1x"/>
+                            <constraint firstItem="3SM-bs-rsz" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="DgY-qq-bpm"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="3SM-bs-rsz" secondAttribute="bottom" constant="30" id="NJh-64-Cxb"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="3SM-bs-rsz" secondAttribute="trailing" constant="10" id="eXk-tK-A9i"/>
                         </constraints>
                     </view>
                 </viewController>
