@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
-        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -1010,45 +1009,14 @@
             </objects>
             <point key="canvasLocation" x="-760.71428571428567" y="-1491.304347826087"/>
         </scene>
-        <!--Collection View Controller-->
+        <!--Image Picker Controller-->
         <scene sceneID="D0w-7V-0Nh">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="3OQ-RC-qrq" customClass="CollectionViewController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="3OQ-RC-qrq" customClass="ImagePickerController" customModule="Fushiki" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iWI-av-ltt">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hkz-ON-bYo">
-                                <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="3" minimumInteritemSpacing="3" id="V5C-C6-8oK">
-                                    <size key="itemSize" width="200" height="200"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" contentMode="center" reuseIdentifier="cell" id="ITd-ae-p8m">
-                                        <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="FfA-mG-pfn">
-                                            <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0OE-Nz-EfM">
-                                                    <rect key="frame" x="0.0" y="0.0" width="502" height="234"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                            </subviews>
-                                        </collectionViewCellContentView>
-                                        <size key="customSize" width="200" height="200"/>
-                                    </collectionViewCell>
-                                </cells>
-                                <connections>
-                                    <outlet property="dataSource" destination="3OQ-RC-qrq" id="qSi-aG-Uh1"/>
-                                    <outlet property="delegate" destination="3OQ-RC-qrq" id="BnO-Ck-AeK"/>
-                                </connections>
-                            </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ywL-bW-mgs">
                                 <rect key="frame" x="786" y="354" width="100" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1066,25 +1034,17 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="mail"/>
                                 <connections>
-                                    <action selector="onMailButton:" destination="3OQ-RC-qrq" eventType="touchUpInside" id="948-O2-ez9"/>
+                                    <action selector="onMailButton" destination="3OQ-RC-qrq" eventType="touchUpInside" id="8uw-In-8Hr"/>
                                 </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="g24-AI-cTd"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="hkz-ON-bYo" firstAttribute="top" secondItem="g24-AI-cTd" secondAttribute="top" id="mlf-wx-QCG"/>
-                            <constraint firstAttribute="trailing" secondItem="hkz-ON-bYo" secondAttribute="trailing" id="nHt-oC-ZbH"/>
-                            <constraint firstItem="hkz-ON-bYo" firstAttribute="leading" secondItem="iWI-av-ltt" secondAttribute="leading" id="xft-vy-Twz"/>
-                            <constraint firstAttribute="bottom" secondItem="hkz-ON-bYo" secondAttribute="bottom" id="yAS-Me-NMh"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="MES-Im-RxF"/>
                     <connections>
-                        <outlet property="collectionView" destination="hkz-ON-bYo" id="5uB-i1-Atb"/>
-                        <outlet property="exitButton" destination="ywL-bW-mgs" id="KUH-js-ByZ"/>
-                        <outlet property="flowLayout" destination="V5C-C6-8oK" id="ODt-Yg-Wo3"/>
-                        <outlet property="mailButton" destination="e37-qg-MW6" id="any-Tb-2wx"/>
+                        <outlet property="exitButton" destination="ywL-bW-mgs" id="VhZ-b7-zje"/>
+                        <outlet property="mailButton" destination="e37-qg-MW6" id="ca0-jL-trn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IBf-p4-Nih" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

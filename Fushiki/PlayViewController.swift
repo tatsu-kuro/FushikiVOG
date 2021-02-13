@@ -863,7 +863,7 @@ class PlayViewController: UIViewController {
         vogBoxYmin=wh/2-vogBoxHeight/2
         vogBoxYcenter=wh/2
         fpsXd=Int((240.0/videoFps).rounded())
-        mailButton.isEnabled=false
+//        mailButton.isEnabled=false
         cameraButton.frame = CGRect(x:  sp*7+bw*5, y: by-bh*2, width: bw*2+sp, height:bh)
         view.bringSubviewToFront(cameraButton)
     }
