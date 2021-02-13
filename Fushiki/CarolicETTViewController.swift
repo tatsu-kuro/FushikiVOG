@@ -11,6 +11,7 @@ import AVFoundation
 import Photos
 class CarolicETTViewController: UIViewController{
     let camera = CameraAlbumEtc(name:"Fushiki")
+    var mainBrightness:CGFloat?
     var ettWidth:Int = 0//1:narrow,2:wide
     var targetMode:Int = 0
     var cirDia:CGFloat = 0
@@ -26,6 +27,7 @@ class CarolicETTViewController: UIViewController{
     @IBAction func doubleTap(_ sender: Any) {
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
         mainView.targetMode=targetMode
+        UIScreen.main.brightness=mainBrightness!
         delTimer()
         camera.recordStop() //fileOutput.stopRecording()
 //        self.present(mainView, animated: false, completion: nil)
@@ -135,17 +137,16 @@ class CarolicETTViewController: UIViewController{
     @objc func updateRecClarification(tm: Timer) {
         cntREC += 1
         recClarification.alpha=camera.updateRecClarification(tm: cntREC)
-        if cntREC==5{
+        if cntREC==20{
             camera.recordStart()//ここだと暗くならない
         }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         camera.makeAlbum()
-//        camera.initSession(camera: 0, bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
-//        
-        
-        let cameraMode = camera.getUserDefault(str: "cameraMode", ret: 0)
+        mainBrightness = UIScreen.main.brightness
+        UIScreen.main.brightness = 1.0
+         let cameraMode = camera.getUserDefault(str: "cameraMode", ret: 0)
         camera.initSession(camera: Int(cameraMode), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
       
         let zoomValue=camera.getUserDefault(str: "zoomValue", ret:0)

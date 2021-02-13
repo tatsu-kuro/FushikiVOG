@@ -12,6 +12,7 @@ import Photos
 import AVFoundation
 class OKNViewController: UIViewController{
     let camera = CameraAlbumEtc(name:"Fushiki")
+    var mainBrightness:CGFloat!
     var startTime=CFAbsoluteTimeGetCurrent()
     var lastTime=CFAbsoluteTimeGetCurrent()
     var cnt:Int = 0
@@ -96,6 +97,7 @@ class OKNViewController: UIViewController{
     func exit4OKN(){
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
         mainView.targetMode=targetMode
+        UIScreen.main.brightness=mainBrightness!
         delTimer()
         camera.recordStop()//fileOutput.stopRecording()
         performSegue(withIdentifier: "fromOKN", sender: self)
@@ -260,14 +262,14 @@ class OKNViewController: UIViewController{
     @objc func updateRecClarification(tm: Timer) {
         cntREC += 1
         recClarification.alpha=camera.updateRecClarification(tm: cntREC)
-        if cntREC==5{
+        if cntREC==20{
             camera.recordStart()//ここだと暗くならない
         }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-//        camera.recordStart()
-//        let album = CameraAlbumController(name: "fushiki")
+        mainBrightness = UIScreen.main.brightness
+        UIScreen.main.brightness = 1.0
         camera.makeAlbum()
 //        camera.initSession(camera: 0, bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
 //

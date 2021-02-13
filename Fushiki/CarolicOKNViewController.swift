@@ -11,6 +11,7 @@ import AVFoundation
 import Photos
 class CarolicOKNViewController: UIViewController{
     let camera = CameraAlbumEtc(name:"Fushiki")
+    var mainBrightness:CGFloat!
     var oknSpeed:Int = 0
     var oknMode:Int=0
     var targetMode:Int = 0
@@ -38,6 +39,7 @@ class CarolicOKNViewController: UIViewController{
     @IBAction func doubleTap(_ sender: Any) {
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
         mainView.targetMode=targetMode
+        UIScreen.main.brightness=mainBrightness!
         delTimer()
         camera.recordStop()
         performSegue(withIdentifier: "fromCarolicOKN", sender: self)
@@ -159,15 +161,16 @@ class CarolicOKNViewController: UIViewController{
     @objc func updateRecClarification(tm: Timer) {
         cntREC += 1
         recClarification.alpha=camera.updateRecClarification(tm: cntREC)
-        if cntREC==5{
+        if cntREC==20{
             camera.recordStart()//ここだと暗くならない
         }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         camera.makeAlbum()
-//        camera.initSession(camera: 0, bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
-        
+        mainBrightness = UIScreen.main.brightness
+        UIScreen.main.brightness = 1.0
+ 
         let cameraMode = camera.getUserDefault(str: "cameraMode", ret: 0)
         camera.initSession(camera: Int(cameraMode), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
       
