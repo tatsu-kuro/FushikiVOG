@@ -147,6 +147,7 @@ class OKPViewController: UIViewController{
         super.viewDidLoad()
         mainBrightness = UIScreen.main.brightness
         UIScreen.main.brightness = 1.0
+        UIScreen.main.brightness = CGFloat(camera.getUserDefault(str: "screenBrightness", ret:0.5))
         camera.makeAlbum()
         let cameraMode = camera.getUserDefault(str: "cameraMode", ret: 0)
         camera.initSession(camera: Int(cameraMode), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)

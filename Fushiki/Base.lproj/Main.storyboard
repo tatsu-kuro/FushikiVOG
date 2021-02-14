@@ -91,6 +91,13 @@
                                     <action selector="paraAct7:" destination="gOS-fU-nK5" eventType="valueChanged" id="RSa-GC-wDv"/>
                                 </connections>
                             </slider>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="rqo-3h-wbp">
+                                <rect key="frame" x="80" y="354" width="118" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="paraAct8:" destination="gOS-fU-nK5" eventType="valueChanged" id="snd-j4-uEJ"/>
+                                </connections>
+                            </slider>
                             <button opaque="NO" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dd6-zp-sxW">
                                 <rect key="frame" x="405" y="338" width="25" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -177,6 +184,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Screen Brightness" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YmA-od-BNX">
+                                <rect key="frame" x="270" y="354" width="140" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="53f-q3-sSQ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -197,6 +211,7 @@
                         <outlet property="paraCnt5" destination="uh1-Tf-lNZ" id="10X-AN-mzs"/>
                         <outlet property="paraCnt6" destination="7li-Aa-cfI" id="LGU-GW-Qef"/>
                         <outlet property="paraCnt7" destination="Kjj-mF-dmr" id="GS2-fM-S89"/>
+                        <outlet property="paraCnt8" destination="rqo-3h-wbp" id="hf7-IT-zFx"/>
                         <outlet property="paraTxt0" destination="JNE-pm-V4S" id="aZA-GF-eqk"/>
                         <outlet property="paraTxt1" destination="FaM-mf-KdP" id="JAn-HK-ONb"/>
                         <outlet property="paraTxt2" destination="8VF-21-pW0" id="yQv-2d-Osd"/>
@@ -205,6 +220,7 @@
                         <outlet property="paraTxt5" destination="HMX-MG-GP5" id="SIc-MU-Zx7"/>
                         <outlet property="paraTxt6" destination="ixO-Uv-LwA" id="5bk-rJ-YmM"/>
                         <outlet property="paraTxt7" destination="joF-RS-tH3" id="TgJ-j0-4KF"/>
+                        <outlet property="paraTxt8" destination="YmA-od-BNX" id="Mls-lt-SYT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bde-H1-uyg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -269,7 +269,7 @@ class OKNViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         mainBrightness = UIScreen.main.brightness
-        UIScreen.main.brightness = 1.0
+        UIScreen.main.brightness = CGFloat(camera.getUserDefault(str: "screenBrightness", ret:0.5))
         camera.makeAlbum()
 //        camera.initSession(camera: 0, bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
 //

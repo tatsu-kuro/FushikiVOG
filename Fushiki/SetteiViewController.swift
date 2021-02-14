@@ -30,6 +30,7 @@ class SetteiViewController: UIViewController {
     @IBOutlet weak var paraCnt6: UISegmentedControl!
     @IBOutlet weak var paraCnt7: UISlider!
     @IBOutlet weak var exitButton: UIButton!
+    @IBOutlet weak var paraCnt8: UISlider!
     @IBOutlet weak var defaultButton: UIButton!
     @IBOutlet weak var paraTxt0: UILabel!
     @IBOutlet weak var paraTxt1: UILabel!
@@ -39,6 +40,8 @@ class SetteiViewController: UIViewController {
     @IBOutlet weak var paraTxt5: UILabel!
     @IBOutlet weak var paraTxt6: UILabel!
     @IBOutlet weak var paraTxt7: UILabel!
+    
+    @IBOutlet weak var paraTxt8: UILabel!
     var tapInterval=CFAbsoluteTimeGetCurrent()
 
     override func remoteControlReceived(with event: UIEvent?) {
@@ -123,7 +126,9 @@ class SetteiViewController: UIViewController {
          ettWidth=Int(sender.value*100)
          dispTexts()
      }
-  
+    @IBAction func paraAct8(_ sender: UISlider) {
+        UserDefaults.standard.set(sender.value, forKey: "screenBrightness")
+    }
     
     @IBAction func defaultAct(_ sender: Any) {
         okpMode=0
@@ -146,6 +151,7 @@ class SetteiViewController: UIViewController {
         paraCnt5.value=Float(oknTime)/100.0
         paraCnt6.selectedSegmentIndex=ettMode%4
         paraCnt7.value=Float(ettWidth)/100.0
+        paraCnt8.value=camera.getUserDefault(str: "screenBrightness", ret: 0.5)
     }
     func setokpMode(){
         paraTxt0.text="OKP-MODE" + "   "
@@ -220,16 +226,12 @@ class SetteiViewController: UIViewController {
         let ww=view.bounds.width
         let wh=view.bounds.height
         
-        
-        
-        
-        
         let x0=ww/25
         var bw=ww/4
         let x1=x0+bw+x0/2
-        var sp=wh/60
+        var sp=wh/80
         
-        var bh=wh/13
+        var bh=wh/15
         let b0y=bh*4/5
         let b1y=b0y+bh+sp
         let b2y=b1y+bh+sp
@@ -238,6 +240,7 @@ class SetteiViewController: UIViewController {
         let b5y=b4y+bh+sp
         let b6y=b5y+bh+sp*3
         let b7y=b6y+bh+sp
+        let b8y=b7y+bh+sp*3
         paraCnt3.frame  = CGRect(x:x0,   y: b0y ,width: bw, height: bh)
         paraTxt3.frame  = CGRect(x:x1,   y: b0y ,width: bw*5, height: bh)
         paraCnt4.frame  = CGRect(x:x0,   y: b1y ,width: bw, height: bh)
@@ -257,7 +260,9 @@ class SetteiViewController: UIViewController {
         paraTxt6.frame  = CGRect(x:x1,   y: b6y ,width: bw*5,height:bh)
         paraCnt7.frame  = CGRect(x:x0,   y: b7y ,width: bw,height:bh)
         paraTxt7.frame  = CGRect(x:x1,   y: b7y ,width: bw*5,height:bh)
-    
+        paraCnt8.frame  = CGRect(x:x0,   y: b8y ,width: bw,height:bh)
+        paraTxt8.frame  = CGRect(x:x1,   y: b8y ,width: bw*5,height:bh)
+
         sp=ww/120//間隙
         bw=(ww-sp*10)/7//ボタン幅
         bh=bw*170/440
