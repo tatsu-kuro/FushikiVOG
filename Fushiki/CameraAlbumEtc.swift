@@ -552,4 +552,34 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
             return ret
         }
     }
+    func setLedLevel(level:Float){
+        if let device = videoDevice{
+            do {
+                if device.hasTorch {
+                    do {
+                        // torch device lock on
+                        try device.lockForConfiguration()
+                        
+                        if (level > 0.0){
+                              do {
+                                try device.setTorchModeOn(level: level)
+                            } catch {
+                                print("error")
+                            }
+                            
+                        } else {
+                            // flash LED OFF
+                            // 注意しないといけないのは、0.0はエラーになるのでLEDをoffさせます。
+                            device.torchMode = AVCaptureDevice.TorchMode.off
+                        }
+                        // torch device unlock
+                        device.unlockForConfiguration()
+                        
+                    } catch {
+                        print("Torch could not be used")
+                    }
+                }
+            }
+        }
+    }
 }

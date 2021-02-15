@@ -119,7 +119,8 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         camera.setZoom(level: zoomValue)
         let focusValue=camera.getUserDefault(str: "focusValue", ret: 0)
         camera.setFocus(focus: focusValue)
-        
+        camera.setLedLevel(level:camera.getUserDefault(str: "ledValue", ret:0))
+
         ettMode=UserDefaults.standard.integer(forKey: "ettMode")
         ettWidth=UserDefaults.standard.integer(forKey: "ettWidth")
 //        let w=view.bounds.width/2

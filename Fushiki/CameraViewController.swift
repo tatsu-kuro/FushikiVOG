@@ -19,9 +19,13 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var cameraChan: UISegmentedControl!
     @IBOutlet weak var zoomBar: UISlider!
     @IBOutlet weak var focusBar: UISlider!
+    
+    @IBOutlet weak var ledBar: UISlider!
     @IBOutlet weak var zoomLabel: UILabel!
     @IBOutlet weak var focusLabel: UILabel!
-     @IBOutlet weak var exitButton: UIButton!
+    
+    @IBOutlet weak var ledLabel: UILabel!
+    @IBOutlet weak var exitButton: UIButton!
 
     @IBAction func onFpsButton(_ sender: Any) {
     }
@@ -37,6 +41,13 @@ class CameraViewController: UIViewController {
         zoomBar.addTarget(self, action: #selector(onZoomValueChange), for: UIControl.Event.valueChanged)
         zoomBar.value=camera.getUserDefault(str: "zoomValue", ret:0)
         camera.setZoom(level: zoomBar.value)
+        
+        ledBar.minimumValue = 0
+        ledBar.maximumValue = 0.1
+        ledBar.addTarget(self, action: #selector(onLedValueChange), for: UIControl.Event.valueChanged)
+        ledBar.value=camera.getUserDefault(str: "ledValue", ret:0)
+        camera.setLedLevel(level: ledBar.value)
+        
         focusBar.minimumValue = 0
         focusBar.maximumValue = 1.0
         focusBar.addTarget(self, action: #selector(onFocusValueChange), for: UIControl.Event.valueChanged)
@@ -51,8 +62,12 @@ class CameraViewController: UIViewController {
         camera.initSession(camera: cameraMode, bounds:view.bounds, cameraView: cameraView)
         print("cameraMode:",cameraMode)
         fpsLabel.text = String(format:"fps:%d" ,camera.fpsCurrent)
+        camera.setLedLevel(level:camera.getUserDefault(str: "ledValue", ret:0))
     }
-    
+    @objc func onLedValueChange(){
+        camera.setLedLevel(level:ledBar.value)
+        UserDefaults.standard.set(ledBar.value, forKey: "ledValue")
+    }
     @objc func onZoomValueChange(){
         camera.setZoom(level:zoomBar.value)
         UserDefaults.standard.set(zoomBar.value, forKey: "zoomValue")
@@ -81,8 +96,10 @@ class CameraViewController: UIViewController {
         camera.setLabelProperty( fpsLabel,x:bw*2+sp*5,y:by,w:bw*2,h:bh,UIColor.white)
         camera.setLabelProperty(zoomLabel,x:bw*6+sp*8,y:by-sp/3-bh,w:bw,h:bh,UIColor.white)
         camera.setLabelProperty(focusLabel,x:bw*6+sp*8,y:by-sp*2/3-2*bh,w:bw,h:bh,UIColor.white)
-        focusBar.frame=CGRect(x:2*sp,y:by-sp*2/3-2*bh,width:ww-4*sp,height:bh)
-        zoomBar.frame=CGRect(x:2*sp,y:by-sp/3-bh,width:ww-4*sp,height:bh)
+        camera.setLabelProperty(ledLabel,x:bw*6+sp*8,y:by-sp*3/3-3*bh,w:bw,h:bh,UIColor.white)
+        ledBar.frame=CGRect(x:5*sp,y:by-sp*3/3-3*bh,width:ww-7*sp-bw,height:bh)
+        focusBar.frame=CGRect(x:5*sp,y:by-sp*2/3-2*bh,width:ww-7*sp-bw,height:bh)
+        zoomBar.frame=CGRect(x:5*sp,y:by-sp/3-bh,width:ww-7*sp-bw,height:bh)
         cameraChan.frame=CGRect(x:bw*4+sp*6,y:by,width:bw*2+sp,height:bh)
      }
 }
