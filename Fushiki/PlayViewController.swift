@@ -53,6 +53,8 @@ class PlayViewController: UIViewController {
     var vogBoxYcenter:CGFloat=0
     var mailWidth:CGFloat=2400//VOG
     var mailHeight:CGFloat=1600//VOG
+    var videoWidth:CGFloat!
+    var videoHeight:CGFloat!
     var idNumber:Int = 0
     var savedFlag:Bool = false
     @IBOutlet weak var waveButton: UIButton!
@@ -954,10 +956,9 @@ class PlayViewController: UIViewController {
     var eyePosY = Array<CGFloat>()
     var eyePosYfiltered = Array<CGFloat>()
     var eyePosXfiltered = Array<CGFloat>()
-//    var eyeVeloFiltered = Array<CGFloat>()
     var eyeVelXfiltered = Array<CGFloat>()
     var eyeVelYfiltered = Array<CGFloat>()
-    var buttonsArray:[Bool]!
+//    var buttonsArray:[Bool]!
     func setButtons(flag:Bool){
         mailButton.isEnabled=flag
         saveButton.isEnabled=flag
@@ -966,6 +967,18 @@ class PlayViewController: UIViewController {
         playButton.isEnabled=flag
         setteiButton.isEnabled=flag
         exitButton.isEnabled=flag
+    }
+    func checkImageRect(rect:CGRect)->Bool{
+        if rect.minX<0{
+            return false
+        }else if rect.minY<0{//} uiImage.size.height<1000{
+            return false
+        }else if rect.maxX>videoWidth{
+            return false
+        }else if rect.maxY>videoHeight{
+            return false
+        }
+        return true
     }
     @IBAction func onCalcButton(_ sender: Any) {
         if faceMark == false{
@@ -986,11 +999,19 @@ class PlayViewController: UIViewController {
         setUserDefaults()//eyeCenter,faceCenter
         lastArraycount=0
         calcFlag = true
-        eyePosXfiltered.removeAll()
         eyePosX.removeAll()
         eyePosXfiltered.removeAll()
         eyePosY.removeAll()
         eyePosYfiltered.removeAll()
+        eyeVelXfiltered.removeAll()
+        eyeVelYfiltered.removeAll()
+        eyePosX.append(0)
+        eyePosXfiltered.append(0)
+        eyePosY.append(0)
+        eyePosYfiltered.append(0)
+        eyeVelXfiltered.append(0)
+        eyeVelYfiltered.append(0)
+    
         
         KalmanInit()
         //        showBoxies(f: true)
@@ -1055,9 +1076,12 @@ class PlayViewController: UIViewController {
         }else{
             ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
         }
+        videoWidth=ciImage.extent.width
+        videoHeight=ciImage.extent.height
+
 //        let ciImage = CIImage(cvPixelBuffer:pixelBuffer).oriented(CGImagePropertyOrientation.down)
-        let maxWidth=ciImage.extent.size.width
-        let maxHeight=ciImage.extent.size.height
+//        let maxWidth=ciImage.extent.size.width
+//        let maxHeight=ciImage.extent.size.height
         
         let eyeRect = resizeR2(eyeRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
         var eyeWithBorderRect = resizeR2(eyeWithBorderRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
@@ -1065,8 +1089,8 @@ class PlayViewController: UIViewController {
         var faceWithBorderRect = resizeR2(faceWithBorderRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
         //eyeWithBorderRectとeyeRect の差、faceでの差も同じ
         let borderRectDiffer=faceWithBorderRect.width-faceRect.width
-        let maxWidthWithBorder=maxWidth-eyeWithBorderRect.width-5
-        let maxHeightWithBorder=maxHeight-eyeWithBorderRect.height-5
+//        let maxWidthWithBorder=maxWidth-eyeWithBorderRect.width-5
+//        let maxHeightWithBorder=maxHeight-eyeWithBorderRect.height-5
         //        let eyebR0 = eyeWithBorderRect
         //        let facbR0 = faceWithBorderRect
         
@@ -1084,9 +1108,10 @@ class PlayViewController: UIViewController {
         let yDiffer=faceWithBorderRect.origin.y - eyeWithBorderRect.origin.y
         var maxEyeV:Double = 0
         var maxFaceV:Double = 0
-        var frameCnt:Int=0
+//        var frameCnt:Int=0
         while reader.status != AVAssetReader.Status.reading {
             sleep(UInt32(0.1))
+            
         }
         DispatchQueue.global(qos: .default).async { [self] in
             while let sample = readerOutput.copyNextSampleBuffer(), self.calcFlag != false {
@@ -1114,11 +1139,11 @@ class PlayViewController: UIViewController {
                     faceWithBorderRect.origin.x += fx
                     faceWithBorderRect.origin.y += fy
                     
-                    if faceWithBorderRect.origin.x > wakuLength &&
-                        faceWithBorderRect.origin.x < maxWidthWithBorder &&
-                        faceWithBorderRect.origin.y > wakuLength &&
-                        faceWithBorderRect.origin.y < maxHeightWithBorder
-                    {
+//                    if faceWithBorderRect.origin.x > wakuLength &&
+//                        faceWithBorderRect.origin.x < maxWidthWithBorder &&
+//                        faceWithBorderRect.origin.y > wakuLength &&
+//                        faceWithBorderRect.origin.y < maxHeightWithBorder
+//                    {
                         
                         eyeWithBorderRect.origin.x = faceWithBorderRect.origin.x - xDiffer
                         eyeWithBorderRect.origin.y = faceWithBorderRect.origin.y - yDiffer
@@ -1128,13 +1153,10 @@ class PlayViewController: UIViewController {
                         }else{
                             ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
                         }
-                        
-                        
-//                        let ciImage: CIImage =
-//                            CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.down)
+                    if checkImageRect(rect:eyeWithBorderRect) == true{
                         eyeWithBorderCGImage = context.createCGImage(ciImage, from: eyeWithBorderRect)!
                         eyeWithBorderUIImage = UIImage.init(cgImage: eyeWithBorderCGImage)
-                        
+                    }
 //                        #if DEBUG
                         if debugMode == true{
                         //画面表示はmain threadで行う
@@ -1149,7 +1171,7 @@ class PlayViewController: UIViewController {
                             x += eyeWithBorderRect.size.width + 5
                         }
 //                        #endif
-                    }
+//                    }
                         maxEyeV=self.openCV.matching(eyeWithBorderUIImage,
                                                      narrow: eyeUIImage,
                                                      x: eX,
@@ -1181,31 +1203,32 @@ class PlayViewController: UIViewController {
 //                        #endif
                     }
                         context.clearCaches()
-                        
+//フィルター２回なら下２行
+//                        self.eyeVelXfiltered.append(self.Kalman(value:ex - self.eyePosX.last!,num: 2))
+//                        self.eyeVelYfiltered.append(self.Kalman(value:ey - self.eyePosY.last!,num: 3))
                         self.eyePosX.append(ex)
                         self.eyePosY.append(ey)
+                        let lastPosXfiltered=self.eyePosXfiltered.last
+                        let lastPosYfiltered=self.eyePosYfiltered.last
                         self.eyePosXfiltered.append(-1*self.Kalman(value: ex,num: 0))
                         self.eyePosYfiltered.append(-1*self.Kalman(value: ey,num: 1))
-                        let cnt=eyePosX.count
-                        if cnt == 1{
-                            self.eyeVelXfiltered.append(self.Kalman(value:self.eyePosXfiltered[cnt-1],num:2))
-                            self.eyeVelYfiltered.append(self.Kalman(value:self.eyePosYfiltered[cnt-1],num:3))
-                        }else{
-                            self.eyeVelXfiltered.append(self.Kalman(value:self.eyePosXfiltered[cnt-1]-self.eyePosXfiltered[cnt-2],num:2))
-                            self.eyeVelYfiltered.append(self.Kalman(value:self.eyePosYfiltered[cnt-1]-self.eyePosYfiltered[cnt-2],num:3))
-                        }
+                    //filter２回なら下２行
+                        self.eyeVelXfiltered.append(self.Kalman(value:self.eyePosXfiltered.last! - lastPosXfiltered!,num: 2))
+                        self.eyeVelYfiltered.append(self.Kalman(value:self.eyePosYfiltered.last! - lastPosYfiltered!,num: 3))
+  
+                        
+
                         while reader.status != AVAssetReader.Status.reading {
                             sleep(UInt32(0.1))
+                            print("readerStatus-loop")
                         }
                     }else{
                         self.calcFlag = false
                     }
                     //マッチングデバッグ用スリープ、デバッグが終わったら削除
-//                    #if DEBUG
                     if debugMode == true{
                         usleep(200)
                     }
-//                    #endif
                 }
             }
             self.calcFlag = false
@@ -1227,11 +1250,18 @@ class PlayViewController: UIViewController {
         setUserDefaults()//eyeCenter,faceCenter
         lastArraycount=0
         calcFlag = true
-        eyePosXfiltered.removeAll()
         eyePosX.removeAll()
         eyePosXfiltered.removeAll()
         eyePosY.removeAll()
         eyePosYfiltered.removeAll()
+        eyeVelXfiltered.removeAll()
+        eyeVelYfiltered.removeAll()
+        eyePosX.append(0)
+        eyePosXfiltered.append(0)
+        eyePosY.append(0)
+        eyePosYfiltered.append(0)
+        eyeVelXfiltered.append(0)
+        eyeVelYfiltered.append(0)
         
         KalmanInit()
         //        showBoxies(f: true)
@@ -1292,10 +1322,11 @@ class PlayViewController: UIViewController {
         }else{
             ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
         }
-        
-        
+        videoWidth=ciImage.extent.width
+        videoHeight=ciImage.extent.height
+//        print("x-y:",ciImage.extent.width,ciImage.extent.height)
         let eyeRect = resizeR2(eyeRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
-        var eyeWithBorderRect = resizeR2(eyeWithBorderRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
+        let eyeWithBorderRect = resizeR2(eyeWithBorderRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
         
         let borderRectDiffer=eyeWithBorderRect.width-eyeRect.width
         
@@ -1311,6 +1342,7 @@ class PlayViewController: UIViewController {
             sleep(UInt32(0.1))
         }
         DispatchQueue.global(qos: .default).async { [self] in
+//            var vogCnt:Int=0
             while let sample = readerOutput.copyNextSampleBuffer(), self.calcFlag != false {
                 var ex:CGFloat = 0
                 var ey:CGFloat = 0
@@ -1329,12 +1361,16 @@ class PlayViewController: UIViewController {
                         ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
                     }
                     
-//                    let ciImage: CIImage =
-//                        CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.down)
-                    eyeWithBorderCGImage = context.createCGImage(ciImage, from: eyeWithBorderRect)!
-                    eyeWithBorderUIImage = UIImage.init(cgImage: eyeWithBorderCGImage)
+                    //                    let ciImage: CIImage =
+                    //                        CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.down)
                     
-//                    #if DEBUG
+                    if checkImageRect(rect:eyeWithBorderRect) == true{
+                        
+                        eyeWithBorderCGImage = context.createCGImage(ciImage, from: eyeWithBorderRect)!
+                        eyeWithBorderUIImage = UIImage.init(cgImage: eyeWithBorderCGImage)
+                    }
+                    
+                    //                    #if DEBUG
                     if debugMode == true{
                     //画面表示はmain threadで行う
                     DispatchQueue.main.async {
@@ -1366,19 +1402,20 @@ class PlayViewController: UIViewController {
                     }
                     
                     context.clearCaches()
+//filter１回なら、下２行
+//                    self.eyeVelXfiltered.append(self.Kalman(value:ex - self.eyePosX.last!,num:2))
+//                    self.eyeVelYfiltered.append(self.Kalman(value:ey - self.eyePosY.last!,num:3))
                     
+                    let lastPosXfiltered=self.eyePosXfiltered.last
+                    let lastPosYfiltered=self.eyePosYfiltered.last
                     self.eyePosX.append(ex)
                     self.eyePosY.append(ey)
                     self.eyePosXfiltered.append(-1*self.Kalman(value: ex,num: 0))
                     self.eyePosYfiltered.append(-1*self.Kalman(value: ey,num: 1))
-                    let cnt=eyePosX.count
-                    if cnt == 1{
-                        self.eyeVelXfiltered.append(self.Kalman(value:self.eyePosXfiltered[cnt-1],num:2))
-                        self.eyeVelYfiltered.append(self.Kalman(value:self.eyePosYfiltered[cnt-1],num:3))
-                    }else{
-                        self.eyeVelXfiltered.append(self.Kalman(value:self.eyePosXfiltered[cnt-1]-self.eyePosXfiltered[cnt-2],num:2))
-                        self.eyeVelYfiltered.append(self.Kalman(value:self.eyePosYfiltered[cnt-1]-self.eyePosYfiltered[cnt-2],num:3))
-                    }
+  //filter２回なら下２行
+                    self.eyeVelXfiltered.append(self.Kalman(value:self.eyePosXfiltered.last! - lastPosXfiltered!,num:2))
+                    self.eyeVelYfiltered.append(self.Kalman(value:self.eyePosYfiltered.last! - lastPosYfiltered!,num:3))
+  
                     while reader.status != AVAssetReader.Status.reading {
                         sleep(UInt32(0.1))
                     }
