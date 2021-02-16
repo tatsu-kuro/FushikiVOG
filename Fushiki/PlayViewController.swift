@@ -1053,12 +1053,12 @@ class PlayViewController: UIViewController {
         let eY = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
         let fX = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
         let fY = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
-        var eyeCGImage:CGImage!
-        let eyeUIImage:UIImage!
+//        var eyeCGImage:CGImage!
+//        let eyeUIImage:UIImage!
         var eyeWithBorderCGImage:CGImage!
         var eyeWithBorderUIImage:UIImage!
-        var faceCGImage:CGImage!
-        var faceUIImage:UIImage!
+//        var faceCGImage:CGImage!
+//        var faceUIImage:UIImage!
         var faceWithBorderCGImage:CGImage!
         var faceWithBorderUIImage:UIImage!
         let eyeRectOnScreen=getRectFromCenter(center: eyeCenter, len: wakuLength)
@@ -1078,7 +1078,7 @@ class PlayViewController: UIViewController {
         }
         videoWidth=ciImage.extent.width
         videoHeight=ciImage.extent.height
-
+print("wh:",videoWidth,videoHeight)
 //        let ciImage = CIImage(cvPixelBuffer:pixelBuffer).oriented(CGImagePropertyOrientation.down)
 //        let maxWidth=ciImage.extent.size.width
 //        let maxHeight=ciImage.extent.size.height
@@ -1089,15 +1089,15 @@ class PlayViewController: UIViewController {
         var faceWithBorderRect = resizeR2(faceWithBorderRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
         //eyeWithBorderRectとeyeRect の差、faceでの差も同じ
         let borderRectDiffer=faceWithBorderRect.width-faceRect.width
-//        let maxWidthWithBorder=maxWidth-eyeWithBorderRect.width-5
-//        let maxHeightWithBorder=maxHeight-eyeWithBorderRect.height-5
+        let maxWidthWithBorder=videoWidth-eyeWithBorderRect.width-5
+        let maxHeightWithBorder=videoHeight-eyeWithBorderRect.height-5
         //        let eyebR0 = eyeWithBorderRect
         //        let facbR0 = faceWithBorderRect
         
-        eyeCGImage = context.createCGImage(ciImage, from: eyeRect)!
-        eyeUIImage = UIImage.init(cgImage: eyeCGImage)
-        faceCGImage = context.createCGImage(ciImage, from: faceRect)!
-        faceUIImage = UIImage.init(cgImage:faceCGImage)
+        let eyeCGImage = context.createCGImage(ciImage, from: eyeRect)!
+        let eyeUIImage = UIImage.init(cgImage: eyeCGImage)
+        let faceCGImage = context.createCGImage(ciImage, from: faceRect)!
+        let faceUIImage = UIImage.init(cgImage:faceCGImage)
         
         let osEyeX:CGFloat = (eyeWithBorderRect.size.width - eyeRect.size.width) / 2.0//上下方向への差
         let osEyeY:CGFloat = (eyeWithBorderRect.size.height - eyeRect.size.height) / 2.0//左右方向への差
@@ -1108,6 +1108,8 @@ class PlayViewController: UIViewController {
         let yDiffer=faceWithBorderRect.origin.y - eyeWithBorderRect.origin.y
         var maxEyeV:Double = 0
         var maxFaceV:Double = 0
+        let eyebR0 = eyeWithBorderRect
+        let facbR0 = faceWithBorderRect
 //        var frameCnt:Int=0
         while reader.status != AVAssetReader.Status.reading {
             sleep(UInt32(0.1))
@@ -1121,44 +1123,44 @@ class PlayViewController: UIViewController {
                 var fy:CGFloat = 0
                 
                 //for test display
-//                #if DEBUG
+                //                #if DEBUG
                 var x:CGFloat = 50.0
                 let y:CGFloat = 50.0
-//                #endif
+                //                #endif
                 autoreleasepool{
                     let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample)!
                     
                     maxFaceV=self.openCV.matching(faceWithBorderUIImage, narrow: faceUIImage, x: fX, y: fY)
                     if maxFaceV<0.92{
-//                        print("maxError:",maxFaceV)
+                        //                        print("maxError:",maxFaceV)
                     }else{
-                        //                        print(maxFaceV)
+                        //                        calcFlag=false//kokoga errorなら終了                        print(maxFaceV)
                     }
                     fx = CGFloat(fX.pointee) - osFacX
                     fy = borderRectDiffer - CGFloat(fY.pointee) - osFacY
                     faceWithBorderRect.origin.x += fx
                     faceWithBorderRect.origin.y += fy
                     
-//                    if faceWithBorderRect.origin.x > wakuLength &&
-//                        faceWithBorderRect.origin.x < maxWidthWithBorder &&
-//                        faceWithBorderRect.origin.y > wakuLength &&
-//                        faceWithBorderRect.origin.y < maxHeightWithBorder
-//                    {
-                        
-                        eyeWithBorderRect.origin.x = faceWithBorderRect.origin.x - xDiffer
-                        eyeWithBorderRect.origin.y = faceWithBorderRect.origin.y - yDiffer
-                        
-                        if cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
-                            ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
-                        }else{
-                            ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
-                        }
-                    if checkImageRect(rect:eyeWithBorderRect) == true{
-                        eyeWithBorderCGImage = context.createCGImage(ciImage, from: eyeWithBorderRect)!
-                        eyeWithBorderUIImage = UIImage.init(cgImage: eyeWithBorderCGImage)
+                    //                    if faceWithBorderRect.origin.x > wakuLength &&
+                    //                        faceWithBorderRect.origin.x < maxWidthWithBorder &&
+                    //                        faceWithBorderRect.origin.y > wakuLength &&
+                    //                        faceWithBorderRect.origin.y < maxHeightWithBorder
+                    //                    {
+                    
+                    eyeWithBorderRect.origin.x = faceWithBorderRect.origin.x - xDiffer
+                    eyeWithBorderRect.origin.y = faceWithBorderRect.origin.y - yDiffer
+                    
+                    if cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
+                        ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
+                    }else{
+                        ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
                     }
-//                        #if DEBUG
-                        if debugMode == true{
+                    //                    if checkImageRect(rect:eyeWithBorderRect) == true{
+                    eyeWithBorderCGImage = context.createCGImage(ciImage, from: eyeWithBorderRect)!
+                    eyeWithBorderUIImage = UIImage.init(cgImage: eyeWithBorderCGImage)
+                    //                    }
+                    //                        #if DEBUG
+                    if debugMode == true{
                         //画面表示はmain threadで行う
                         DispatchQueue.main.async {
                             self.debugEye.frame=CGRect(x:x,y:y,width:eyeRect.size.width,height:eyeRect.size.height)
@@ -1170,8 +1172,8 @@ class PlayViewController: UIViewController {
                             self.view.bringSubviewToFront(self.debugEyeb)
                             x += eyeWithBorderRect.size.width + 5
                         }
-//                        #endif
-//                    }
+                        //                        #endif
+                        //                    }
                         maxEyeV=self.openCV.matching(eyeWithBorderUIImage,
                                                      narrow: eyeUIImage,
                                                      x: eX,
@@ -1189,38 +1191,51 @@ class PlayViewController: UIViewController {
                         }
                         faceWithBorderCGImage = context.createCGImage(ciImage, from:faceWithBorderRect)!
                         faceWithBorderUIImage = UIImage.init(cgImage: faceWithBorderCGImage)
-//                        #if DEBUG
+                        //                        #if DEBUG
                         if debugMode == true{
-                        DispatchQueue.main.async {
-                            self.debugFace.frame=CGRect(x:x,y:y,width:faceRect.size.width,height:faceRect.size.height)
-                            self.debugFace.image=faceUIImage
-                            x += faceRect.size.width
-                            self.debugFaceb.frame=CGRect(x:x,y:y,width:faceWithBorderRect.size.width,height:faceWithBorderRect.size.height)
-                            self.debugFaceb.image=faceWithBorderUIImage
-                            self.view.bringSubviewToFront(self.debugFace)
-                            self.view.bringSubviewToFront(self.debugFaceb)
+                            DispatchQueue.main.async {
+                                self.debugFace.frame=CGRect(x:x,y:y,width:faceRect.size.width,height:faceRect.size.height)
+                                self.debugFace.image=faceUIImage
+                                x += faceRect.size.width
+                                self.debugFaceb.frame=CGRect(x:x,y:y,width:faceWithBorderRect.size.width,height:faceWithBorderRect.size.height)
+                                self.debugFaceb.image=faceWithBorderUIImage
+                                self.view.bringSubviewToFront(self.debugFace)
+                                self.view.bringSubviewToFront(self.debugFaceb)
+                            }
+                            //                        #endif
                         }
-//                        #endif
-                    }
                         context.clearCaches()
-//フィルター２回なら下２行
-//                        self.eyeVelXfiltered.append(self.Kalman(value:ex - self.eyePosX.last!,num: 2))
-//                        self.eyeVelYfiltered.append(self.Kalman(value:ey - self.eyePosY.last!,num: 3))
+                        //フィルター２回なら下２行
+                        //                        self.eyeVelXfiltered.append(self.Kalman(value:ex - self.eyePosX.last!,num: 2))
+                        //                        self.eyeVelYfiltered.append(self.Kalman(value:ey - self.eyePosY.last!,num: 3))
                         self.eyePosX.append(ex)
                         self.eyePosY.append(ey)
                         let lastPosXfiltered=self.eyePosXfiltered.last
                         let lastPosYfiltered=self.eyePosYfiltered.last
                         self.eyePosXfiltered.append(-1*self.Kalman(value: ex,num: 0))
                         self.eyePosYfiltered.append(-1*self.Kalman(value: ey,num: 1))
-                    //filter２回なら下２行
+                        //filter２回なら下２行
                         self.eyeVelXfiltered.append(self.Kalman(value:self.eyePosXfiltered.last! - lastPosXfiltered!,num: 2))
                         self.eyeVelYfiltered.append(self.Kalman(value:self.eyePosYfiltered.last! - lastPosYfiltered!,num: 3))
-  
                         
-
+                        
+                        
                         while reader.status != AVAssetReader.Status.reading {
                             sleep(UInt32(0.1))
-                            print("readerStatus-loop")
+                        }
+                        if eyeWithBorderRect.origin.x < 5 ||
+                            eyeWithBorderRect.origin.x > maxWidthWithBorder ||
+                            eyeWithBorderRect.origin.y < 5 ||
+                            eyeWithBorderRect.origin.y > maxHeightWithBorder
+                        {
+                            self.calcFlag=false//quit
+                        }
+                        if faceWithBorderRect.origin.x < 5 ||
+                            faceWithBorderRect.origin.x > maxWidthWithBorder ||
+                            faceWithBorderRect.origin.y < 5 ||
+                            faceWithBorderRect.origin.y > maxHeightWithBorder
+                        {
+                            self.calcFlag=false//quit
                         }
                     }else{
                         self.calcFlag = false
@@ -1303,8 +1318,8 @@ class PlayViewController: UIViewController {
         let eY = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
         //        let fX = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
         //        let fY = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
-        var eyeCGImage:CGImage!
-        let eyeUIImage:UIImage!
+//        var eyeCGImage:CGImage!
+//        let eyeUIImage:UIImage!
         var eyeWithBorderCGImage:CGImage!
         var eyeWithBorderUIImage:UIImage!
  
@@ -1324,20 +1339,24 @@ class PlayViewController: UIViewController {
         }
         videoWidth=ciImage.extent.width
         videoHeight=ciImage.extent.height
-//        print("x-y:",ciImage.extent.width,ciImage.extent.height)
+ 
+        print("x-y:",ciImage.extent.width,ciImage.extent.height)
         let eyeRect = resizeR2(eyeRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
         let eyeWithBorderRect = resizeR2(eyeWithBorderRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
         
         let borderRectDiffer=eyeWithBorderRect.width-eyeRect.width
         
-        eyeCGImage = context.createCGImage(ciImage, from: eyeRect)!
-        eyeUIImage = UIImage.init(cgImage: eyeCGImage)
+        let eyeCGImage = context.createCGImage(ciImage, from: eyeRect)!
+        let eyeUIImage = UIImage.init(cgImage: eyeCGImage)
         
         let osEyeX:CGFloat = (eyeWithBorderRect.size.width - eyeRect.size.width) / 2.0//上下方向への差
         let osEyeY:CGFloat = (eyeWithBorderRect.size.height - eyeRect.size.height) / 2.0//左右方向への差
-        
+        let maxWidthWithBorder=videoWidth-eyeWithBorderRect.width-5
+        let maxHeightWithBorder=videoHeight-eyeWithBorderRect.height-5
+
         var maxEyeV:Double = 0
-        
+        let eyebR0 = eyeWithBorderRect
+//        let facbR0 = faceWithBorderRect
         while reader.status != AVAssetReader.Status.reading {
             sleep(UInt32(0.1))
         }
@@ -1364,11 +1383,11 @@ class PlayViewController: UIViewController {
                     //                    let ciImage: CIImage =
                     //                        CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.down)
                     
-                    if checkImageRect(rect:eyeWithBorderRect) == true{
+//                    if checkImageRect(rect:eyeWithBorderRect) == true{
                         
                         eyeWithBorderCGImage = context.createCGImage(ciImage, from: eyeWithBorderRect)!
                         eyeWithBorderUIImage = UIImage.init(cgImage: eyeWithBorderCGImage)
-                    }
+//                    }
                     
                     //                    #if DEBUG
                     if debugMode == true{
@@ -1418,6 +1437,13 @@ class PlayViewController: UIViewController {
   
                     while reader.status != AVAssetReader.Status.reading {
                         sleep(UInt32(0.1))
+                    }
+                    if eyeWithBorderRect.origin.x < 5 ||
+                        eyeWithBorderRect.origin.x > maxWidthWithBorder ||
+                        eyeWithBorderRect.origin.y < 5 ||
+                        eyeWithBorderRect.origin.y > maxHeightWithBorder
+                    {
+                        self.calcFlag=false//quit
                     }
                     //マッチングデバッグ用スリープ、デバッグが終わったら削除
                     //                    #if DEBUG

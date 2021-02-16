@@ -19,6 +19,7 @@ class SetteiViewController: UIViewController {
     var ettMode:Int = 0
     var ettWidth:Int=50
     var targetMode:Int=0
+    var screenBrightness:Float!
     
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var paraCnt0: UISegmentedControl!
@@ -74,7 +75,7 @@ class SetteiViewController: UIViewController {
     @IBAction func exitBut(_ sender: Any) {
         goExit(0)
     }
-    @IBAction func goExit(_ sender: Any) {
+    func setUserDefaults(){
         UserDefaults.standard.set(okpSpeed, forKey: "okpSpeed")
         UserDefaults.standard.set(okpTime, forKey: "okpTime")
         UserDefaults.standard.set(okpMode, forKey: "okpMode")
@@ -83,7 +84,19 @@ class SetteiViewController: UIViewController {
         UserDefaults.standard.set(oknMode, forKey: "oknMode")
         UserDefaults.standard.set(ettMode,forKey: "ettMode")
         UserDefaults.standard.set(ettWidth,forKey: "ettWidth")
-        
+        UserDefaults.standard.set(screenBrightness, forKey: "screenBrightness")
+    }
+    @IBAction func goExit(_ sender: Any) {
+//        UserDefaults.standard.set(okpSpeed, forKey: "okpSpeed")
+//        UserDefaults.standard.set(okpTime, forKey: "okpTime")
+//        UserDefaults.standard.set(okpMode, forKey: "okpMode")
+//        UserDefaults.standard.set(oknSpeed, forKey: "oknSpeed")
+//        UserDefaults.standard.set(oknTime, forKey: "oknTime")
+//        UserDefaults.standard.set(oknMode, forKey: "oknMode")
+//        UserDefaults.standard.set(ettMode,forKey: "ettMode")
+//        UserDefaults.standard.set(ettWidth,forKey: "ettWidth")
+//        UserDefaults.standard.set(screenBrightness, forKey: "screenBrightness")
+        setUserDefaults()
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
         //delTimer()
         mainView.targetMode=targetMode
@@ -127,7 +140,9 @@ class SetteiViewController: UIViewController {
          dispTexts()
      }
     @IBAction func paraAct8(_ sender: UISlider) {
-        UserDefaults.standard.set(sender.value, forKey: "screenBrightness")
+//        UserDefaults.standard.set(sender.value, forKey: "screenBrightness")
+        screenBrightness=sender.value
+        setUserDefaults()
     }
     
     @IBAction func defaultAct(_ sender: Any) {
@@ -204,6 +219,7 @@ class SetteiViewController: UIViewController {
         paraTxt2.text="OKP-PAUSE:" + String(Int(okpTime)) + "sec"
         paraTxt5.text="OKN-TIME:" + String(Int(oknTime)) + "sec"
         paraTxt7.text="ETT-WIDTH:" + String(Int(ettWidth)) + "%"
+        setUserDefaults()
     }
 
     override func viewDidLoad() {

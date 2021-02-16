@@ -14,11 +14,15 @@
 @implementation OpenCVWrapper
 -(double) matching:(UIImage *)wide_img narrow:(UIImage *)narrow_img x:(int *)x_ret y:(int *)y_ret
 {
-        cv::Mat wide_mat;
-        cv::Mat narrow_mat;
+    cv::Mat wide_mat;
+    cv::Mat narrow_mat;
+    cv::Mat wide_gray_mat;
+    cv::Mat narrow_gray_mat;
         cv::Mat return_mat;
         UIImageToMat(wide_img, wide_mat);
         UIImageToMat(narrow_img, narrow_mat);
+//    cv::cvtColor(wide_mat,wide_gray_mat,CV_BGR2GRAY);
+//    cv::cvtColor(narrow_mat,wide_gray_mat,CV_BGR2GRAY);
 
         // テンプレートマッチング
 //        cv::cvtColor(wide_mat, wide_mat, CV_BGRA2GRAY);
