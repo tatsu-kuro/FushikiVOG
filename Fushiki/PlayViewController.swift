@@ -711,7 +711,7 @@ class PlayViewController: UIViewController {
     }
    
     @IBAction func tapGesture(_ sender: UITapGestureRecognizer) {
-//        print("tap")
+        print("tap",vogImageView?.isHidden,calcFlag)
  
         if vogImageView?.isHidden == false{
             return
@@ -1147,7 +1147,7 @@ class PlayViewController: UIViewController {
                         faceWithBorderRect.origin.x += fx
                         faceWithBorderRect.origin.y += fy
                     }else{
-                       //faceWithBorderRect.x, faceWidBorderRect.y とも初期値
+                        //faceWithBorderRect.x, faceWidBorderRect.y とも初期値
                         //
                     }
                     if faceWithBorderRect.origin.x > wakuLength &&
@@ -1246,8 +1246,9 @@ class PlayViewController: UIViewController {
             }
             calcFlag = false
         }
+        //        setButtons(flag: true)
     }
-    func onCalcButton() {
+ /*   func onCalcButton() {
         if calcFlag == true{
             calcFlag=false
             setButtons(flag: true)
@@ -1454,7 +1455,7 @@ class PlayViewController: UIViewController {
             self.calcFlag = false
         }
     }
-
+*/
     @IBAction func unwindPlay(segue: UIStoryboardSegue) {
 //        UIApplication.shared.isIdleTimerDisabled = false//スリープする
         print("unwindPlay")
