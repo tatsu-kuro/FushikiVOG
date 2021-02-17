@@ -10,7 +10,11 @@ import UIKit
 
 class PlayParaViewController: UIViewController {
     let camera = CameraAlbumEtc(name:"Fushiki")
-    @IBOutlet weak var defaultButton: UIButton!
+    @IBOutlet weak var default4Button: UIButton!
+    @IBOutlet weak var default2Button: UIButton!
+    
+    @IBOutlet weak var default3Button: UIButton!
+    @IBOutlet weak var default1Button: UIButton!
     @IBOutlet weak var faceMark: UISwitch!
     @IBOutlet weak var checkRects: UISwitch!
     @IBOutlet weak var exitButton: UIButton!
@@ -75,7 +79,7 @@ class PlayParaViewController: UIViewController {
         keyPadDownButton.isHidden=true
     }
   
-    @IBAction func onDefaultButton(_ sender: Any) {
+    @IBAction func onDefault1Button(_ sender: Any) {
         paraInt1=100
         paraInt2=100
         if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
@@ -83,10 +87,52 @@ class PlayParaViewController: UIViewController {
             paraInt4 = 20
         }else{//iphone
             paraInt3 = 3
-            paraInt4 = 9
+            paraInt4 = 10
         }
         paraInt5=1
-        paraInt6=0
+        paraInt6=1
+        setUserDefaults()
+    }
+    @IBAction func onDefault2Button(_ sender: Any) {
+        paraInt1=100
+        paraInt2=100
+        if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
+            paraInt3 = 10
+            paraInt4 = 24
+        }else{//iphone
+            paraInt3 = 5
+            paraInt4 = 12
+        }
+        paraInt5=1
+        paraInt6=1
+        setUserDefaults()
+    }
+    @IBAction func onDefault3Button(_ sender: Any) {
+        paraInt1=100
+        paraInt2=100
+        if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
+            paraInt3 = 15
+            paraInt4 = 30
+        }else{//iphone
+            paraInt3 = 8
+            paraInt4 = 15
+        }
+        paraInt5=1
+        paraInt6=1
+        setUserDefaults()
+    }
+    @IBAction func onDefault4Button(_ sender: Any) {
+        paraInt1=100
+        paraInt2=100
+        if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
+            paraInt3 = 20
+            paraInt4 = 40
+        }else{//iphone
+            paraInt3 = 10
+            paraInt4 = 20
+        }
+        paraInt5=1
+        paraInt6=1
         setUserDefaults()
     }
     func setUserDefaults(){
@@ -167,10 +213,13 @@ class PlayParaViewController: UIViewController {
         let bh=bw*170/440
         let by=wh-bh-sp
         let lw=ww-bw*2
-        let head=sp*1.5
+        let head=sp*3
         camera.setButtonProperty(keyPadDownButton, x: bw*6+sp*8, y: sp, w: bw, h: bh, UIColor.darkGray)
         camera.setButtonProperty(exitButton,x:bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
-        camera.setButtonProperty(defaultButton, x: bw*5+sp*7, y: by, w: bw, h: bh, UIColor.darkGray)
+        camera.setButtonProperty(default1Button, x: bw*2+sp*4, y: by, w: bw, h: bh, UIColor.darkGray)
+        camera.setButtonProperty(default2Button, x: bw*3+sp*5, y: by, w: bw, h: bh, UIColor.darkGray)
+        camera.setButtonProperty(default3Button, x: bw*4+sp*6, y: by, w: bw, h: bh, UIColor.darkGray)
+        camera.setButtonProperty(default4Button, x: bw*5+sp*7, y: by, w: bw, h: bh, UIColor.darkGray)
         para1.frame=CGRect(x:head+2*sp,y:sp,width:bw,height: bh)
         para2.frame=CGRect(x:head+2*sp,y:sp*2+bh,width:bw,height: bh)
         para3.frame=CGRect(x:head+2*sp,y:sp*3+bh*2,width:bw,height: bh)
