@@ -315,7 +315,7 @@ class PlayViewController: UIViewController {
                       width: (tw * iw / vw).rounded(),
                       height: (th * ih / vh).rounded())
     }
-   
+    var handlingDataNowFlag = false
     func addVogWave(startingImage:UIImage,startn:Int,end:Int) ->UIImage{
         // Create a context of the starting image size and set it as the current one
         var start=startn
@@ -342,6 +342,7 @@ class PlayViewController: UIViewController {
 //        var dx = Int((240/videoFps).rounded())// 1// xの間隔
 //        print("dx:",dx)
 //        dx = 1
+        handlingDataNowFlag=true
         for i in start..<end {
 //            if i < vogPos_count{
                 let px = CGFloat(fpsXd * i)
@@ -359,6 +360,7 @@ class PlayViewController: UIViewController {
                 pointYd.append(point4)
 //            }
         }
+        handlingDataNowFlag=false
         // 始点に移動する
         context.move(to: pointX[0])
         // 配列から始点の値を取り除く
@@ -483,7 +485,7 @@ class PlayViewController: UIViewController {
         lastArraycount=cntTemp
 //        drawVogall_new()
         #if DEBUG
-        print("debug-update",timercnt,calcFlagTemp)
+//        print("debug-update",timercnt,calcFlagTemp)
         #endif
         //            print("veloCount:",eyeVeloOrig.count)
         drawVogOnePage(count: cntTemp)
@@ -1101,8 +1103,6 @@ class PlayViewController: UIViewController {
         let yDiffer=faceWithBorderRect.origin.y - eyeWithBorderRect.origin.y
         var maxEyeV:Double = 0
         var maxFaceV:Double = 0
-        let eyebR0 = eyeWithBorderRect
-        let facbR0 = faceWithBorderRect
         //        var frameCnt:Int=0
         while reader.status != AVAssetReader.Status.reading {
             sleep(UInt32(0.1))
@@ -1123,42 +1123,48 @@ class PlayViewController: UIViewController {
                     let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample)!
                     
                     if faceMark == true{
-                        maxFaceV=openCV.matching(faceWithBorderUIImage, narrow: faceUIImage, x: fX, y: fY)
-                        if maxFaceV<0.92{
-                            //                        print("maxError:",maxFaceV)
+                        if faceWithBorderRect.minX>0 && faceWithBorderRect.maxX<videoWidth && faceWithBorderRect.minY>0 && faceWithBorderRect.maxY<videoHeight{
+                            maxFaceV=openCV.matching(faceWithBorderUIImage, narrow: faceUIImage, x: fX, y: fY)
+                            if maxFaceV>0.91{
+                                fx = CGFloat(fX.pointee) - osFacX
+                                fy = borderRectDiffer - CGFloat(fY.pointee) - osFacY
+                            }else{
+                                fx=0
+                                fy=0
+                            }
                         }else{
-                            //                        print(maxFaceV)
+                            fx=0
+                            fy=0
                         }
-                        fx = CGFloat(fX.pointee) - osFacX
-                        fy = borderRectDiffer - CGFloat(fY.pointee) - osFacY
+//                        fx = CGFloat(fX.pointee) - osFacX
+//                        fy = borderRectDiffer - CGFloat(fY.pointee) - osFacY
                         faceWithBorderRect.origin.x += fx
                         faceWithBorderRect.origin.y += fy
-                    }else{
-                        //faceWithBorderRect.x, faceWidBorderRect.y とも初期値
-                        //
+//                    }else{
+//                        //faceWithBorderRect.x, faceWidBorderRect.y とも初期値
+//                        //
                     }
-                    if faceWithBorderRect.origin.x > wakuLength &&
-                        faceWithBorderRect.origin.x < maxWidthWithBorder &&
-                        faceWithBorderRect.origin.y > wakuLength &&
-                        faceWithBorderRect.origin.y < maxHeightWithBorder
-                    {
+//                    if faceWithBorderRect.origin.x > wakuLength &&
+//                        faceWithBorderRect.origin.x < maxWidthWithBorder &&
+//                        faceWithBorderRect.origin.y > wakuLength &&
+//                        faceWithBorderRect.origin.y < maxHeightWithBorder
+//                    {
                         
                         eyeWithBorderRect.origin.x = faceWithBorderRect.origin.x - xDiffer
                         eyeWithBorderRect.origin.y = faceWithBorderRect.origin.y - yDiffer
-                        
+                    if eyeWithBorderRect.minX<0 || eyeWithBorderRect.maxX>videoWidth || eyeWithBorderRect.minY<0 || eyeWithBorderRect.maxY>videoHeight{
+                        eyeWithBorderRect.origin.x=0
+                        eyeWithBorderRect.origin.y=0
+                    }
                         if cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
                             ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
                         }else{
                             ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
                         }
-                        
-                        
-                        //                        let ciImage: CIImage =
-                        //                            CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.down)
+                       
                         eyeWithBorderCGImage = context.createCGImage(ciImage, from: eyeWithBorderRect)!
                         eyeWithBorderUIImage = UIImage.init(cgImage: eyeWithBorderCGImage)
                         
-                        //                        #if DEBUG
                         if debugMode == true{
                             //画面表示はmain threadで行う
                             DispatchQueue.main.async {
@@ -1204,7 +1210,9 @@ class PlayViewController: UIViewController {
                             //                        #endif
                         }
                         context.clearCaches()
-                        
+                    while handlingDataNowFlag==true{
+                        sleep(UInt32(0.1))
+                    }
                         eyePosX.append(ex)
                         eyePosY.append(ey)
                         eyePosXfiltered.append(-1*Kalman(value: ex,num: 0))
@@ -1220,9 +1228,9 @@ class PlayViewController: UIViewController {
                         while reader.status != AVAssetReader.Status.reading {
                             sleep(UInt32(0.1))
                         }
-                    }else{
-                        calcFlag = false
-                    }
+//                    }else{
+//                        calcFlag = false
+//                    }
                     //マッチングデバッグ用スリープ、デバッグが終わったら削除
                     //                    #if DEBUG
                     if debugMode == true{
