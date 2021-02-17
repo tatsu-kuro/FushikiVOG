@@ -170,7 +170,7 @@ class CarolicOKNViewController: UIViewController{
         camera.makeAlbum()
         mainBrightness = UIScreen.main.brightness
 
-        UIScreen.main.brightness = CGFloat(camera.getUserDefaultFloat(str: "screenBrightness", ret:0.5))
+        UIScreen.main.brightness = CGFloat(camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
  
         let cameraMode = camera.getUserDefaultInt(str: "cameraMode", ret: 0)
         camera.initSession(camera: Int(cameraMode), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
