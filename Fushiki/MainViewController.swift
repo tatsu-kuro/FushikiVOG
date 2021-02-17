@@ -242,6 +242,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         ettMode = getUserDefault(str: "ettMode", ret: 0)
         ettWidth = getUserDefault(str: "ettWidth", ret: 90)
         targetMode = getUserDefault(str: "targetMode", ret: 6)
+    
         setRotate(alp:1)
         sound(snd:"silence")
         UIApplication.shared.beginReceivingRemoteControlEvents()

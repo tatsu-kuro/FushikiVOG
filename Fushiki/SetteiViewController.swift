@@ -232,7 +232,7 @@ class SetteiViewController: UIViewController {
         oknTime = UserDefaults.standard.integer(forKey: "oknTime")
         ettMode = UserDefaults.standard.integer(forKey: "ettMode")
         ettWidth = UserDefaults.standard.integer(forKey: "ettWidth")
-
+        screenBrightness = camera.getUserDefault(str: "screenBrightness", ret: 0.5)
         setScreen()
         dispTexts()
         setPars()
