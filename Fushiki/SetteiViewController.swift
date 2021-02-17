@@ -166,7 +166,7 @@ class SetteiViewController: UIViewController {
         paraCnt5.value=Float(oknTime)/100.0
         paraCnt6.selectedSegmentIndex=ettMode%4
         paraCnt7.value=Float(ettWidth)/100.0
-        paraCnt8.value=camera.getUserDefault(str: "screenBrightness", ret: 0.5)
+        paraCnt8.value=camera.getUserDefaultFloat(str: "screenBrightness", ret: 0.5)
     }
     func setokpMode(){
         paraTxt0.text="OKP-MODE" + "   "
@@ -232,7 +232,7 @@ class SetteiViewController: UIViewController {
         oknTime = UserDefaults.standard.integer(forKey: "oknTime")
         ettMode = UserDefaults.standard.integer(forKey: "ettMode")
         ettWidth = UserDefaults.standard.integer(forKey: "ettWidth")
-        screenBrightness = camera.getUserDefault(str: "screenBrightness", ret: 0.5)
+        screenBrightness = camera.getUserDefaultFloat(str: "screenBrightness", ret: 0.5)
         setScreen()
         dispTexts()
         setPars()

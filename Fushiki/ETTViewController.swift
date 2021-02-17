@@ -111,15 +111,15 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         camera.makeAlbum()
         mainBrightness=UIScreen.main.brightness//明るさを保持、終了時に戻す
         print(UIScreen.main.brightness)
-        UIScreen.main.brightness = CGFloat(camera.getUserDefault(str: "screenBrightness", ret:0.5))
-        let cameraMode = camera.getUserDefault(str: "cameraMode", ret: 0)
+        UIScreen.main.brightness = CGFloat(camera.getUserDefaultFloat(str: "screenBrightness", ret:0.5))
+        let cameraMode = camera.getUserDefaultInt(str: "cameraMode", ret: 0)
         camera.initSession(camera: Int(cameraMode), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
       
-        let zoomValue=camera.getUserDefault(str: "zoomValue", ret:0)
+        let zoomValue=camera.getUserDefaultFloat(str: "zoomValue", ret:0)
         camera.setZoom(level: zoomValue)
-        let focusValue=camera.getUserDefault(str: "focusValue", ret: 0)
+        let focusValue=camera.getUserDefaultFloat(str: "focusValue", ret: 0)
         camera.setFocus(focus: focusValue)
-        camera.setLedLevel(level:camera.getUserDefault(str: "ledValue", ret:0))
+        camera.setLedLevel(level:camera.getUserDefaultFloat(str: "ledValue", ret:0))
 
         ettMode=UserDefaults.standard.integer(forKey: "ettMode")
         ettWidth=UserDefaults.standard.integer(forKey: "ettWidth")

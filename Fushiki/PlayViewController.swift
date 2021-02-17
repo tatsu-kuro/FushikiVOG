@@ -750,36 +750,23 @@ class PlayViewController: UIViewController {
         let avAsset = AVURLAsset(url: url, options: options)
         return avAsset.tracks.first!.nominalFrameRate
     }
-    func getUserDefault(str:String,ret:Int) -> Int{//getUserDefault_one
-        if (UserDefaults.standard.object(forKey: str) != nil){//keyが設定してなければretをセット
-            return UserDefaults.standard.integer(forKey:str)
-        }else{
-            UserDefaults.standard.set(ret, forKey: str)
-            return ret
-        }
-    }
     
     func getUserDefaults(){
         if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
-            wakuLength = CGFloat(getUserDefault(str: "wakuLength", ret: 6))
-            eyeBorder = getUserDefault(str: "eyeBorder", ret: 20)
+            wakuLength = CGFloat(album.getUserDefaultInt(str: "wakuLength", ret: 6))
+            eyeBorder = album.getUserDefaultInt(str: "eyeBorder", ret: 20)
         }else{//iphone
-            wakuLength = CGFloat(getUserDefault(str: "wakuLength", ret: 3))
-            eyeBorder = getUserDefault(str: "eyeBorder", ret: 9)
+            wakuLength = CGFloat(album.getUserDefaultInt(str: "wakuLength", ret: 3))
+            eyeBorder = album.getUserDefaultInt(str: "eyeBorder", ret: 9)
         }
-        cameraMode = getUserDefault(str: "video_cameraMode", ret: 0)
-        posRatio = getUserDefault(str: "posRatio", ret:100)
-        veloRatio = getUserDefault(str:"veloRatio",ret :100)
-        eyeCenter.x = CGFloat(getUserDefault(str: "eyeCenterX", ret: 320))
-        eyeCenter.y = CGFloat(getUserDefault(str: "eyeCenterY", ret: 100))
-        faceCenter.x = CGFloat(getUserDefault(str: "faceCenterX", ret: 300))
-        faceCenter.y = CGFloat(getUserDefault(str: "faceCenterY", ret: 100))
-        let faceMarkInt = getUserDefault(str: "faceMark", ret:0)
-        if faceMarkInt == 1{
-            faceMark=true
-        }else{
-            faceMark=false
-        }
+        cameraMode = album.getUserDefaultInt(str: "video_cameraMode", ret: 0)
+        posRatio = album.getUserDefaultInt(str: "posRatio", ret:100)
+        veloRatio = album.getUserDefaultInt(str:"veloRatio",ret :100)
+        eyeCenter.x = CGFloat(album.getUserDefaultInt(str: "eyeCenterX", ret: 320))
+        eyeCenter.y = CGFloat(album.getUserDefaultInt(str: "eyeCenterY", ret: 100))
+        faceCenter.x = CGFloat(album.getUserDefaultInt(str: "faceCenterX", ret: 300))
+        faceCenter.y = CGFloat(album.getUserDefaultInt(str: "faceCenterY", ret: 100))
+        faceMark = album.getUserDefaultBool(str: "faceMark", ret:false)
     }
     func setUserDefaults(){
         UserDefaults.standard.set(eyeCenter.x, forKey: "eyeCenterX")
@@ -1463,13 +1450,7 @@ class PlayViewController: UIViewController {
         veloRatio=UserDefaults.standard.integer(forKey:"veloRatio")
         wakuLength=CGFloat(UserDefaults.standard.integer(forKey:"wakuLength"))
         eyeBorder=UserDefaults.standard.integer(forKey:"eyeBorder")
-        let faceMarkInt = getUserDefault(str: "faceMark", ret:0)
-        if faceMarkInt == 1{
-            faceMark=true
-        }else{
-            faceMark=false
-        }
-
+        faceMark = UserDefaults.standard.bool(forKey: "faceMark")
         dispWakus()
         showWakuImages()
         if vogImageView?.isHidden == false{//wakuimageなどの前に持ってくる

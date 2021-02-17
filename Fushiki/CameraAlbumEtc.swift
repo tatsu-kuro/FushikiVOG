@@ -564,7 +564,23 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
         button.layer.cornerRadius = 5
         button.backgroundColor = color
     }
-    func getUserDefault(str:String,ret:Float) -> Float{
+    func getUserDefaultInt(str:String,ret:Int) -> Int{
+        if (UserDefaults.standard.object(forKey: str) != nil){//keyが設定してなければretをセット
+            return UserDefaults.standard.integer(forKey:str)
+        }else{
+            UserDefaults.standard.set(ret, forKey: str)
+            return ret
+        }
+    }
+    func getUserDefaultBool(str:String,ret:Bool) -> Bool{
+        if (UserDefaults.standard.object(forKey: str) != nil){
+            return UserDefaults.standard.bool(forKey: str)
+        }else{//keyが設定してなければretをセット
+            UserDefaults.standard.set(ret, forKey: str)
+            return ret
+        }
+    }
+    func getUserDefaultFloat(str:String,ret:Float) -> Float{
         if (UserDefaults.standard.object(forKey: str) != nil){
             return UserDefaults.standard.float(forKey: str)
         }else{//keyが設定してなければretをセット

@@ -170,19 +170,19 @@ class CarolicOKNViewController: UIViewController{
         camera.makeAlbum()
         mainBrightness = UIScreen.main.brightness
 
-        UIScreen.main.brightness = CGFloat(camera.getUserDefault(str: "screenBrightness", ret:0.5))
+        UIScreen.main.brightness = CGFloat(camera.getUserDefaultFloat(str: "screenBrightness", ret:0.5))
  
-        let cameraMode = camera.getUserDefault(str: "cameraMode", ret: 0)
+        let cameraMode = camera.getUserDefaultInt(str: "cameraMode", ret: 0)
         camera.initSession(camera: Int(cameraMode), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
         if cameraMode == 2{
             recClarification.isHidden=true
         }
-        let zoomValue=camera.getUserDefault(str: "zoomValue", ret:0)
+        let zoomValue=camera.getUserDefaultFloat(str: "zoomValue", ret:0)
         camera.setZoom(level: zoomValue)
-        let focusValue=camera.getUserDefault(str: "focusValue", ret: 0)
+        let focusValue=camera.getUserDefaultFloat(str: "focusValue", ret: 0)
         camera.setFocus(focus: focusValue)
         
-        camera.setLedLevel(level:camera.getUserDefault(str: "ledValue", ret:0))
+        camera.setLedLevel(level:camera.getUserDefaultFloat(str: "ledValue", ret:0))
 
         ww=view.bounds.width
         wh=view.bounds.height

@@ -33,8 +33,8 @@ class CameraViewController: UIViewController {
         super.viewDidLoad()
         setButtons()
         var cameraMode=0
-        if camera.getUserDefault(str: "cameraMode", ret: 0) != nil{
-            cameraMode = Int(camera.getUserDefault(str: "cameraMode", ret: 0))
+        if camera.getUserDefaultInt(str: "cameraMode", ret: 0) != nil{
+            cameraMode = Int(camera.getUserDefaultInt(str: "cameraMode", ret: 0))
         }
         cameraChan.selectedSegmentIndex = cameraMode
         camera.initSession(camera: cameraMode, bounds:view.bounds, cameraView: cameraView)
@@ -42,19 +42,19 @@ class CameraViewController: UIViewController {
         zoomBar.minimumValue = 0
         zoomBar.maximumValue = 0.1
         zoomBar.addTarget(self, action: #selector(onZoomValueChange), for: UIControl.Event.valueChanged)
-        zoomBar.value=camera.getUserDefault(str: "zoomValue", ret:0)
+        zoomBar.value=camera.getUserDefaultFloat(str: "zoomValue", ret:0)
         camera.setZoom(level: zoomBar.value)
         
         ledBar.minimumValue = 0
         ledBar.maximumValue = 0.1
         ledBar.addTarget(self, action: #selector(onLedValueChange), for: UIControl.Event.valueChanged)
-        ledBar.value=camera.getUserDefault(str: "ledValue", ret:0)
+        ledBar.value=camera.getUserDefaultFloat(str: "ledValue", ret:0)
         camera.setLedLevel(level: ledBar.value)
         
         focusBar.minimumValue = 0
         focusBar.maximumValue = 1.0
         focusBar.addTarget(self, action: #selector(onFocusValueChange), for: UIControl.Event.valueChanged)
-        focusBar.value=camera.getUserDefault(str: "focusValue", ret: 0)
+        focusBar.value=camera.getUserDefaultFloat(str: "focusValue", ret: 0)
         camera.setFocus(focus: focusBar.value)
         if cameraMode==2{
             cameraView.alpha=0.1
@@ -75,7 +75,7 @@ class CameraViewController: UIViewController {
         camera.initSession(camera: cameraMode, bounds:view.bounds, cameraView: cameraView)
         print("cameraMode:",cameraMode)
         fpsLabel.text = String(format:"fps:%d" ,camera.fpsCurrent)
-        camera.setLedLevel(level:camera.getUserDefault(str: "ledValue", ret:0))
+        camera.setLedLevel(level:camera.getUserDefaultFloat(str: "ledValue", ret:0))
     }
     @objc func onLedValueChange(){
         camera.setLedLevel(level:ledBar.value)
