@@ -25,6 +25,7 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
     var albumExist:Bool = false
     var dialogStatus:Int=0
     var fpsCurrent:Int=0
+    var cameraMode:Int=0
     init(name: String) {
         // 全てのプロパティを初期化する前にインスタンスメソッドを実行することはできない
         self.albumName = name
@@ -165,6 +166,9 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
         }
     }
     func setZoom(level:Float){//ledとなっているので要変更！！！
+        if cameraMode==2{
+            return
+        }
         if let device = videoDevice {
         do {
             try device.lockForConfiguration()
@@ -179,6 +183,9 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
     }
     
     func setFocus(focus:Float){//focus 0:最接近　0-1.0
+        if cameraMode==2{
+            return
+        }
         if let device = videoDevice {
             do {
                 try! device.lockForConfiguration()
@@ -367,20 +374,33 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
     }
 
     func recordStart(){
+        if cameraMode==2{
+            return
+        }
         try? FileManager.default.removeItem(atPath: TempFilePath)
         let fileURL = NSURL(fileURLWithPath: TempFilePath)
         fileOutput.startRecording(to: fileURL as URL, recordingDelegate: self)
     }
     func recordStop(){
+        if cameraMode==2{
+            return
+        }
         captureSession.stopRunning()//下行と入れ替えても動く
         fileOutput.stopRecording()
      }
     func stopRunning(){
+        if cameraMode==2{
+            return
+        }
         captureSession.stopRunning()
     }
 
     func initSession(camera:Int,bounds:CGRect,cameraView:UIImageView) {
         // セッション生成
+        cameraMode=camera
+        if cameraMode==2{
+            return
+        }
         captureSession = AVCaptureSession()
         // 入力 : 背面カメラ
         if camera==0{
@@ -553,6 +573,9 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
         }
     }
     func setLedLevel(level:Float){
+        if cameraMode==2{
+            return
+        }
         if let device = videoDevice{
             do {
                 if device.hasTorch {

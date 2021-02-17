@@ -772,7 +772,8 @@ class PlayViewController: UIViewController {
         eyeCenter.y = CGFloat(getUserDefault(str: "eyeCenterY", ret: 100))
         faceCenter.x = CGFloat(getUserDefault(str: "faceCenterX", ret: 300))
         faceCenter.y = CGFloat(getUserDefault(str: "faceCenterY", ret: 100))
-        if getUserDefault(str: "faceMark", ret:1) == 1{
+        let faceMarkInt = getUserDefault(str: "faceMark", ret:0)
+        if faceMarkInt == 1{
             faceMark=true
         }else{
             faceMark=false
@@ -994,6 +995,7 @@ class PlayViewController: UIViewController {
             setButtons(flag: true)
             return
         }
+        var cvError:Int = 0
         startTime=CFAbsoluteTimeGetCurrent()
         setButtons(flag: false)
         setUserDefaults()//eyeCenter,faceCenter
@@ -1114,14 +1116,142 @@ print("wh:",videoWidth,videoHeight)
         while reader.status != AVAssetReader.Status.reading {
             sleep(UInt32(0.1))
             
+        }/*
+        DispatchQueue.global(qos: .default).async { [self] in//resizerectのチェックの時はここをコメントアウト下がいいかな？
+            while let sample = readerOutput.copyNextSampleBuffer(), self.calcFlag != false {
+                var ex:CGFloat = 0
+                var ey:CGFloat = 0
+                var eyePos:CGFloat = 0
+                var fx:CGFloat = 0
+                var fy:CGFloat = 0
+                
+                //for test display
+                #if DEBUG
+                var x:CGFloat = 0.0
+                let y:CGFloat = 500.0
+                #endif
+                autoreleasepool{
+                    let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample)!//27sec:10sec
+                    cvError -= 1
+                    if cvError < 0{
+                        //orientation.upとrightは所要時間同じ
+                        let ciImage: CIImage =
+                            CIImage(cvPixelBuffer: pixelBuffer).oriented(CGImagePropertyOrientation.right)
+                        eyeWithBorderCGImage = context.createCGImage(ciImage, from: eyeWithBorderRect)!
+                        eyeWithBorderUIImage = UIImage.init(cgImage: eyeWithBorderCGImage)
+                        
+                        #if DEBUG
+                        //                        画面表示はmain threadで行う
+                        
+                        let eye0CGImage = context.createCGImage(ciImage, from:eyebR0)!
+                        //                        let eye0CGImage = context.createCGImage(ciImage, from:eyeErrorRect)!
+                        let eye0UIImage = UIImage.init(cgImage: eye0CGImage)
+                        
+                        DispatchQueue.main.async {
+                            self.wakuEye.frame=CGRect(x:x,y:y,width:eyeRect.size.width*2,height:eyeRect.size.height*2)
+                            self.wakuEye.image=eyeUIImage
+                            x += eyeRect.size.width*2
+                            
+                            self.wakuEyeb.frame=CGRect(x:x,y:y,width:eyeWithBorderRect.size.width*2,height:eyeWithBorderRect.size.height*2)
+                            self.wakuEyeb.image=eyeWithBorderUIImage
+                            x += eyeWithBorderRect.size.width*2
+                            if self.faceF==0 || self.isVHIT==false{
+                                self.wakuFacb.frame=CGRect(x:x,y:y,width:eyebR0.size.width*2,height:eyebR0.size.height*2)
+                                self.wakuFacb.image=eye0UIImage
+                            }
+                        }
+                        #endif
+                        maxEyeV=self.openCV.matching(eyeWithBorderUIImage,
+                                                     narrow: eyeUIImage,
+                                                     x: eX,
+                                                     y: eY)
+                        if maxEyeV < 0.7{//errorもここに来るぞ!!　ey=0で戻ってくる
+                            cvError=5//10/240secはcontinue
+                            eyeWithBorderRect=eyebR0//初期位置に戻す
+                            faceWithBorderRect=facbR0
+                        }else{//検出できた時
+                            ex = CGFloat(eX.pointee) - osEyeX
+                            ey = -CGFloat(eY.pointee) + osEyeY
+                            eyeWithBorderRect.origin.x += ex
+                            eyeWithBorderRect.origin.y += ey
+                            eyePos = eyeWithBorderRect.origin.x - eyebR0.origin.x + ex
+                            
+                            if faceMark==true{
+                                faceWithBorderCGImage = context.createCGImage(ciImage, from:faceWithBorderRect)!
+                                faceWithBorderUIImage = UIImage.init(cgImage: faceWithBorderCGImage)
+                                #if DEBUG
+                                DispatchQueue.main.async {
+                                    if self.faceF==1{
+                                        self.wakuFac.frame=CGRect(x:x,y:y,width:faceRect.size.width*2,height:faceRect.size.height*2)
+                                        self.wakuFac.image=faceUIImage
+                                        x += faceRect.size.width*2
+                                        self.wakuFacb.frame=CGRect(x:x,y:y,width:faceWithBorderRect.size.width*2,height:faceWithBorderRect.size.height*2)
+                                        self.wakuFacb.image=faceWithBorderUIImage
+                                    }
+                                }
+                                #endif
+                                
+                                maxFaceV=self.openCV.matching(faceWithBorderUIImage, narrow: faceUIImage, x: fX, y: fY)
+                                if maxFaceV<0.7{
+                                    cvError=5
+                                    faceWithBorderRect=facbR0
+                                    eyeWithBorderRect=eyebR0
+                                }else{
+                                    fx = CGFloat(fX.pointee) - osFacX
+                                    fy = -CGFloat(fY.pointee) + osFacY
+                                    faceWithBorderRect.origin.x += fx
+                                    faceWithBorderRect.origin.y += fy
+                                }
+                            }
+                        }
+                        context.clearCaches()
+                    }
+       
+                    if faceMark==true{
+                        self.faceVelX.append(fx)
+                        self.faceVelXfiltered.append(-12.0*self.Kalman(value: fx,num: 0))
+                    }else{
+                        self.faceVelX.append(0)
+                        self.faceVelXfiltered.append(0)
+                    }
+                    eyePosX.append(eyePos)
+                    eyePosXfiltered.append( -1.0*Kalman(value:eyePos,num:1))
+                    
+                    self.eyeVelX.append(ex)
+                    let eye5 = -12.0*Kalman(value: ex,num:2)//そのままではずれる
+                    self.eyeVelXfiltered.append(eye5-faceVelXfiltered.last!)
+                    
+                
+                    while reader.status != AVAssetReader.Status.reading {
+                        sleep(UInt32(0.1))
+                    }
+
+                    //eyeのみでチェックしているが。。。。
+                    if eyeWithBorderRect.origin.x < 5 ||
+                        eyeWithBorderRect.origin.x > maxWidthWithBorder ||
+                        eyeWithBorderRect.origin.y < 5 ||
+                        eyeWithBorderRect.origin.y > maxHeightWithBorder
+                    {
+                        self.calcFlag=false//quit
+                    }
+                }
+                //マッチングデバッグ用スリープ、デバッグが終わったら削除
+                #if DEBUG
+                usleep(200)
+                #endif
+            }
+            self.calcFlag = false
+          
         }
+        */
+        
         DispatchQueue.global(qos: .default).async { [self] in
             while let sample = readerOutput.copyNextSampleBuffer(), self.calcFlag != false {
                 var ex:CGFloat = 0
                 var ey:CGFloat = 0
                 var fx:CGFloat = 0
                 var fy:CGFloat = 0
-                
+
                 //for test display
                 //                #if DEBUG
                 var x:CGFloat = 50.0
@@ -1129,7 +1259,7 @@ print("wh:",videoWidth,videoHeight)
                 //                #endif
                 autoreleasepool{
                     let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample)!
-                    
+
                     maxFaceV=self.openCV.matching(faceWithBorderUIImage, narrow: faceUIImage, x: fX, y: fY)
                     if maxFaceV<0.92{
                         //                        print("maxError:",maxFaceV)
@@ -1140,16 +1270,16 @@ print("wh:",videoWidth,videoHeight)
                     fy = borderRectDiffer - CGFloat(fY.pointee) - osFacY
                     faceWithBorderRect.origin.x += fx
                     faceWithBorderRect.origin.y += fy
-                    
+
                     //                    if faceWithBorderRect.origin.x > wakuLength &&
                     //                        faceWithBorderRect.origin.x < maxWidthWithBorder &&
                     //                        faceWithBorderRect.origin.y > wakuLength &&
                     //                        faceWithBorderRect.origin.y < maxHeightWithBorder
                     //                    {
-                    
+
                     eyeWithBorderRect.origin.x = faceWithBorderRect.origin.x - xDiffer
                     eyeWithBorderRect.origin.y = faceWithBorderRect.origin.y - yDiffer
-                    
+
                     if cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
                         ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
                     }else{
@@ -1217,9 +1347,9 @@ print("wh:",videoWidth,videoHeight)
                         //filter２回なら下２行
                         self.eyeVelXfiltered.append(self.Kalman(value:self.eyePosXfiltered.last! - lastPosXfiltered!,num: 2))
                         self.eyeVelYfiltered.append(self.Kalman(value:self.eyePosYfiltered.last! - lastPosYfiltered!,num: 3))
-                        
-                        
-                        
+
+
+
                         while reader.status != AVAssetReader.Status.reading {
                             sleep(UInt32(0.1))
                         }
@@ -1464,11 +1594,13 @@ print("wh:",videoWidth,videoHeight)
         veloRatio=UserDefaults.standard.integer(forKey:"veloRatio")
         wakuLength=CGFloat(UserDefaults.standard.integer(forKey:"wakuLength"))
         eyeBorder=UserDefaults.standard.integer(forKey:"eyeBorder")
-        if UserDefaults.standard.integer(forKey:"faceMark") == 1{
+        let faceMarkInt = getUserDefault(str: "faceMark", ret:0)
+        if faceMarkInt == 1{
             faceMark=true
         }else{
             faceMark=false
         }
+
         dispWakus()
         showWakuImages()
         if vogImageView?.isHidden == false{//wakuimageなどの前に持ってくる

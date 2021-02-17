@@ -223,7 +223,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
     }
     func getUserDefault(str:String,ret:Int) -> Int{//getUserDefault_one
-        if (UserDefaults.standard.object(forKey: str) != nil){//keyが設定してなければretをセット
+        if UserDefaults.standard.object(forKey: str) != nil{//keyが設定してなければretをセット
             return UserDefaults.standard.integer(forKey:str)
         }else{
             UserDefaults.standard.set(ret, forKey: str)
@@ -278,7 +278,9 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var button1: UIButton!
     @IBOutlet weak var button0: UIButton!
     @IBOutlet weak var button2: UIButton!
-//    @IBOutlet weak var titleImage: UIImageView!
+    
+    @IBOutlet weak var cameraButton: UIButton!
+    //    @IBOutlet weak var titleImage: UIImageView!
     func setRotate(alp:CGFloat){
 
         let ww:CGFloat=view.bounds.width
@@ -303,6 +305,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         camera.setButtonProperty(button4,x:bw*4+sp*6,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(helpButton,x:bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(setteiButton,x:bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(cameraButton, x: bw*6+sp*8, y: sp, w: bw, h: bh, UIColor.orange)
 
         let logoY = ww/13
         if view.bounds.width/2 > by - logoY{

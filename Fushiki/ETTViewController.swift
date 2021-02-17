@@ -147,8 +147,10 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         displayLinkF=true
         tcount=0
         recClarification.frame=camera.getRecClarificationRct(width:view.bounds.width,height:view.bounds.height)
+        if cameraMode == 2{
+            recClarification.isHidden=true
+        }
         timerREC = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: true)
-
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
         }

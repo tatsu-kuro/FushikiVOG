@@ -105,7 +105,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="camera" catalog="system"/>
                                 <connections>
-                                    <segue destination="c63-hm-Ug5" kind="show" id="xIn-md-1DA"/>
+                                    <segue destination="c63-hm-Ug5" kind="show" id="Zj2-IF-7jJ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wIu-wr-ffr">
@@ -1003,6 +1003,16 @@
                                     <action selector="doSettei:" destination="BYZ-38-t0r" eventType="touchUpInside" id="N5J-fQ-EGh"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aYl-wa-v9e">
+                                <rect key="frame" x="801" y="365" width="25" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="camera" catalog="system"/>
+                                <connections>
+                                    <segue destination="c63-hm-Ug5" kind="show" id="6zK-KW-B9K"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1014,6 +1024,7 @@
                         <outlet property="button2" destination="uQ1-87-BgY" id="ifl-hB-ox6"/>
                         <outlet property="button3" destination="Jef-4N-Mcg" id="tnT-24-hnA"/>
                         <outlet property="button4" destination="SgL-BM-Dbh" id="J3i-TL-HmM"/>
+                        <outlet property="cameraButton" destination="aYl-wa-v9e" id="ByI-MS-PAK"/>
                         <outlet property="helpButton" destination="deG-Tq-o9U" id="myc-QC-YJO"/>
                         <outlet property="logoImage" destination="rFo-zO-z8q" id="2jU-kC-jYJ"/>
                         <outlet property="setteiButton" destination="CTI-eK-yKu" id="iDo-Lz-j12"/>
@@ -1129,12 +1140,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="IGF-X7-hOJ">
-                                <rect key="frame" x="494" y="359" width="197" height="32"/>
+                                <rect key="frame" x="445" y="359" width="296" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <segments>
                                     <segment title="front camera"/>
                                     <segment title="back camera"/>
+                                    <segment title="none"/>
                                 </segments>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="selectedSegmentTintColor" systemColor="systemOrangeColor"/>
@@ -1239,6 +1251,9 @@
             <point key="canvasLocation" x="69.642857142857139" y="-2089.8550724637685"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="6zK-KW-B9K"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="camera" catalog="system" width="128" height="94"/>
         <image name="etthelp" width="1334" height="750"/>

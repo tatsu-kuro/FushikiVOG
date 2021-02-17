@@ -283,7 +283,8 @@ class SetteiViewController: UIViewController {
         bw=(ww-sp*10)/7//ボタン幅
         bh=bw*170/440
         let by=wh-bh-sp
-        camera.setButtonProperty(cameraButton,x:bw*4+sp*6,y:by,w:bw,h: bh,UIColor.orange)
+        cameraButton.isHidden=true
+//        camera.setButtonProperty(cameraButton,x:bw*4+sp*6,y:by,w:bw,h: bh,UIColor.orange)
         camera.setButtonProperty(defaultButton,x:bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(exitButton,x:bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
     }

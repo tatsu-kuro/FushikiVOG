@@ -275,7 +275,9 @@ class OKNViewController: UIViewController{
 //
         let cameraMode = camera.getUserDefault(str: "cameraMode", ret: 0)
         camera.initSession(camera: Int(cameraMode), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
-      
+        if cameraMode == 2{
+            recClarification.isHidden=true
+        }
         let zoomValue=camera.getUserDefault(str: "zoomValue", ret:0)
         camera.setZoom(level: zoomValue)
         let focusValue=camera.getUserDefault(str: "focusValue", ret: 0)

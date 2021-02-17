@@ -32,7 +32,10 @@ class CameraViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setButtons()
-        let cameraMode = Int(camera.getUserDefault(str: "cameraMode", ret: 0))
+        var cameraMode=0
+        if camera.getUserDefault(str: "cameraMode", ret: 0) != nil{
+            cameraMode = Int(camera.getUserDefault(str: "cameraMode", ret: 0))
+        }
         cameraChan.selectedSegmentIndex = cameraMode
         camera.initSession(camera: cameraMode, bounds:view.bounds, cameraView: cameraView)
         fpsLabel.text = String(format:"fps:%d" ,camera.fpsCurrent)
@@ -53,11 +56,21 @@ class CameraViewController: UIViewController {
         focusBar.addTarget(self, action: #selector(onFocusValueChange), for: UIControl.Event.valueChanged)
         focusBar.value=camera.getUserDefault(str: "focusValue", ret: 0)
         camera.setFocus(focus: focusBar.value)
+        if cameraMode==2{
+            cameraView.alpha=0.1
+        }else{
+            cameraView.alpha=1
+        }
     }
     
     @IBAction func onCameraChan(_ sender: UISegmentedControl) {
         let cameraMode=cameraChan.selectedSegmentIndex
         UserDefaults.standard.set(cameraMode, forKey: "cameraMode")
+        if cameraMode==2{
+            cameraView.alpha=0
+        }else{
+            cameraView.alpha=1
+        }
         camera.stopRunning()
         camera.initSession(camera: cameraMode, bounds:view.bounds, cameraView: cameraView)
         print("cameraMode:",cameraMode)
@@ -93,14 +106,14 @@ class CameraViewController: UIViewController {
     
         camera.setButtonProperty(exitButton,x:bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
         fpsButton.isHidden=true
-        camera.setLabelProperty( fpsLabel,x:bw*2+sp*5,y:by,w:bw*2,h:bh,UIColor.white)
+        camera.setLabelProperty( fpsLabel,x:bw*1+sp*4,y:by,w:bw*2,h:bh,UIColor.white)
         camera.setLabelProperty(zoomLabel,x:bw*6+sp*8,y:by-sp/3-bh,w:bw,h:bh,UIColor.white)
         camera.setLabelProperty(focusLabel,x:bw*6+sp*8,y:by-sp*2/3-2*bh,w:bw,h:bh,UIColor.white)
         camera.setLabelProperty(ledLabel,x:bw*6+sp*8,y:by-sp*3/3-3*bh,w:bw,h:bh,UIColor.white)
         ledBar.frame=CGRect(x:5*sp,y:by-sp*3/3-3*bh,width:ww-7*sp-bw,height:bh)
         focusBar.frame=CGRect(x:5*sp,y:by-sp*2/3-2*bh,width:ww-7*sp-bw,height:bh)
         zoomBar.frame=CGRect(x:5*sp,y:by-sp/3-bh,width:ww-7*sp-bw,height:bh)
-        cameraChan.frame=CGRect(x:bw*4+sp*6,y:by,width:bw*2+sp,height:bh)
+        cameraChan.frame=CGRect(x:bw*3+sp*5,y:by,width:bw*3+sp*2,height:bh)
      }
 }
 
