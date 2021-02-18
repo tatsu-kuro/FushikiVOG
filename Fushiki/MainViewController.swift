@@ -20,7 +20,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var logoImage: UIImageView!
     //    let albumName:String = "iCapNYS"
     var videoArrayCount:Int = 0
-    let album = CameraAlbumEtc(name: "Fushiki")
+//    let camera = CameraAlbumEtc(name: "Fushiki")
     var oknSpeed:Int = 50
     var oknTime:Int = 50
     var oknMode:Int=0
@@ -210,13 +210,13 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             setteiButton.alpha=1.0
         }
         setToppage()
-        album.getAlbumList()
-        videoArrayCount = album.videoURL.count
+        camera.getAlbumList()
+        videoArrayCount = camera.videoURL.count
         tableView.reloadData()
     }
     func setToppage()
     {
-        if album.videoURL.count==0{
+        if camera.videoURL.count==0{
             tableView.isHidden=true
         }else{
             tableView.isHidden=false
@@ -233,6 +233,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        camera.makeAlbum()
         okpSpeed = camera.getUserDefaultInt(str: "okpSpeed", ret:100)
         okpTime = camera.getUserDefaultInt(str: "okpTime", ret: 5)
         okpMode = camera.getUserDefaultInt(str: "okpMode", ret: 0)
@@ -248,9 +249,10 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         UIApplication.shared.beginReceivingRemoteControlEvents()
         self.becomeFirstResponder()
 //        prefersHomeIndicatorAutoHidden()
-        album.getAlbumList()
-        videoArrayCount = album.videoURL.count
-//        print(videoArrayCount,album.videoURL.count,album.videoDate.count)
+        camera.getAlbumList()
+        videoArrayCount = camera.videoURL.count
+        
+        print(videoArrayCount,camera.videoURL.count,camera.videoDate.count)
         setToppage()
         tableView.reloadData()
     }
@@ -340,18 +342,18 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 //        album.getAlbumList()//probably not nessesary
 //        videoArrayCount = album.videoURL.count//probably not nessesary
         setToppage()//nessesary
-        if album.albumExist==false{
+        if camera.albumExist==false{
             return 0
         }else{
 //            let album = AlbumController()
-            return album.videoURL.count
+            return camera.videoURL.count
         }
     }
     //set data on cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath:IndexPath) -> UITableViewCell{
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier:"cell",for :indexPath)
         let number = (indexPath.row+1).description + ") "
-        cell.textLabel!.text = number + album.videoDate[indexPath.row]
+        cell.textLabel!.text = number + camera.videoDate[indexPath.row]
         return cell
     }
     //play item
@@ -359,8 +361,8 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let storyboard: UIStoryboard = self.storyboard!
         
         let nextView = storyboard.instantiateViewController(withIdentifier: "PLAY") as! PlayViewController
-        nextView.videoURL = album.videoURL[indexPath.row]
-        nextView.calcDate = album.videoDate[indexPath.row]
+        nextView.videoURL = camera.videoURL[indexPath.row]
+        nextView.calcDate = camera.videoDate[indexPath.row]
         self.present(nextView, animated: true, completion: nil)
     }
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
@@ -373,13 +375,13 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 
         //削除するだけなのでindexPath_row = indexPath.rowをする必要はない。
         if editingStyle == UITableViewCell.EditingStyle.delete {
-            album.eraseVideo(number: indexPath.row)
-            while album.dialogStatus==0{
+            camera.eraseVideo(number: indexPath.row)
+            while camera.dialogStatus==0{
                 sleep(UInt32(0.1))
             }
-            if album.dialogStatus==1{
-                album.videoURL.remove(at: indexPath.row)
-                album.videoDate.remove(at: indexPath.row)
+            if camera.dialogStatus==1{
+                camera.videoURL.remove(at: indexPath.row)
+                camera.videoDate.remove(at: indexPath.row)
                 tableView.reloadData()
             }
 //            setToppage()

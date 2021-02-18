@@ -28,7 +28,7 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
     var cameraMode:Int=0
     init(name: String) {
         // 全てのプロパティを初期化する前にインスタンスメソッドを実行することはできない
-        self.albumName = name
+        self.albumName = "Fushiki"//name
     }
     func updateRecClarification(tm: Int)->CGFloat {
         var cnt=tm%40
