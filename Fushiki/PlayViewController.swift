@@ -983,12 +983,24 @@ class PlayViewController: UIViewController {
         if  UserDefaults.standard.integer(forKey: "checkRects") == 0{
             debugMode=false
         }
-        if faceMark==false{
-            debugFaceb.isHidden=true
+        if debugMode==false{
             debugFace.isHidden=true
+            debugFaceb.isHidden=true
+            debugEye.isHidden=true
+            debugEyeb.isHidden=true
         }else{
-            debugFaceb.isHidden=false
-            debugFace.isHidden=false
+            debugEye.isHidden=false
+            debugEyeb.isHidden=false
+            if faceMark==false{
+                debugFaceb.isHidden=true
+                debugFace.isHidden=true
+            }else{
+                debugFaceb.isHidden=false
+                debugFace.isHidden=false
+            }
+        }
+        if debugMode==true{
+            
         }
         
         if calcFlag == true{
@@ -1081,14 +1093,9 @@ class PlayViewController: UIViewController {
         }
         videoWidth=ciImage.extent.width
         videoHeight=ciImage.extent.height
-        print("wh:",videoWidth,videoHeight)
-        //        let ciImage = CIImage(cvPixelBuffer:pixelBuffer).oriented(CGImagePropertyOrientation.down)
-        //        let maxWidth=ciImage.extent.size.width
-        //        let maxHeight=ciImage.extent.size.height
-        
-        let eyeRect = resizeR2(eyeRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
-        var eyeWithBorderRect = resizeR2(eyeWithBorderRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
-        let faceRect = resizeR2(faceRectOnScreen, viewRect:getVideoRectOnScreen() /*view.frame*/, image:ciImage)
+        let eyeRect = resizeR2(eyeRectOnScreen, viewRect:getVideoRectOnScreen(), image:ciImage)
+        var eyeWithBorderRect = resizeR2(eyeWithBorderRectOnScreen, viewRect:getVideoRectOnScreen(), image:ciImage)
+        let faceRect = resizeR2(faceRectOnScreen, viewRect:getVideoRectOnScreen(), image:ciImage)
         var faceWithBorderRect = resizeR2(faceWithBorderRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
         //eyeWithBorderRectとeyeRect の差、faceでの差も同じ
         let borderRectDiffer=faceWithBorderRect.width-faceRect.width
@@ -1126,10 +1133,8 @@ class PlayViewController: UIViewController {
                 var fy:CGFloat = 0
                 
                 //for test display
-                //                #if DEBUG
                 var x:CGFloat = 50.0
                 let y:CGFloat = 50.0
-                //                #endif
                 autoreleasepool{
                     let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample)!
                     
@@ -1147,20 +1152,9 @@ class PlayViewController: UIViewController {
                             fx=0
                             fy=0
                         }
-                        //                        fx = CGFloat(fX.pointee) - osFacX
-                        //                        fy = borderRectDiffer - CGFloat(fY.pointee) - osFacY
                         faceWithBorderRect.origin.x += fx
                         faceWithBorderRect.origin.y += fy
-                        //                    }else{
-                        //                        //faceWithBorderRect.x, faceWidBorderRect.y とも初期値
-                        //                        //
                     }
-                    //                    if faceWithBorderRect.origin.x > wakuLength &&
-                    //                        faceWithBorderRect.origin.x < maxWidthWithBorder &&
-                    //                        faceWithBorderRect.origin.y > wakuLength &&
-                    //                        faceWithBorderRect.origin.y < maxHeightWithBorder
-                    //                    {
-                    
                     eyeWithBorderRect.origin.x = faceWithBorderRect.origin.x - xDiffer
                     eyeWithBorderRect.origin.y = faceWithBorderRect.origin.y - yDiffer
                     if eyeWithBorderRect.minX<0 || eyeWithBorderRect.maxX>videoWidth || eyeWithBorderRect.minY<0 || eyeWithBorderRect.maxY>videoHeight{
@@ -1188,7 +1182,6 @@ class PlayViewController: UIViewController {
                             view.bringSubviewToFront(debugEyeb)
                             x += eyeWithBorderRect.size.width + 5
                         }
-                        //                        #endif
                     }
                     if eyeWithBorderRect.minX<0 || eyeWithBorderRect.maxX>videoWidth || eyeWithBorderRect.minY<0 || eyeWithBorderRect.maxY>videoHeight{
                         ex=0
@@ -1213,7 +1206,6 @@ class PlayViewController: UIViewController {
                     
                     faceWithBorderCGImage = context.createCGImage(ciImage, from:faceWithBorderRect)!
                     faceWithBorderUIImage = UIImage.init(cgImage: faceWithBorderCGImage)
-                    //                        #if DEBUG
                     if debugMode == true && faceMark==true{
                         DispatchQueue.main.async {
                             debugFace.frame=CGRect(x:x,y:y,width:faceRect.size.width,height:faceRect.size.height)
@@ -1224,7 +1216,6 @@ class PlayViewController: UIViewController {
                             view.bringSubviewToFront(debugFace)
                             view.bringSubviewToFront(debugFaceb)
                         }
-                        //                        #endif
                     }
                     context.clearCaches()
                     while handlingDataNowFlag==true{
@@ -1244,12 +1235,10 @@ class PlayViewController: UIViewController {
                     if debugMode == true{
                         usleep(200)
                     }
-                    //                    #endif
                 }
             }
             calcFlag = false
         }
-        //        setButtons(flag: true)
     }
  
     @IBAction func unwindPlay(segue: UIStoryboardSegue) {

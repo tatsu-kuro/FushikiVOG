@@ -280,6 +280,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var button0: UIButton!
     @IBOutlet weak var button2: UIButton!
     
+    @IBOutlet weak var cameraButton2: UIButton!
     @IBOutlet weak var cameraButton: UIButton!
     //    @IBOutlet weak var titleImage: UIImageView!
     func setRotate(alp:CGFloat){
@@ -307,6 +308,8 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         camera.setButtonProperty(helpButton,x:bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(setteiButton,x:bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(cameraButton, x: bw*6+sp*8, y: sp, w: bw, h: bh, UIColor.orange)
+        //seにおいてカメラボタンが反応しにくいので
+        cameraButton2.frame=CGRect(x:ww-bw-2*sp,y:0,width:bw+sp*2,height:bh+sp*2)
 
         let logoY = ww/13
         if view.bounds.width/2 > by - logoY{
