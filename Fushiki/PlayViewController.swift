@@ -983,6 +983,14 @@ class PlayViewController: UIViewController {
         if  UserDefaults.standard.integer(forKey: "checkRects") == 0{
             debugMode=false
         }
+        if faceMark==false{
+            debugFaceb.isHidden=true
+            debugFace.isHidden=true
+        }else{
+            debugFaceb.isHidden=false
+            debugFace.isHidden=false
+        }
+        
         if calcFlag == true{
             calcFlag=false
             setButtons(flag: true)
@@ -1206,7 +1214,7 @@ class PlayViewController: UIViewController {
                     faceWithBorderCGImage = context.createCGImage(ciImage, from:faceWithBorderRect)!
                     faceWithBorderUIImage = UIImage.init(cgImage: faceWithBorderCGImage)
                     //                        #if DEBUG
-                    if debugMode == true{
+                    if debugMode == true && faceMark==true{
                         DispatchQueue.main.async {
                             debugFace.frame=CGRect(x:x,y:y,width:faceRect.size.width,height:faceRect.size.height)
                             debugFace.image=faceUIImage
