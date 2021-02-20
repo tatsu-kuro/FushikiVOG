@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import Photos
 class CarolicETTViewController: UIViewController{
-    let camera = CameraAlbumEtc(name:"Fushiki")
+    let camera = CameraAlbumEtc()//name:"Fushiki")
     var mainBrightness:CGFloat?
     var ettWidth:Int = 0//1:narrow,2:wide
     var targetMode:Int = 0

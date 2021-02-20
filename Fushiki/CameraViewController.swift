@@ -12,7 +12,7 @@ import GLKit
 import Photos
 import CoreMotion
 class CameraViewController: UIViewController {
-    let camera = CameraAlbumEtc(name:"Fushiki")
+    let camera = CameraAlbumEtc()//name:"Fushiki")
     @IBOutlet weak var fpsLabel: UILabel!
     @IBOutlet weak var cameraView: UIImageView!
     @IBOutlet weak var fpsButton: UIButton!
@@ -32,10 +32,10 @@ class CameraViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setButtons()
-        var cameraMode=0
-        if camera.getUserDefaultInt(str: "cameraMode", ret: 0) != nil{
-            cameraMode = Int(camera.getUserDefaultInt(str: "cameraMode", ret: 0))
-        }
+//        var cameraMode=0
+//        if camera.getUserDefaultInt(str: "cameraMode", ret: 0) != nil{
+        var cameraMode = Int(camera.getUserDefaultInt(str: "cameraMode", ret: 0))
+//        }
         cameraChan.selectedSegmentIndex = cameraMode
         camera.initSession(camera: cameraMode, bounds:view.bounds, cameraView: cameraView)
         fpsLabel.text = String(format:"fps:%d" ,camera.fpsCurrent)

@@ -103,7 +103,7 @@ class HelpViewController: UIViewController {
      }
     override func viewDidLoad() {
         super.viewDidLoad()
-        let camera = CameraAlbumEtc(name:"Fushiki")
+        let camera = CameraAlbumEtc()//name:"Fushiki")
         let ww:CGFloat=view.bounds.width
         let wh:CGFloat=view.bounds.height
         let sp=ww/120//間隙

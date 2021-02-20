@@ -10,7 +10,7 @@ import UIKit
 import Photos
 import AVFoundation
 class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegate {
-    let camera = CameraAlbumEtc(name:"Fushiki")
+    let camera = CameraAlbumEtc()//name:"Fushiki")
     var cirDiameter:CGFloat = 0
     var startTime=CFAbsoluteTimeGetCurrent()
     var lastTime=CFAbsoluteTimeGetCurrent()

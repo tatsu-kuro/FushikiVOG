@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import Photos
 class OKPViewController: UIViewController{
-    let camera = CameraAlbumEtc(name:"Fushiki")
+    let camera = CameraAlbumEtc()//name:"Fushiki")
     var mainBrightness:CGFloat!
     @IBOutlet weak var speedLabel: UILabel!
     

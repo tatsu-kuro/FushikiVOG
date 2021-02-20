@@ -10,17 +10,16 @@ import UIKit
 import AVFoundation
 import MediaPlayer
 import Photos
-//import GameController
+
 class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
-//    var FushikiAlbum: PHAssetCollection? // アルバムをオブジェクト化
-    let camera = CameraAlbumEtc(name:"Fushiki")
+
+    let camera = CameraAlbumEtc()//name:"Fushiki")
     var controllerF:Bool=false
     @IBOutlet weak var titleImage: UIImageView!
-    //    var timer: Timer!
+    
     @IBOutlet weak var logoImage: UIImageView!
-    //    let albumName:String = "iCapNYS"
+
     var videoArrayCount:Int = 0
-//    let camera = CameraAlbumEtc(name: "Fushiki")
     var oknSpeed:Int = 50
     var oknTime:Int = 50
     var oknMode:Int=0
@@ -32,7 +31,6 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var targetMode:Int = 6
     @IBOutlet weak var tableView: UITableView!
     
-//    var oknDirection:Int = 0
     var soundPlayer: AVAudioPlayer? = nil
     
     func sound(snd:String){
@@ -210,7 +208,11 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             setteiButton.alpha=1.0
         }
         setToppage()
-        camera.getAlbumList()
+        while camera.getAlbumList()==false{
+            sleep(UInt32(0.1))
+        }
+        print("didappear:",camera.videoURL.count,camera.videoDate.count)
+
         videoArrayCount = camera.videoURL.count
         tableView.reloadData()
     }
@@ -222,18 +224,10 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             tableView.isHidden=false
         }
     }
-//    func getUserDefaultInt(str:String,ret:Int) -> Int{//getUserDefault_one
-//        if UserDefaults.standard.object(forKey: str) != nil{//keyが設定してなければretをセット
-//            return UserDefaults.standard.integer(forKey:str)
-//        }else{
-//            UserDefaults.standard.set(ret, forKey: str)
-//            return ret
-//        }
-//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        camera.makeAlbum()
+    
         okpSpeed = camera.getUserDefaultInt(str: "okpSpeed", ret:100)
         okpTime = camera.getUserDefaultInt(str: "okpTime", ret: 5)
         okpMode = camera.getUserDefaultInt(str: "okpMode", ret: 0)
@@ -248,11 +242,18 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         sound(snd:"silence")
         UIApplication.shared.beginReceivingRemoteControlEvents()
         self.becomeFirstResponder()
-//        prefersHomeIndicatorAutoHidden()
-        camera.getAlbumList()
+
+        while camera.getAlbumList()==false{
+            sleep(UInt32(0.1))
+        }
         videoArrayCount = camera.videoURL.count
-        
-        print(videoArrayCount,camera.videoURL.count,camera.videoDate.count)
+        print("didload:",camera.videoURL.count,camera.videoDate.count)
+        var idS = Array<String>()
+        for i in 0..<camera.videoIdentifier.count{
+            idS.append(camera.videoIdentifier[i])
+            camera.printURLArrayFirst(localID: idS)
+            idS.removeAll()
+        }
         setToppage()
         tableView.reloadData()
     }
@@ -342,7 +343,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 //        album.getAlbumList()//probably not nessesary
 //        videoArrayCount = album.videoURL.count//probably not nessesary
         setToppage()//nessesary
-        if camera.albumExist==false{
+        if camera.albumExistFlag==false{
             return 0
         }else{
 //            let album = AlbumController()

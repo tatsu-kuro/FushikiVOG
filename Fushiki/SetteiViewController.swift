@@ -9,7 +9,7 @@
 import UIKit
 
 class SetteiViewController: UIViewController {
-    let camera = CameraAlbumEtc(name:"Fushiki")
+    let camera = CameraAlbumEtc()//name:"Fushiki")
     var oknMode:Int=0
     var oknSpeed:Int = 50
     var oknTime:Int = 50

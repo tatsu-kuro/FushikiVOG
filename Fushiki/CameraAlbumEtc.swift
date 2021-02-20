@@ -8,6 +8,30 @@
 import UIKit
 import Photos
 import AVFoundation
+extension PHAsset {
+    func getURL(completionHandler : @escaping ((_ responseURL : URL?) -> Void)){
+        if self.mediaType == .image {
+            let options: PHContentEditingInputRequestOptions = PHContentEditingInputRequestOptions()
+            options.canHandleAdjustmentData = {(adjustmeta: PHAdjustmentData) -> Bool in
+                return true
+            }
+            self.requestContentEditingInput(with: options, completionHandler: {(contentEditingInput: PHContentEditingInput?, info: [AnyHashable : Any]) -> Void in
+                completionHandler(contentEditingInput!.fullSizeImageURL as URL?)
+            })
+        } else if self.mediaType == .video {
+            let options: PHVideoRequestOptions = PHVideoRequestOptions()
+            options.version = .original
+            PHImageManager.default().requestAVAsset(forVideo: self, options: options, resultHandler: {(asset: AVAsset?, audioMix: AVAudioMix?, info: [AnyHashable : Any]?) -> Void in
+                if let urlAsset = asset as? AVURLAsset {
+                    let localVideoUrl: URL = urlAsset.url as URL
+                    completionHandler(localVideoUrl)
+                } else {
+                    completionHandler(nil)
+                }
+            })
+        }
+    }
+}
 class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
     var videoDevice: AVCaptureDevice?
     var captureSession: AVCaptureSession!
@@ -15,34 +39,32 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
     let TempFilePath: String = "\(NSTemporaryDirectory())temp.mp4"
     var soundIdx:SystemSoundID = 0
     var saved2album:Bool = false
-    var albumName:String = ""
+    var albumName:String = "Fushiki"
     var videoDate = Array<String>()
     var videoURL = Array<URL>()
+    var videoIdentifier = Array<String>()
+    var videoIdentifierDate = Array<String>()
     var stillDate = Array<String>()
     var stillURL = Array<URL>()
     var stillAsset = Array<PHAsset>()
     var stillImage = Array<UIImageView>()
-    var albumExist:Bool = false
+    var albumExistFlag:Bool = false
     var dialogStatus:Int=0
     var fpsCurrent:Int=0
     var cameraMode:Int=0
-    init(name: String) {
-        // 全てのプロパティを初期化する前にインスタンスメソッドを実行することはできない
-        self.albumName = "Fushiki"//name
-    }
+//    init(name: String) {
+//        // 全てのプロパティを初期化する前にインスタンスメソッドを実行することはできない
+//        self.albumName = "Fushiki"//name
+//    }
+    //ジワーッと文字を表示するため
     func updateRecClarification(tm: Int)->CGFloat {
         var cnt=tm%40
         if cnt>19{
             cnt = 40 - cnt
         }
-//        let alpha=CGFloat(cnt)/20.0
         var alpha=CGFloat(cnt)*0.9/20.0//少し目立たなくなる
         alpha += 0.05
         return alpha
-//        recClarification.alpha=alpha
-//        if recordCircleCnt==1{
-//            camera.recordStart()//ここだと暗くならない
-//        }
     }
     func getRecClarificationRct(width:CGFloat,height:CGFloat)->CGRect{
         let imgH=height/30//415*177 2.34  383*114 3.36 257*112 2.3
@@ -101,21 +123,27 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
         //同じ名前のアルバムは一つしかないはずなので最初のオブジェクトを使用
         return assetCollections.object(at:0)
     }
-    var gettingAlbumF:Bool=true
-    func getAlbumList(){//最後のvideoを取得するまで待つ
+    var gettingAlbumF:Bool=false
+    func getAlbumList()->Bool{//最後のvideoを取得するまで待つ
+        if gettingAlbumF == true{
+            return false
+        }
         gettingAlbumF = true
         getAlbumList_sub()
         while gettingAlbumF == true{
             sleep(UInt32(0.1))
         }
+        return true
     }
-    func getAlbumList_sub(){
+/*    func getAlbumList_sub1(){
         //     let imgManager = PHImageManager.default()
         let requestOptions = PHImageRequestOptions()
         videoURL.removeAll()
         videoDate.removeAll()
+        videoIdentifier.removeAll()
+        videoIdentifierDate.removeAll()
         requestOptions.isSynchronous = true
-        requestOptions.isNetworkAccessAllowed = false//これでもicloud上のvideoを取ってしまう
+        requestOptions.isNetworkAccessAllowed = true//これでもicloud上のvideoを取ってしまう
         requestOptions.deliveryMode = .highQualityFormat
         // アルバムをフェッチ
         let assetFetchOptions = PHFetchOptions()
@@ -130,20 +158,26 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
             let fetchOptions = PHFetchOptions()
             fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
             let assets = PHAsset.fetchAssets(in: assetCollection, options: fetchOptions)
-            albumExist=true
+            albumExistFlag=true
             if assets.count == 0{
                 gettingAlbumF=false
-                albumExist=false
+                albumExistFlag=false
             }
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             for i in 0..<assets.count{
                 let asset=assets[i]
+//                print(asset)
                 let date_sub = asset.creationDate
                 let date = formatter.string(from: date_sub!)
                 let duration = String(format:"%.1fs",asset.duration)
                 let options=PHVideoRequestOptions()
+                videoIdentifier.append(asset.localIdentifier)
+                videoIdentifierDate.append(date + "(" + duration + ")")
                 options.version = .original
+//                asset.getURL(completionHandler: <#T##((URL?) -> Void)##((URL?) -> Void)##(URL?) -> Void#>)
+//                var url=getURL(ofPhotoWith: asset)
+//                DispatchQueue.global(qos: .default).async{
                 PHImageManager.default().requestAVAsset(forVideo:asset,
                                                         options: options){ [self](asset:AVAsset?,audioMix, info:[AnyHashable:Any]?)->Void in
                     
@@ -159,11 +193,152 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
                         }
                     }
                 }
+//                }
             }
         }else{
-            albumExist=false
+            albumExistFlag=false
             gettingAlbumF=false
         }
+    }*/
+    func getAlbumList_sub(){
+        //     let imgManager = PHImageManager.default()
+        let requestOptions = PHImageRequestOptions()
+        videoURL.removeAll()
+        videoDate.removeAll()
+        videoIdentifier.removeAll()
+        videoIdentifierDate.removeAll()
+
+        requestOptions.isSynchronous = true
+        requestOptions.isNetworkAccessAllowed = true//これでもicloud上のvideoを取ってしまう
+        requestOptions.deliveryMode = .highQualityFormat
+        // アルバムをフェッチ
+        let assetFetchOptions = PHFetchOptions()
+        assetFetchOptions.predicate = NSPredicate(format: "title == %@", albumName)
+        let assetCollections = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .smartAlbumVideos, options: assetFetchOptions)
+        
+        //アルバムが存在しない事もある？
+        if (assetCollections.count > 0) {
+            //同じ名前のアルバムは一つしかないはずなので最初のオブジェクトを使用
+            let assetCollection = assetCollections.object(at:0)
+            // creationDate降順でアルバム内のアセットをフェッチ
+            let fetchOptions = PHFetchOptions()
+            fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+            let assets = PHAsset.fetchAssets(in: assetCollection, options: fetchOptions)
+            albumExistFlag=true
+            if assets.count == 0{
+                gettingAlbumF=false
+                albumExistFlag=false
+            }
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            
+            for i in 0..<assets.count{
+                let asset=assets[i]
+//                print(asset)
+                let date_sub = asset.creationDate
+                let date = formatter.string(from: date_sub!)
+                let duration = String(format:"%.1fs",asset.duration)
+                let options=PHVideoRequestOptions()
+                if asset.duration>0{
+                    videoIdentifier.append(asset.localIdentifier)
+                    videoIdentifierDate.append(date + "(" + duration + ")")
+//                    print(videoIdentifier.last)
+                }
+                options.version = .original
+//                asset.getURL(completionHandler: <#T##((URL?) -> Void)##((URL?) -> Void)##(URL?) -> Void#>)
+//                var url=getURL(ofPhotoWith: asset)
+//                DispatchQueue.global(qos: .default).async{
+                PHImageManager.default().requestAVAsset(forVideo:asset,
+                                                        options: options){ [self](asset:AVAsset?,audioMix, info:[AnyHashable:Any]?)->Void in
+                    
+                    if let urlAsset = asset as? AVURLAsset{//not on iCloud
+                        videoURL.append(urlAsset.url)
+                        videoDate.append(date + "(" + duration + ")")
+                        if i == assets.count - 1{
+                            gettingAlbumF=false
+                        }
+                    }else{//on icloud
+                        if i == assets.count - 1{
+                            gettingAlbumF=false
+                        }
+                    }
+                }
+//                }
+            }
+        }else{
+            albumExistFlag=false
+            gettingAlbumF=false
+        }
+    }
+    /*
+    
+    if let asset = PHAsset.fetchAssets(withLocalIdentifiers: [ここにlocalID], options: nil).firstObject {
+        let options = PHVideoRequestOptions()
+        options.version = .original
+        PHImageManager.default().requestAVAsset(forVideo: asset, options: options) { (asset: AVAsset?, audioMix: AVAudioMix?, info: [AnyHashable : Any]?) -> Void in
+            if let urlAsset = asset as? AVURLAsset {
+                let localVideoUrl = urlAsset.url as URL
+                print(localVideoUrl) // ここで取れる？
+            }
+        }
+    }
+*/
+//    func getURL(ofPhotoWith mPhasset: PHAsset) -> URL{
+//        let options: PHVideoRequestOptions = PHVideoRequestOptions()
+//        options.deliveryMode = .highQualityFormat
+//        options.version = .current
+//        var urlStr2 = URL(string:"")
+//
+//        let semaphore = DispatchSemaphore(value: 0)
+//        PHImageManager.default().requestAVAsset(forVideo: mPhasset, options: options, resultHandler: { (asset, audioMix, info) in
+//
+//            if let tokenStr = info?["PHImageFileSandboxExtensionTokenKey"] as? String {
+//                let tokenKeys = tokenStr.components(separatedBy: ";")
+//                let urlStr = tokenKeys.filter { $0.contains("/private/var/mobile/Media") }.first
+//                urlStr2 = URL(string:urlStr!)
+//                if let urlStr = urlStr {
+//                    if let url = URL(string: urlStr) {
+//                        print(url.lastPathComponent)
+//                        print(url.pathExtension)
+//                    }
+//                }
+//            }
+//            defer {semaphore.signal() }
+//        })
+//        semaphore.wait(timeout: DispatchTime.distantFuture)
+//        return urlStr2!
+//    }
+//    var appendURLArray = Array<URL>()
+    func printURLArrayFirst(localID:[String]){
+        if let asset = PHAsset.fetchAssets(withLocalIdentifiers: localID, options: nil).firstObject {
+                  let options = PHVideoRequestOptions()
+                  options.version = .original
+                  PHImageManager.default().requestAVAsset(forVideo: asset, options: options) { (asset: AVAsset?, audioMix: AVAudioMix?, info: [AnyHashable : Any]?) -> Void in
+                      if let urlAsset = asset as? AVURLAsset {
+                          let localVideoUrl = urlAsset.url as URL
+//                        self.appendURLArray.append(localVideoUrl)//localVideoUrl)
+                          print(localVideoUrl) // ここで取れる？
+                      }
+                  }
+              }
+        
+        
+        
+        
+        
+//
+//
+//        if let asset = PHAsset.fetchAssets(withLocalIdentifiers: localID, options: nil).firstObject {
+//            let options = PHVideoRequestOptions()
+//            options.version = .original
+//            PHImageManager.default().requestAVAsset(forVideo: asset, options: options) { [self] (asset: AVAsset?, audioMix: AVAudioMix?, info: [AnyHashable : Any]?) -> Void in
+//                if let urlAsset = asset as? AVURLAsset {
+//                    let localVideoUrl = urlAsset.url as URL
+//                    appendURLArray.append(localVideoUrl) // ここで取れる？
+//                    //return urlAsset.url
+//                }
+//            }
+//        }
     }
     func setZoom(level:Float){//ledとなっているので要変更！！！
         if cameraMode==2{
@@ -271,10 +446,10 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
             let fetchOptions = PHFetchOptions()
             fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
             let assets = PHAsset.fetchAssets(in: assetCollection, options: fetchOptions)
-            albumExist=true
+            albumExistFlag=true
             if assets.count == 0{
                 gettingAlbumF=false
-                albumExist=false
+                albumExistFlag=false
             }
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -316,7 +491,7 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
                 }
             }
         }else{
-            albumExist=false
+            albumExistFlag=false
             gettingAlbumF=false
         }
     }
