@@ -246,25 +246,11 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         ettMode = camera.getUserDefaultInt(str: "ettMode", ret: 0)
         ettWidth = camera.getUserDefaultInt(str: "ettWidth", ret: 90)
         targetMode = camera.getUserDefaultInt(str: "targetMode", ret: 6)
-    
+        print("viewDidLoad")
         setRotate(alp:1)
         sound(snd:"silence")
         UIApplication.shared.beginReceivingRemoteControlEvents()
         self.becomeFirstResponder()
-
-//        while camera.getAlbumList()==false{
-//            sleep(UInt32(0.1))
-//        }
-//        videoArrayCount = camera.videoURL.count
-//        print("didload:",camera.videoURL.count,camera.videoDate.count)
-//        var idS = Array<String>()
-//        for i in 0..<camera.videoIdentifier.count{
-//            idS.append(camera.videoIdentifier[i])
-//            camera.printURLArrayFirst(localID: idS)
-//            idS.removeAll()
-//        }
-//        setToppage()
-//        tableView.reloadData()
     }
   
     override var prefersStatusBarHidden: Bool {
@@ -348,16 +334,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     //nuber of cell
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        print("number of cell")
-//        album.getAlbumList()//probably not nessesary
-//        videoArrayCount = album.videoURL.count//probably not nessesary
-//        setToppage()//nessesary
-//        if camera.albumExistFlag==false{
-//            return 0
-//        }else{
-//            let album = AlbumController()
             return camera.videoURL.count
-//        }
     }
     //set data on cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath:IndexPath) -> UITableViewCell{
@@ -369,9 +346,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     //play item
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard: UIStoryboard = self.storyboard!
-        
         let nextView = storyboard.instantiateViewController(withIdentifier: "PLAY") as! PlayViewController
-        
         nextView.videoURL = camera.videoURL[indexPath.row]
         nextView.calcDate = camera.videoDate[indexPath.row]
         self.present(nextView, animated: true, completion: nil)
@@ -403,17 +378,16 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 }
             }
         }
-        
     }
     @IBAction func unwindAction(segue: UIStoryboardSegue) {
-//        func unwindAction(segue: UIStoryboardSegue) {
         UIApplication.shared.isIdleTimerDisabled = false//スリープする
         print("unwindAction")
-        //        album.getAlbumList()
-//        tableView.reloadData()
-//        videoArrayCount=album.videoURL.count
-//        setToppage()//not effective
-//        print("unwindAction:",videoArrayCount)
-    }
+//        if let vc = segue.source as? PlayViewController {
+//            if vc.timer != nil{
+//                vc.timer?.invalidate()
+//            }
+//            print("index:",vc.currentIndex)
+//        }
+     }
 }
 

@@ -249,7 +249,8 @@ class PlayViewController: UIViewController {
         if UIApplication.shared.isIdleTimerDisabled == true{
             UIApplication.shared.isIdleTimerDisabled = false//スリープする
         }
-        self.present(mainView, animated: false, completion: nil)
+        print("playview_exit")
+//        self.present(mainView, animated: false, completion: nil)
     }
     var eyeCenter = CGPoint(x:300.0,y:100.0)
     var faceCenter = CGPoint(x:300.0,y:200.0)

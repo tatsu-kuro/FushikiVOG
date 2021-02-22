@@ -11,9 +11,7 @@ import AVFoundation
 
 class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
     let tempFilePath: String = "\(NSTemporaryDirectory())temp.mp4"
-//    let tempFileURL = URL(string: "\(NSTemporaryDirectory())temp.mp4")
     let albumName:String = "Fushiki"
-
     var videoDevice: AVCaptureDevice?
     var captureSession: AVCaptureSession!
     var fileOutput = AVCaptureMovieFileOutput()

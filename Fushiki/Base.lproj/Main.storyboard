@@ -125,7 +125,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="EXIT"/>
                                 <connections>
-                                    <action selector="exitBut:" destination="gOS-fU-nK5" eventType="touchUpInside" id="KfE-Rm-f6N"/>
+                                    <segue destination="4AW-zU-c08" kind="unwind" unwindAction="unwindActionWithSegue:" id="QoD-80-OWg"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JNE-pm-V4S">
@@ -224,6 +224,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bde-H1-uyg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="4AW-zU-c08" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer numberOfTapsRequired="2" id="3TM-bb-wSt">
                     <connections>
                         <action selector="goExit:" destination="gOS-fU-nK5" id="UBl-cB-gqb"/>
@@ -371,7 +372,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="EXIT"/>
                                 <connections>
-                                    <action selector="goExit:" destination="YRo-aS-cBq" eventType="touchUpInside" id="MsL-tM-ove"/>
+                                    <segue destination="aXj-Bo-ygl" kind="unwind" unwindAction="unwindActionWithSegue:" id="Zf4-zi-KUe"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleAspectFill" semanticContentAttribute="playback" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n7m-sE-d1T">
@@ -405,6 +406,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SHZ-t8-76y" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="aXj-Bo-ygl" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer id="zSj-ag-bUT">
                     <connections>
                         <action selector="doubleTap:" destination="YRo-aS-cBq" id="XSX-YK-7EC"/>
@@ -672,6 +674,7 @@
                                 <state key="normal" title="Exit"/>
                                 <connections>
                                     <action selector="onExitButton:" destination="qHa-wQ-wFQ" eventType="touchUpInside" id="W9o-Vu-ALP"/>
+                                    <segue destination="Ccw-B3-5ju" kind="unwind" unwindAction="unwindActionWithSegue:" id="sgX-R4-NqE"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -705,6 +708,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MFk-2w-uR5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="Ccw-B3-5ju" userLabel="Exit" sceneMemberID="exit"/>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="q9w-qB-lzZ">
                     <connections>
                         <action selector="panGesture:" destination="qHa-wQ-wFQ" id="xIh-2i-lAi"/>
@@ -1299,7 +1303,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="6zK-KW-B9K"/>
+        <segue reference="Zj2-IF-7jJ"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="camera" catalog="system" width="128" height="94"/>
