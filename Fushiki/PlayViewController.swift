@@ -246,9 +246,6 @@ class PlayViewController: UIViewController {
     @IBAction func onExitButton(_ sender: Any) {
         killTimer()
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
-        if UIApplication.shared.isIdleTimerDisabled == true{
-            UIApplication.shared.isIdleTimerDisabled = false//スリープする
-        }
         print("playview_exit")
 //        self.present(mainView, animated: false, completion: nil)
     }
@@ -492,7 +489,7 @@ class PlayViewController: UIViewController {
         drawVogOnePage(count: cntTemp)
         //ここでcalcFlagをチェックするとデータを撮り損なうか
         if calcFlagTemp == false{//timer に入るときに終わっていた
-            UIApplication.shared.isIdleTimerDisabled = false
+            UIApplication.shared.isIdleTimerDisabled = false//スリープする
             drawVogOnePage(count: 0)
             print("calcend")
             timer_vog!.invalidate()
