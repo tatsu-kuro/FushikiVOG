@@ -207,14 +207,14 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }else{
             setteiButton.alpha=1.0
         }
+          print("didappear")
+          videoArrayCount = camera.getAlbumAssets()
+          for i in 0..<camera.videoURL.count{
+              camera.videoURL[i] = camera.getURLfromPHAsset(asset: camera.videoAlbumAssets[i])
+          }
+          print(videoArrayCount,camera.videoURL.count,camera.videoDate.count)
+         tableView.reloadData()
         setToppage()
-        while camera.getAlbumList()==false{
-            sleep(UInt32(0.1))
-        }
-        print("didappear:",camera.videoURL.count,camera.videoDate.count)
-
-        videoArrayCount = camera.videoURL.count
-        tableView.reloadData()
     }
     func setToppage()
     {
@@ -243,19 +243,19 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         UIApplication.shared.beginReceivingRemoteControlEvents()
         self.becomeFirstResponder()
 
-        while camera.getAlbumList()==false{
-            sleep(UInt32(0.1))
-        }
-        videoArrayCount = camera.videoURL.count
-        print("didload:",camera.videoURL.count,camera.videoDate.count)
-        var idS = Array<String>()
-        for i in 0..<camera.videoIdentifier.count{
-            idS.append(camera.videoIdentifier[i])
-            camera.printURLArrayFirst(localID: idS)
-            idS.removeAll()
-        }
-        setToppage()
-        tableView.reloadData()
+//        while camera.getAlbumList()==false{
+//            sleep(UInt32(0.1))
+//        }
+//        videoArrayCount = camera.videoURL.count
+//        print("didload:",camera.videoURL.count,camera.videoDate.count)
+//        var idS = Array<String>()
+//        for i in 0..<camera.videoIdentifier.count{
+//            idS.append(camera.videoIdentifier[i])
+//            camera.printURLArrayFirst(localID: idS)
+//            idS.removeAll()
+//        }
+//        setToppage()
+//        tableView.reloadData()
     }
   
     override var prefersStatusBarHidden: Bool {
@@ -342,13 +342,13 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 //        print("number of cell")
 //        album.getAlbumList()//probably not nessesary
 //        videoArrayCount = album.videoURL.count//probably not nessesary
-        setToppage()//nessesary
-        if camera.albumExistFlag==false{
-            return 0
-        }else{
+//        setToppage()//nessesary
+//        if camera.albumExistFlag==false{
+//            return 0
+//        }else{
 //            let album = AlbumController()
             return camera.videoURL.count
-        }
+//        }
     }
     //set data on cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath:IndexPath) -> UITableViewCell{
