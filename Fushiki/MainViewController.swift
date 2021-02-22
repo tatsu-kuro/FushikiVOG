@@ -83,14 +83,9 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     func doModes(){
         let storyboard: UIStoryboard = self.storyboard!
-//    //tableviewをトップに戻す
-//        print("domodes")
-//        if targetMode<5{
-//        let indexPath = IndexPath(row:0,section:0)
-//            tableView.reloadData()
-//            tableView.reloadRows(at: [indexPath], with: .fade)
-//
-//        }
+        if targetMode<5{//録画の時tableviewをトップに戻す
+            tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        }
         UserDefaults.standard.set(targetMode, forKey:"targetMode")
         if targetMode==0{//pursuit
             let nextView = storyboard.instantiateViewController(withIdentifier: "ETT") as! ETTViewController
