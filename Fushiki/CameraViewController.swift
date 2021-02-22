@@ -32,10 +32,7 @@ class CameraViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setButtons()
-//        var cameraMode=0
-//        if camera.getUserDefaultInt(str: "cameraMode", ret: 0) != nil{
-        var cameraMode = Int(camera.getUserDefaultInt(str: "cameraMode", ret: 0))
-//        }
+        let cameraMode = Int(camera.getUserDefaultInt(str: "cameraMode", ret: 0))
         cameraChan.selectedSegmentIndex = cameraMode
         camera.initSession(camera: cameraMode, bounds:view.bounds, cameraView: cameraView)
         fpsLabel.text = String(format:"fps:%d" ,camera.fpsCurrent)

@@ -207,15 +207,24 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }else{
             setteiButton.alpha=1.0
         }
-          print("didappear")
-          videoArrayCount = camera.getAlbumAssets()
-          for i in 0..<camera.videoURL.count{
-              camera.videoURL[i] = camera.getURLfromPHAsset(asset: camera.videoAlbumAssets[i])
-          }
-          print(videoArrayCount,camera.videoURL.count,camera.videoDate.count)
-         tableView.reloadData()
+        print("didappear")
+        camera.getAlbumAssets()
+        for i in 0..<camera.videoURL.count{//cloud のURL->nilを入れる
+            camera.videoURL[i] = camera.getURLfromPHAsset(asset: camera.videoAlbumAssets[i])
+        }
+        for i in (0..<camera.videoURL.count).reversed(){//cloud(nil) のものは削除する
+            if camera.videoURL[i] == nil{
+                camera.videoURL.remove(at: i)
+                camera.videoDate.remove(at: i)
+                camera.videoAlbumAssets.remove(at: i)
+            }
+        }
+        videoArrayCount=camera.videoURL.count
+        print(videoArrayCount,camera.videoURL.count,camera.videoDate.count)
+        tableView.reloadData()
         setToppage()
     }
+    
     func setToppage()
     {
         if camera.videoURL.count==0{
@@ -362,9 +371,11 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let storyboard: UIStoryboard = self.storyboard!
         
         let nextView = storyboard.instantiateViewController(withIdentifier: "PLAY") as! PlayViewController
+        
         nextView.videoURL = camera.videoURL[indexPath.row]
         nextView.calcDate = camera.videoDate[indexPath.row]
         self.present(nextView, animated: true, completion: nil)
+        
     }
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         print("set canMoveRowAt")
@@ -373,7 +384,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     //セルの削除ボタンが押された時の処理
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-
+        
         //削除するだけなのでindexPath_row = indexPath.rowをする必要はない。
         if editingStyle == UITableViewCell.EditingStyle.delete {
             camera.eraseVideo(number: indexPath.row)
@@ -384,9 +395,15 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 camera.videoURL.remove(at: indexPath.row)
                 camera.videoDate.remove(at: indexPath.row)
                 tableView.reloadData()
+                if indexPath.row>4 && indexPath.row<camera.videoURL.count{
+                    tableView.reloadRows(at: [indexPath], with: .fade)
+                }else if indexPath.row == camera.videoURL.count{
+                    let indexPath1 = IndexPath(row:indexPath.row-1,section:0)
+                    tableView.reloadRows(at: [indexPath1], with: .fade)
+                }
             }
-//            setToppage()
         }
+        
     }
     @IBAction func unwindAction(segue: UIStoryboardSegue) {
 //        func unwindAction(segue: UIStoryboardSegue) {
