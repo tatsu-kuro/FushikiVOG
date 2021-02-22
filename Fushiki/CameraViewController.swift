@@ -35,7 +35,8 @@ class CameraViewController: UIViewController {
         let cameraMode = Int(camera.getUserDefaultInt(str: "cameraMode", ret: 0))
         cameraChan.selectedSegmentIndex = cameraMode
         camera.initSession(camera: cameraMode, bounds:view.bounds, cameraView: cameraView)
-        fpsLabel.text = String(format:"fps:%d" ,camera.fpsCurrent)
+        fpsLabel.text = String(format:"fps:%d %dx%d" ,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
+ 
         zoomBar.minimumValue = 0
         zoomBar.maximumValue = 0.1
         zoomBar.addTarget(self, action: #selector(onZoomValueChange), for: UIControl.Event.valueChanged)
@@ -71,7 +72,7 @@ class CameraViewController: UIViewController {
         camera.stopRunning()
         camera.initSession(camera: cameraMode, bounds:view.bounds, cameraView: cameraView)
         print("cameraMode:",cameraMode)
-        fpsLabel.text = String(format:"fps:%d" ,camera.fpsCurrent)
+        fpsLabel.text = String(format:"fps:%d %dx%d" ,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
         camera.setLedLevel(level:camera.getUserDefaultFloat(str: "ledValue", ret:0))
     }
     @objc func onLedValueChange(){

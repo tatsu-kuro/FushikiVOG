@@ -24,6 +24,8 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
     var albumExistFlag:Bool = false
     var dialogStatus:Int=0
     var fpsCurrent:Int=0
+    var widthCurrent:Int=0
+    var heightCurrent:Int=0
     var cameraMode:Int=0
 //    init(name: String) {
 //        // 全てのプロパティを初期化する前にインスタンスメソッドを実行することはできない
@@ -158,7 +160,7 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
         }
     }
     
-    func setZoom(level:Float){//ledとなっているので要変更！！！
+    func setZoom(level:Float){//
         if cameraMode==2{
             return
         }
@@ -341,6 +343,8 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
                 if desiredFps == range.maxFrameRate && width >= maxWidth {
                     selectedFormat = format
                     maxWidth = width
+                    widthCurrent = Int(dimensions.width)
+                    heightCurrent = Int(dimensions.height)
                 }
             }
         }
