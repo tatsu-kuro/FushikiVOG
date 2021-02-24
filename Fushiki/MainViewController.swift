@@ -320,7 +320,13 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         button4.alpha=alp
         helpButton.alpha=alp
         setteiButton.alpha=alp
-        camera.setButtonProperty(doModeButton, x: 0, y: 0, w: bw, h: bw, UIColor.white)
+        let cameraMode = Int(camera.getUserDefaultInt(str: "cameraMode", ret: 0))
+        if cameraMode == 1{
+            doModeButton.isHidden=false
+            camera.setButtonProperty(doModeButton, x: 0, y: 0, w: bw, h: bw, UIColor.white)
+        }else{
+            doModeButton.isHidden=true
+        }
         camera.setButtonProperty(button0,x:sp*2,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(button1,x:bw*1+sp*3,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(button2,x:bw*2+sp*4,y:by,w:bw,h:bh,UIColor.darkGray)
