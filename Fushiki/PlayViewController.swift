@@ -997,13 +997,11 @@ class PlayViewController: UIViewController {
                 debugFace.isHidden=false
             }
         }
-        if debugMode==true{
-            
-        }
         
         if calcFlag == true{
             calcFlag=false
             setButtons(flag: true)
+            UIApplication.shared.isIdleTimerDisabled = false//sleepする
             return
         }
 //        var cvError:Int = 0
@@ -1029,7 +1027,7 @@ class PlayViewController: UIViewController {
         KalmanInit()
         //        showBoxies(f: true)
         //        vogImage = drawWakulines(width:mailWidth*18,height:mailHeight)//枠だけ
-        UIApplication.shared.isIdleTimerDisabled = true
+        UIApplication.shared.isIdleTimerDisabled = true//sleepしない
         let eyeborder:CGFloat = CGFloat(eyeBorder)
         startTimer()//resizerectのチェックの時はここをコメントアウト*********************
         let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
@@ -1236,6 +1234,7 @@ class PlayViewController: UIViewController {
                 }
             }
             calcFlag = false
+            UIApplication.shared.isIdleTimerDisabled = false//sleepする
         }
     }
  

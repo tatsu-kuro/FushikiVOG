@@ -203,9 +203,9 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
 
     override func viewDidAppear(_ animated: Bool) {
-//        if UIApplication.shared.isIdleTimerDisabled == true{
-//            UIApplication.shared.isIdleTimerDisabled = false//監視する
-//        }
+        if UIApplication.shared.isIdleTimerDisabled == true{
+            UIApplication.shared.isIdleTimerDisabled = false//監視する
+        }
  
         setRotate(alp: 0.6)
         if targetMode==0{
@@ -320,7 +320,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         button4.alpha=alp
         helpButton.alpha=alp
         setteiButton.alpha=alp
-        camera.setButtonProperty(doModeButton, x: 0, y: 0, w: bw, h: bw, UIColor.orange)
+        camera.setButtonProperty(doModeButton, x: 0, y: 0, w: bw, h: bw, UIColor.white)
         camera.setButtonProperty(button0,x:sp*2,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(button1,x:bw*1+sp*3,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(button2,x:bw*2+sp*4,y:by,w:bw,h:bh,UIColor.darkGray)
@@ -403,7 +403,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
     }
     @IBAction func unwindAction(segue: UIStoryboardSegue) {
-        UIApplication.shared.isIdleTimerDisabled = false//スリープする
+//        UIApplication.shared.isIdleTimerDisabled = false//スリープする
         print("unwindAction")
 //        if let vc = segue.source as? PlayViewController {
 //            if vc.timer != nil{
