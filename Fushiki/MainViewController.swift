@@ -39,47 +39,42 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             soundPlayer?.play() // → これで音が鳴る
         }
     }
+    func doModes_sub(mode:Int){
+        if targetMode == mode {
+            sound(snd: "silence")
+            doModes()
+        }else{
+            targetMode = mode
+            setAlpha()
+        }
+    }
     
     @IBAction func doMode0(_ sender: Any) {
-        targetMode=0
-        sound(snd:"silence")
-        doModes()
+        doModes_sub(mode: 0)
     }
     
     @IBAction func doMode1(_ sender: Any) {
-        targetMode=1
-        sound(snd:"silence")
-        doModes()
+        doModes_sub(mode: 1)
     }
     
     @IBAction func doMode2(_ sender: Any) {
-        targetMode=2
-        sound(snd:"silence")
-        doModes()
+        doModes_sub(mode: 2)
     }
     
     @IBAction func doMode3(_ sender: Any) {
-        targetMode=3
-        sound(snd:"silence")
-        doModes()
+        doModes_sub(mode: 3)
     }
     
     @IBAction func doMode4(_ sender: Any) {
-        targetMode=4
-        sound(snd:"silence")
-        doModes()
+        doModes_sub(mode: 4)
     }
     
     @IBAction func doHelp(_ sender: Any) {
-        targetMode=5
-        sound(snd:"silence")
-        doModes()
+        doModes_sub(mode: 5)
     }
     
     @IBAction func doSettei(_ sender: Any) {
-        targetMode=6
-        sound(snd:"silence")
-        doModes()
+        doModes_sub(mode: 6)
     }
     func doModes(){
         let storyboard: UIStoryboard = self.storyboard!
@@ -115,6 +110,24 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             let nextView = storyboard.instantiateViewController(withIdentifier: "SETTEI") as! SetteiViewController
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
+        }
+    }
+    func setAlpha(){
+        setRotate(alp: 0.6)
+        if targetMode==0{
+            button0.alpha=1.0// saccadebut.alph=1.0
+        }else if targetMode==1{
+            button1.alpha=1.0
+        }else if targetMode==2{
+            button2.alpha=1.0
+        }else if targetMode==3{
+            button3.alpha=1.0
+        }else if targetMode==4{
+            button4.alpha=1.0
+        }else if targetMode==5{
+            helpButton.alpha=1.0
+        }else{
+            setteiButton.alpha=1.0
         }
     }
     override func remoteControlReceived(with event: UIEvent?) {
@@ -281,6 +294,12 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var button0: UIButton!
     @IBOutlet weak var button2: UIButton!
     
+    @IBOutlet weak var doModeButton: UIButton!
+    @IBAction func onDoModeButton(_ sender: Any) {
+        sound(snd: "silence")
+        doModes()
+    }
+    
     @IBOutlet weak var cameraButton2: UIButton!
     @IBOutlet weak var cameraButton: UIButton!
     //    @IBOutlet weak var titleImage: UIImageView!
@@ -301,6 +320,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         button4.alpha=alp
         helpButton.alpha=alp
         setteiButton.alpha=alp
+        camera.setButtonProperty(doModeButton, x: 0, y: 0, w: bw, h: bw, UIColor.orange)
         camera.setButtonProperty(button0,x:sp*2,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(button1,x:bw*1+sp*3,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(button2,x:bw*2+sp*4,y:by,w:bw,h:bh,UIColor.darkGray)
