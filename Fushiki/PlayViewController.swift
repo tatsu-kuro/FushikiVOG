@@ -572,7 +572,7 @@ class PlayViewController: UIViewController {
         }
         let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample)!
         var ciImage:CIImage!
-        if cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
+        if videoFps<230{//cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
             ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
         }else{
             ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
@@ -671,11 +671,10 @@ class PlayViewController: UIViewController {
         } else if sender.state == .changed {
             
             if vogImageView?.isHidden == false{//vog波形表示中
-//                if vogImageViewFlag == true{//vog波形表示中
                 if fpsXd*eyePosX.count<240*10{//240*10以下なら動けない。
                     return
                 }
-                let ratio=pos.y/view.bounds.height
+                let ratio=(view.bounds.height-pos.y)/view.bounds.height
                 let dd = Int(15*ratio)
                 if Int(move.x) > lastmoveX + dd{
                     vogCurPoint -= dd*10
@@ -858,6 +857,7 @@ class PlayViewController: UIViewController {
 //        mailButton.isEnabled=false
         cameraButton.frame = CGRect(x:  sp*7+bw*5, y: by-bh*2, width: bw*2+sp, height:bh)
         view.bringSubviewToFront(cameraButton)
+        cameraButton.isHidden=true//fps<230ならfrontCameraと判定することとした
     }
   
     func setButtonProperty(button:UIButton,color:UIColor){
@@ -1082,7 +1082,7 @@ class PlayViewController: UIViewController {
         sample = readerOutput.copyNextSampleBuffer()
         let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample!)!
         var ciImage:CIImage!
-        if cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
+        if videoFps<230{//cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
             ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
         }else{
             ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
@@ -1157,7 +1157,7 @@ class PlayViewController: UIViewController {
                         eyeWithBorderRect.origin.x=0
                         eyeWithBorderRect.origin.y=0
                     }
-                    if cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
+                    if videoFps<230{//cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
                         ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
                     }else{
                         ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
@@ -1234,7 +1234,7 @@ class PlayViewController: UIViewController {
                 }
             }
             calcFlag = false
-            UIApplication.shared.isIdleTimerDisabled = false//sleepする
+//            UIApplication.shared.isIdleTimerDisabled = false//sleepする
         }
     }
  
