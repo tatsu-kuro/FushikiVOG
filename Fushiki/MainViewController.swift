@@ -336,6 +336,8 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         camera.setButtonProperty(helpButton,x:bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(setteiButton,x:bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(cameraButton, x: bw*6+sp*8, y: by-bh-sp, w: bw, h: bh, UIColor.orange)
+//        cameraButton.frame=CGRect(x:bw*6+sp*8,y:by-bh-sp,width:bw,height: bh)
+//        setteiButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height: bh)
         //seにおいてカメラボタンが反応しにくいので　tableViewの上にあるためか？
         cameraButton2.frame=CGRect(x:ww-bw,y:by-bh,width:bw,height:bh+sp*2)
 

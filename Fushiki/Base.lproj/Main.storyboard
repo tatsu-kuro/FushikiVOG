@@ -641,7 +641,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="gearshape" catalog="system"/>
+                                <state key="normal" title="parameter"/>
                                 <connections>
                                     <segue destination="lpw-bn-NhA" kind="show" id="qxK-X4-tBt"/>
                                 </connections>
@@ -651,7 +651,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="playpause.fill" catalog="system"/>
+                                <state key="normal" title="play"/>
                                 <connections>
                                     <action selector="onPlayButton:" destination="qHa-wQ-wFQ" eventType="touchUpInside" id="Ywt-aI-tSn"/>
                                 </connections>
@@ -1043,22 +1043,24 @@
                                     <segue destination="c63-hm-Ug5" kind="show" id="zX0-Di-3Ji"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CTI-eK-yKu" userLabel="Settei Button">
-                                <rect key="frame" x="749" y="318" width="59" height="22"/>
+                            <button opaque="NO" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CTI-eK-yKu" userLabel="Settei Button">
+                                <rect key="frame" x="739" y="312" width="83" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="gearshape" catalog="system"/>
+                                <state key="normal" title="parameter">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
                                     <action selector="doSettei:" destination="BYZ-38-t0r" eventType="touchUpInside" id="N5J-fQ-EGh"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aYl-wa-v9e">
-                                <rect key="frame" x="801" y="365" width="25" height="22"/>
+                                <rect key="frame" x="802" y="366" width="25" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="camera" catalog="system"/>
+                                <state key="normal" title="camera"/>
                                 <connections>
                                     <segue destination="c63-hm-Ug5" kind="show" id="6zK-KW-B9K"/>
                                 </connections>
@@ -1204,14 +1206,13 @@
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="IGF-X7-hOJ">
                                 <rect key="frame" x="445" y="359" width="296" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <segments>
                                     <segment title="front camera"/>
                                     <segment title="back camera"/>
                                     <segment title="none"/>
                                 </segments>
-                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="selectedSegmentTintColor" systemColor="systemOrangeColor"/>
+                                <color key="tintColor" systemColor="systemOrangeColor"/>
                                 <connections>
                                     <action selector="onCameraChan:" destination="c63-hm-Ug5" eventType="valueChanged" id="nw1-AA-MRl"/>
                                 </connections>
@@ -1323,9 +1324,7 @@
         <image name="eye" width="212" height="212"/>
         <image name="face" width="212" height="212"/>
         <image name="fushiki_e" width="1168" height="577"/>
-        <image name="gearshape" catalog="system" width="128" height="121"/>
         <image name="logomejiro" width="1300" height="100"/>
-        <image name="playpause.fill" catalog="system" width="128" height="70"/>
         <image name="rec" width="257" height="112"/>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
