@@ -78,7 +78,8 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     func doModes(){
         let storyboard: UIStoryboard = self.storyboard!
-        if targetMode<5{//録画の時tableviewをトップに戻す
+        if targetMode<5 && tableView.visibleCells.count>5{//録画の時tableviewをトップに戻す
+            
             tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
         }
         UserDefaults.standard.set(targetMode, forKey:"targetMode")
