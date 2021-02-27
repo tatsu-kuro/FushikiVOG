@@ -40,31 +40,44 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
     }
     func doModes_sub(mode:Int){
-        if targetMode == mode {
-            sound(snd: "silence")
-            doModes()
-        }else{
-            targetMode = mode
-            setAlpha()
-        }
+        targetMode = mode
+        setAlpha()
+        sound(snd: "silence")
+        doModes()
     }
     
+    @IBAction func onBut0(_ sender: Any) {
+        targetMode=0
+        setAlpha()
+    }
     @IBAction func doMode0(_ sender: Any) {
         doModes_sub(mode: 0)
     }
-    
+    @IBAction func onBut1(_ sender: Any) {
+        targetMode=1
+        setAlpha()
+    }
     @IBAction func doMode1(_ sender: Any) {
         doModes_sub(mode: 1)
     }
-    
+    @IBAction func onBut2(_ sender: Any) {
+        targetMode=2
+        setAlpha()
+    }
     @IBAction func doMode2(_ sender: Any) {
         doModes_sub(mode: 2)
     }
-    
+    @IBAction func onBut3(_ sender: Any) {
+        targetMode=3
+        setAlpha()
+    }
     @IBAction func doMode3(_ sender: Any) {
         doModes_sub(mode: 3)
     }
-    
+    @IBAction func onBut4(_ sender: Any) {
+        targetMode=4
+        setAlpha()
+    }
     @IBAction func doMode4(_ sender: Any) {
         doModes_sub(mode: 4)
     }
@@ -413,7 +426,13 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     @IBAction func unwindAction(segue: UIStoryboardSegue) {
 //        UIApplication.shared.isIdleTimerDisabled = false//スリープする
-        print("unwindAction")
+        let cameraMode = Int(camera.getUserDefaultInt(str: "cameraMode", ret: 0))
+        if cameraMode == 1{
+            doModeButton.isHidden=false
+        }else{
+            doModeButton.isHidden=true
+        }
+        
 //        if let vc = segue.source as? PlayViewController {
 //            if vc.timer != nil{
 //                vc.timer?.invalidate()

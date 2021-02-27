@@ -637,21 +637,21 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="spatial" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fs4-ea-mju">
-                                <rect key="frame" x="563" y="314" width="28" height="29"/>
+                                <rect key="frame" x="537" y="312" width="83" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="parameter"/>
+                                <state key="normal" title="Parameter"/>
                                 <connections>
                                     <segue destination="lpw-bn-NhA" kind="show" id="qxK-X4-tBt"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cRW-v2-GZO">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cRW-v2-GZO">
                                 <rect key="frame" x="527" y="314" width="28" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="play"/>
+                                <state key="normal" title="Play"/>
                                 <connections>
                                     <action selector="onPlayButton:" destination="qHa-wQ-wFQ" eventType="touchUpInside" id="Ywt-aI-tSn"/>
                                 </connections>
@@ -974,6 +974,7 @@
                                 </state>
                                 <connections>
                                     <action selector="doMode0:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IQ8-Fi-Bmy"/>
+                                    <action selector="onBut0:" destination="BYZ-38-t0r" eventType="touchDragOutside" id="exr-3c-wv8"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cTd-rF-Jk7">
@@ -986,6 +987,7 @@
                                 </state>
                                 <connections>
                                     <action selector="doMode1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JGE-XG-crn"/>
+                                    <action selector="onBut1:" destination="BYZ-38-t0r" eventType="touchDragOutside" id="SfB-6F-JHB"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uQ1-87-BgY">
@@ -998,6 +1000,7 @@
                                 </state>
                                 <connections>
                                     <action selector="doMode2:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0gv-vV-zuc"/>
+                                    <action selector="onBut2:" destination="BYZ-38-t0r" eventType="touchDragOutside" id="opf-b4-k86"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jef-4N-Mcg">
@@ -1008,6 +1011,7 @@
                                 <state key="normal" title="CaloricETT"/>
                                 <connections>
                                     <action selector="doMode3:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nnd-G0-WOH"/>
+                                    <action selector="onBut3:" destination="BYZ-38-t0r" eventType="touchDragOutside" id="0mp-eX-kpV"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SgL-BM-Dbh">
@@ -1018,6 +1022,7 @@
                                 <state key="normal" title="CaloricOKN"/>
                                 <connections>
                                     <action selector="doMode4:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YZr-Wi-gpK"/>
+                                    <action selector="onBut4:" destination="BYZ-38-t0r" eventType="touchDragOutside" id="VpG-KI-mfX"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="deG-Tq-o9U">
@@ -1030,8 +1035,8 @@
                                     <action selector="doHelp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IhA-EU-kmL"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DBN-p3-ntt">
-                                <rect key="frame" x="637" y="368" width="30" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DBN-p3-ntt">
+                                <rect key="frame" x="591" y="366" width="124" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1048,7 +1053,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="parameter">
+                                <state key="normal" title="Parameter">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -1060,17 +1065,15 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="camera"/>
+                                <state key="normal" title="Camera"/>
                                 <connections>
                                     <segue destination="c63-hm-Ug5" kind="show" id="6zK-KW-B9K"/>
                                 </connections>
                             </button>
                             <button opaque="NO" alpha="0.5" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MAr-Bx-PuO">
-                                <rect key="frame" x="727" y="367" width="20" height="22"/>
+                                <rect key="frame" x="722" y="361" width="30" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="tintColor" systemColor="systemRedColor"/>
-                                <state key="normal" image="circle.fill" catalog="system"/>
                                 <connections>
                                     <action selector="onDoModeButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ROD-TD-GwI"/>
                                 </connections>
@@ -1206,13 +1209,11 @@
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="IGF-X7-hOJ">
                                 <rect key="frame" x="445" y="359" width="296" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <segments>
                                     <segment title="front camera"/>
                                     <segment title="back camera"/>
                                     <segment title="none"/>
                                 </segments>
-                                <color key="tintColor" systemColor="systemOrangeColor"/>
                                 <connections>
                                     <action selector="onCameraChan:" destination="c63-hm-Ug5" eventType="valueChanged" id="nw1-AA-MRl"/>
                                 </connections>
@@ -1319,7 +1320,6 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="camera" catalog="system" width="128" height="94"/>
-        <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="etthelp" width="1334" height="750"/>
         <image name="eye" width="212" height="212"/>
         <image name="face" width="212" height="212"/>
@@ -1334,9 +1334,6 @@
         </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
