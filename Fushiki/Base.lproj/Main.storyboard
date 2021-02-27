@@ -974,7 +974,7 @@
                                 </state>
                                 <connections>
                                     <action selector="doMode0:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IQ8-Fi-Bmy"/>
-                                    <action selector="onBut0:" destination="BYZ-38-t0r" eventType="touchDragOutside" id="exr-3c-wv8"/>
+                                    <action selector="onBut0:" destination="BYZ-38-t0r" eventType="touchDragOutside" id="8PQ-Ov-zWB"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cTd-rF-Jk7">

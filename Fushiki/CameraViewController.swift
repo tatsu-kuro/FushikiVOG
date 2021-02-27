@@ -56,6 +56,13 @@ class CameraViewController: UIViewController {
         camera.setFocus(focus: focusBar.value)
       
     }
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    override var prefersHomeIndicatorAutoHidden: Bool {
+        return true
+    }
+    
     
     @IBAction func onCameraChan(_ sender: UISegmentedControl) {
         let cameraMode=cameraChan.selectedSegmentIndex

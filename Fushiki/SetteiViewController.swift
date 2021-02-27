@@ -238,6 +238,13 @@ class SetteiViewController: UIViewController {
         setPars()
         // Do any additional setup after loading the view.
     }
+    
+      override var prefersStatusBarHidden: Bool {
+          return true
+      }
+      override var prefersHomeIndicatorAutoHidden: Bool {
+          return true
+      }
     func setScreen(){
         let ww=view.bounds.width
         let wh=view.bounds.height

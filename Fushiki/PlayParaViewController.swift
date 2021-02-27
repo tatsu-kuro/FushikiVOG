@@ -78,6 +78,13 @@ class PlayParaViewController: UIViewController {
         setScreen()
         keyPadDownButton.isHidden=true
     }
+    
+      override var prefersStatusBarHidden: Bool {
+          return true
+      }
+      override var prefersHomeIndicatorAutoHidden: Bool {
+          return true
+      }
   
     @IBAction func onDefault1Button(_ sender: Any) {
         paraInt1=100
