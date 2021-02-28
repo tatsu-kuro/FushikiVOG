@@ -77,6 +77,9 @@ class CameraViewController: UIViewController {
         print("cameraMode:",cameraMode)
         fpsLabel.text = String(format:"fps:%d %dx%d" ,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
         camera.setLedLevel(level:camera.getUserDefaultFloat(str: "ledValue", ret:0))
+        if cameraMode == 1{
+            UserDefaults.standard.set(camera.fpsCurrent, forKey: "backCameraFps")
+        }
         setButtons()
     }
     @objc func onLedValueChange(){

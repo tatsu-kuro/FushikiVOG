@@ -230,6 +230,7 @@ class PlayViewController: UIViewController {
             videoPlayer.pause()
             currFrameNumber=Int(seekBar.value*videoFps)
             videoPlayer.seek(to: CMTimeMakeWithSeconds(Float64(seekBar.value), preferredTimescale: Int32(NSEC_PER_SEC)))
+            dispWakus()
             showWakuImages()
         }else{//stoped
             if seekBar.value>seekBar.maximumValue-0.5{
@@ -536,6 +537,7 @@ class PlayViewController: UIViewController {
         let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
         let avAsset = AVURLAsset(url: videoURL!, options: options)
         var reader: AVAssetReader! = nil
+        let backCameraFps=album.getUserDefaultFloat(str: "backCameraFps", ret:240.0)
         do {
             reader = try AVAssetReader(asset: avAsset)
         } catch {
@@ -550,7 +552,7 @@ class PlayViewController: UIViewController {
             #endif
             return
         }
-        
+//        print("preferredtransform:",avAsset. preferredTransform)
         let readerOutputSettings: [String: Any] = [kCVPixelBufferPixelFormatTypeKey as String : Int(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)]
         let readerOutput = AVAssetReaderTrackOutput(track: videoTrack, outputSettings: readerOutputSettings)
         
@@ -572,7 +574,7 @@ class PlayViewController: UIViewController {
         }
         let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample)!
         var ciImage:CIImage!
-        if videoFps<230{//cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
+        if videoFps<backCameraFps-10.0{//cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
             ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
         }else{
             ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
@@ -734,6 +736,7 @@ class PlayViewController: UIViewController {
             if seekBar.value>videoDuration-0.01{
                 seekBar.value=0
                 videoPlayer.seek(to: CMTimeMakeWithSeconds(Float64(seekBar.value), preferredTimescale: Int32(NSEC_PER_SEC)))
+//                dispWakus()
 //                showWakuImages()
             }
         }
@@ -881,7 +884,7 @@ class PlayViewController: UIViewController {
         let newTime = CMTime(seconds: Double(seekBar.value), preferredTimescale: 600)
         videoPlayer.seek(to: newTime, toleranceBefore: .zero, toleranceAfter: .zero)
         currFrameNumber=Int(seekBar.value*videoFps)
-//        dispWakus()
+        dispWakus()
         showWakuImages()
 //        print("curr/slider:",currFrameNumber)
     }
@@ -978,6 +981,7 @@ class PlayViewController: UIViewController {
 //            return
 //        }
         var debugMode:Bool=true
+        let backCameraFps=album.getUserDefaultFloat(str: "backCameraFps", ret:240.0)
         if  UserDefaults.standard.integer(forKey: "checkRects") == 0{
             debugMode=false
         }
@@ -1082,7 +1086,7 @@ class PlayViewController: UIViewController {
         sample = readerOutput.copyNextSampleBuffer()
         let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample!)!
         var ciImage:CIImage!
-        if videoFps<230{//cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
+        if videoFps<backCameraFps-10{//cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
             ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
         }else{
             ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
@@ -1157,7 +1161,7 @@ class PlayViewController: UIViewController {
                         eyeWithBorderRect.origin.x=0
                         eyeWithBorderRect.origin.y=0
                     }
-                    if videoFps<230{//cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
+                    if videoFps<backCameraFps-10{//cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
                         ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
                     }else{
                         ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)

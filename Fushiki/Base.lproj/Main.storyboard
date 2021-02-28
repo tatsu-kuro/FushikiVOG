@@ -636,16 +636,6 @@
                                     <action selector="onWaveButton:" destination="qHa-wQ-wFQ" eventType="touchUpInside" id="TRY-4V-ckj"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="spatial" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fs4-ea-mju">
-                                <rect key="frame" x="537" y="312" width="83" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Parameter"/>
-                                <connections>
-                                    <segue destination="lpw-bn-NhA" kind="show" id="qxK-X4-tBt"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cRW-v2-GZO">
                                 <rect key="frame" x="527" y="314" width="28" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -675,6 +665,16 @@
                                 <connections>
                                     <action selector="onExitButton:" destination="qHa-wQ-wFQ" eventType="touchUpInside" id="W9o-Vu-ALP"/>
                                     <segue destination="Ccw-B3-5ju" kind="unwind" unwindAction="unwindActionWithSegue:" id="sgX-R4-NqE"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="spatial" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fs4-ea-mju">
+                                <rect key="frame" x="598" y="314" width="71" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Parameter"/>
+                                <connections>
+                                    <segue destination="lpw-bn-NhA" kind="show" id="qxK-X4-tBt"/>
                                 </connections>
                             </button>
                         </subviews>

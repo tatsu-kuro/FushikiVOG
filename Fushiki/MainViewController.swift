@@ -417,7 +417,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 tableView.reloadData()
                 if indexPath.row>4 && indexPath.row<camera.videoURL.count{
                     tableView.reloadRows(at: [indexPath], with: .fade)
-                }else if indexPath.row == camera.videoURL.count{
+                }else if indexPath.row == camera.videoURL.count && indexPath.row != 0{
                     let indexPath1 = IndexPath(row:indexPath.row-1,section:0)
                     tableView.reloadRows(at: [indexPath1], with: .fade)
                 }
