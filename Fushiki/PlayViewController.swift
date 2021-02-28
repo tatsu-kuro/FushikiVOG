@@ -715,6 +715,10 @@ class PlayViewController: UIViewController {
         print("tap",vogImageView?.isHidden,calcFlag)
  
         if vogImageView?.isHidden == false{
+            let pos = sender.location(in: self.view)
+            if pos.x<view.bounds.width/4 || pos.x>view.bounds.width*3/4{
+                vogImageView?.isHidden=true
+            }
             return
         }
         if eyeORface == 0{//eye
