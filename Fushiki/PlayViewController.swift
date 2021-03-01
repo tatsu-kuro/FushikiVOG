@@ -586,8 +586,7 @@ class PlayViewController: UIViewController {
         CGeye = context.createCGImage(ciImage, from: eyeRectResized)
 
         UIeye = UIImage.init(cgImage: CGeye, scale:1.0, orientation:.up)//orientation)
-
-        eyeWakuL_image.frame=CGRect(x:view.bounds.width/2+10,y:5,width: eyeRectResized.size.width*4,height: eyeRectResized.size.height*4)
+        eyeWakuL_image.frame=CGRect(x:view.bounds.width/2 - eyeRectResized.size.width*4 - 10,y:5,width: eyeRectResized.size.width*4,height: eyeRectResized.size.height*4)
         eyeWakuL_image.layer.borderColor = UIColor.black.cgColor
         eyeWakuL_image.layer.borderWidth = 1.0
         eyeWakuL_image.backgroundColor = UIColor.clear
@@ -598,7 +597,7 @@ class PlayViewController: UIViewController {
         let faceRectResized = resizeR2(faceRect, viewRect:getVideoRectOnScreen(), image: ciImage)
         CGface = context.createCGImage(ciImage, from: faceRectResized)
         UIface = UIImage.init(cgImage: CGface, scale:1.0, orientation:.up)
-        faceWakuL_image.frame=CGRect(x:view.bounds.width/2 - faceRectResized.size.width*4 - 10,y:5,width: faceRectResized.size.width*4,height: faceRectResized.size.height*4)
+        faceWakuL_image.frame=CGRect(x:view.bounds.width/2 + 10,y:5,width: faceRectResized.size.width*4,height: faceRectResized.size.height*4)
         faceWakuL_image.layer.borderColor = UIColor.black.cgColor
         faceWakuL_image.layer.borderWidth = 1.0
         faceWakuL_image.backgroundColor = UIColor.clear
@@ -1177,12 +1176,12 @@ class PlayViewController: UIViewController {
                     if debugMode == true{
                         //画面表示はmain threadで行う
                         DispatchQueue.main.async {
-                            debugEye.frame=CGRect(x:x,y:y,width:eyeRect.size.width,height:eyeRect.size.height)
-                            debugEye.image=eyeUIImage
-                            x += eyeRect.size.width
+//                            debugEye.frame=CGRect(x:x,y:y,width:eyeRect.size.width,height:eyeRect.size.height)
+//                            debugEye.image=eyeUIImage
+//                            x += eyeRect.size.width
                             debugEyeb.frame=CGRect(x:x,y:y,width:eyeWithBorderRect.size.width,height:eyeWithBorderRect.size.height)
                             debugEyeb.image=eyeWithBorderUIImage
-                            view.bringSubviewToFront(debugEye)
+//                            view.bringSubviewToFront(debugEye)
                             view.bringSubviewToFront(debugEyeb)
                             x += eyeWithBorderRect.size.width + 5
                         }
@@ -1212,12 +1211,12 @@ class PlayViewController: UIViewController {
                     faceWithBorderUIImage = UIImage.init(cgImage: faceWithBorderCGImage)
                     if debugMode == true && faceMark==true{
                         DispatchQueue.main.async {
-                            debugFace.frame=CGRect(x:x,y:y,width:faceRect.size.width,height:faceRect.size.height)
-                            debugFace.image=faceUIImage
-                            x += faceRect.size.width
+//                            debugFace.frame=CGRect(x:x,y:y,width:faceRect.size.width,height:faceRect.size.height)
+//                            debugFace.image=faceUIImage
+//                            x += faceRect.size.width
                             debugFaceb.frame=CGRect(x:x,y:y,width:faceWithBorderRect.size.width,height:faceWithBorderRect.size.height)
                             debugFaceb.image=faceWithBorderUIImage
-                            view.bringSubviewToFront(debugFace)
+//                            view.bringSubviewToFront(debugFace)
                             view.bringSubviewToFront(debugFaceb)
                         }
                     }
