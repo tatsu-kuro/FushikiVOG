@@ -582,23 +582,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KxV-OG-VNr">
-                                <rect key="frame" x="39" y="85" width="56" height="63"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6QA-2Y-Eoa">
-                                <rect key="frame" x="103" y="20" width="58" height="57"/>
+                                <rect key="frame" x="103" y="17" width="56" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="08B-ab-fp8">
-                                <rect key="frame" x="103" y="84" width="58" height="64"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pRs-HF-qCQ">
-                                <rect key="frame" x="169" y="20" width="51" height="57"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lkb-hX-28d">
-                                <rect key="frame" x="169" y="85" width="51" height="63"/>
+                                <rect key="frame" x="37" y="85" width="58" height="64"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="eye" translatesAutoresizingMaskIntoConstraints="NO" id="ETc-4Y-VEe">
@@ -677,6 +665,10 @@
                                     <segue destination="lpw-bn-NhA" kind="show" id="qxK-X4-tBt"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lkb-hX-28d">
+                                <rect key="frame" x="108" y="85" width="51" height="63"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="k2J-6C-QeK"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -690,9 +682,7 @@
                         <outlet property="calcButton" destination="ryP-oe-phP" id="IEs-DN-S5y"/>
                         <outlet property="cameraButton" destination="lG2-CX-0aU" id="tlE-bZ-nOX"/>
                         <outlet property="currTimeLabel" destination="fCB-dg-Pfm" id="oB5-o4-fYb"/>
-                        <outlet property="debugEye" destination="6QA-2Y-Eoa" id="yTr-OJ-nQb"/>
                         <outlet property="debugEyeb" destination="08B-ab-fp8" id="wPp-o8-6JK"/>
-                        <outlet property="debugFace" destination="pRs-HF-qCQ" id="1yw-8D-l4y"/>
                         <outlet property="debugFaceb" destination="Lkb-hX-28d" id="9ri-iE-j2G"/>
                         <outlet property="exitButton" destination="JHV-lT-7mi" id="yUl-RL-ALz"/>
                         <outlet property="eyeWakuL_image" destination="d12-qp-QJR" id="mhZ-1G-6ep"/>

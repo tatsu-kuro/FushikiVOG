@@ -64,9 +64,9 @@ class PlayViewController: UIViewController {
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var setteiButton: UIButton!
-    @IBOutlet weak var debugEye: UIImageView!
+//    @IBOutlet weak var debugEye: UIImageView!
     @IBOutlet weak var debugEyeb: UIImageView!
-    @IBOutlet weak var debugFace: UIImageView!
+//    @IBOutlet weak var debugFace: UIImageView!
     @IBOutlet weak var debugFaceb: UIImageView!
     
     @IBOutlet weak var eyeWaku_image: UIImageView!
@@ -989,19 +989,19 @@ class PlayViewController: UIViewController {
             debugMode=false
         }
         if debugMode==false{
-            debugFace.isHidden=true
+//            debugFace.isHidden=true
             debugFaceb.isHidden=true
-            debugEye.isHidden=true
+//            debugEye.isHidden=true
             debugEyeb.isHidden=true
         }else{
-            debugEye.isHidden=false
+//            debugEye.isHidden=false
             debugEyeb.isHidden=false
             if faceMark==false{
                 debugFaceb.isHidden=true
-                debugFace.isHidden=true
+//                debugFace.isHidden=true
             }else{
                 debugFaceb.isHidden=false
-                debugFace.isHidden=false
+//                debugFace.isHidden=false
             }
         }
         
@@ -1176,12 +1176,8 @@ class PlayViewController: UIViewController {
                     if debugMode == true{
                         //画面表示はmain threadで行う
                         DispatchQueue.main.async {
-//                            debugEye.frame=CGRect(x:x,y:y,width:eyeRect.size.width,height:eyeRect.size.height)
-//                            debugEye.image=eyeUIImage
-//                            x += eyeRect.size.width
                             debugEyeb.frame=CGRect(x:x,y:y,width:eyeWithBorderRect.size.width,height:eyeWithBorderRect.size.height)
                             debugEyeb.image=eyeWithBorderUIImage
-//                            view.bringSubviewToFront(debugEye)
                             view.bringSubviewToFront(debugEyeb)
                             x += eyeWithBorderRect.size.width + 5
                         }
@@ -1211,12 +1207,8 @@ class PlayViewController: UIViewController {
                     faceWithBorderUIImage = UIImage.init(cgImage: faceWithBorderCGImage)
                     if debugMode == true && faceMark==true{
                         DispatchQueue.main.async {
-//                            debugFace.frame=CGRect(x:x,y:y,width:faceRect.size.width,height:faceRect.size.height)
-//                            debugFace.image=faceUIImage
-//                            x += faceRect.size.width
                             debugFaceb.frame=CGRect(x:x,y:y,width:faceWithBorderRect.size.width,height:faceWithBorderRect.size.height)
                             debugFaceb.image=faceWithBorderUIImage
-//                            view.bringSubviewToFront(debugFace)
                             view.bringSubviewToFront(debugFaceb)
                         }
                     }
