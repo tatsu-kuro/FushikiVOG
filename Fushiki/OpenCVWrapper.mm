@@ -46,6 +46,40 @@
         *y_ret = max_pt.y;
         return maxVal;//恐らく見つかった時は　0.7　より大の模様
 }
+-(double) matching_gray:(UIImage *)wide_img narrow:(UIImage *)narrow_img x:(int *)x_ret y:(int *)y_ret
+{
+    cv::Mat wide_mat;
+    cv::Mat narrow_mat;
+    cv::Mat wide_gray_mat;
+    cv::Mat narrow_gray_mat;
+        cv::Mat return_mat;
+        UIImageToMat(wide_img, wide_mat);
+        UIImageToMat(narrow_img, narrow_mat);
+    cv::cvtColor(wide_mat,wide_gray_mat,CV_BGR2GRAY);
+    cv::cvtColor(narrow_mat,narrow_gray_mat,CV_BGR2GRAY);
+
+//        // テンプレートマッチング
+//        cv::cvtColor(wide_mat, wide_mat, CV_BGRA2GRAY);
+//        cv::cvtColor(narrow_mat,narrow_mat,CV_BGR2GRAY);
+          try
+        {
+            cv::matchTemplate(wide_gray_mat, narrow_gray_mat, return_mat, CV_TM_CCOEFF_NORMED);
+           // ...
+        }
+        catch( cv::Exception& e )
+        {
+          //  const char* err_msg = e.what();
+            return -2.0;
+        }
+        
+        // 最大のスコアの場所を探す
+        cv::Point max_pt;
+        double maxVal;
+        cv::minMaxLoc(return_mat, NULL, &maxVal, NULL, &max_pt);
+        *x_ret = max_pt.x;
+        *y_ret = max_pt.y;
+        return maxVal;//恐らく見つかった時は　0.7　より大の模様
+}
 -(UIImage *)GrayScale:(UIImage *)image{
     // 変換用Matの宣言
     cv::Mat image_mat;

@@ -574,7 +574,7 @@ class PlayViewController: UIViewController {
         }
         let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample)!
         var ciImage:CIImage!
-        if videoFps<backCameraFps-10.0{//cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
+        if videoFps<backCameraFps-10.0{//if frontCamera
             ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
         }else{
             ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
@@ -1277,5 +1277,95 @@ class PlayViewController: UIViewController {
         // イメージ処理の終了
         UIGraphicsEndImageContext()
         return image!
+    }
+    //longPressでeye(sikaku),face(maru)を探して、そこに枠を近づける。２〜３回繰り返すと良いか。
+    @IBAction func longPress(_ sender: UILongPressGestureRecognizer) {
+        if sender.state != .began {//.ended .changed etc?
+            return
+        }
+        print("longPress")
+        let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
+        let avAsset = AVURLAsset(url: videoURL!, options: options)
+        var reader: AVAssetReader! = nil
+        let backCameraFps=album.getUserDefaultFloat(str: "backCameraFps", ret:240.0)
+        do {
+            reader = try AVAssetReader(asset: avAsset)
+        } catch {
+            #if DEBUG
+            print("could not initialize reader.")
+            #endif
+            return
+        }
+        guard let videoTrack = avAsset.tracks(withMediaType: AVMediaType.video).last else {
+            #if DEBUG
+            print("could not retrieve the video track.")
+            #endif
+            return
+        }
+//        print("preferredtransform:",avAsset. preferredTransform)
+        let readerOutputSettings: [String: Any] = [kCVPixelBufferPixelFormatTypeKey as String : Int(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)]
+        let readerOutput = AVAssetReaderTrackOutput(track: videoTrack, outputSettings: readerOutputSettings)
+        
+        reader.add(readerOutput)
+        let frameRate = videoTrack.nominalFrameRate
+        let startTime = CMTime(value: CMTimeValue(currFrameNumber), timescale: CMTimeScale(frameRate))
+        let timeRange = CMTimeRange(start: startTime, end:CMTime.positiveInfinity)
+        reader.timeRange = timeRange //読み込む範囲を`timeRange`で指定
+        reader.startReading()
+        let context:CIContext = CIContext.init(options: nil)
+        guard let sample = readerOutput.copyNextSampleBuffer() else{
+            print("get sample error")
+            return
+        }
+        let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample)!
+        var ciImage:CIImage!
+        if videoFps<backCameraFps-10.0{//if frontCamera
+            ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
+        }else{//backCamera
+            ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
+        }
+
+        let eX = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
+        let eY = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
+    
+        var eyeRectOnScreen=getRectFromCenter(center: eyeCenter, len: wakuLength)
+        if eyeORface == 1{//
+            eyeRectOnScreen=getRectFromCenter(center: faceCenter, len: wakuLength)
+        }
+        let eyeborder:CGFloat = CGFloat(eyeBorder)*3
+        let eyeWithBorderRectOnScreen = expandRectWithBorderWide(rect: eyeRectOnScreen, border: eyeborder)
+        let eyeRect = resizeR2(eyeRectOnScreen, viewRect:getVideoRectOnScreen(), image:ciImage)
+        var eyeWithBorderRect = resizeR2(eyeWithBorderRectOnScreen, viewRect:getVideoRectOnScreen(), image:ciImage)
+        
+        var eyeImage=UIImage(named: "sikaku")
+        if eyeORface == 1{
+            eyeImage=UIImage(named: "maru")
+        }
+        let osEyeX:CGFloat = (eyeWithBorderRect.size.width - eyeImage!.size.width) / 2.0//上下方向への差
+        let osEyeY:CGFloat = (eyeWithBorderRect.size.height - eyeImage!.size.height) / 2.0//左右方向への差
+
+        var ex:CGFloat = 0
+        var ey:CGFloat = 0
+//        let eyeCGImage = context.createCGImage(ciImage, from: eyeRect)!
+//        let eyeUIImage = UIImage.init(cgImage: eyeCGImage)
+//        UIImageWriteToSavedPhotosAlbum(eyeUIImage, nil, nil, nil)
+        let eyeWithBorderCGImage = context.createCGImage(ciImage, from: eyeWithBorderRect)!
+        let eyeWithBorderUIImage = UIImage.init(cgImage: eyeWithBorderCGImage)
+        let maxEyeV=openCV.matching(eyeWithBorderUIImage,
+                                    narrow: eyeImage,
+                                    x: eX,
+                                    y: eY)
+        ex = CGFloat(eX.pointee) - osEyeX
+        ey = CGFloat(eY.pointee) - osEyeY
+        print(maxEyeV,ex,ey)
+        if eyeORface == 0{
+        eyeCenter.x += ex/3
+        eyeCenter.y += ey/3
+        }else{
+            faceCenter.x += ex/3
+            faceCenter.y += ey/3
+        }
+        dispWakus()
+        showWakuImages()
     }
 }
