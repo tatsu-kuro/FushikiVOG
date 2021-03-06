@@ -1279,10 +1279,13 @@ class PlayViewController: UIViewController {
         return image!
     }
     //longPressでeye(sikaku),face(maru)を探して、そこに枠を近づける。２〜３回繰り返すと良いか。
+//    var longPressCnt:Int = 0
+    var faceMarkType:Int = 0
     @IBAction func longPress(_ sender: UILongPressGestureRecognizer) {
         if sender.state != .began {//.ended .changed etc?
             return
         }
+//        longPressCnt += 1
         print("longPress")
         let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
         let avAsset = AVURLAsset(url: videoURL!, options: options)
@@ -1339,7 +1342,11 @@ class PlayViewController: UIViewController {
         
         var eyeImage=UIImage(named: "sikaku")
         if eyeORface == 1{
-            eyeImage=UIImage(named: "maru")
+            if faceMarkType == 0{
+                eyeImage=UIImage(named: "maru")
+            }else{
+                eyeImage=UIImage(named: "cross")
+            }
         }
         let osEyeX:CGFloat = (eyeWithBorderRect.size.width - eyeImage!.size.width) / 2.0//上下方向への差
         let osEyeY:CGFloat = (eyeWithBorderRect.size.height - eyeImage!.size.height) / 2.0//左右方向への差
@@ -1359,8 +1366,8 @@ class PlayViewController: UIViewController {
         ey = CGFloat(eY.pointee) - osEyeY
         print(maxEyeV,ex,ey)
         if eyeORface == 0{
-        eyeCenter.x += ex/3
-        eyeCenter.y += ey/3
+            eyeCenter.x += ex/3
+            eyeCenter.y += ey/3
         }else{
             faceCenter.x += ex/3
             faceCenter.y += ey/3
