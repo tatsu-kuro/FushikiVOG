@@ -280,9 +280,15 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
         }
         captureSession = AVCaptureSession()
         // 入力 : 背面カメラ
+        //Fushiki-->builtInWideAngleCamera
+        //builtInUltraWideCamera//12-upper, 8-error, 7plus-error
+        //builtInTelephontoCamera//7plus-right,8-error
+        //builtInWideAngleCamera//12-lower, 7plus-left, 8
         if camera==0{
         videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front)
         }else{
+//            videoDevice = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back)
+//            videoDevice = AVCaptureDevice.default(.builtInTelephotoCamera, for: .video, position: .back)
             videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
         }
         let videoInput = try! AVCaptureDeviceInput.init(device: videoDevice!)
