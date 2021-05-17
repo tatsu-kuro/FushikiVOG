@@ -80,15 +80,15 @@ class PlayViewController: UIViewController {
     @IBAction func onMailButton(_ sender: Any) {
     }
     
-    @IBOutlet weak var cameraButton: UISegmentedControl!
-    
-    @IBAction func onCameraButton(_ sender: Any) {
-        cameraMode=cameraButton.selectedSegmentIndex
-        UserDefaults.standard.set(cameraMode, forKey: "video_cameraMode")
-//        print("cameraMode:",cameraMode)
-        dispWakus()
-        showWakuImages()
-    }
+//    @IBOutlet weak var cameraButton: UISegmentedControl!
+//
+//    @IBAction func onCameraButton(_ sender: Any) {
+//        cameraMode=cameraButton.selectedSegmentIndex
+//        UserDefaults.standard.set(cameraMode, forKey: "video_cameraMode")
+////        print("cameraMode:",cameraMode)
+//        dispWakus()
+//        showWakuImages()
+//    }
     func Field2value(field:UITextField) -> Int {
         if field.text?.count != 0 {
             return Int(field.text!)!
@@ -782,7 +782,7 @@ class PlayViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getUserDefaults()
-        cameraButton.selectedSegmentIndex = cameraMode
+//        cameraButton.selectedSegmentIndex = cameraMode
         //setteiしてなければ、以下
     
         let avAsset = AVURLAsset(url: videoURL!)
@@ -799,11 +799,12 @@ class PlayViewController: UIViewController {
         // Create AVPlayer
         videoPlayer = AVPlayer(playerItem: playerItem)
         // Add AVPlayer
-        let layer = AVPlayerLayer()
-        layer.videoGravity = AVLayerVideoGravity.resizeAspect
-        layer.player = videoPlayer
-        layer.frame = view.bounds
-        view.layer.addSublayer(layer)
+        let videoPlayerLayer = AVPlayerLayer()
+        videoPlayerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
+        videoPlayerLayer.player = videoPlayer
+        videoPlayerLayer.frame = view.bounds
+//        layer.frame = CGRect(x:-view.bounds.width,y:0,width: view.bounds.width*2,height:view.bounds.height*2)
+        view.layer.addSublayer(videoPlayerLayer)
         // Create Movie SeekBar
         seekBar.frame = CGRect(x: sp*2, y:seeky, width: ww - 4*sp, height: bh)
         seekBar.thumbTintColor=UIColor.orange
@@ -861,9 +862,9 @@ class PlayViewController: UIViewController {
         vogBoxYcenter=wh/2
         fpsXd=Int((240.0/videoFps).rounded())
 //        mailButton.isEnabled=false
-        cameraButton.frame = CGRect(x:  sp*7+bw*5, y: by-bh*2, width: bw*2+sp, height:bh)
-        view.bringSubviewToFront(cameraButton)
-        cameraButton.isHidden=true//fps<230ならfrontCameraと判定することとした
+//        cameraButton.frame = CGRect(x:  sp*7+bw*5, y: by-bh*2, width: bw*2+sp, height:bh)
+//        view.bringSubviewToFront(cameraButton)
+//        cameraButton.isHidden=true//fps<230ならfrontCameraと判定することとした
     }
   
     func setButtonProperty(button:UIButton,color:UIColor){
