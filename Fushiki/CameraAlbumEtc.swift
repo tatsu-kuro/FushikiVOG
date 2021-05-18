@@ -154,7 +154,7 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
                 getURL = localVideoUrl
                 setURLfromPHAssetFlag=true
             }else{//on cloud?
-                getURL = nil//tempFileURL!// URL(string: tempFilePath)
+                getURL = URL(string: tempFilePath)
                 setURLfromPHAssetFlag=true
             }
         }

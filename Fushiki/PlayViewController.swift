@@ -35,6 +35,7 @@ class PlayViewController: UIViewController {
     var startTime=CFAbsoluteTimeGetCurrent()
     var fpsXd:Int=2//240/videoFPS 1dataのピクセル数
     var videoPlayer: AVPlayer!
+    var videoPlayerLayerRect:CGRect = CGRect(x:0,y:0,width: 0,height: 0)
     var videoDuration:Float=0
     var screenSize:CGSize!
     var currFrameNumber:Int=0
@@ -534,6 +535,9 @@ class PlayViewController: UIViewController {
         return returnRect
     }
     func showWakuImages(){//結果が表示されていない時、画面上部1/4をタップするとWaku表示
+        if zoomNum != 1{
+            return
+        }
         let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
         let avAsset = AVURLAsset(url: videoURL!, options: options)
         var reader: AVAssetReader! = nil
@@ -802,7 +806,10 @@ class PlayViewController: UIViewController {
         let videoPlayerLayer = AVPlayerLayer()
         videoPlayerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
         videoPlayerLayer.player = videoPlayer
-        videoPlayerLayer.frame = view.bounds
+        if videoPlayerLayerRect.width==0{
+            videoPlayerLayerRect=view.bounds
+        }
+        videoPlayerLayer.frame = videoPlayerLayerRect
 //        layer.frame = CGRect(x:-view.bounds.width,y:0,width: view.bounds.width*2,height:view.bounds.height*2)
         view.layer.addSublayer(videoPlayerLayer)
         // Create Movie SeekBar
@@ -980,6 +987,9 @@ class PlayViewController: UIViewController {
         return true
     }
     @IBAction func onCalcButton(_ sender: Any) {
+        if zoomNum != 1{
+            return
+        }
 //        if faceMark == false{
 //            onCalcButton()
 //            return
@@ -1279,14 +1289,45 @@ class PlayViewController: UIViewController {
         UIGraphicsEndImageContext()
         return image!
     }
+//    var longpressCnt:Int=0
+    var zoomNum:Int=1
+    var lastPressPoint:CGPoint=CGPoint(x:0,y:0)
+    @IBAction func longPress(_ sender: UILongPressGestureRecognizer) {
+//        if sender.state != .began {//.ended .changed etc?
+//            return
+//        }
+        if sender.state == .began{
+            zoomNum += 2
+            let zn=CGFloat(zoomNum)
+            let w=view.bounds.width
+            let h=view.bounds.height
+            if zoomNum == 3{
+                lastPressPoint = sender.location(in: self.view)
+            }
+            print("longpress",zn)
+            let x0 = -lastPressPoint.x*zn + w/2
+            let y0 = -lastPressPoint.y*zn + h/2
+            if zoomNum==9{
+                zoomNum=1
+                videoPlayerLayerRect=CGRect(x:0,y:0,width:w,height:h)
+
+            }else{
+            videoPlayerLayerRect=CGRect(x:x0,y:y0,width:w*zn,height:h*zn)
+            }
+            viewDidLoad()
+        }else if sender.state == .ended{
+//            zoomNum=1
+        }
+//        longpressCnt += 1
+//        print(longpressCnt/10,sender)
+     }
     //longPressでeye(sikaku),face(maru)を探して、そこに枠を近づける。２〜３回繰り返すと良いか。
-//    var longPressCnt:Int = 0
-    var faceMarkType:Int = 0
+ /*   var faceMarkType:Int = 0
     @IBAction func longPress(_ sender: UILongPressGestureRecognizer) {
         if sender.state != .began {//.ended .changed etc?
             return
         }
-//        longPressCnt += 1
+
         print("longPress")
         let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
         let avAsset = AVURLAsset(url: videoURL!, options: options)
@@ -1375,5 +1416,5 @@ class PlayViewController: UIViewController {
         }
         dispWakus()
         showWakuImages()
-    }
+    }*/
 }

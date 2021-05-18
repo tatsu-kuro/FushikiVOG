@@ -239,11 +239,12 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         print("didappear")
         camera.getAlbumAssets()
-        for i in 0..<camera.videoURL.count{//cloud のURL->nilを入れる
+        for i in 0..<camera.videoURL.count{//cloud のURL->temp.mp4としている
             camera.videoURL[i] = camera.getURLfromPHAsset(asset: camera.videoAlbumAssets[i])
         }
-        for i in (0..<camera.videoURL.count).reversed(){//cloud(nil) のものは削除する
-            if camera.videoURL[i] == nil{
+        for i in (0..<camera.videoURL.count).reversed(){//cloud(temp.mp4)は削除する
+            let path = camera.videoURL[i]!.absoluteString
+            if path.contains("temp.mp4"){
                 camera.videoURL.remove(at: i)
                 camera.videoDate.remove(at: i)
                 camera.videoAlbumAssets.remove(at: i)
