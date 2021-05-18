@@ -806,7 +806,7 @@ class PlayViewController: UIViewController {
         let videoPlayerLayer = AVPlayerLayer()
         videoPlayerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
         videoPlayerLayer.player = videoPlayer
-        if videoPlayerLayerRect.width==0{
+        if videoPlayerLayerRect.width==0 {
             videoPlayerLayerRect=view.bounds
         }
         videoPlayerLayer.frame = videoPlayerLayerRect
@@ -1309,10 +1309,10 @@ class PlayViewController: UIViewController {
             let y0 = -lastPressPoint.y*zn + h/2
             if zoomNum==9{
                 zoomNum=1
-                videoPlayerLayerRect=CGRect(x:0,y:0,width:w,height:h)
+                videoPlayerLayerRect=CGRect(x:0,y:0,width:0,height:0)
 
             }else{
-            videoPlayerLayerRect=CGRect(x:x0,y:y0,width:w*zn,height:h*zn)
+                videoPlayerLayerRect=CGRect(x:x0,y:y0,width:w*zn,height:h*zn)
             }
             viewDidLoad()
         }else if sender.state == .ended{
