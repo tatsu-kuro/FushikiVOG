@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="landscape" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -662,7 +662,8 @@
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="q9w-qB-lzZ" appends="YES" id="bSZ-L2-WCm"/>
                             <outletCollection property="gestureRecognizers" destination="i9a-yo-jek" appends="YES" id="8dr-lm-Ozv"/>
-                            <outletCollection property="gestureRecognizers" destination="rT6-SE-Iec" appends="YES" id="Dkf-Ev-shQ"/>
+                            <outletCollection property="gestureRecognizers" destination="nqe-4E-T8h" appends="YES" id="yMu-JX-iKI"/>
+                            <outletCollection property="gestureRecognizers" destination="14o-Zk-X4i" appends="YES" id="Y8F-QF-SOT"/>
                         </connections>
                     </view>
                     <connections>
@@ -692,12 +693,17 @@
                 </panGestureRecognizer>
                 <tapGestureRecognizer id="i9a-yo-jek">
                     <connections>
-                        <action selector="tapGesture:" destination="qHa-wQ-wFQ" id="kzs-cD-UfW"/>
+                        <action selector="singleTapGesture:" destination="qHa-wQ-wFQ" id="s3l-C4-xIE"/>
                     </connections>
                 </tapGestureRecognizer>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="rT6-SE-Iec">
+                <tapGestureRecognizer numberOfTapsRequired="2" id="nqe-4E-T8h">
                     <connections>
-                        <action selector="longPress:" destination="qHa-wQ-wFQ" id="YIx-1z-kOR"/>
+                        <action selector="doubleTapGesture:" destination="qHa-wQ-wFQ" id="1Se-5f-xlk"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="14o-Zk-X4i">
+                    <connections>
+                        <action selector="longPress:" destination="qHa-wQ-wFQ" id="PMl-8I-F5Y"/>
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
@@ -932,7 +938,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="139" id="2G5-eP-MHF">
-                                        <rect key="frame" x="0.0" y="24.5" width="896" height="139"/>
+                                        <rect key="frame" x="0.0" y="28" width="896" height="139"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2G5-eP-MHF" id="8hS-zy-JdQ">
                                             <rect key="frame" x="44" y="0.0" width="808" height="139"/>

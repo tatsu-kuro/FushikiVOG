@@ -535,9 +535,9 @@ class PlayViewController: UIViewController {
         return returnRect
     }
     func showWakuImages(){//結果が表示されていない時、画面上部1/4をタップするとWaku表示
-        if zoomNum != 1{
-            return
-        }
+//        if zoomNum != 1{
+//            return
+//        }
         let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
         let avAsset = AVURLAsset(url: videoURL!, options: options)
         var reader: AVAssetReader! = nil
@@ -713,17 +713,48 @@ class PlayViewController: UIViewController {
         }else if sender.state == .ended{
         }
     }
-   
-    @IBAction func tapGesture(_ sender: UITapGestureRecognizer) {
-        print("tap",vogImageView?.isHidden,calcFlag)
- 
-        if vogImageView?.isHidden == false{
-            let pos = sender.location(in: self.view)
-            if pos.x<view.bounds.width/4 || pos.x>view.bounds.width*3/4{
-                vogImageView?.isHidden=true
-            }
-            return
+    var zoomNum:Int=1
+    var lastTapPoint:CGPoint=CGPoint(x:0,y:0)
+     @IBAction func doubleTapGesture(_ sender: UITapGestureRecognizer) {
+        print("doubletap")
+        if eyeORface == 0{//eye
+            eyeORface=1
+        }else{
+            eyeORface=0
         }
+        dispWakus()
+        showWakuImages()
+        
+        zoomNum += 2
+        let zn=CGFloat(zoomNum)
+        let w=view.bounds.width
+        let h=view.bounds.height
+        if zoomNum == 3{
+            lastTapPoint = sender.location(in: self.view)
+        }
+        //            print("longpress",zn)
+        let x0 = -lastTapPoint.x*zn + w/2
+        let y0 = -lastTapPoint.y*zn + h/2
+        if zoomNum==9{
+            zoomNum=1
+            videoPlayerLayerRect=CGRect(x:0,y:0,width:0,height:0)
+            
+        }else{
+            videoPlayerLayerRect=CGRect(x:x0,y:y0,width:w*zn,height:h*zn)
+        }
+        viewDidLoad()
+
+    }
+    @IBAction func singleTapGesture(_ sender: UITapGestureRecognizer) {
+        print("singletap",vogImageView?.isHidden,calcFlag)
+//        print(sender.numberOfTapsRequired)
+//        if vogImageView?.isHidden == false{
+//            let pos = sender.location(in: self.view)
+//            if pos.x<view.bounds.width/4 || pos.x>view.bounds.width*3/4{
+//                vogImageView?.isHidden=true
+//            }
+//            return
+//        }
         if eyeORface == 0{//eye
             eyeORface=1
         }else{
@@ -872,6 +903,8 @@ class PlayViewController: UIViewController {
 //        cameraButton.frame = CGRect(x:  sp*7+bw*5, y: by-bh*2, width: bw*2+sp, height:bh)
 //        view.bringSubviewToFront(cameraButton)
 //        cameraButton.isHidden=true//fps<230ならfrontCameraと判定することとした
+        // シングルタップが失敗した時に、ダブルタップジェスチャーで対応するように設定します。
+//        singleTap.require(toFail: singleTap)
     }
   
     func setButtonProperty(button:UIButton,color:UIColor){
@@ -987,9 +1020,9 @@ class PlayViewController: UIViewController {
         return true
     }
     @IBAction func onCalcButton(_ sender: Any) {
-        if zoomNum != 1{
-            return
-        }
+//        if zoomNum != 1{
+//            return
+//        }
 //        if faceMark == false{
 //            onCalcButton()
 //            return
@@ -1289,40 +1322,8 @@ class PlayViewController: UIViewController {
         UIGraphicsEndImageContext()
         return image!
     }
-//    var longpressCnt:Int=0
-    var zoomNum:Int=1
-    var lastPressPoint:CGPoint=CGPoint(x:0,y:0)
-    @IBAction func longPress(_ sender: UILongPressGestureRecognizer) {
-//        if sender.state != .began {//.ended .changed etc?
-//            return
-//        }
-        if sender.state == .began{
-            zoomNum += 2
-            let zn=CGFloat(zoomNum)
-            let w=view.bounds.width
-            let h=view.bounds.height
-            if zoomNum == 3{
-                lastPressPoint = sender.location(in: self.view)
-            }
-            print("longpress",zn)
-            let x0 = -lastPressPoint.x*zn + w/2
-            let y0 = -lastPressPoint.y*zn + h/2
-            if zoomNum==9{
-                zoomNum=1
-                videoPlayerLayerRect=CGRect(x:0,y:0,width:0,height:0)
-
-            }else{
-                videoPlayerLayerRect=CGRect(x:x0,y:y0,width:w*zn,height:h*zn)
-            }
-            viewDidLoad()
-        }else if sender.state == .ended{
-//            zoomNum=1
-        }
-//        longpressCnt += 1
-//        print(longpressCnt/10,sender)
-     }
-    //longPressでeye(sikaku),face(maru)を探して、そこに枠を近づける。２〜３回繰り返すと良いか。
- /*   var faceMarkType:Int = 0
+     //longPressでeye(sikaku),face(maru)を探して、そこに枠を近づける。２〜３回繰り返すと良いか。
+    var faceMarkType:Int = 0
     @IBAction func longPress(_ sender: UILongPressGestureRecognizer) {
         if sender.state != .began {//.ended .changed etc?
             return
@@ -1416,5 +1417,5 @@ class PlayViewController: UIViewController {
         }
         dispWakus()
         showWakuImages()
-    }*/
+    }
 }
