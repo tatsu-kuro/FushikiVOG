@@ -535,9 +535,9 @@ class PlayViewController: UIViewController {
         return returnRect
     }
     func showWakuImages(){//結果が表示されていない時、画面上部1/4をタップするとWaku表示
-//        if zoomNum != 1{
-//            return
-//        }
+        if zoomNum != 1{
+            return
+        }
         let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
         let avAsset = AVURLAsset(url: videoURL!, options: options)
         var reader: AVAssetReader! = nil
@@ -1020,9 +1020,9 @@ class PlayViewController: UIViewController {
         return true
     }
     @IBAction func onCalcButton(_ sender: Any) {
-//        if zoomNum != 1{
-//            return
-//        }
+        if zoomNum != 1{
+            return
+        }
 //        if faceMark == false{
 //            onCalcButton()
 //            return
