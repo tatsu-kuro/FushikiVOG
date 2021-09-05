@@ -32,6 +32,27 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var tableView: UITableView!
     
     var soundPlayer: AVAudioPlayer? = nil
+    var topPadding:CGFloat = 0
+    var bottomPadding:CGFloat = 0
+    var leftPadding:CGFloat = 0
+    var rightPadding:CGFloat = 0
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if #available(iOS 11.0, *) {
+            // viewDidLayoutSubviewsではSafeAreaの取得ができている
+            topPadding = self.view.safeAreaInsets.top
+            bottomPadding = self.view.safeAreaInsets.bottom
+            leftPadding = self.view.safeAreaInsets.left
+            rightPadding = self.view.safeAreaInsets.right
+            print("in viewDidLayoutSubviews")
+            UserDefaults.standard.set(topPadding, forKey: "top")
+            UserDefaults.standard.set(bottomPadding, forKey: "bottom")
+            UserDefaults.standard.set(leftPadding, forKey: "left")
+            UserDefaults.standard.set(rightPadding, forKey: "right")
+            print(topPadding,bottomPadding,leftPadding,rightPadding)    // iPhoneXなら44, その他は20.0
+        }
+        setRotate(alp: 1)
+    }
     
     func sound(snd:String){
         if let soundharu = NSDataAsset(name: snd) {
@@ -278,7 +299,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         ettWidth = camera.getUserDefaultInt(str: "ettWidth", ret: 90)
         targetMode = camera.getUserDefaultInt(str: "targetMode", ret: 6)
         print("viewDidLoad")
-        setRotate(alp:1)
+//        setRotate(alp:1)
         sound(snd:"silence")
         UIApplication.shared.beginReceivingRemoteControlEvents()
         self.becomeFirstResponder()
@@ -317,7 +338,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     @IBOutlet weak var cameraButton2: UIButton!
     @IBOutlet weak var cameraButton: UIButton!
-    //    @IBOutlet weak var titleImage: UIImageView!
+ /*   //    @IBOutlet weak var titleImage: UIImageView!
     func setRotate(alp:CGFloat){
 
         let ww:CGFloat=view.bounds.width
@@ -374,6 +395,53 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 //            UIApplication.shared.isIdleTimerDisabled = false//監視する
 //        }
     }
+    */
+     func setRotate(alp:CGFloat){
+
+         let ww:CGFloat=view.bounds.width-leftPadding-rightPadding
+         let wh:CGFloat=view.bounds.height-topPadding-bottomPadding
+         let sp=ww/120//間隙
+         let bw=(ww-sp*10)/7//ボタン幅
+         let bh=bw*170/440
+         let by=wh-bh-sp+topPadding
+        tableView.frame=CGRect(x:leftPadding,y:0,width:ww,height: by)
+
+         button0.alpha=alp
+         button1.alpha=alp
+         button2.alpha=alp
+         button3.alpha=alp
+         button4.alpha=alp
+         helpButton.alpha=alp
+         setteiButton.alpha=alp
+ //        let cameraMode = Int(iroiro.getUserDefaultInt(str: "cameraMode", ret: 0))
+  
+         camera.setButtonProperty(button0,x:sp*2+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(button1,x:bw*1+sp*3+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
+         camera.setButtonProperty(button2,x:bw*2+sp*4+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
+         camera.setButtonProperty(button3,x:bw*3+sp*5+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
+         camera.setButtonProperty(button4,x:bw*4+sp*6+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
+         camera.setButtonProperty(helpButton,x:bw*5+sp*7+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
+         camera.setButtonProperty(setteiButton,x:bw*6+sp*8+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
+
+         let logoY = ww/13
+
+         if ww/2 > by - logoY{
+             titleImage.frame.origin.y = logoY + topPadding
+             titleImage.frame.size.width = (by - logoY)*2
+             titleImage.frame.size.height = by - logoY
+             titleImage.frame.origin.x = (ww - titleImage.frame.size.width)/2+leftPadding
+         }else{
+             titleImage.frame.origin.x = leftPadding
+             titleImage.frame.size.width = ww
+             titleImage.frame.origin.y = logoY + (by - logoY - ww/2)/2
+             titleImage.frame.size.height = ww/2
+         }
+         logoImage.frame = CGRect(x: leftPadding, y: topPadding, width:ww, height:wh/10)
+
+     }
+     
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

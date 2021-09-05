@@ -21,6 +21,18 @@ class SetteiViewController: UIViewController {
     var targetMode:Int=0
     var screenBrightness:Float!
     
+    @IBOutlet weak var frontCameraLabel: UILabel!
+    @IBOutlet weak var frontCameraSwitch: UISwitch!
+    
+    @IBAction func onFrontCameraSwitch(_ sender: UISwitch) {
+        var cameraMode:Int!
+        if sender.isOn==true{
+           cameraMode=0
+        }else{
+            cameraMode=2
+        }
+        UserDefaults.standard.set(cameraMode, forKey: "cameraMode")
+    }
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var paraCnt0: UISegmentedControl!
     @IBOutlet weak var paraCnt1: UISlider!
@@ -232,6 +244,12 @@ class SetteiViewController: UIViewController {
         oknTime = UserDefaults.standard.integer(forKey: "oknTime")
         ettMode = UserDefaults.standard.integer(forKey: "ettMode")
         ettWidth = UserDefaults.standard.integer(forKey: "ettWidth")
+        let cameraMode = camera.getUserDefaultInt(str: "cameraMode", ret: 0)
+        if cameraMode==0{//front camera
+            frontCameraSwitch.isOn=true
+        }else{//don't use camera
+            frontCameraSwitch.isOn=false
+        }
         screenBrightness = camera.getUserDefaultFloat(str: "screenBrightness", ret: 1.0)
         setScreen()
         dispTexts()
@@ -246,14 +264,21 @@ class SetteiViewController: UIViewController {
           return true
       }
     func setScreen(){
-        let ww=view.bounds.width
-        let wh=view.bounds.height
+//        let ww=view.bounds.width
+//        let wh=view.bounds.height
         
-        let x0=ww/25
-        var bw=ww/4
-        let x1=x0+bw+x0/2
-        var sp=wh/80
-        
+        let top=CGFloat(UserDefaults.standard.float(forKey: "top"))
+        let bottom=CGFloat( UserDefaults.standard.float(forKey: "bottom"))
+        let left=CGFloat( UserDefaults.standard.float(forKey: "left"))
+        let right=CGFloat( UserDefaults.standard.float(forKey: "right"))
+        print("top",top,bottom,left,right)
+        let ww=view.bounds.width-(left+right)
+        let wh=view.bounds.height-(top+bottom)
+
+        var bw=ww/4.5
+        var sp=ww/120
+        let x0=sp*2+left
+        let x1=x0+bw+sp*2
         var bh=wh/15
         let b0y=bh*4/5
         let b1y=b0y+bh+sp
@@ -264,6 +289,7 @@ class SetteiViewController: UIViewController {
         let b6y=b5y+bh+sp*3
         let b7y=b6y+bh+sp
         let b8y=b7y+bh+sp*3
+        let b9y=b8y+bh+sp
         paraCnt3.frame  = CGRect(x:x0,   y: b0y ,width: bw, height: bh)
         paraTxt3.frame  = CGRect(x:x1,   y: b0y ,width: bw*5, height: bh)
         paraCnt4.frame  = CGRect(x:x0,   y: b1y ,width: bw, height: bh)
@@ -285,15 +311,16 @@ class SetteiViewController: UIViewController {
         paraTxt7.frame  = CGRect(x:x1,   y: b7y ,width: bw*5,height:bh)
         paraCnt8.frame  = CGRect(x:x0,   y: b8y ,width: bw,height:bh)
         paraTxt8.frame  = CGRect(x:x1,   y: b8y ,width: bw*5,height:bh)
-
+        frontCameraSwitch.frame = CGRect(x:x0,y:b9y,width:bw,height: bh)
+        frontCameraLabel.frame = CGRect(x:x0+70,y:b9y+2,width:bw*5,height:bh)
         sp=ww/120//間隙
         bw=(ww-sp*10)/7//ボタン幅
         bh=bw*170/440
         let by=wh-bh-sp
         cameraButton.isHidden=true
 //        camera.setButtonProperty(cameraButton,x:bw*4+sp*6,y:by,w:bw,h: bh,UIColor.orange)
-        camera.setButtonProperty(defaultButton,x:bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
-        camera.setButtonProperty(exitButton,x:bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(defaultButton,x:left+bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(exitButton,x:left+bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
     }
 
 }

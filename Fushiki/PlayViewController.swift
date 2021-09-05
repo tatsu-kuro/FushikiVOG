@@ -418,7 +418,7 @@ class PlayViewController: UIViewController {
         let drawImage = namedImage.resize(size: CGSize(width:view.bounds.width, height:view.bounds.height*4/5))
 //        let namedImage =
         vogImageView = UIImageView(image: drawImage)
-        vogImageView?.center =  CGPoint(x:view.bounds.width/2,y:view.bounds.height/2)
+        vogImageView?.center =  CGPoint(x:view.bounds.width/2,y:drawImage!.size.height/2/*view.bounds.height/2*/)
         // 画面に表示する
         view.addSubview(vogImageView!)
     }
@@ -821,10 +821,20 @@ class PlayViewController: UIViewController {
         getUserDefaults()
 //        cameraButton.selectedSegmentIndex = cameraMode
         //setteiしてなければ、以下
-    
+        
+        
+        let top=CGFloat(UserDefaults.standard.float(forKey: "top"))
+        let bottom=CGFloat( UserDefaults.standard.float(forKey: "bottom"))
+        let left=CGFloat( UserDefaults.standard.float(forKey: "left"))
+        let right=CGFloat( UserDefaults.standard.float(forKey: "right"))
+        print("top",top,bottom,left,right)
+        let ww=view.bounds.width-(left+right)
+        let wh=view.bounds.height-(top+bottom)
+//        centerX=ww/2+CGFloat(left)
+//        centerY=wh/2+CGFloat(top)
         let avAsset = AVURLAsset(url: videoURL!)
-        let ww:CGFloat=view.bounds.width
-        let wh:CGFloat=view.bounds.height
+//        let ww:CGFloat=view.bounds.width
+//        let wh:CGFloat=view.bounds.height
         let sp=ww/120//間隙
         let bw=(ww-sp*10)/7//ボタン幅
         let bh=bw*170/440
@@ -850,7 +860,7 @@ class PlayViewController: UIViewController {
 //        view.layer.sublayers?.insert( <#CALayer#>, at: )
         print("layerConut:",view.layer.sublayers?.count)
         // Create Movie SeekBar
-        seekBar.frame = CGRect(x: sp*2, y:seeky, width: ww - 4*sp, height: bh)
+        seekBar.frame = CGRect(x: left+sp*2, y:seeky, width: ww - 4*sp, height: bh)
         seekBar.thumbTintColor=UIColor.orange
         seekBar.minimumValue = 0
         seekBar.maximumValue = videoDuration
@@ -868,43 +878,42 @@ class PlayViewController: UIViewController {
             let value = Float(self.seekBar.maximumValue - self.seekBar.minimumValue) * Float(time) / Float(duration) + Float(self.seekBar.minimumValue)
             self.seekBar.value = value
         })
-        currTimeLabel.frame = CGRect(x: sp*2, y: 5, width: bw*2, height: bh)
+        currTimeLabel.frame = CGRect(x:left+sp*2, y: 0, width: bw*1.2, height: bh*0.6)
         currTimeLabel!.font=UIFont.monospacedDigitSystemFont(ofSize: 15, weight: .medium)
         view.bringSubviewToFront(currTimeLabel)
         // Create Movie Start Button
-        mailButton.frame = CGRect(x:sp*2+bw*0,y:by,width:bw,height:bh)
+        mailButton.frame = CGRect(x:left+sp*2+bw*0,y:by,width:bw,height:bh)
         setButtonProperty(button: mailButton, color: UIColor.darkGray)
         view.bringSubviewToFront(mailButton)
-        saveButton.frame = CGRect(x:sp*3+bw*1,y:by,width:bw,height:bh)
+        saveButton.frame = CGRect(x:left+sp*3+bw*1,y:by,width:bw,height:bh)
         setButtonProperty(button: saveButton, color: UIColor.darkGray)
         view.bringSubviewToFront(saveButton)
-        waveButton.frame = CGRect(x:sp*4+bw*2,y:by,width:bw,height:bh)
+        waveButton.frame = CGRect(x:left+sp*4+bw*2,y:by,width:bw,height:bh)
         setButtonProperty(button: waveButton, color: UIColor.darkGray)
         view.bringSubviewToFront(waveButton)
-        calcButton.frame = CGRect(x: sp*5+bw*3, y: by, width: bw, height: bh)
+        calcButton.frame = CGRect(x: left+sp*5+bw*3, y: by, width: bw, height: bh)
         setButtonProperty(button: calcButton, color: UIColor.blue)
         view.bringSubviewToFront(calcButton)
-        playButton.frame = CGRect(x: sp*6+bw*4, y: by, width: bw, height: bh)
+        playButton.frame = CGRect(x: left+sp*6+bw*4, y: by, width: bw, height: bh)
         setButtonProperty(button: playButton, color: UIColor.orange)
         view.bringSubviewToFront(playButton)
-        album.setButtonProperty(setteiButton,x:sp*7+bw*5,y:by,w:bw,h:bh,UIColor.darkGray)
+        album.setButtonProperty(setteiButton,x:left+sp*7+bw*5,y:by,w:bw,h:bh,UIColor.darkGray)
         view.bringSubviewToFront(setteiButton)
-        album.setButtonProperty(exitButton,x: sp*8+bw*6,y:by, w:bw,h:bh,UIColor.darkGray)
+        album.setButtonProperty(exitButton,x: left+sp*8+bw*6,y:by, w:bw,h:bh,UIColor.darkGray)
         view.bringSubviewToFront(exitButton)
         print("layerConut:",view.layer.sublayers?.count)
-
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         videoSize=resolutionSizeOfVideo(url:videoURL!)
         screenSize=view.bounds.size
         videoFps=getFPS(url: videoURL!)
         dispWakus()
         showWakuImages()
-        fpsLabel.frame=CGRect(x:ww - bw*2,y:5,width: bw*2-sp*2,height: bh)
-        fpsLabel.text = String(format:"fps:%.0f w:%.0f h:%.0f",videoFps,videoSize.width,videoSize.height)
+        fpsLabel.frame=CGRect(x:left+ww - bw*1.2-sp*2,y:0,width: bw*1.2/*bw*2-sp*2*/,height: bh*0.6)
+        fpsLabel.text = String(format:"%.0f %.0fx%.0f",videoFps,videoSize.width,videoSize.height)
         fpsLabel!.font=UIFont.monospacedDigitSystemFont(ofSize: 15, weight: .medium)
         view.bringSubviewToFront(fpsLabel)
         vogBoxHeight=ww*16/25
-        vogBoxYmin=wh/2-vogBoxHeight/2
+        vogBoxYmin=0//wh/2-vogBoxHeight/2
         vogBoxYcenter=wh/2
         fpsXd=Int((240.0/videoFps).rounded())
     }

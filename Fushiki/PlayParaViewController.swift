@@ -212,27 +212,34 @@ class PlayParaViewController: UIViewController {
     }
   
     func setScreen(){
-        let ww=view.bounds.width
-        let wh=view.bounds.height
+//        let ww=view.bounds.width
+//        let wh=view.bounds.height
+        let top=CGFloat(UserDefaults.standard.float(forKey: "top"))
+        let bottom=CGFloat( UserDefaults.standard.float(forKey: "bottom"))
+        let left=CGFloat( UserDefaults.standard.float(forKey: "left"))
+        let right=CGFloat( UserDefaults.standard.float(forKey: "right"))
+        print("top",top,bottom,left,right)
+        let ww=view.bounds.width-(left+right)
+        let wh=view.bounds.height-(top+bottom)
 
         let sp=ww/120//間隙
         let bw=(ww-sp*10)/7//ボタン幅
         let bh=bw*170/440
         let by=wh-bh-sp
         let lw=ww-bw*2
-        let head=sp*3
+        let head=sp*2+left
         camera.setButtonProperty(keyPadDownButton, x: bw*6+sp*8, y: sp, w: bw, h: bh, UIColor.darkGray)
-        camera.setButtonProperty(exitButton,x:bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
-        camera.setButtonProperty(default1Button, x: bw*2+sp*4, y: by, w: bw, h: bh, UIColor.darkGray)
-        camera.setButtonProperty(default2Button, x: bw*3+sp*5, y: by, w: bw, h: bh, UIColor.darkGray)
-        camera.setButtonProperty(default3Button, x: bw*4+sp*6, y: by, w: bw, h: bh, UIColor.darkGray)
-        camera.setButtonProperty(default4Button, x: bw*5+sp*7, y: by, w: bw, h: bh, UIColor.darkGray)
-        para1.frame=CGRect(x:head+2*sp,y:sp,width:bw,height: bh)
-        para2.frame=CGRect(x:head+2*sp,y:sp*2+bh,width:bw,height: bh)
-        para3.frame=CGRect(x:head+2*sp,y:sp*3+bh*2,width:bw,height: bh)
-        para4.frame=CGRect(x:head+2*sp,y:sp*4+bh*3,width:bw,height: bh)
-        faceMark.frame=CGRect(x:head+2*sp,y:sp*5+bh*4,width:bw,height: bh)
-        checkRects.frame=CGRect(x:head+2*sp,y:sp*6+bh*5,width:bw,height: bh)
+        camera.setButtonProperty(exitButton,x:head+sp*6+bw*6,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(default1Button, x:head+sp*2+bw*2, y: by, w: bw, h: bh, UIColor.darkGray)
+        camera.setButtonProperty(default2Button, x:head+sp*3+bw*3, y: by, w: bw, h: bh, UIColor.darkGray)
+        camera.setButtonProperty(default3Button, x:head+sp*4+bw*4, y: by, w: bw, h: bh, UIColor.darkGray)
+        camera.setButtonProperty(default4Button, x:head+sp*5+bw*5, y: by, w: bw, h: bh, UIColor.darkGray)
+        para1.frame=CGRect(x:head,y:sp,width:bw,height: bh)
+        para2.frame=CGRect(x:head,y:sp*2+bh,width:bw,height: bh)
+        para3.frame=CGRect(x:head,y:sp*3+bh*2,width:bw,height: bh)
+        para4.frame=CGRect(x:head,y:sp*4+bh*3,width:bw,height: bh)
+        faceMark.frame=CGRect(x:head,y:sp*5+bh*4,width:bw,height: bh)
+        checkRects.frame=CGRect(x:head,y:sp*6+bh*5,width:bw,height: bh)
         paraText1.frame=CGRect(x:head+bw+3*sp,y:sp,width:lw,height: bh)
         paraText2.frame=CGRect(x:head+bw+3*sp,y:sp*2+bh,width:lw,height: bh)
         paraText3.frame=CGRect(x:head+bw+3*sp,y:sp*3+bh*2,width:lw,height: bh)
