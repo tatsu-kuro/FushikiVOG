@@ -346,10 +346,10 @@ class PlayViewController: UIViewController {
         for i in start..<end {
 //            if i < vogPos_count{
                 let px = CGFloat(fpsXd * i)
-                let py1 = eyePosXfiltered[i] * posR + (h-240)/5
-                let py2 = eyeVelXfiltered[i] * veloR + (h-240)*2/5
-                let py3 = eyePosYfiltered[i] * posR + (h-240)*3/5
-                let py4 = eyeVelYfiltered[i] * veloR + (h-240)*4/5
+                let py1 = eyePosXFiltered[i] * posR + (h-240)/5
+                let py2 = eyeVeloXFiltered[i] * veloR + (h-240)*2/5
+                let py3 = eyePosYFiltered[i] * posR + (h-240)*3/5
+                let py4 = eyeVeloYFiltered[i] * veloR + (h-240)*4/5
                 let point1 = CGPoint(x: px, y: py1)
                 let point2 = CGPoint(x: px, y: py2)
                 let point3 = CGPoint(x: px, y: py3)
@@ -472,15 +472,15 @@ class PlayViewController: UIViewController {
         if calcFlag == true{
             elapsedTime=CFAbsoluteTimeGetCurrent()-startTime
         }
-        currTimeLabel.text=String(format:"%.1f/%.1f (%.0f)",seekBar.value + Float(eyePosX.count)/videoFps,videoDuration,elapsedTime)
-        if eyePosXfiltered.count < 5 {
+        currTimeLabel.text=String(format:"%.1f/%.1f (%.0f)",seekBar.value + Float(eyePosXOrig.count)/videoFps,videoDuration,elapsedTime)
+        if eyePosXFiltered.count < 5 {
             return
         }
         var calcFlagTemp=true
         if calcFlag == false {//終わったらここだが取り残しがある
             calcFlagTemp=false
         }
-        let cntTemp=eyePosX.count
+        let cntTemp=eyePosXOrig.count
         vogImage=addVogWave(startingImage: vogImage!, startn: lastArraycount-1, end:cntTemp)
         lastArraycount=cntTemp
 //        drawVogall_new()
@@ -646,8 +646,8 @@ class PlayViewController: UIViewController {
     
     func moveCenter(start:CGPoint,move:CGPoint,hani:CGRect)-> CGPoint{
         var returnPoint:CGPoint=CGPoint(x:0,y:0)//2種類の枠を代入、変更してreturnで返す
-        returnPoint.x = start.x + move.x
-        returnPoint.y = start.y + move.y
+        returnPoint.x = start.x + move.x/4
+        returnPoint.y = start.y + move.y/4
         if returnPoint.x < hani.origin.x{
             returnPoint.x = hani.origin.x
         }else if returnPoint.x > hani.origin.x+hani.width{
@@ -676,7 +676,7 @@ class PlayViewController: UIViewController {
         } else if sender.state == .changed {
             
             if vogImageView?.isHidden == false{//vog波形表示中
-                if fpsXd*eyePosX.count<240*10{//240*10以下なら動けない。
+                if fpsXd*eyePosXOrig.count<240*10{//240*10以下なら動けない。
                     return
                 }
                 let ratio=(view.bounds.height-pos.y)/view.bounds.height
@@ -688,8 +688,8 @@ class PlayViewController: UIViewController {
                     vogCurPoint += dd*10
                     lastmoveX = Int(move.x)
                 }
-                if vogCurPoint>eyePosX.count{
-                    vogCurPoint=eyePosX.count
+                if vogCurPoint>eyePosXOrig.count{
+                    vogCurPoint=eyePosXOrig.count
                 }else if fpsXd*vogCurPoint<2400{
                     vogCurPoint=2400/fpsXd
                 }
@@ -742,6 +742,8 @@ class PlayViewController: UIViewController {
         }else{
             videoPlayerLayerRect=CGRect(x:x0,y:y0,width:w*zn,height:h*zn)
         }
+//        let layerCnt=view.layer.sublayers!.count//?.remove(at: <#T##Int#>)?.last=videoPlayerLayer
+//        view.layer.sublayers?.remove(at: layerCnt-1)
         viewDidLoad()
 
     }
@@ -766,9 +768,9 @@ class PlayViewController: UIViewController {
     
     @objc func update(tm: Timer) {
         if timer_vog?.isValid == true{
-            currTimeLabel.text=String(format:"%.1f/%.1f (%.0f)",seekBar.value + Float(eyePosX.count)/videoFps,videoDuration,elapsedTime)
+            currTimeLabel.text=String(format:"%.1f/%.1f (%.0f)",seekBar.value + Float(eyePosXOrig.count)/videoFps,videoDuration,elapsedTime)
         }else{
-            currTimeLabel.text=String(format:"%.1f/%.1f (%.0f)",seekBar.value + Float(eyePosX.count)/videoFps,videoDuration,elapsedTime)
+            currTimeLabel.text=String(format:"%.1f/%.1f (%.0f)",seekBar.value + Float(eyePosXOrig.count)/videoFps,videoDuration,elapsedTime)
         }
         if !((videoPlayer.rate != 0) && (videoPlayer.error == nil)) {//notplaying
             if seekBar.value>videoDuration-0.01{
@@ -841,8 +843,12 @@ class PlayViewController: UIViewController {
             videoPlayerLayerRect=view.bounds
         }
         videoPlayerLayer.frame = videoPlayerLayerRect
-//        layer.frame = CGRect(x:-view.bounds.width,y:0,width: view.bounds.width*2,height:view.bounds.height*2)
+        print("layerConut:",view.layer.sublayers?.count)
+     
         view.layer.addSublayer(videoPlayerLayer)
+//        view.layer.sublayers?.remove(at: )
+//        view.layer.sublayers?.insert( <#CALayer#>, at: )
+        print("layerConut:",view.layer.sublayers?.count)
         // Create Movie SeekBar
         seekBar.frame = CGRect(x: sp*2, y:seeky, width: ww - 4*sp, height: bh)
         seekBar.thumbTintColor=UIColor.orange
@@ -885,6 +891,8 @@ class PlayViewController: UIViewController {
         view.bringSubviewToFront(setteiButton)
         album.setButtonProperty(exitButton,x: sp*8+bw*6,y:by, w:bw,h:bh,UIColor.darkGray)
         view.bringSubviewToFront(exitButton)
+        print("layerConut:",view.layer.sublayers?.count)
+
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         videoSize=resolutionSizeOfVideo(url:videoURL!)
         screenSize=view.bounds.size
@@ -899,12 +907,6 @@ class PlayViewController: UIViewController {
         vogBoxYmin=wh/2-vogBoxHeight/2
         vogBoxYcenter=wh/2
         fpsXd=Int((240.0/videoFps).rounded())
-//        mailButton.isEnabled=false
-//        cameraButton.frame = CGRect(x:  sp*7+bw*5, y: by-bh*2, width: bw*2+sp, height:bh)
-//        view.bringSubviewToFront(cameraButton)
-//        cameraButton.isHidden=true//fps<230ならfrontCameraと判定することとした
-        // シングルタップが失敗した時に、ダブルタップジェスチャーで対応するように設定します。
-//        singleTap.require(toFail: singleTap)
     }
   
     func setButtonProperty(button:UIButton,color:UIColor){
@@ -991,12 +993,12 @@ class PlayViewController: UIViewController {
     var veloRatio:Int = 100//vog
     var faceF:Int = 0
     var calcDate:String = ""
-    var eyePosX = Array<CGFloat>()
-    var eyePosY = Array<CGFloat>()
-    var eyePosYfiltered = Array<CGFloat>()
-    var eyePosXfiltered = Array<CGFloat>()
-    var eyeVelXfiltered = Array<CGFloat>()
-    var eyeVelYfiltered = Array<CGFloat>()
+    var eyePosXOrig = Array<CGFloat>()
+    var eyePosYOrig = Array<CGFloat>()
+    var eyePosYFiltered = Array<CGFloat>()
+    var eyePosXFiltered = Array<CGFloat>()
+    var eyeVeloXFiltered = Array<CGFloat>()
+    var eyeVeloYFiltered = Array<CGFloat>()
 //    var buttonsArray:[Bool]!
     func setButtons(flag:Bool){
         mailButton.isEnabled=flag
@@ -1023,22 +1025,15 @@ class PlayViewController: UIViewController {
         if zoomNum != 1{
             return
         }
-//        if faceMark == false{
-//            onCalcButton()
-//            return
-//        }
         var debugMode:Bool=true
         let backCameraFps=album.getUserDefaultFloat(str: "backCameraFps", ret:240.0)
         if  UserDefaults.standard.integer(forKey: "checkRects") == 0{
             debugMode=false
         }
         if debugMode==false{
-//            debugFace.isHidden=true
             debugFaceb.isHidden=true
-//            debugEye.isHidden=true
             debugEyeb.isHidden=true
         }else{
-//            debugEye.isHidden=false
             debugEyeb.isHidden=false
             if faceMark==false{
                 debugFaceb.isHidden=true
@@ -1061,30 +1056,26 @@ class PlayViewController: UIViewController {
         setUserDefaults()//eyeCenter,faceCenter
         lastArraycount=0
         calcFlag = true
-        eyePosX.removeAll()
-        eyePosXfiltered.removeAll()
-        eyePosY.removeAll()
-        eyePosYfiltered.removeAll()
-        eyeVelXfiltered.removeAll()
-        eyeVelYfiltered.removeAll()
-        eyePosX.append(0)
-        eyePosXfiltered.append(0)
-        eyePosY.append(0)
-        eyePosYfiltered.append(0)
-        eyeVelXfiltered.append(0)
-        eyeVelYfiltered.append(0)
-        
+        eyePosXOrig.removeAll()
+        eyePosXFiltered.removeAll()
+        eyePosYOrig.removeAll()
+        eyePosYFiltered.removeAll()
+        eyeVeloXFiltered.removeAll()
+        eyeVeloYFiltered.removeAll()
+        eyePosXOrig.append(0)
+        eyePosXFiltered.append(0)
+        eyePosYOrig.append(0)
+        eyePosYFiltered.append(0)
+        eyeVeloXFiltered.append(0)
+        eyeVeloYFiltered.append(0)
         
         KalmanInit()
-        //        showBoxies(f: true)
-        //        vogImage = drawWakulines(width:mailWidth*18,height:mailHeight)//枠だけ
         UIApplication.shared.isIdleTimerDisabled = true//sleepしない
         let eyeborder:CGFloat = CGFloat(eyeBorder)
         startTimer()//resizerectのチェックの時はここをコメントアウト*********************
         let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
         let avAsset = AVURLAsset(url: videoURL!, options: options)
-        //        calcDate = avAsset.creationDate!.description
-        //                print("calcdate:",calcDate)
+
         var reader: AVAssetReader! = nil
         do {
             reader = try AVAssetReader(asset: avAsset)
@@ -1146,10 +1137,6 @@ class PlayViewController: UIViewController {
         var faceWithBorderRect = resizeR2(faceWithBorderRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
         //eyeWithBorderRectとeyeRect の差、faceでの差も同じ
         let borderRectDiffer=faceWithBorderRect.width-faceRect.width
-//        let maxWidthWithBorder=videoWidth-eyeWithBorderRect.width-5
-//        let maxHeightWithBorder=videoHeight-eyeWithBorderRect.height-5
-        //        let eyebR0 = eyeWithBorderRect
-        //        let facbR0 = faceWithBorderRect
         
         let eyeCGImage = context.createCGImage(ciImage, from: eyeRect)!
         let eyeUIImage = UIImage.init(cgImage: eyeCGImage)
@@ -1234,11 +1221,9 @@ class PlayViewController: UIViewController {
                                                 narrow: eyeUIImage,
                                                 x: eX,
                                                 y: eY)
-                        //                    print("OpenV",maxEyeV)
                         if maxEyeV < 0.7{
                             ex = 0
                             ey = 0
-//                            print("error 0.7",eyePosX.count)///Int(videoFps))
                         }else{//検出できた時
                             //eXはポインタなので、".pointee"でそのポインタの内容が取り出せる。Cでいうところの"*"
                             //上で宣言しているとおりInt32が返ってくるのでCGFloatに変換して代入
@@ -1260,13 +1245,13 @@ class PlayViewController: UIViewController {
                     while handlingDataNowFlag==true{
                         sleep(UInt32(0.1))
                     }
-                    eyePosX.append(ex)
-                    eyePosY.append(ey)
-                    eyePosXfiltered.append(-1*Kalman(value: ex,num: 0))
-                    eyePosYfiltered.append(-1*Kalman(value: ey,num: 1))
-                    let cnt=eyePosX.count
-                    eyeVelXfiltered.append(Kalman(value:eyePosXfiltered[cnt-1]-eyePosXfiltered[cnt-2],num:2))
-                    eyeVelYfiltered.append(Kalman(value:eyePosYfiltered[cnt-1]-eyePosYfiltered[cnt-2],num:3))
+                    eyePosXOrig.append(ex)
+                    eyePosYOrig.append(ey)
+                    eyePosXFiltered.append(-1*Kalman(value: ex,num: 0))
+                    eyePosYFiltered.append(-1*Kalman(value: ey,num: 1))
+                    let cnt=eyePosXOrig.count
+                    eyeVeloXFiltered.append(Kalman(value:eyePosXFiltered[cnt-1]-eyePosXFiltered[cnt-2],num:2))
+                    eyeVeloYFiltered.append(Kalman(value:eyePosYFiltered[cnt-1]-eyePosYFiltered[cnt-2],num:3))
                     
                     while reader.status != AVAssetReader.Status.reading {
                         sleep(UInt32(0.1))
@@ -1277,7 +1262,6 @@ class PlayViewController: UIViewController {
                 }
             }
             calcFlag = false
-//            UIApplication.shared.isIdleTimerDisabled = false//sleepする
         }
     }
  
