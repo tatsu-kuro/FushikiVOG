@@ -108,6 +108,11 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        let top=CGFloat(UserDefaults.standard.float(forKey: "top"))
+        let bottom=CGFloat( UserDefaults.standard.float(forKey: "bottom"))
+        let left=CGFloat( UserDefaults.standard.float(forKey: "left"))
+        let right=CGFloat( UserDefaults.standard.float(forKey: "right"))
+
         camera.makeAlbum()
         mainBrightness=UIScreen.main.brightness//明るさを保持、終了時に戻す
         print(UIScreen.main.brightness)

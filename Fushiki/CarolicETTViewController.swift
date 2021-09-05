@@ -144,6 +144,11 @@ class CarolicETTViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         camera.makeAlbum()
+        let top=CGFloat(UserDefaults.standard.float(forKey: "top"))
+        let bottom=CGFloat( UserDefaults.standard.float(forKey: "bottom"))
+        let left=CGFloat( UserDefaults.standard.float(forKey: "left"))
+        let right=CGFloat( UserDefaults.standard.float(forKey: "right"))
+
         mainBrightness = UIScreen.main.brightness
         
         UIScreen.main.brightness = CGFloat(camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))

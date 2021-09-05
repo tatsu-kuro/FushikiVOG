@@ -42,10 +42,17 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
         return alpha
     }
     func getRecClarificationRct(width:CGFloat,height:CGFloat)->CGRect{
-        let imgH=height/30//415*177 2.34  383*114 3.36 257*112 2.3
-        let imgW=imgH*2.3
-        let space=imgW*0.1
-        return CGRect(x:width-imgW-space,y:height-imgH-space,width: imgW,height:imgH)
+        let w=width/100
+        let left=CGFloat( UserDefaults.standard.float(forKey: "left"))
+        if left==0{
+            return CGRect(x:width-w,y:height-w,width:w,height:w)
+        }else{
+            return CGRect(x:left/6,y:height-height/5.5,width:w,height:w)
+        }
+//        let imgH=height/30//415*177 2.34  383*114 3.36 257*112 2.3
+//        let imgW=imgH*2.3
+//        let space=imgW*0.1
+//        return CGRect(x:width-imgW-space,y:height-imgH-space,width: imgW,height:imgH)
     }
     func albumExists() -> Bool {
         // ここで以下のようなエラーが出るが、なぜか問題なくアルバムが取得できている
