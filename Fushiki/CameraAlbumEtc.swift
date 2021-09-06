@@ -480,6 +480,14 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
             return ret
         }
     }
+    func getUserDefaultString(str:String,ret:String) -> String{
+        if (UserDefaults.standard.object(forKey: str) != nil){
+            return UserDefaults.standard.string(forKey:str)!
+        }else{//keyが設定してなければretをセット
+            UserDefaults.standard.set(ret, forKey: str)
+            return ret
+        }
+    }
     func setLedLevel(level:Float){
         if cameraMode==2{
             return

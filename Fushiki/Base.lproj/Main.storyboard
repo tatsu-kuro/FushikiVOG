@@ -27,14 +27,14 @@
                                     <segment title="3"/>
                                 </segments>
                                 <connections>
-                                    <action selector="paraAct0:" destination="gOS-fU-nK5" eventType="valueChanged" id="Onz-Ko-gnP"/>
+                                    <action selector="onOkpModeSwitch:" destination="gOS-fU-nK5" eventType="valueChanged" id="Onz-Ko-gnP"/>
                                 </connections>
                             </segmentedControl>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="cA9-K4-shB">
                                 <rect key="frame" x="79" y="148" width="118" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
-                                    <action selector="paraAct2:" destination="gOS-fU-nK5" eventType="valueChanged" id="u18-nK-1h9"/>
+                                    <action selector="onOkpTimeSlider:" destination="gOS-fU-nK5" eventType="valueChanged" id="u18-nK-1h9"/>
                                 </connections>
                             </slider>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="wrz-kI-t9y">
@@ -47,14 +47,14 @@
                                     <segment title="3"/>
                                 </segments>
                                 <connections>
-                                    <action selector="paraAct3:" destination="gOS-fU-nK5" eventType="valueChanged" id="Qzz-Nf-Trh"/>
+                                    <action selector="onOknModeSwitch:" destination="gOS-fU-nK5" eventType="valueChanged" id="Qzz-Nf-Trh"/>
                                 </connections>
                             </segmentedControl>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="uh1-Tf-lNZ">
                                 <rect key="frame" x="72" y="231" width="118" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
-                                    <action selector="paraAct5:" destination="gOS-fU-nK5" eventType="valueChanged" id="DT7-du-49O"/>
+                                    <action selector="onOknTimeSlider:" destination="gOS-fU-nK5" eventType="valueChanged" id="DT7-du-49O"/>
                                 </connections>
                             </slider>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="7li-Aa-cfI">
@@ -67,14 +67,14 @@
                                     <segment title="3"/>
                                 </segments>
                                 <connections>
-                                    <action selector="paraAct6:" destination="gOS-fU-nK5" eventType="valueChanged" id="GMJ-GJ-txo"/>
+                                    <action selector="onEttModeSwitch:" destination="gOS-fU-nK5" eventType="valueChanged" id="GMJ-GJ-txo"/>
                                 </connections>
                             </segmentedControl>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="rqo-3h-wbp">
                                 <rect key="frame" x="72" y="284" width="118" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
-                                    <action selector="paraAct8:" destination="gOS-fU-nK5" eventType="valueChanged" id="snd-j4-uEJ"/>
+                                    <action selector="onBrightnessSlider:" destination="gOS-fU-nK5" eventType="valueChanged" id="snd-j4-uEJ"/>
                                 </connections>
                             </slider>
                             <button opaque="NO" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dd6-zp-sxW">
@@ -135,14 +135,18 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ixO-Uv-LwA">
-                                <rect key="frame" x="259" y="20" width="42" height="25"/>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ixO-Uv-LwA">
+                                <rect key="frame" x="259" y="20" width="256" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="v3Y-jM-4m8" appends="YES" id="pvG-14-1mc"/>
+                                </connections>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="joF-RS-tH3">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="joF-RS-tH3">
                                 <rect key="frame" x="82" y="59" width="219" height="42"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -177,8 +181,8 @@
                                     <action selector="onFrontCameraSwitch:" destination="gOS-fU-nK5" eventType="valueChanged" id="Gwo-zO-NQV"/>
                                 </connections>
                             </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d9U-Qr-Rh6">
-                                <rect key="frame" x="255" y="367" width="42" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="sound to start recording" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d9U-Qr-Rh6">
+                                <rect key="frame" x="255" y="367" width="184" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -215,8 +219,8 @@
                         <outlet property="oknTimeText" destination="HMX-MG-GP5" id="SIc-MU-Zx7"/>
                         <outlet property="okpPauseTimeSlider" destination="cA9-K4-shB" id="Qg2-YT-Asl"/>
                         <outlet property="okpPauseTimeText" destination="8VF-21-pW0" id="yQv-2d-Osd"/>
+                        <outlet property="okpSwitch" destination="grl-Cp-esh" id="u9I-8p-Acp"/>
                         <outlet property="okpText" destination="JNE-pm-V4S" id="aZA-GF-eqk"/>
-                        <outlet property="opkSwitch" destination="grl-Cp-esh" id="u9I-8p-Acp"/>
                         <outlet property="speakerImage" destination="a0Q-M0-AO5" id="rBU-En-DAb"/>
                         <outlet property="speakerSwitch" destination="epD-UA-8gP" id="KSD-1W-bkX"/>
                         <outlet property="speakerText" destination="d9U-Qr-Rh6" id="ECb-wr-2Eb"/>
@@ -227,6 +231,11 @@
                 <tapGestureRecognizer numberOfTapsRequired="2" id="3TM-bb-wSt">
                     <connections>
                         <action selector="goExit:" destination="gOS-fU-nK5" id="UBl-cB-gqb"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="v3Y-jM-4m8">
+                    <connections>
+                        <action selector="tapOnEttText:" destination="gOS-fU-nK5" id="qkh-b8-ZG5"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

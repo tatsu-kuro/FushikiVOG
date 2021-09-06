@@ -7,31 +7,47 @@
 //
 
 import UIKit
+extension String {
+    // 半角数字の判定
+    func isAlphanumeric() -> Bool {
+//        return self.range(of: "[^0-9]+", options: .regularExpression) == nil && self != ""
+        return self.range(of: "[^,:0123456789]", options: .regularExpression) == nil && self != ""
+    }
+}
 
 class SetteiViewController: UIViewController {
     let camera = CameraAlbumEtc()//name:"Fushiki")
     var oknMode:Int=0
-    var oknSpeed:Int = 50
+//    var oknSpeed:Int = 50
     var oknTime:Int = 50
     var okpMode:Int=0
-    var okpSpeed:Int=50
+//    var okpSpeed:Int=50
     var okpTime:Int=50
     var ettMode:Int = 0
     var ettWidth:Int=50
     var targetMode:Int=0
     var screenBrightness:Float!
-    
+    var ettModeTxt0:String=""
+    var ettModeTxt1:String=""
+    var ettModeTxt2:String=""
+    var ettModeTxt3:String=""
+    var cameraMode:Int!
+    var speakerOnOff:Int!
     @IBOutlet weak var frontCameraLabel: UILabel!
     @IBOutlet weak var frontCameraSwitch: UISwitch!
-    
     @IBOutlet weak var speakerText: UILabel!
     @IBOutlet weak var speakerImage: UIImageView!
     @IBAction func onSpeakerSwitch(_ sender: UISwitch) {
+        if sender.isOn==true{
+            speakerOnOff=1
+        }else{
+            speakerOnOff=0
+        }
+        UserDefaults.standard.set(speakerOnOff, forKey: "speakerOnOff")
     }
     @IBOutlet weak var speakerSwitch: UISwitch!
     @IBAction func onFrontCameraSwitch(_ sender: UISwitch) {
-        var cameraMode:Int!
-        if sender.isOn==true{
+         if sender.isOn==true{
            cameraMode=0
         }else{
             cameraMode=2
@@ -39,7 +55,7 @@ class SetteiViewController: UIViewController {
         UserDefaults.standard.set(cameraMode, forKey: "cameraMode")
     }
     @IBOutlet weak var cameraButton: UIButton!
-    @IBOutlet weak var opkSwitch: UISegmentedControl!
+    @IBOutlet weak var okpSwitch: UISegmentedControl!
 //    @IBOutlet weak var paraCnt1: UISlider!
     @IBOutlet weak var okpPauseTimeSlider: UISlider!
     @IBOutlet weak var oknSwitch: UISegmentedControl!
@@ -89,9 +105,48 @@ class SetteiViewController: UIViewController {
              }
          }
     }
-    @IBAction func exitBut(_ sender: Any) {
-        goExit(0)
+ 
+    @IBAction func goExit(_ sender: Any) {
+        setUserDefaults()
+        let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
+        //delTimer()
+        mainView.targetMode=targetMode
+        self.present(mainView, animated: false, completion: nil)
     }
+    
+     @IBAction func onOkpModeSwitch(_ sender: UISegmentedControl) {
+          okpMode=sender.selectedSegmentIndex
+          dispTexts()
+      }
+     
+     @IBAction func onOkpTimeSlider(_ sender: UISlider) {
+         okpTime=Int(sender.value*50)
+         dispTexts()
+     }
+      @IBAction func onOknModeSwitch(_ sender: UISegmentedControl) {
+           oknMode=sender.selectedSegmentIndex
+           dispTexts()
+       }
+     
+     @IBAction func onOknTimeSlider(_ sender: UISlider) {
+         oknTime=Int(sender.value*100)
+         dispTexts()
+     }
+    @IBAction func onEttModeSwitch(_ sender: UISegmentedControl) {
+        ettMode=sender.selectedSegmentIndex
+        print("ettmode:",ettMode)
+        if ettMode==0{
+            ettText.text=ettModeTxt0
+        }else if ettMode==1{
+            ettText.text=ettModeTxt1
+        }else if ettMode==2{
+            ettText.text=ettModeTxt2
+        }else if ettMode==3{
+            ettText.text=ettModeTxt3
+        }
+        setUserDefaults()
+    }
+    /*
     func setUserDefaults(){
         UserDefaults.standard.set(okpSpeed, forKey: "okpSpeed")
         UserDefaults.standard.set(okpTime, forKey: "okpTime")
@@ -102,61 +157,25 @@ class SetteiViewController: UIViewController {
         UserDefaults.standard.set(ettMode,forKey: "ettMode")
         UserDefaults.standard.set(ettWidth,forKey: "ettWidth")
         UserDefaults.standard.set(screenBrightness, forKey: "screenBrightness")
-    }
-    @IBAction func goExit(_ sender: Any) {
+    }*/
+    func setUserDefaults(){
 //        UserDefaults.standard.set(okpSpeed, forKey: "okpSpeed")
-//        UserDefaults.standard.set(okpTime, forKey: "okpTime")
-//        UserDefaults.standard.set(okpMode, forKey: "okpMode")
+        UserDefaults.standard.set(okpTime, forKey: "okpTime")
+        UserDefaults.standard.set(okpMode, forKey: "okpMode")
 //        UserDefaults.standard.set(oknSpeed, forKey: "oknSpeed")
-//        UserDefaults.standard.set(oknTime, forKey: "oknTime")
-//        UserDefaults.standard.set(oknMode, forKey: "oknMode")
-//        UserDefaults.standard.set(ettMode,forKey: "ettMode")
-//        UserDefaults.standard.set(ettWidth,forKey: "ettWidth")
-//        UserDefaults.standard.set(screenBrightness, forKey: "screenBrightness")
-        setUserDefaults()
-        let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
-        //delTimer()
-        mainView.targetMode=targetMode
-        self.present(mainView, animated: false, completion: nil)
+        UserDefaults.standard.set(oknTime, forKey: "oknTime")
+        UserDefaults.standard.set(oknMode, forKey: "oknMode")
+        UserDefaults.standard.set(ettMode,forKey: "ettMode")
+        UserDefaults.standard.set(screenBrightness, forKey: "screenBrightness")
+        UserDefaults.standard.set(cameraMode,forKey: "cameraMode")
+        UserDefaults.standard.set(speakerOnOff,forKey: "speakerOnOff")
+        UserDefaults.standard.set(ettModeTxt0, forKey: "ettModeTxt0")
+        UserDefaults.standard.set(ettModeTxt1, forKey: "ettModeTxt1")
+        UserDefaults.standard.set(ettModeTxt2, forKey: "ettModeTxt2")
+        UserDefaults.standard.set(ettModeTxt3, forKey: "ettModeTxt3")
     }
-    
-     @IBAction func paraAct0(_ sender: UISegmentedControl) {
-          okpMode=sender.selectedSegmentIndex
-          dispTexts()
-      }
 
-//     @IBAction func paraAct1(_ sender: UISlider) {
-//         okpSpeed=Int(sender.value*200)
-//         dispTexts()
-//     }
-     
-     @IBAction func paraAct2(_ sender: UISlider) {
-         okpTime=Int(sender.value*50)
-         dispTexts()
-     }
-      @IBAction func paraAct3(_ sender: UISegmentedControl) {
-           oknMode=sender.selectedSegmentIndex
-           dispTexts()
-       }
-//     @IBAction func paraAct4(_ sender: UISlider) {
-//         oknSpeed=Int(sender.value*200)
-//         dispTexts()
-//     }
-     
-     @IBAction func paraAct5(_ sender: UISlider) {
-         oknTime=Int(sender.value*100)
-         dispTexts()
-     }
-     @IBAction func paraAct6(_ sender: UISegmentedControl) {
-           ettMode=sender.selectedSegmentIndex
-           dispTexts()
-//        print("chante ett mode:",ettMode)
-       }
-     @IBAction func paraAct7(_ sender: UISlider) {
-         ettWidth=Int(sender.value*100)
-         dispTexts()
-     }
-    @IBAction func paraAct8(_ sender: UISlider) {
+    @IBAction func onBrightnessSlider(_ sender: UISlider) {
 //        UserDefaults.standard.set(sender.value, forKey: "screenBrightness")
         screenBrightness=sender.value
         setUserDefaults()
@@ -164,10 +183,10 @@ class SetteiViewController: UIViewController {
     
     @IBAction func defaultAct(_ sender: Any) {
         okpMode=0
-        okpSpeed=100
+//        okpSpeed=100
         okpTime=5
         oknMode=0
-        oknSpeed=100
+//        oknSpeed=100
         oknTime=60
          ettMode=0
         ettWidth=90
@@ -175,13 +194,22 @@ class SetteiViewController: UIViewController {
         dispTexts()
     }
     func setPars(){
-        opkSwitch.selectedSegmentIndex=okpMode%4
+        okpSwitch.selectedSegmentIndex=okpMode%4
         okpPauseTimeSlider.value=Float(okpTime)/50.0
         oknSwitch.selectedSegmentIndex=oknMode%4
         oknTimeSlider.value=Float(oknTime)/100.0
         ettSwitch.selectedSegmentIndex=ettMode%4
-//        paraCnt7.value=Float(ettWidth)/100.0
         brightnessSlider.value=camera.getUserDefaultFloat(str: "screenBrightness", ret: 1.0)
+        if cameraMode==0{//front camera
+            frontCameraSwitch.isOn=true
+        }else{//don't use camera
+            frontCameraSwitch.isOn=false
+        }
+        if speakerOnOff==0{//front camera
+            speakerSwitch.isOn=false
+        }else{//don't use camera
+            speakerSwitch.isOn=true
+        }
     }
     func setokpMode(){
         okpText.text="OKP-MODE" + "   "
@@ -208,15 +236,14 @@ class SetteiViewController: UIViewController {
         }
     }
     func setettMode(){
-        ettText.text="ETT-MODE" + "   "
         if ettMode == 0{
-            ettText.text! += " pursuit(30s) horizontal"
+            ettText.text! = ettModeTxt0//" pursuit(30s) horizontal"
         }else if ettMode == 1{
-            ettText.text! += " sursuit(30s) vertical"
+            ettText.text! = ettModeTxt1
         }else if ettMode == 2{
-            ettText.text! += " saccade(30s) horizontal & vertical"
+            ettText.text! = ettModeTxt2// " saccade(30s) horizontal & vertical"
         }else{
-            ettText.text! += " pursuit(20s)->saccade(20s)->random(20s)"
+            ettText.text! = ettModeTxt3//" pursuit(20s)->saccade(20s)->random(20s)"
         }
     }
 
@@ -224,34 +251,33 @@ class SetteiViewController: UIViewController {
         setokpMode()
         setoknMode()
         setettMode()
-
         okpPauseTimeText.text="OKP-PAUSE:" + String(Int(okpTime)) + "sec"
         oknTimeText.text="OKN-TIME:" + String(Int(oknTime)) + "sec"
-        ettExplanationText.text="ETT-WIDTH:" + String(Int(ettWidth)) + "%"
         setUserDefaults()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         okpMode = UserDefaults.standard.integer(forKey: "okpMode")
-        okpSpeed = UserDefaults.standard.integer(forKey: "okpSpeed")
         okpTime = UserDefaults.standard.integer(forKey: "okpTime")
         oknMode = UserDefaults.standard.integer(forKey: "oknMode")
-        oknSpeed = UserDefaults.standard.integer(forKey: "oknSpeed")
         oknTime = UserDefaults.standard.integer(forKey: "oknTime")
-        ettMode = UserDefaults.standard.integer(forKey: "ettMode")
-        ettWidth = UserDefaults.standard.integer(forKey: "ettWidth")
-        let cameraMode = camera.getUserDefaultInt(str: "cameraMode", ret: 0)
-        if cameraMode==0{//front camera
-            frontCameraSwitch.isOn=true
-        }else{//don't use camera
-            frontCameraSwitch.isOn=false
-        }
+        speakerOnOff=UserDefaults.standard.integer(forKey: "speakerOnOff")
+        cameraMode=UserDefaults.standard.integer(forKey: "cameraMode")
         screenBrightness = camera.getUserDefaultFloat(str: "screenBrightness", ret: 1.0)
+        ettMode = camera.getUserDefaultInt(str:"ettMode",ret:0)
+        ettModeTxt0=camera.getUserDefaultString(str: "ettModeText0", ret: "0")
+        ettModeTxt1=camera.getUserDefaultString(str: "ettModeText1", ret: "1")
+        ettModeTxt2=camera.getUserDefaultString(str: "ettModeText2", ret: "2")
+        ettModeTxt3=camera.getUserDefaultString(str: "ettModeText3", ret: "3")
+
+        ettExplanationText.text="円形視標の動作の設定方法  a:b:c,....\n"
+        ettExplanationText.text! += "a[視標の動き方(1-6)]:b[速さ(0-3)]:c[時間(秒)]\n"
+        ettExplanationText.text! += "a) 1=振子横 2=同縦 3=衝動横 4=同縦 5=不規則横 6=同縦横"
+            
         setScreen()
         dispTexts()
         setPars()
-        // Do any additional setup after loading the view.
     }
     
       override var prefersStatusBarHidden: Bool {
@@ -260,6 +286,59 @@ class SetteiViewController: UIViewController {
       override var prefersHomeIndicatorAutoHidden: Bool {
           return true
       }
+    
+    @IBAction func tapOnEttText(_ sender: Any) {
+        print("tap")
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+//        alert.textFields![0].text!="kiiii"
+        let saveAction = UIAlertAction(title: "OK", style: .default) { [self] (action:UIAlertAction!) -> Void in
+            // 入力したテキストをコンソールに表示
+            let textField = alert.textFields![0] as UITextField
+            let ettString:String = textField.text!
+            if ettString.isAlphanumeric(){//} isOnly(structuredBy: "0123456789:,") == true
+                if ettMode==0{
+                    ettModeTxt0=ettString
+                }else if ettMode==1{
+                    ettModeTxt1=ettString
+                }else if ettMode==2{
+                    ettModeTxt2=ettString
+                }else{
+                    ettModeTxt3=ettString
+                }
+                setUserDefaults()
+                ettText.text=ettString
+            }else{
+                let dialog = UIAlertController(title: "", message: "0123456789,: だけです.", preferredStyle: .alert)
+                //ボタンのタイトル
+                dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                //実際に表示させる
+                self.present(dialog, animated: true, completion: nil)
+//                print(",:0123456789以外は受け付けません")
+            }
+//            print("\(String(describing: textField.text))")
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (action:UIAlertAction!) -> Void in
+        }
+        // UIAlertControllerにtextFieldを追加
+        alert.addTextField { (textField:UITextField!) -> Void in
+            textField.keyboardType = UIKeyboardType.default//.numberPad
+            if self.ettMode==0{
+                textField.text=self.ettModeTxt0
+            }else if self.ettMode==1{
+                textField.text=self.ettModeTxt1
+            }else if self.ettMode==2{
+                textField.text=self.ettModeTxt2
+            }else{
+                textField.text=self.ettModeTxt3
+            }
+        }
+        alert.addAction(cancelAction)//この行と下の行の並びを変えるとCancelとOKの左右が入れ替わる。
+        alert.addAction(saveAction)
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
     func setScreen(){
         
         let top=CGFloat(UserDefaults.standard.float(forKey: "top"))
@@ -269,26 +348,32 @@ class SetteiViewController: UIViewController {
         print("top",top,bottom,left,right)
         let ww=view.bounds.width-(left+right)
         let wh=view.bounds.height-(top+bottom)
-
-        var bw=ww/4.5
+          var bw=ww/4.5
         var sp=ww/120
         let x0=sp*2+left
         let x1=x0+bw+sp*2
         var bh=wh/15
         let b0y=bh*4/5
-        let b1y=b0y+bh+sp
+        let b1y=b0y+bh
         let b2y=b1y+bh*3+sp
-        let b3y=b2y+bh+sp*3
-        let b4y=b3y+bh+sp
+        let b3y=b2y+bh+sp
+        let b4y=b3y+bh+sp*3
         let b5y=b4y+bh+sp
-        let b6y=b5y+bh+sp*3
+        let b6y=b5y+bh+sp*1.5
         let b7y=b6y+bh+sp
-        let b8y=b7y+bh+sp*3
-        let b9y=b8y+bh+sp
+        let b8y=b7y+bh+sp*2
+        let ettTextWidth=view.bounds.width-right-x1-sp*2
+
+//        let b9y=b8y+bh+sp
         ettSwitch.frame  = CGRect(x:x0,   y: b0y ,width: bw,height:bh)
-        ettText.frame  = CGRect(x:x1,   y: b0y ,width: bw*5,height:bh)
-        ettExplanationText.frame  = CGRect(x:x1,   y: b1y ,width: bw*7,height:bh*3)
-        opkSwitch.frame  = CGRect(x:x0,   y: b2y ,width: bw, height: bh)
+//        ettText.frame  = CGRect(x:x1,   y: b0y ,width: bw*5,height:bh)
+//        ettText.frame  = CGRect(x:x1,   y: b0y-2 ,width: ettTextWidth, height: bh+4)
+//        ettText.backgroundColor = UIColor.gray
+        camera.setLabelProperty(ettText, x: x1, y: b0y-2, w: ettTextWidth, h: wh/15+4, UIColor.systemGray5)
+        ettText.layer.cornerRadius=3
+
+        ettExplanationText.frame  = CGRect(x:x0,   y: b1y ,width: bw*7,height:bh*3)
+        okpSwitch.frame  = CGRect(x:x0,   y: b2y ,width: bw, height: bh)
         okpText.frame  = CGRect(x:x1,   y: b2y ,width: bw*5, height: bh)
         okpPauseTimeSlider.frame  = CGRect(x:x0,   y: b3y ,width: bw,height:bh)
         okpPauseTimeText.frame  = CGRect(x:x1,   y: b3y ,width: bw*5,height:bh)
@@ -298,11 +383,11 @@ class SetteiViewController: UIViewController {
         oknTimeText.frame  = CGRect(x:x1,   y: b5y ,width: bw*5,height:bh)
         brightnessSlider.frame  = CGRect(x:x0,   y: b6y ,width: bw,height:bh)
         brightnessText.frame  = CGRect(x:x1,   y: b6y ,width: bw*5,height:bh)
-//        frontCameraSwitch.frame = CGRect(x:x0,y:b7y,width:bw,height: bh)
-//        frontCameraLabel.frame = CGRect(x:x0+70,y:b7y+2,width:bw*5,height:bh)
-        speakerSwitch.frame = CGRect(x:x0,   y: b7y ,width: bw*5,height:bh)
-        speakerImage.frame = CGRect(x:x1,   y: b7y ,width: bw*5,height:bh)
-        speakerText.frame = CGRect(x:x1+20,   y: b7y ,width: bw*5,height:bh)
+        frontCameraSwitch.frame = CGRect(x:x0,y:b7y,width:bw,height: bh)
+        frontCameraLabel.frame = CGRect(x:x1,y:b7y+2,width:bw*5,height:bh)
+        speakerSwitch.frame = CGRect(x:x0,   y: b8y ,width: bw*5,height:bh)
+        speakerImage.frame = CGRect(x:x0+50,   y: b8y ,width: 30,height:30)
+        speakerText.frame = CGRect(x:x1,   y: b8y ,width: bw*5,height:bh)
         sp=ww/120//間隙
         bw=(ww-sp*10)/7//ボタン幅
         bh=bw*170/440
@@ -311,5 +396,4 @@ class SetteiViewController: UIViewController {
         camera.setButtonProperty(defaultButton,x:left+bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(exitButton,x:left+bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
     }
-
 }
