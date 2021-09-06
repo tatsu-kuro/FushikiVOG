@@ -39,7 +39,7 @@ class SetteiViewController: UIViewController {
     }
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var opkSwitch: UISegmentedControl!
-    @IBOutlet weak var paraCnt1: UISlider!
+//    @IBOutlet weak var paraCnt1: UISlider!
     @IBOutlet weak var okpPauseTimeSlider: UISlider!
     @IBOutlet weak var oknSwitch: UISegmentedControl!
 //    @IBOutlet weak var paraCnt4: UISlider!
@@ -50,7 +50,7 @@ class SetteiViewController: UIViewController {
     @IBOutlet weak var brightnessSlider: UISlider!
     @IBOutlet weak var defaultButton: UIButton!
     @IBOutlet weak var okpText: UILabel!
-    @IBOutlet weak var paraTxt1: UILabel!
+//    @IBOutlet weak var paraTxt1: UILabel!
     @IBOutlet weak var okpPauseTimeText: UILabel!
     @IBOutlet weak var oknText: UILabel!
 //    @IBOutlet weak var paraTxt4: UILabel!
@@ -175,7 +175,7 @@ class SetteiViewController: UIViewController {
     }
     func setPars(){
         opkSwitch.selectedSegmentIndex=okpMode%4
-        paraCnt1.value=Float(okpSpeed)/200.0
+//        paraCnt1.value=Float(okpSpeed)/200.0
         okpPauseTimeSlider.value=Float(okpTime)/50.0
         oknSwitch.selectedSegmentIndex=oknMode%4
 //        paraCnt4.value=Float(oknSpeed)/200.0
@@ -221,7 +221,7 @@ class SetteiViewController: UIViewController {
         }
     }
     func setokpSpeed(){
-        paraTxt1.text="OKP-MaxSPEED:" + String(Int(okpSpeed*15)) + "pt/sec" + "  ScreenWidth(" + String(Int(view.bounds.width)) + "pt)"
+//        paraTxt1.text="OKP-MaxSPEED:" + String(Int(okpSpeed*15)) + "pt/sec" + "  ScreenWidth(" + String(Int(view.bounds.width)) + "pt)"
     }
     func setoknSpeed(){
 //        paraTxt4.text="OKN-SPEED:" + String(Int(oknSpeed*15)) + "pt/sec" + "  ScreenWidth(" + String(Int(view.bounds.width)) + "pt)"
@@ -303,8 +303,8 @@ class SetteiViewController: UIViewController {
   
         opkSwitch.frame  = CGRect(x:x0,   y: b3y ,width: bw, height: bh)
         okpText.frame  = CGRect(x:x1,   y: b3y ,width: bw*5, height: bh)
-        paraCnt1.frame  = CGRect(x:x0,   y: b4y ,width: bw, height: bh)
-        paraTxt1.frame  = CGRect(x:x1,   y: b4y ,width: bw*5, height: bh)
+//        paraCnt1.frame  = CGRect(x:x0,   y: b4y ,width: bw, height: bh)
+//        paraTxt1.frame  = CGRect(x:x1,   y: b4y ,width: bw*5, height: bh)
         okpPauseTimeSlider.frame  = CGRect(x:x0,   y: b5y ,width: bw,height:bh)
         okpPauseTimeText.frame  = CGRect(x:x1,   y: b5y ,width: bw*5,height:bh)
 
