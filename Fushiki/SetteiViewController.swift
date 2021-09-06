@@ -24,6 +24,7 @@ class SetteiViewController: UIViewController {
     @IBOutlet weak var frontCameraLabel: UILabel!
     @IBOutlet weak var frontCameraSwitch: UISwitch!
     
+    @IBOutlet weak var speakerText: UILabel!
     @IBOutlet weak var speakerImage: UIImageView!
     @IBAction func onSpeakerSwitch(_ sender: UISwitch) {
     }
@@ -45,7 +46,7 @@ class SetteiViewController: UIViewController {
 //    @IBOutlet weak var paraCnt4: UISlider!
     @IBOutlet weak var oknTimeSlider: UISlider!
     @IBOutlet weak var ettSwitch: UISegmentedControl!
-    @IBOutlet weak var paraCnt7: UISlider!
+//    @IBOutlet weak var paraCnt7: UISlider!
     @IBOutlet weak var exitButton: UIButton!
     @IBOutlet weak var brightnessSlider: UISlider!
     @IBOutlet weak var defaultButton: UIButton!
@@ -56,7 +57,7 @@ class SetteiViewController: UIViewController {
 //    @IBOutlet weak var paraTxt4: UILabel!
     @IBOutlet weak var oknTimeText: UILabel!
     @IBOutlet weak var ettText: UILabel!
-    @IBOutlet weak var paraTxt7: UILabel!
+    @IBOutlet weak var ettExplanationText: UILabel!
     
     @IBOutlet weak var brightnessText: UILabel!
     var tapInterval=CFAbsoluteTimeGetCurrent()
@@ -124,10 +125,10 @@ class SetteiViewController: UIViewController {
           dispTexts()
       }
 
-     @IBAction func paraAct1(_ sender: UISlider) {
-         okpSpeed=Int(sender.value*200)
-         dispTexts()
-     }
+//     @IBAction func paraAct1(_ sender: UISlider) {
+//         okpSpeed=Int(sender.value*200)
+//         dispTexts()
+//     }
      
      @IBAction func paraAct2(_ sender: UISlider) {
          okpTime=Int(sender.value*50)
@@ -137,10 +138,10 @@ class SetteiViewController: UIViewController {
            oknMode=sender.selectedSegmentIndex
            dispTexts()
        }
-     @IBAction func paraAct4(_ sender: UISlider) {
-         oknSpeed=Int(sender.value*200)
-         dispTexts()
-     }
+//     @IBAction func paraAct4(_ sender: UISlider) {
+//         oknSpeed=Int(sender.value*200)
+//         dispTexts()
+//     }
      
      @IBAction func paraAct5(_ sender: UISlider) {
          oknTime=Int(sender.value*100)
@@ -175,13 +176,11 @@ class SetteiViewController: UIViewController {
     }
     func setPars(){
         opkSwitch.selectedSegmentIndex=okpMode%4
-//        paraCnt1.value=Float(okpSpeed)/200.0
         okpPauseTimeSlider.value=Float(okpTime)/50.0
         oknSwitch.selectedSegmentIndex=oknMode%4
-//        paraCnt4.value=Float(oknSpeed)/200.0
         oknTimeSlider.value=Float(oknTime)/100.0
         ettSwitch.selectedSegmentIndex=ettMode%4
-        paraCnt7.value=Float(ettWidth)/100.0
+//        paraCnt7.value=Float(ettWidth)/100.0
         brightnessSlider.value=camera.getUserDefaultFloat(str: "screenBrightness", ret: 1.0)
     }
     func setokpMode(){
@@ -220,21 +219,15 @@ class SetteiViewController: UIViewController {
             ettText.text! += " pursuit(20s)->saccade(20s)->random(20s)"
         }
     }
-    func setokpSpeed(){
-//        paraTxt1.text="OKP-MaxSPEED:" + String(Int(okpSpeed*15)) + "pt/sec" + "  ScreenWidth(" + String(Int(view.bounds.width)) + "pt)"
-    }
-    func setoknSpeed(){
-//        paraTxt4.text="OKN-SPEED:" + String(Int(oknSpeed*15)) + "pt/sec" + "  ScreenWidth(" + String(Int(view.bounds.width)) + "pt)"
-    }
+
     func dispTexts(){
         setokpMode()
         setoknMode()
         setettMode()
-        setokpSpeed()
-        setoknSpeed()
+
         okpPauseTimeText.text="OKP-PAUSE:" + String(Int(okpTime)) + "sec"
         oknTimeText.text="OKN-TIME:" + String(Int(oknTime)) + "sec"
-        paraTxt7.text="ETT-WIDTH:" + String(Int(ettWidth)) + "%"
+        ettExplanationText.text="ETT-WIDTH:" + String(Int(ettWidth)) + "%"
         setUserDefaults()
     }
 
@@ -268,8 +261,6 @@ class SetteiViewController: UIViewController {
           return true
       }
     func setScreen(){
-//        let ww=view.bounds.width
-//        let wh=view.bounds.height
         
         let top=CGFloat(UserDefaults.standard.float(forKey: "top"))
         let bottom=CGFloat( UserDefaults.standard.float(forKey: "bottom"))
@@ -286,7 +277,7 @@ class SetteiViewController: UIViewController {
         var bh=wh/15
         let b0y=bh*4/5
         let b1y=b0y+bh+sp
-        let b2y=b1y+bh+sp
+        let b2y=b1y+bh*3+sp
         let b3y=b2y+bh+sp*3
         let b4y=b3y+bh+sp
         let b5y=b4y+bh+sp
@@ -294,35 +285,29 @@ class SetteiViewController: UIViewController {
         let b7y=b6y+bh+sp
         let b8y=b7y+bh+sp*3
         let b9y=b8y+bh+sp
-        oknSwitch.frame  = CGRect(x:x0,   y: b0y ,width: bw, height: bh)
-        oknText.frame  = CGRect(x:x1,   y: b0y ,width: bw*5, height: bh)
-//        paraCnt4.frame  = CGRect(x:x0,   y: b1y ,width: bw, height: bh)
-//        paraTxt4.frame  = CGRect(x:x1,   y: b1y ,width: bw*5, height: bh)
-        oknTimeSlider.frame  = CGRect(x:x0,   y: b2y ,width: bw,height:bh)
-        oknTimeText.frame  = CGRect(x:x1,   y: b2y ,width: bw*5,height:bh)
-  
-        opkSwitch.frame  = CGRect(x:x0,   y: b3y ,width: bw, height: bh)
-        okpText.frame  = CGRect(x:x1,   y: b3y ,width: bw*5, height: bh)
-//        paraCnt1.frame  = CGRect(x:x0,   y: b4y ,width: bw, height: bh)
-//        paraTxt1.frame  = CGRect(x:x1,   y: b4y ,width: bw*5, height: bh)
-        okpPauseTimeSlider.frame  = CGRect(x:x0,   y: b5y ,width: bw,height:bh)
-        okpPauseTimeText.frame  = CGRect(x:x1,   y: b5y ,width: bw*5,height:bh)
-
-        
-        ettSwitch.frame  = CGRect(x:x0,   y: b6y ,width: bw,height:bh)
-        ettText.frame  = CGRect(x:x1,   y: b6y ,width: bw*5,height:bh)
-        paraCnt7.frame  = CGRect(x:x0,   y: b7y ,width: bw,height:bh)
-        paraTxt7.frame  = CGRect(x:x1,   y: b7y ,width: bw*5,height:bh)
-        brightnessSlider.frame  = CGRect(x:x0,   y: b8y ,width: bw,height:bh)
-        brightnessText.frame  = CGRect(x:x1,   y: b8y ,width: bw*5,height:bh)
-        frontCameraSwitch.frame = CGRect(x:x0,y:b9y,width:bw,height: bh)
-        frontCameraLabel.frame = CGRect(x:x0+70,y:b9y+2,width:bw*5,height:bh)
+        ettSwitch.frame  = CGRect(x:x0,   y: b0y ,width: bw,height:bh)
+        ettText.frame  = CGRect(x:x1,   y: b0y ,width: bw*5,height:bh)
+        ettExplanationText.frame  = CGRect(x:x1,   y: b1y ,width: bw*7,height:bh*3)
+        opkSwitch.frame  = CGRect(x:x0,   y: b2y ,width: bw, height: bh)
+        okpText.frame  = CGRect(x:x1,   y: b2y ,width: bw*5, height: bh)
+        okpPauseTimeSlider.frame  = CGRect(x:x0,   y: b3y ,width: bw,height:bh)
+        okpPauseTimeText.frame  = CGRect(x:x1,   y: b3y ,width: bw*5,height:bh)
+        oknSwitch.frame  = CGRect(x:x0,   y: b4y ,width: bw, height: bh)
+        oknText.frame  = CGRect(x:x1,   y: b4y ,width: bw*5, height: bh)
+        oknTimeSlider.frame  = CGRect(x:x0,   y: b5y ,width: bw,height:bh)
+        oknTimeText.frame  = CGRect(x:x1,   y: b5y ,width: bw*5,height:bh)
+        brightnessSlider.frame  = CGRect(x:x0,   y: b6y ,width: bw,height:bh)
+        brightnessText.frame  = CGRect(x:x1,   y: b6y ,width: bw*5,height:bh)
+//        frontCameraSwitch.frame = CGRect(x:x0,y:b7y,width:bw,height: bh)
+//        frontCameraLabel.frame = CGRect(x:x0+70,y:b7y+2,width:bw*5,height:bh)
+        speakerSwitch.frame = CGRect(x:x0,   y: b7y ,width: bw*5,height:bh)
+        speakerImage.frame = CGRect(x:x1,   y: b7y ,width: bw*5,height:bh)
+        speakerText.frame = CGRect(x:x1+20,   y: b7y ,width: bw*5,height:bh)
         sp=ww/120//間隙
         bw=(ww-sp*10)/7//ボタン幅
         bh=bw*170/440
         let by=wh-bh-sp
         cameraButton.isHidden=true
-//        camera.setButtonProperty(cameraButton,x:bw*4+sp*6,y:by,w:bw,h: bh,UIColor.orange)
         camera.setButtonProperty(defaultButton,x:left+bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(exitButton,x:left+bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
     }
