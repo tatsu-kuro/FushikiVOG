@@ -18,13 +18,11 @@ extension String {
 class SetteiViewController: UIViewController {
     let camera = CameraAlbumEtc()//name:"Fushiki")
     var oknMode:Int=0
-//    var oknSpeed:Int = 50
     var oknTime:Int = 50
     var okpMode:Int=0
-//    var okpSpeed:Int=50
     var okpTime:Int=50
     var ettMode:Int = 0
-    var ettWidth:Int=50
+//    var ettWidth:Int=50
     var targetMode:Int=0
     var screenBrightness:Float!
     var ettModeTxt0:String=""
@@ -56,21 +54,16 @@ class SetteiViewController: UIViewController {
     }
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var okpSwitch: UISegmentedControl!
-//    @IBOutlet weak var paraCnt1: UISlider!
     @IBOutlet weak var okpPauseTimeSlider: UISlider!
     @IBOutlet weak var oknSwitch: UISegmentedControl!
-//    @IBOutlet weak var paraCnt4: UISlider!
     @IBOutlet weak var oknTimeSlider: UISlider!
     @IBOutlet weak var ettSwitch: UISegmentedControl!
-//    @IBOutlet weak var paraCnt7: UISlider!
     @IBOutlet weak var exitButton: UIButton!
     @IBOutlet weak var brightnessSlider: UISlider!
     @IBOutlet weak var defaultButton: UIButton!
     @IBOutlet weak var okpText: UILabel!
-//    @IBOutlet weak var paraTxt1: UILabel!
     @IBOutlet weak var okpPauseTimeText: UILabel!
     @IBOutlet weak var oknText: UILabel!
-//    @IBOutlet weak var paraTxt4: UILabel!
     @IBOutlet weak var oknTimeText: UILabel!
     @IBOutlet weak var ettText: UILabel!
     @IBOutlet weak var ettExplanationText: UILabel!
@@ -134,7 +127,6 @@ class SetteiViewController: UIViewController {
      }
     @IBAction func onEttModeSwitch(_ sender: UISegmentedControl) {
         ettMode=sender.selectedSegmentIndex
-        print("ettmode:",ettMode)
         if ettMode==0{
             ettText.text=ettModeTxt0
         }else if ettMode==1{
@@ -146,23 +138,10 @@ class SetteiViewController: UIViewController {
         }
         setUserDefaults()
     }
-    /*
+   
     func setUserDefaults(){
-        UserDefaults.standard.set(okpSpeed, forKey: "okpSpeed")
         UserDefaults.standard.set(okpTime, forKey: "okpTime")
         UserDefaults.standard.set(okpMode, forKey: "okpMode")
-        UserDefaults.standard.set(oknSpeed, forKey: "oknSpeed")
-        UserDefaults.standard.set(oknTime, forKey: "oknTime")
-        UserDefaults.standard.set(oknMode, forKey: "oknMode")
-        UserDefaults.standard.set(ettMode,forKey: "ettMode")
-        UserDefaults.standard.set(ettWidth,forKey: "ettWidth")
-        UserDefaults.standard.set(screenBrightness, forKey: "screenBrightness")
-    }*/
-    func setUserDefaults(){
-//        UserDefaults.standard.set(okpSpeed, forKey: "okpSpeed")
-        UserDefaults.standard.set(okpTime, forKey: "okpTime")
-        UserDefaults.standard.set(okpMode, forKey: "okpMode")
-//        UserDefaults.standard.set(oknSpeed, forKey: "oknSpeed")
         UserDefaults.standard.set(oknTime, forKey: "oknTime")
         UserDefaults.standard.set(oknMode, forKey: "oknMode")
         UserDefaults.standard.set(ettMode,forKey: "ettMode")
@@ -183,17 +162,14 @@ class SetteiViewController: UIViewController {
     
     @IBAction func defaultAct(_ sender: Any) {
         okpMode=0
-//        okpSpeed=100
         okpTime=5
         oknMode=0
-//        oknSpeed=100
         oknTime=60
          ettMode=0
-        ettWidth=90
-        setPars()
+        setControlState()
         dispTexts()
     }
-    func setPars(){
+    func setControlState(){
         okpSwitch.selectedSegmentIndex=okpMode%4
         okpPauseTimeSlider.value=Float(okpTime)/50.0
         oknSwitch.selectedSegmentIndex=oknMode%4
@@ -211,7 +187,7 @@ class SetteiViewController: UIViewController {
             speakerSwitch.isOn=true
         }
     }
-    func setokpMode(){
+    func setOkpMode(){
         okpText.text="OKP-MODE" + "   "
         if okpMode == 0{
             okpText.text! += " right -> " + String(Int(okpTime)) + "sec -> left"
@@ -223,7 +199,7 @@ class SetteiViewController: UIViewController {
             okpText.text! += " left"
         }
     }
-    func setoknMode(){
+    func setOknMode(){
         oknText.text="OKN-MODE" + "   "
         if oknMode == 0{
             oknText.text! += " right(" + String(Int(oknTime)) + "sec) -> black"
@@ -248,8 +224,8 @@ class SetteiViewController: UIViewController {
     }
 
     func dispTexts(){
-        setokpMode()
-        setoknMode()
+        setOkpMode()
+        setOknMode()
         setettMode()
         okpPauseTimeText.text="OKP-PAUSE:" + String(Int(okpTime)) + "sec"
         oknTimeText.text="OKN-TIME:" + String(Int(oknTime)) + "sec"
@@ -277,7 +253,7 @@ class SetteiViewController: UIViewController {
             
         setScreen()
         dispTexts()
-        setPars()
+        setControlState()
     }
     
       override var prefersStatusBarHidden: Bool {
