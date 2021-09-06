@@ -106,13 +106,16 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
 //            camera.setFocus(focus: 0.9)
 //        }
     }
+    var ettType = Array<Int>()
+    var ettSpeed = Array<Int>()
+    var ettSec = Array<Double>()
+    var currentEttNum:Int = 0
+    var centerX:CGFloat=0
+    var centerY:CGFloat=0
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        let top=CGFloat(UserDefaults.standard.float(forKey: "top"))
-        let bottom=CGFloat( UserDefaults.standard.float(forKey: "bottom"))
-        let left=CGFloat( UserDefaults.standard.float(forKey: "left"))
-        let right=CGFloat( UserDefaults.standard.float(forKey: "right"))
-
+   
         camera.makeAlbum()
         mainBrightness=UIScreen.main.brightness//明るさを保持、終了時に戻す
         print(UIScreen.main.brightness)
@@ -129,28 +132,71 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         ettMode=UserDefaults.standard.integer(forKey: "ettMode")
         ettWidth=UserDefaults.standard.integer(forKey: "ettWidth")
 //        let w=view.bounds.width/2
-        ettW = (view.bounds.width/2)*CGFloat(ettWidth)/100.0
-        ettH = (view.bounds.height/2)*CGFloat(ettWidth)/100.0
-        cirDiameter=view.bounds.width/26
-        if ettMode==0{//pursuit
-            displayLink = CADisplayLink(target: self, selector: #selector(self.update0))
-            displayLink!.preferredFramesPerSecond = 120
-        }else if ettMode==1{//vert-horizon saccade
-            displayLink = CADisplayLink(target: self, selector: #selector(self.update1))
-            displayLink!.preferredFramesPerSecond = 120
-        }else if ettMode==2{//vert-horizon saccade
-            displayLink = CADisplayLink(target: self, selector: #selector(self.update2))
-            displayLink!.preferredFramesPerSecond = 1
-        }else{//pursuit->saccade->random
-            displayLink = CADisplayLink(target: self, selector: #selector(self.update3))
-            displayLink!.preferredFramesPerSecond = 120
+        
+//        ettMode=UserDefaults.standard.integer(forKey: "ettMode")
+//        ettWidth=UserDefaults.standard.integer(forKey: "ettWidth")
+        ettType.removeAll()
+        ettSpeed.removeAll()
+        ettSec.removeAll()
+        currentEttNum=0
+        startTime=CFAbsoluteTimeGetCurrent()
+        var ettTxt:String = ""
+        if ettMode==0{
+            ettTxt = UserDefaults.standard.string(forKey: "ettModeText0")!
+        }else if ettMode==1{
+            ettTxt = UserDefaults.standard.string(forKey: "ettModeText1")!
+        }else if ettMode==2{
+            ettTxt = UserDefaults.standard.string(forKey: "ettModeText2")!
+        }else{
+            ettTxt = UserDefaults.standard.string(forKey: "ettModeText3")!
         }
-//        displayLink = CADisplayLink(target: self,
-//           selector: #selector(updateAnimation))
-         displayLink?.add(to: RunLoop.main, forMode: .common)
-//        displayLink!.add(to: RunLoop.current, forMode: RunLoop.Mode.RunLoop.Mode.common)
-        displayLinkF=true
+        let str0 = ettTxt.components(separatedBy: ",")
+        for i in 0...str0.count-1{
+            let str1 = str0[i].components(separatedBy: ":")
+            if str1.count == 3{
+                ettType.append(Int(str1[0])!)
+                ettSpeed.append(Int(str1[1])!)
+                ettSec.append(Double(str1[2])!)
+            }else{
+                break
+            }
+        }
+        if ettType.count<1{
+            print("ettパラメータが不正です")
+            return
+        }
+        let top=UserDefaults.standard.float(forKey: "top")
+        let bottom=UserDefaults.standard.float(forKey: "bottom")
+        let left=UserDefaults.standard.float(forKey: "left")
+        let right=UserDefaults.standard.float(forKey: "right")
+    
+        let ww=view.bounds.width-CGFloat(left+right)
+        let wh=view.bounds.height-CGFloat(top+bottom)
+        centerX=ww/2+CGFloat(left)
+        centerY=wh/2+CGFloat(top)
+        
+        
+        cirDiameter=ww/26
+        ettW = (ww/2)-cirDiameter// *CGFloat(ettWidth)/100.0
+        ettH = (wh/2)-cirDiameter// *CGFloat(ettWidth)/100.0
+
+        
+        displayLink = CADisplayLink(target: self, selector: #selector(self.update))
+        displayLink!.preferredFramesPerSecond = 120
+
         tcount=0
+        displayLink?.add(to: RunLoop.main, forMode: .common)
+        displayLinkF=true
+ 
+        if UIApplication.shared.isIdleTimerDisabled == false{
+            UIApplication.shared.isIdleTimerDisabled = true//スリープしない
+        }
+    
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+        self.becomeFirstResponder()
+        tapInterval=CFAbsoluteTimeGetCurrent()-1
+        self.setNeedsStatusBarAppearanceUpdate()
+
         recClarification.frame=camera.getRecClarificationRct(width:view.bounds.width,height:view.bounds.height)
         if cameraMode == 2{
             recClarification.isHidden=true
@@ -173,64 +219,23 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
 //    override func prefersHomeIndicatorAutoHidden() -> Bool {
 //        return true
 //    }
-    
     var lastrand:Int=1
     var rand:Int=0
- 
-    var initf:Bool=false
-    @objc func update3() {
-        if initf {
-            view.layer.sublayers?.removeLast()
-        }
-        initf=true
-        tcount += 1
-        let elapset=CFAbsoluteTimeGetCurrent()-startTime
-        if elapset<20.0 {//}(tcount<60*20){
-            let sinV=sin(CGFloat(elapset)*3.1415*0.6)
-            //let sinV=sin(CGFloat(tcount)*0.03183)//0.3Hz
-            let cPoint:CGPoint = CGPoint(x:view.bounds.width/2 + sinV*ettW, y: view.bounds.height/2)
-            drawCircle(cPoint:cPoint)
-        }else if elapset<40.0 {//}(tcount<60*20*2){
-            //    if Int(elapset) != Int(lastTime){
-            if Int(elapset)%2 == 0{// }(tcount/60)%2==0){
-                let cPoint:CGPoint = CGPoint(x:view.bounds.width/2 + ettW, y: view.bounds.height/2)
-                drawCircle(cPoint:cPoint)
-            }else{
-                let cPoint:CGPoint = CGPoint(x:view.bounds.width/2 - ettW, y: view.bounds.height/2)
-                drawCircle(cPoint:cPoint)
+    var lastSec:Int = -1
+    var lastRandPoint:CGPoint = CGPoint(x:-200,y:-200)
+    func getRandPointX()->CGPoint{
+        var rand = Int.random(in: 0..<5) - 2
+        if(lastrand==rand){
+            rand += 1
+            if(rand > 2){
+                rand = -2
             }
-            //  }
-        }else if elapset<60 {//}(tcount<60*20*3){
-            
-            if Int(elapset) != Int(lastTime){
-                rand = Int.random(in: 0..<5) - 2
-                if(lastrand==rand){
-                    rand += 1
-                    if(rand > 2){
-                        rand = -2
-                    }
-                }
-            }
-            let cg=CGFloat(rand)/2.0
-            lastrand=rand
-            let cPoint:CGPoint = CGPoint(x:view.bounds.width/2 - cg*ettW, y: view.bounds.height/2)
-            drawCircle(cPoint:cPoint)
-        }else if elapset<65{
-            let cPoint:CGPoint = CGPoint(x:view.bounds.width/2, y: view.bounds.height/2)
-            drawCircle(cPoint:cPoint)
-            //self.dismiss(animated: true, completion: nil)
-        }else{
-            //             delTimer()
-            doubleTap(0)
         }
-        lastTime=elapset
+        lastrand=rand
+        let xd=CGFloat(rand)*ettW/2
+        return CGPoint(x:centerX+xd, y: centerY)
     }
-    
-    @objc func update2() {
-        if tcount > 0{
-            view.layer.sublayers?.removeLast()
-        }
-        tcount += 1
+    func getRandPointXY()->CGPoint {
         var rand = Int.random(in: 0..<10)
         if (rand==9){
             rand=4
@@ -241,9 +246,6 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
                 rand=0
             }
         }
-        if(tcount>30){//finish
-            doubleTap(0)
-        }
         lastrand=rand
         var xn:Int=0
         var yn:Int=0
@@ -253,46 +255,90 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         if(rand/3==0){yn = -1}
         else if(rand/3==1){yn = 0}
         else {yn=1}
-        let x0=view.bounds.width/2
-        let xd=CGFloat(ettWidth)*x0/100
-        let y0=view.bounds.height/2
-        var yd=xd
-        if CGFloat(ettWidth)*x0/100>(y0-cirDiameter/2){
-            yd=y0-cirDiameter/2
-        }
-        let cPoint:CGPoint = CGPoint(x:x0 + CGFloat(xn)*xd, y: y0 + CGFloat(yn)*yd)
-        drawCircle(cPoint:cPoint)
+        let x0=centerX
+        let xd=ettH// CGFloat(ettWidth)*x0/100
+        let y0=centerY
+        let yd=ettH
+        return CGPoint(x:x0 + CGFloat(xn)*xd, y: y0 + CGFloat(yn)*yd)
     }
-    @objc func update1() {//pursuit
+    @objc func update() {//pursuit
         if tcount > 0{
             view.layer.sublayers?.removeLast()
         }
         tcount += 1
         let elapset=CFAbsoluteTimeGetCurrent()-startTime
-        if(tcount>60*30 && elapset>29 || tcount>120*30){
-            doubleTap(0)
+        if elapset<ettSec[currentEttNum]{
+            let etttype=ettType[currentEttNum]
+            if etttype == 1{
+                let ettspeed=CGFloat(ettSpeed[currentEttNum])
+                let sinV=sin(CGFloat(elapset)*3.1415*0.3*ettspeed)
+                let cPoint:CGPoint = CGPoint(x:centerX + sinV*ettW, y: centerY)
+                drawCircle(cPoint:cPoint)
+            }else if etttype==2{
+                let ettspeed=CGFloat(ettSpeed[currentEttNum])
+                let sinV=sin(CGFloat(elapset)*3.1415*0.3*ettspeed)
+                let cPoint:CGPoint = CGPoint(x:centerX , y: centerY + sinV*ettH)
+                drawCircle(cPoint:cPoint)
+            }else if etttype==3{
+                let ettspeed=Double(ettSpeed[currentEttNum])
+                let sec=Int(elapset*ettspeed/2)
+                if ettspeed==0{
+                    drawCircle(cPoint: CGPoint(x:centerX,y:centerY))
+                }else{
+                    if sec%2==0{
+                        let cPoint=CGPoint(x:centerX+ettW,y:centerY)
+                        drawCircle(cPoint: cPoint)
+                    }else{
+                        let cPoint=CGPoint(x:centerX-ettW,y:centerY)
+                        drawCircle(cPoint: cPoint)
+                    }
+                }
+            }else if etttype==4{
+                let ettspeed=Double(ettSpeed[currentEttNum])
+                let sec=Int(elapset*ettspeed/2)
+                if ettspeed==0{
+                    drawCircle(cPoint: CGPoint(x:centerX,y:centerY))
+                }else{
+                    if sec%2==0{
+                        let cPoint=CGPoint(x:centerX,y:centerY+ettH)
+                        drawCircle(cPoint: cPoint)
+                    }else{
+                        let cPoint=CGPoint(x:centerX,y:centerY-ettH)
+                        drawCircle(cPoint: cPoint)
+                    }
+                }
+//            }else if etttype==5{
+            }else{
+                let ettspeed=Double(ettSpeed[currentEttNum])
+                let sec=Int(elapset*ettspeed/2)
+                if sec != lastSec{
+                    if etttype==6{
+                        lastRandPoint=getRandPointXY()// randamDrawXY()
+                    }else{
+                        lastRandPoint=getRandPointX()
+                    }
+                    print("time:",elapset)
+                }
+                drawCircle(cPoint: lastRandPoint)
+                lastSec=sec
+            }
+        }else{
+            currentEttNum += 1
+            if ettType.count-1<currentEttNum{
+                if tcount%100==0{
+                    print("owari!!")
+                    doubleTap(0)
+                }
+                currentEttNum -= 1
+            }else{
+                startTime=CFAbsoluteTimeGetCurrent()
+            }
+            drawCircle(cPoint: CGPoint(x:-200,y:-200))//damy
         }
-        
-        let sinV=sin(CGFloat(elapset)*3.1415*0.6)
-        
-        let cPoint:CGPoint = CGPoint(x:view.bounds.width/2 , y: view.bounds.height/2 + sinV*ettH)
-        drawCircle(cPoint:cPoint)
     }
-    @objc func update0() {//pursuit
-        if tcount > 0{
-            view.layer.sublayers?.removeLast()
-        }
-        tcount += 1
-        let elapset=CFAbsoluteTimeGetCurrent()-startTime
-        if(tcount>60*30 && elapset>29 || tcount>120*30){
-            doubleTap(0)
-        }
-        
-        let sinV=sin(CGFloat(elapset)*3.1415*0.6)
-        
-        let cPoint:CGPoint = CGPoint(x:view.bounds.width/2 + sinV*ettW, y: view.bounds.height/2)
-        drawCircle(cPoint:cPoint)
-    }
+ 
+    var initf:Bool=false
+  
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

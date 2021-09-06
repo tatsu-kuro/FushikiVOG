@@ -12,9 +12,9 @@ import Photos
 class CarolicETTViewController: UIViewController{
     let camera = CameraAlbumEtc()//name:"Fushiki")
     var mainBrightness:CGFloat?
-    var ettWidth:Int = 0//1:narrow,2:wide
+//    var ettWidth:Int = 0//1:narrow,2:wide
     var targetMode:Int = 0
-    var cirDia:CGFloat = 0
+    var cirDiameter:CGFloat = 0
     var timer: Timer!
     var timerREC: Timer?
     var epTim = Array<Int>()
@@ -141,14 +141,33 @@ class CarolicETTViewController: UIViewController{
             camera.recordStart()//ここだと暗くならない
         }
     }
+    var centerX:CGFloat=0
+    var centerY:CGFloat=0
+    var ettW:CGFloat=0
+    var ettH:CGFloat=0
     override func viewDidLoad() {
         super.viewDidLoad()
         camera.makeAlbum()
-        let top=CGFloat(UserDefaults.standard.float(forKey: "top"))
-        let bottom=CGFloat( UserDefaults.standard.float(forKey: "bottom"))
-        let left=CGFloat( UserDefaults.standard.float(forKey: "left"))
-        let right=CGFloat( UserDefaults.standard.float(forKey: "right"))
+    
+        let top=UserDefaults.standard.float(forKey: "top")
+        let bottom=UserDefaults.standard.float(forKey: "bottom")
+        let left=UserDefaults.standard.float(forKey: "left")
+        let right=UserDefaults.standard.float(forKey: "right")
+    
+        let ww=view.bounds.width-CGFloat(left+right)
+        let wh=view.bounds.height-CGFloat(top+bottom)
+        centerX=ww/2+CGFloat(left)
+        centerY=wh/2+CGFloat(top)
+        
+        
+        cirDiameter=ww/26
+        ettW = (ww/2)-cirDiameter// *CGFloat(ettWidth)/100.0
+        ettH = (wh/2)-cirDiameter// *CGFloat(ettWidth)/100.0
 
+        
+        
+        
+        
         mainBrightness = UIScreen.main.brightness
         
         UIScreen.main.brightness = CGFloat(camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
@@ -171,7 +190,7 @@ class CarolicETTViewController: UIViewController{
         epTim.append(115)
         epTim.append(138)
         epTim.append(148)
-        ettWidth = UserDefaults.standard.integer(forKey:"ettWidth")
+//        ettWidth = UserDefaults.standard.integer(forKey:"ettWidth")
         //        print("ETTsView/carolicETT")//carolicETT
         drawBrect()
 //        setBackcolor(color:UIColor.black.cgColor)
@@ -211,12 +230,26 @@ class CarolicETTViewController: UIViewController{
     var displayLinkF:Bool = false
     @objc func update(tm: Timer) {
         tcnt += 1
-        cirDia=view.bounds.width/26
+        cirDiameter=view.bounds.width/26
         //let cirDia=view.bounds.width/26
         //        timerCnt.text = "\(tcnt)"
         
         if tcnt == epTim[0]{
-            drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2), cirDiameter: cirDia, color1: UIColor.red.cgColor , color2:UIColor.red.cgColor)
+            drawCircle(cPoint: CGPoint(x:centerX,y:centerY), cirDiameter: cirDiameter, color1: UIColor.red.cgColor , color2:UIColor.red.cgColor)
+        }
+        if tcnt == epTim[0]+1{
+            view.layer.sublayers?.removeLast()
+//            view.bringSubviewToFront(recClarification)
+        }
+        if tcnt == epTim[1]{
+            drawWrect()
+            drawCircle(cPoint: CGPoint(x:centerX,y:centerY), cirDiameter: cirDiameter, color1: UIColor.black.cgColor , color2:UIColor.black.cgColor)
+        }
+        
+        
+        
+   /*     if tcnt == epTim[0]{
+            drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2), cirDiameter: cirDiameter, color1: UIColor.red.cgColor , color2:UIColor.red.cgColor)
         }
         if tcnt == epTim[0]+1{
             view.layer.sublayers?.removeLast()
@@ -225,9 +258,9 @@ class CarolicETTViewController: UIViewController{
         if tcnt == epTim[1]{
             drawWrect()
             //            setBackcolor(color:UIColor.white.cgColor)
-            drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2), cirDiameter: cirDia, color1: UIColor.black.cgColor , color2:UIColor.black.cgColor)
+            drawCircle(cPoint: CGPoint(x:view.bounds.width/2,y:view.bounds.height/2), cirDiameter: cirDiameter, color1: UIColor.black.cgColor , color2:UIColor.black.cgColor)
             view.bringSubviewToFront(recClarification)
-        }
+        }*/
         if tcnt == epTim[2]{
             drawBrect()
             //            setBackcolor(color:UIColor.black.cgColor)
@@ -281,7 +314,7 @@ class CarolicETTViewController: UIViewController{
         circleLayer.path = UIBezierPath.init(ovalIn: CGRect.init(x: 0, y: 0, width: circleFrame.size.width, height: circleFrame.size.height)).cgPath
         self.view.layer.addSublayer(circleLayer)
     }
-    var setBackf:Bool=true
+   /* var setBackf:Bool=true
     var setKnasf:Bool=true
     var setEndf:Bool=true
     @objc func update2() {
@@ -298,10 +331,38 @@ class CarolicETTViewController: UIViewController{
             
             let sinV=sin(CGFloat(elapset)*3.1415*0.6)
             var cPoint:CGPoint
-            cPoint = CGPoint(x:ww2 + sinV*ww2*CGFloat(ettWidth)/100, y: view.bounds.height/2)
+            cPoint = CGPoint(x:ww2 + sinV*ww2*CGFloat(ettW)/100, y: view.bounds.height/2)
             view.layer.sublayers?.removeLast()
             
-            drawCircle(cPoint:cPoint,cirDiameter: cirDia,color1: UIColor.black.cgColor,color2:UIColor.black.cgColor)
+            drawCircle(cPoint:cPoint,cirDiameter: cirDiameter,color1: UIColor.black.cgColor,color2:UIColor.black.cgColor)
+        }
+    }*/
+    
+//    var setBackf:Bool=true
+    var setKnasf:Bool=true
+    var setEndf:Bool=true
+    @objc func update2() {
+        tcnt2 += 1
+//        let ww2=view.bounds.width/2
+        let elapset=CFAbsoluteTimeGetCurrent()-startTime
+        if tcnt2 == 1 {
+            drawWrect()
+        }
+        if elapset < 7/0.3{
+            //            let ettWidth=view.bounds.width/2 - view.bounds.width/18
+            //let ettSpeed:CGFloat = 0.3
+            //3.1415*5 -> 100回で１周、100回ps
+            
+            let sinV=sin(CGFloat(elapset)*3.1415*0.6)
+            var cPoint:CGPoint
+//            cPoint = CGPoint(x:centerX + sinV*centerX*CGFloat(ettWidth)/100, y: centerY)
+            
+            cPoint = CGPoint(x:centerX + sinV*ettW, y: centerY)
+
+            
+            view.layer.sublayers?.removeLast()
+            
+            drawCircle(cPoint:cPoint,cirDiameter: cirDiameter,color1: UIColor.black.cgColor,color2:UIColor.black.cgColor)
         }
     }
 }

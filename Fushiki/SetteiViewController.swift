@@ -148,10 +148,10 @@ class SetteiViewController: UIViewController {
         UserDefaults.standard.set(screenBrightness, forKey: "screenBrightness")
         UserDefaults.standard.set(cameraMode,forKey: "cameraMode")
         UserDefaults.standard.set(speakerOnOff,forKey: "speakerOnOff")
-        UserDefaults.standard.set(ettModeTxt0, forKey: "ettModeTxt0")
-        UserDefaults.standard.set(ettModeTxt1, forKey: "ettModeTxt1")
-        UserDefaults.standard.set(ettModeTxt2, forKey: "ettModeTxt2")
-        UserDefaults.standard.set(ettModeTxt3, forKey: "ettModeTxt3")
+        UserDefaults.standard.set(ettModeTxt0, forKey: "ettModeText0")
+        UserDefaults.standard.set(ettModeTxt1, forKey: "ettModeText1")
+        UserDefaults.standard.set(ettModeTxt2, forKey: "ettModeText2")
+        UserDefaults.standard.set(ettModeTxt3, forKey: "ettModeText3")
     }
 
     @IBAction func onBrightnessSlider(_ sender: UISlider) {
