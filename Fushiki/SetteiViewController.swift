@@ -24,6 +24,10 @@ class SetteiViewController: UIViewController {
     @IBOutlet weak var frontCameraLabel: UILabel!
     @IBOutlet weak var frontCameraSwitch: UISwitch!
     
+    @IBOutlet weak var speakerImage: UIImageView!
+    @IBAction func onSpeakerSwitch(_ sender: UISwitch) {
+    }
+    @IBOutlet weak var speakerSwitch: UISwitch!
     @IBAction func onFrontCameraSwitch(_ sender: UISwitch) {
         var cameraMode:Int!
         if sender.isOn==true{
@@ -34,27 +38,27 @@ class SetteiViewController: UIViewController {
         UserDefaults.standard.set(cameraMode, forKey: "cameraMode")
     }
     @IBOutlet weak var cameraButton: UIButton!
-    @IBOutlet weak var paraCnt0: UISegmentedControl!
+    @IBOutlet weak var opkSwitch: UISegmentedControl!
     @IBOutlet weak var paraCnt1: UISlider!
-    @IBOutlet weak var paraCnt2: UISlider!
-    @IBOutlet weak var paraCnt3: UISegmentedControl!
+    @IBOutlet weak var okpPauseTimeSlider: UISlider!
+    @IBOutlet weak var oknSwitch: UISegmentedControl!
     @IBOutlet weak var paraCnt4: UISlider!
-    @IBOutlet weak var paraCnt5: UISlider!
-    @IBOutlet weak var paraCnt6: UISegmentedControl!
+    @IBOutlet weak var oknTimeSlider: UISlider!
+    @IBOutlet weak var ettSwitch: UISegmentedControl!
     @IBOutlet weak var paraCnt7: UISlider!
     @IBOutlet weak var exitButton: UIButton!
-    @IBOutlet weak var paraCnt8: UISlider!
+    @IBOutlet weak var brightnessSlider: UISlider!
     @IBOutlet weak var defaultButton: UIButton!
-    @IBOutlet weak var paraTxt0: UILabel!
+    @IBOutlet weak var okpText: UILabel!
     @IBOutlet weak var paraTxt1: UILabel!
-    @IBOutlet weak var paraTxt2: UILabel!
-    @IBOutlet weak var paraTxt3: UILabel!
+    @IBOutlet weak var okpPauseTimeText: UILabel!
+    @IBOutlet weak var oknText: UILabel!
     @IBOutlet weak var paraTxt4: UILabel!
-    @IBOutlet weak var paraTxt5: UILabel!
-    @IBOutlet weak var paraTxt6: UILabel!
+    @IBOutlet weak var oknTimeText: UILabel!
+    @IBOutlet weak var ettText: UILabel!
     @IBOutlet weak var paraTxt7: UILabel!
     
-    @IBOutlet weak var paraTxt8: UILabel!
+    @IBOutlet weak var brightnessText: UILabel!
     var tapInterval=CFAbsoluteTimeGetCurrent()
 
     override func remoteControlReceived(with event: UIEvent?) {
@@ -170,50 +174,50 @@ class SetteiViewController: UIViewController {
         dispTexts()
     }
     func setPars(){
-        paraCnt0.selectedSegmentIndex=okpMode%4
+        opkSwitch.selectedSegmentIndex=okpMode%4
         paraCnt1.value=Float(okpSpeed)/200.0
-        paraCnt2.value=Float(okpTime)/50.0
-        paraCnt3.selectedSegmentIndex=oknMode%4
+        okpPauseTimeSlider.value=Float(okpTime)/50.0
+        oknSwitch.selectedSegmentIndex=oknMode%4
         paraCnt4.value=Float(oknSpeed)/200.0
-        paraCnt5.value=Float(oknTime)/100.0
-        paraCnt6.selectedSegmentIndex=ettMode%4
+        oknTimeSlider.value=Float(oknTime)/100.0
+        ettSwitch.selectedSegmentIndex=ettMode%4
         paraCnt7.value=Float(ettWidth)/100.0
-        paraCnt8.value=camera.getUserDefaultFloat(str: "screenBrightness", ret: 1.0)
+        brightnessSlider.value=camera.getUserDefaultFloat(str: "screenBrightness", ret: 1.0)
     }
     func setokpMode(){
-        paraTxt0.text="OKP-MODE" + "   "
+        okpText.text="OKP-MODE" + "   "
         if okpMode == 0{
-            paraTxt0.text! += " right -> " + String(Int(okpTime)) + "sec -> left"
+            okpText.text! += " right -> " + String(Int(okpTime)) + "sec -> left"
         }else if okpMode == 1{
-            paraTxt0.text! += " left -> " + String(Int(okpTime)) + "sec -> right"
+            okpText.text! += " left -> " + String(Int(okpTime)) + "sec -> right"
         }else if okpMode == 2{
-            paraTxt0.text! += " right"
+            okpText.text! += " right"
         }else{
-            paraTxt0.text! += " left"
+            okpText.text! += " left"
         }
     }
     func setoknMode(){
-        paraTxt3.text="OKN-MODE" + "   "
+        oknText.text="OKN-MODE" + "   "
         if oknMode == 0{
-            paraTxt3.text! += " right(" + String(Int(oknTime)) + "sec) -> black"
+            oknText.text! += " right(" + String(Int(oknTime)) + "sec) -> black"
         }else if oknMode == 1{
-            paraTxt3.text! += " left(" + String(Int(oknTime)) + "sec) -> black"
+            oknText.text! += " left(" + String(Int(oknTime)) + "sec) -> black"
         }else if oknMode == 2{
-            paraTxt3.text! += " right"
+            oknText.text! += " right"
         }else{
-            paraTxt3.text! += " left"
+            oknText.text! += " left"
         }
     }
     func setettMode(){
-        paraTxt6.text="ETT-MODE" + "   "
+        ettText.text="ETT-MODE" + "   "
         if ettMode == 0{
-            paraTxt6.text! += " pursuit(30s) horizontal"
+            ettText.text! += " pursuit(30s) horizontal"
         }else if ettMode == 1{
-            paraTxt6.text! += " sursuit(30s) vertical"
+            ettText.text! += " sursuit(30s) vertical"
         }else if ettMode == 2{
-            paraTxt6.text! += " saccade(30s) horizontal & vertical"
+            ettText.text! += " saccade(30s) horizontal & vertical"
         }else{
-            paraTxt6.text! += " pursuit(20s)->saccade(20s)->random(20s)"
+            ettText.text! += " pursuit(20s)->saccade(20s)->random(20s)"
         }
     }
     func setokpSpeed(){
@@ -228,8 +232,8 @@ class SetteiViewController: UIViewController {
         setettMode()
         setokpSpeed()
         setoknSpeed()
-        paraTxt2.text="OKP-PAUSE:" + String(Int(okpTime)) + "sec"
-        paraTxt5.text="OKN-TIME:" + String(Int(oknTime)) + "sec"
+        okpPauseTimeText.text="OKP-PAUSE:" + String(Int(okpTime)) + "sec"
+        oknTimeText.text="OKN-TIME:" + String(Int(oknTime)) + "sec"
         paraTxt7.text="ETT-WIDTH:" + String(Int(ettWidth)) + "%"
         setUserDefaults()
     }
@@ -290,27 +294,27 @@ class SetteiViewController: UIViewController {
         let b7y=b6y+bh+sp
         let b8y=b7y+bh+sp*3
         let b9y=b8y+bh+sp
-        paraCnt3.frame  = CGRect(x:x0,   y: b0y ,width: bw, height: bh)
-        paraTxt3.frame  = CGRect(x:x1,   y: b0y ,width: bw*5, height: bh)
+        oknSwitch.frame  = CGRect(x:x0,   y: b0y ,width: bw, height: bh)
+        oknText.frame  = CGRect(x:x1,   y: b0y ,width: bw*5, height: bh)
         paraCnt4.frame  = CGRect(x:x0,   y: b1y ,width: bw, height: bh)
         paraTxt4.frame  = CGRect(x:x1,   y: b1y ,width: bw*5, height: bh)
-        paraCnt5.frame  = CGRect(x:x0,   y: b2y ,width: bw,height:bh)
-        paraTxt5.frame  = CGRect(x:x1,   y: b2y ,width: bw*5,height:bh)
+        oknTimeSlider.frame  = CGRect(x:x0,   y: b2y ,width: bw,height:bh)
+        oknTimeText.frame  = CGRect(x:x1,   y: b2y ,width: bw*5,height:bh)
   
-        paraCnt0.frame  = CGRect(x:x0,   y: b3y ,width: bw, height: bh)
-        paraTxt0.frame  = CGRect(x:x1,   y: b3y ,width: bw*5, height: bh)
+        opkSwitch.frame  = CGRect(x:x0,   y: b3y ,width: bw, height: bh)
+        okpText.frame  = CGRect(x:x1,   y: b3y ,width: bw*5, height: bh)
         paraCnt1.frame  = CGRect(x:x0,   y: b4y ,width: bw, height: bh)
         paraTxt1.frame  = CGRect(x:x1,   y: b4y ,width: bw*5, height: bh)
-        paraCnt2.frame  = CGRect(x:x0,   y: b5y ,width: bw,height:bh)
-        paraTxt2.frame  = CGRect(x:x1,   y: b5y ,width: bw*5,height:bh)
+        okpPauseTimeSlider.frame  = CGRect(x:x0,   y: b5y ,width: bw,height:bh)
+        okpPauseTimeText.frame  = CGRect(x:x1,   y: b5y ,width: bw*5,height:bh)
 
         
-        paraCnt6.frame  = CGRect(x:x0,   y: b6y ,width: bw,height:bh)
-        paraTxt6.frame  = CGRect(x:x1,   y: b6y ,width: bw*5,height:bh)
+        ettSwitch.frame  = CGRect(x:x0,   y: b6y ,width: bw,height:bh)
+        ettText.frame  = CGRect(x:x1,   y: b6y ,width: bw*5,height:bh)
         paraCnt7.frame  = CGRect(x:x0,   y: b7y ,width: bw,height:bh)
         paraTxt7.frame  = CGRect(x:x1,   y: b7y ,width: bw*5,height:bh)
-        paraCnt8.frame  = CGRect(x:x0,   y: b8y ,width: bw,height:bh)
-        paraTxt8.frame  = CGRect(x:x1,   y: b8y ,width: bw*5,height:bh)
+        brightnessSlider.frame  = CGRect(x:x0,   y: b8y ,width: bw,height:bh)
+        brightnessText.frame  = CGRect(x:x1,   y: b8y ,width: bw*5,height:bh)
         frontCameraSwitch.frame = CGRect(x:x0,y:b9y,width:bw,height: bh)
         frontCameraLabel.frame = CGRect(x:x0+70,y:b9y+2,width:bw*5,height:bh)
         sp=ww/120//間隙

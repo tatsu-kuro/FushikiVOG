@@ -191,13 +191,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OxW-Hi-sPf">
-                                <rect key="frame" x="113" y="383" width="49" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <action selector="onFrontCameraSwitch:" destination="gOS-fU-nK5" eventType="valueChanged" id="Gwo-zO-NQV"/>
-                                </connections>
-                            </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="record by front camera" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eaO-tb-IY3">
                                 <rect key="frame" x="270" y="388" width="175" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -205,6 +198,26 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="epD-UA-8gP">
+                                <rect key="frame" x="73" y="378" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="onSpeakerSwitch:" destination="gOS-fU-nK5" eventType="valueChanged" id="0mf-nR-dan"/>
+                                </connections>
+                            </switch>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="speaker.wave.2.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="a0Q-M0-AO5">
+                                <rect key="frame" x="143" y="378" width="37" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OxW-Hi-sPf">
+                                <rect key="frame" x="188" y="383" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="onFrontCameraSwitch:" destination="gOS-fU-nK5" eventType="valueChanged" id="Gwo-zO-NQV"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="53f-q3-sSQ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -214,29 +227,31 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="brightnessSlider" destination="rqo-3h-wbp" id="hf7-IT-zFx"/>
+                        <outlet property="brightnessText" destination="YmA-od-BNX" id="Mls-lt-SYT"/>
                         <outlet property="cameraButton" destination="dd6-zp-sxW" id="pCm-gY-tMP"/>
                         <outlet property="defaultButton" destination="wIu-wr-ffr" id="akP-bM-J7O"/>
+                        <outlet property="ettSwitch" destination="7li-Aa-cfI" id="LGU-GW-Qef"/>
+                        <outlet property="ettText" destination="ixO-Uv-LwA" id="5bk-rJ-YmM"/>
                         <outlet property="exitButton" destination="vji-3f-Tqg" id="4tC-Qb-6z9"/>
                         <outlet property="frontCameraLabel" destination="eaO-tb-IY3" id="OVt-s6-oUr"/>
                         <outlet property="frontCameraSwitch" destination="OxW-Hi-sPf" id="ZOT-OK-W8J"/>
-                        <outlet property="paraCnt0" destination="grl-Cp-esh" id="u9I-8p-Acp"/>
+                        <outlet property="oknSwitch" destination="wrz-kI-t9y" id="BP5-nK-RW9"/>
+                        <outlet property="oknText" destination="bvF-vu-c8A" id="Klx-Cg-muc"/>
+                        <outlet property="oknTimeSlider" destination="uh1-Tf-lNZ" id="10X-AN-mzs"/>
+                        <outlet property="oknTimeText" destination="HMX-MG-GP5" id="SIc-MU-Zx7"/>
+                        <outlet property="okpPauseTimeSlider" destination="cA9-K4-shB" id="Qg2-YT-Asl"/>
+                        <outlet property="okpPauseTimeText" destination="8VF-21-pW0" id="yQv-2d-Osd"/>
+                        <outlet property="okpText" destination="JNE-pm-V4S" id="aZA-GF-eqk"/>
+                        <outlet property="opkSwitch" destination="grl-Cp-esh" id="u9I-8p-Acp"/>
                         <outlet property="paraCnt1" destination="6sn-Mf-aer" id="ush-fQ-5lP"/>
-                        <outlet property="paraCnt2" destination="cA9-K4-shB" id="Qg2-YT-Asl"/>
-                        <outlet property="paraCnt3" destination="wrz-kI-t9y" id="BP5-nK-RW9"/>
                         <outlet property="paraCnt4" destination="h4m-6F-csX" id="Id1-g5-Pkm"/>
-                        <outlet property="paraCnt5" destination="uh1-Tf-lNZ" id="10X-AN-mzs"/>
-                        <outlet property="paraCnt6" destination="7li-Aa-cfI" id="LGU-GW-Qef"/>
                         <outlet property="paraCnt7" destination="Kjj-mF-dmr" id="GS2-fM-S89"/>
-                        <outlet property="paraCnt8" destination="rqo-3h-wbp" id="hf7-IT-zFx"/>
-                        <outlet property="paraTxt0" destination="JNE-pm-V4S" id="aZA-GF-eqk"/>
                         <outlet property="paraTxt1" destination="FaM-mf-KdP" id="JAn-HK-ONb"/>
-                        <outlet property="paraTxt2" destination="8VF-21-pW0" id="yQv-2d-Osd"/>
-                        <outlet property="paraTxt3" destination="bvF-vu-c8A" id="Klx-Cg-muc"/>
                         <outlet property="paraTxt4" destination="JPF-zl-Xu4" id="YeW-g9-5f3"/>
-                        <outlet property="paraTxt5" destination="HMX-MG-GP5" id="SIc-MU-Zx7"/>
-                        <outlet property="paraTxt6" destination="ixO-Uv-LwA" id="5bk-rJ-YmM"/>
                         <outlet property="paraTxt7" destination="joF-RS-tH3" id="TgJ-j0-4KF"/>
-                        <outlet property="paraTxt8" destination="YmA-od-BNX" id="Mls-lt-SYT"/>
+                        <outlet property="speakerImage" destination="a0Q-M0-AO5" id="rBU-En-DAb"/>
+                        <outlet property="speakerSwitch" destination="epD-UA-8gP" id="KSD-1W-bkX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bde-H1-uyg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1329,7 +1344,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="6zK-KW-B9K"/>
+        <segue reference="Zj2-IF-7jJ"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="camera" catalog="system" width="128" height="94"/>
@@ -1339,6 +1354,7 @@
         <image name="face" width="212" height="212"/>
         <image name="fushiki_e" width="1168" height="577"/>
         <image name="logomejiro" width="1300" height="100"/>
+        <image name="speaker.wave.2.circle" catalog="system" width="128" height="121"/>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
