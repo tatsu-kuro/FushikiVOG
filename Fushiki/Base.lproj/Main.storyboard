@@ -60,9 +60,6 @@
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="h4m-6F-csX">
                                 <rect key="frame" x="79" y="120" width="118" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <action selector="paraAct4:" destination="gOS-fU-nK5" eventType="valueChanged" id="58k-05-ofy"/>
-                                </connections>
                             </slider>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="uh1-Tf-lNZ">
                                 <rect key="frame" x="79" y="83" width="118" height="30"/>
@@ -245,10 +242,8 @@
                         <outlet property="okpText" destination="JNE-pm-V4S" id="aZA-GF-eqk"/>
                         <outlet property="opkSwitch" destination="grl-Cp-esh" id="u9I-8p-Acp"/>
                         <outlet property="paraCnt1" destination="6sn-Mf-aer" id="ush-fQ-5lP"/>
-                        <outlet property="paraCnt4" destination="h4m-6F-csX" id="Id1-g5-Pkm"/>
                         <outlet property="paraCnt7" destination="Kjj-mF-dmr" id="GS2-fM-S89"/>
                         <outlet property="paraTxt1" destination="FaM-mf-KdP" id="JAn-HK-ONb"/>
-                        <outlet property="paraTxt4" destination="JPF-zl-Xu4" id="YeW-g9-5f3"/>
                         <outlet property="paraTxt7" destination="joF-RS-tH3" id="TgJ-j0-4KF"/>
                         <outlet property="speakerImage" destination="a0Q-M0-AO5" id="rBU-En-DAb"/>
                         <outlet property="speakerSwitch" destination="epD-UA-8gP" id="KSD-1W-bkX"/>
