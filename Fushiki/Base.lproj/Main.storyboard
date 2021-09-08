@@ -77,16 +77,6 @@
                                     <action selector="onBrightnessSlider:" destination="gOS-fU-nK5" eventType="valueChanged" id="snd-j4-uEJ"/>
                                 </connections>
                             </slider>
-                            <button opaque="NO" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dd6-zp-sxW">
-                                <rect key="frame" x="405" y="338" width="25" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="camera" catalog="system"/>
-                                <connections>
-                                    <segue destination="c63-hm-Ug5" kind="show" id="Zj2-IF-7jJ"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wIu-wr-ffr">
                                 <rect key="frame" x="524" y="319" width="172" height="57"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -194,6 +184,16 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dd6-zp-sxW">
+                                <rect key="frame" x="180" y="319" width="25" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="camera" catalog="system"/>
+                                <connections>
+                                    <segue destination="c63-hm-Ug5" kind="show" id="Zj2-IF-7jJ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="53f-q3-sSQ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1038,19 +1038,6 @@
                                     <action selector="doHelp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IhA-EU-kmL"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DBN-p3-ntt">
-                                <rect key="frame" x="591" y="366" width="124" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="cameraButton2">
-                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <segue destination="c63-hm-Ug5" kind="show" id="zX0-Di-3Ji"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CTI-eK-yKu" userLabel="Settei Button">
                                 <rect key="frame" x="739" y="312" width="83" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1061,24 +1048,6 @@
                                 </state>
                                 <connections>
                                     <action selector="doSettei:" destination="BYZ-38-t0r" eventType="touchUpInside" id="N5J-fQ-EGh"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aYl-wa-v9e">
-                                <rect key="frame" x="802" y="366" width="25" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Camera"/>
-                                <connections>
-                                    <segue destination="c63-hm-Ug5" kind="show" id="6zK-KW-B9K"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" alpha="0.5" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MAr-Bx-PuO">
-                                <rect key="frame" x="722" y="361" width="30" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <action selector="onDoModeButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ROD-TD-GwI"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1092,9 +1061,6 @@
                         <outlet property="button2" destination="uQ1-87-BgY" id="ifl-hB-ox6"/>
                         <outlet property="button3" destination="Jef-4N-Mcg" id="tnT-24-hnA"/>
                         <outlet property="button4" destination="SgL-BM-Dbh" id="J3i-TL-HmM"/>
-                        <outlet property="cameraButton" destination="aYl-wa-v9e" id="ByI-MS-PAK"/>
-                        <outlet property="cameraButton2" destination="DBN-p3-ntt" id="vI1-DB-fHB"/>
-                        <outlet property="doModeButton" destination="MAr-Bx-PuO" id="OIX-cr-0PG"/>
                         <outlet property="helpButton" destination="deG-Tq-o9U" id="myc-QC-YJO"/>
                         <outlet property="logoImage" destination="rFo-zO-z8q" id="2jU-kC-jYJ"/>
                         <outlet property="setteiButton" destination="CTI-eK-yKu" id="iDo-Lz-j12"/>
@@ -1167,7 +1133,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="EXIT"/>
                                 <connections>
-                                    <segue destination="RQA-Mq-mfo" kind="unwind" unwindAction="unwindActionWithSegue:" id="RiQ-Rj-NWp"/>
+                                    <segue destination="RQA-Mq-mfo" kind="unwind" unwindAction="unwindPlayParaWithSegue:" id="xEN-5R-cqN"/>
                                 </connections>
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="bKh-nU-99c">
@@ -1320,9 +1286,6 @@
             <point key="canvasLocation" x="69.642857142857139" y="-2089.8550724637685"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="Zj2-IF-7jJ"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="camera" catalog="system" width="128" height="94"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>

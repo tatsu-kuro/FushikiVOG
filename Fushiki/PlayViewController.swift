@@ -1319,7 +1319,7 @@ class PlayViewController: UIViewController {
     }
  
     @IBAction func unwindPlay(segue: UIStoryboardSegue) {
-//        UIApplication.shared.isIdleTimerDisabled = false//スリープする
+        UIApplication.shared.isIdleTimerDisabled = false//スリープする
         print("unwindPlay")
         posRatio=UserDefaults.standard.integer(forKey:"posRatio")
         veloRatio=UserDefaults.standard.integer(forKey:"veloRatio")

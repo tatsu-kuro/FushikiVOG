@@ -50,6 +50,7 @@ class SetteiViewController: UIViewController {
         }else{
             cameraMode=2
         }
+        dispTexts()
         UserDefaults.standard.set(cameraMode, forKey: "cameraMode")
     }
     @IBOutlet weak var cameraButton: UIButton!
@@ -227,6 +228,11 @@ class SetteiViewController: UIViewController {
         setOkpMode()
         setOknMode()
         setettMode()
+        if cameraMode==0{
+            cameraButton.isHidden=false
+        }else{
+            cameraButton.isHidden=true
+        }
         okpPauseTimeText.text="OKP-PAUSE:" + String(Int(okpTime)) + "sec"
         oknTimeText.text="OKN-TIME:" + String(Int(oknTime)) + "sec"
         setUserDefaults()
@@ -395,12 +401,15 @@ class SetteiViewController: UIViewController {
         speakerSwitch.frame = CGRect(x:x0,   y: b8y ,width: bw*5,height:bh)
         speakerImage.frame = CGRect(x:x0+50,   y: b8y ,width: 30,height:30)
         speakerText.frame = CGRect(x:x1,   y: b8y ,width: bw*5,height:bh)
+        cameraButton.frame = CGRect(x:(x0+x1)/2,y:b7y+2,width:30,height: 25)
         sp=ww/120//間隙
         bw=(ww-sp*10)/7//ボタン幅
         bh=bw*170/440
         let by=wh-bh-sp
-        cameraButton.isHidden=true
+//        cameraButton.isHidden=true
         camera.setButtonProperty(defaultButton,x:left+bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(exitButton,x:left+bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
+    }
+    @IBAction func unwindPlayPara(segue: UIStoryboardSegue) {
     }
 }

@@ -102,48 +102,60 @@ class CameraViewController: UIViewController {
 
     func setButtons(){//type:Bool){
         // recording button
-        let ww=view.bounds.width
-        let wh=view.bounds.height
+        
+        let top=CGFloat(UserDefaults.standard.float(forKey: "top"))
+        let bottom=CGFloat(UserDefaults.standard.float(forKey: "bottom"))
+        let left=CGFloat(UserDefaults.standard.float(forKey: "left"))
+        let right=CGFloat(UserDefaults.standard.float(forKey: "right"))
+    
+        let ww = view.bounds.width - left - right
+        let wh = view.bounds.height - top - bottom
+
+//        let ww=view.bounds.width
+//        let wh=view.bounds.height
         let sp=ww/120//間隙
         let bw=(ww-sp*10)/7//ボタン幅
         let bh=bw*170/440
         let by=wh-bh-sp
-        let cameraMode = Int(camera.getUserDefaultInt(str: "cameraMode", ret: 0))
+//        let cameraMode = Int(camera.getUserDefaultInt(str: "cameraMode", ret: 0))
+        camera.setButtonProperty(exitButton,x:left+bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
 
-        camera.setButtonProperty(exitButton,x:bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
+//        camera.setButtonProperty(exitButton,x:bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
         fpsButton.isHidden=true
-        camera.setLabelProperty( fpsLabel,x:bw*1+sp*4,y:by,w:bw*2,h:bh,UIColor.white)
-        camera.setLabelProperty(zoomLabel,x:bw*6+sp*8,y:by-sp/3-bh,w:bw,h:bh,UIColor.white)
-        camera.setLabelProperty(focusLabel,x:bw*6+sp*8,y:by-sp*2/3-2*bh,w:bw,h:bh,UIColor.white)
-        camera.setLabelProperty(ledLabel,x:bw*6+sp*8,y:by-sp*3/3-3*bh,w:bw,h:bh,UIColor.white)
-        ledBar.frame=CGRect(x:5*sp,y:by-sp*3/3-3*bh,width:ww-7*sp-bw,height:bh)
-        focusBar.frame=CGRect(x:5*sp,y:by-sp*2/3-2*bh,width:ww-7*sp-bw,height:bh)
-        zoomBar.frame=CGRect(x:5*sp,y:by-sp/3-bh,width:ww-7*sp-bw,height:bh)
-        cameraChan.frame=CGRect(x:bw*3+sp*5,y:by,width:bw*3+sp*2,height:bh)
-        if cameraMode==2{
-            cameraView.alpha=0.1
+        camera.setLabelProperty( fpsLabel,x:left+sp*2,y:by,w:bw*2,h:bh,UIColor.white)
+        camera.setLabelProperty(zoomLabel,x:left+bw*6+sp*8,y:by-sp/3-bh,w:bw,h:bh,UIColor.white)
+//        camera.setLabelProperty(focusLabel,x:bw*6+sp*8,y:by-sp*2/3-2*bh,w:bw,h:bh,UIColor.white)
+//        camera.setLabelProperty(ledLabel,x:bw*6+sp*8,y:by-sp*3/3-3*bh,w:bw,h:bh,UIColor.white)
+//        ledBar.frame=CGRect(x:5*sp,y:by-sp*3/3-3*bh,width:ww-7*sp-bw,height:bh)
+//        focusBar.frame=CGRect(x:5*sp,y:by-sp*2/3-2*bh,width:ww-7*sp-bw,height:bh)
+        zoomBar.frame=CGRect(x:left + 2*sp,y:by-sp/3-bh,width:ww-7*sp-bw,height:bh)
+//        cameraChan.frame=CGRect(x:bw*3+sp*5,y:by,width:bw*3+sp*2,height:bh)
+//        if cameraMode==2{
+//            cameraView.alpha=0.1
+//            focusBar.isHidden=true
+//            focusLabel.isHidden=true
+//            ledBar.isHidden=true
+//            ledLabel.isHidden=true
+//            zoomBar.isHidden=true
+//            zoomLabel.isHidden=true
+//        }else if cameraMode==1{
+//            cameraView.alpha=1
+//            focusBar.isHidden=false
+//            focusLabel.isHidden=false
+//            ledBar.isHidden=false
+//            ledLabel.isHidden=false
+//            zoomBar.isHidden=false
+//            zoomLabel.isHidden=false
+//        }else if cameraMode==0{
+            cameraView.alpha=1
+        cameraChan.isHidden=true
             focusBar.isHidden=true
             focusLabel.isHidden=true
             ledBar.isHidden=true
             ledLabel.isHidden=true
-            zoomBar.isHidden=true
-            zoomLabel.isHidden=true
-        }else if cameraMode==1{
-            cameraView.alpha=1
-            focusBar.isHidden=false
-            focusLabel.isHidden=false
-            ledBar.isHidden=false
-            ledLabel.isHidden=false
             zoomBar.isHidden=false
             zoomLabel.isHidden=false
-        }else if cameraMode==0{
-            cameraView.alpha=1
-            focusBar.isHidden=true
-            focusLabel.isHidden=true
-            ledBar.isHidden=true
-            ledLabel.isHidden=true
-            zoomBar.isHidden=false
-            zoomLabel.isHidden=false        }
+//    }
      }
 }
 

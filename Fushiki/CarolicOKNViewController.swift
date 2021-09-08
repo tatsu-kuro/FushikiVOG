@@ -274,8 +274,9 @@ class CarolicOKNViewController: UIViewController{
             if UIApplication.shared.isIdleTimerDisabled == true{
                 UIApplication.shared.isIdleTimerDisabled = false//監視する
             }
-            delTimer()
-            self.dismiss(animated: true, completion: nil)
+            doubleTap(0)
+//            delTimer()
+  //          self.dismiss(animated: true, completion: nil)
         }
     }
     func drawCircle(cPoint:CGPoint,cirDiameter:CGFloat,color1:CGColor,color2:CGColor){

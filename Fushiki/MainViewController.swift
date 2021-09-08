@@ -353,14 +353,14 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var button0: UIButton!
     @IBOutlet weak var button2: UIButton!
     
-    @IBOutlet weak var doModeButton: UIButton!
-    @IBAction func onDoModeButton(_ sender: Any) {
-        sound(snd: "silence")
-        doModes()
-    }
+//    @IBOutlet weak var doModeButton: UIButton!
+//    @IBAction func onDoModeButton(_ sender: Any) {
+//        sound(snd: "silence")
+//        doModes()
+//    }
     
-    @IBOutlet weak var cameraButton2: UIButton!
-    @IBOutlet weak var cameraButton: UIButton!
+//    @IBOutlet weak var cameraButton2: UIButton!
+//    @IBOutlet weak var cameraButton: UIButton!
  /*   //    @IBOutlet weak var titleImage: UIImageView!
     func setRotate(alp:CGFloat){
 
@@ -519,12 +519,12 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBAction func unwindAction(segue: UIStoryboardSegue) {
         print("main-unwind")
         UIApplication.shared.isIdleTimerDisabled = false//スリープする
-        let cameraMode = Int(camera.getUserDefaultInt(str: "cameraMode", ret: 0))
-        if cameraMode == 1{
-            doModeButton.isHidden=false
-        }else{
-            doModeButton.isHidden=true
-        }
+//        let cameraMode = Int(camera.getUserDefaultInt(str: "cameraMode", ret: 0))
+//        if cameraMode == 1{
+//            doModeButton.isHidden=false
+//        }else{
+//            doModeButton.isHidden=true
+//        }
     }
 }
 

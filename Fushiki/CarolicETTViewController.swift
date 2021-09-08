@@ -288,8 +288,9 @@ class CarolicETTViewController: UIViewController{
             if UIApplication.shared.isIdleTimerDisabled == true{
                 UIApplication.shared.isIdleTimerDisabled = false//監視する
             }
-            delTimer()
-            self.dismiss(animated: true, completion: nil)
+            doubleTap(0)
+//            delTimer()
+  //          self.dismiss(animated: true, completion: nil)
         }
     }
     func delTimer(){
