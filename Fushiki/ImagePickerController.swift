@@ -27,7 +27,7 @@ class ImagePickerController: UIViewController,MFMailComposeViewControllerDelegat
         let mailViewController = MFMailComposeViewController()
   
         mailViewController.mailComposeDelegate = self
-        mailViewController.setSubject("FushikiVOG")
+        mailViewController.setSubject("iPhone-VOG")
         let imageDataq = videoView.jpegData(compressionQuality: 1.0)
         mailViewController.addAttachmentData(imageDataq!, mimeType: "image/jpg", fileName: imageName)
         present(mailViewController, animated: true, completion: nil)
