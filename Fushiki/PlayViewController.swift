@@ -1198,8 +1198,8 @@ class PlayViewController: UIViewController {
         var faceWithBorderUIImage:UIImage!
         let eyeRectOnScreen=getRectFromCenter(center: eyeCenter, len: wakuLength)
         let eyeWithBorderRectOnScreen = expandRectWithBorderWide(rect: eyeRectOnScreen, border: eyeborder)
-        let faceRectOnScreen=getRectFromCenter(center: faceCenter, len: wakuLength)
-        let faceWithBorderRectOnScreen = expandRectWithBorderWide(rect: faceRectOnScreen, border: eyeborder)
+        let faceRectOnScreen=getRectFromCenter(center: faceCenter, len: 3/*wakuLength*/)
+        let faceWithBorderRectOnScreen = expandRectWithBorderWide(rect: faceRectOnScreen, border: 6/*eyeborder*/)
         
         let context:CIContext = CIContext.init(options: nil)
         var sample:CMSampleBuffer!
@@ -1234,7 +1234,7 @@ class PlayViewController: UIViewController {
         let osFacY:CGFloat = (faceWithBorderRect.size.height - faceRect.size.height) / 2.0//左右方向への差
         //   "ofset:" osEyeX=osFac,osEyeY=osFacY eyeとface同じ
         let xDiffer=faceWithBorderRect.origin.x - eyeWithBorderRect.origin.x
-        let yDiffer=faceWithBorderRect.origin.y - eyeWithBorderRect.origin.y
+        let yDiffer = faceWithBorderRect.origin.y - eyeWithBorderRect.origin.y
         var maxEyeV:Double = 0
         var maxFaceV:Double = 0
         //        var frameCnt:Int=0
@@ -1310,7 +1310,7 @@ class PlayViewController: UIViewController {
                             //eXはポインタなので、".pointee"でそのポインタの内容が取り出せる。Cでいうところの"*"
                             //上で宣言しているとおりInt32が返ってくるのでCGFloatに変換して代入
                             ex = CGFloat(eX.pointee) - osEyeX
-                            ey = borderRectDiffer - CGFloat(eY.pointee) - osEyeY
+                            ey = /*borderRectDiffer*/ CGFloat(eY.pointee) - osEyeY
                         }
                     }
                     
