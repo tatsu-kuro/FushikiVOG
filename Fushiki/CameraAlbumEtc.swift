@@ -261,6 +261,17 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
         if cameraMode==2{
             return
         }
+        if let soundUrl = URL(string:
+                                "/System/Library/Audio/UISounds/end_record.caf"/*photoShutter.caf*/){
+            let speakerOnOff=UserDefaults.standard.integer(forKey: "speakerOnOff")
+            if speakerOnOff==1{
+            
+            AudioServicesCreateSystemSoundID(soundUrl as CFURL, &soundIdx)
+            AudioServicesPlaySystemSound(soundIdx)
+            }
+        }
+        
+        
         try? FileManager.default.removeItem(atPath: tempFilePath)
         let fileURL = NSURL(fileURLWithPath: tempFilePath)
         fileOutput.startRecording(to: fileURL as URL, recordingDelegate: self)
@@ -392,8 +403,12 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         if let soundUrl = URL(string:
                                 "/System/Library/Audio/UISounds/end_record.caf"/*photoShutter.caf*/){
+            let speakerOnOff=UserDefaults.standard.integer(forKey: "speakerOnOff")
+            if speakerOnOff==1{
+            
             AudioServicesCreateSystemSoundID(soundUrl as CFURL, &soundIdx)
             AudioServicesPlaySystemSound(soundIdx)
+            }
         }
          print("終了ボタン、最大を超えた時もここを通る")
         //         motionManager.stopDeviceMotionUpdates()//ここで止めたが良さそう。
