@@ -88,8 +88,8 @@ class PlayParaViewController: UIViewController {
       }
   
     @IBAction func onDefault1Button(_ sender: Any) {
-        posRatio=100
-        veloRatio=100
+//        posRatio=100
+//        veloRatio=100
         if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
             wakuLength = 6
             eyeBorder = 20
@@ -97,13 +97,13 @@ class PlayParaViewController: UIViewController {
             wakuLength = 3
             eyeBorder = 10
         }
-        faceMark=1
-        showRect=1
+//        faceMark=1
+//        showRect=1
         setUserDefaults()
     }
     @IBAction func onDefault2Button(_ sender: Any) {
-        posRatio=100
-        veloRatio=100
+//        posRatio=100
+//        veloRatio=100
         if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
             wakuLength = 10
             eyeBorder = 24
@@ -111,13 +111,13 @@ class PlayParaViewController: UIViewController {
             wakuLength = 5
             eyeBorder = 12
         }
-        faceMark=1
-        showRect=1
+//        faceMark=1
+//        showRect=1
         setUserDefaults()
     }
     @IBAction func onDefault3Button(_ sender: Any) {
-        posRatio=100
-        veloRatio=100
+//        posRatio=100
+//        veloRatio=100
         if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
             wakuLength = 15
             eyeBorder = 30
@@ -125,13 +125,13 @@ class PlayParaViewController: UIViewController {
             wakuLength = 8
             eyeBorder = 15
         }
-        faceMark=1
-        showRect=1
+//        faceMark=1
+//        showRect=1
         setUserDefaults()
     }
     @IBAction func onDefault4Button(_ sender: Any) {
-        posRatio=100
-        veloRatio=100
+//        posRatio=100
+//        veloRatio=100
         if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
             wakuLength = 20
             eyeBorder = 40
@@ -139,8 +139,8 @@ class PlayParaViewController: UIViewController {
             wakuLength = 10
             eyeBorder = 20
         }
-        faceMark=1
-        showRect=1
+//        faceMark=1
+//        showRect=1
         setUserDefaults()
     }
     func setUserDefaults(){

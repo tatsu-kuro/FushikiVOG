@@ -17,11 +17,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3SM-bs-rsz">
-                                <rect key="frame" x="10" y="30" width="647" height="315"/>
-                                <string key="text">Fushiki VOG  version 1.0
-by Kuroda ENT
-2021-9-5</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                <rect key="frame" x="10" y="30" width="647" height="265"/>
+                                <string key="text">Fushiki VOG
+Version 1.0</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="41"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2021-9-8   by Kuroda ENT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fQQ-wI-zP8">
+                                <rect key="frame" x="10" y="295" width="647" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="agP-Xn-k0u"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -29,10 +37,13 @@ by Kuroda ENT
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="3SM-bs-rsz" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="30" id="9S4-gB-l1x"/>
-                            <constraint firstItem="3SM-bs-rsz" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="DgY-qq-bpm"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="3SM-bs-rsz" secondAttribute="bottom" constant="30" id="NJh-64-Cxb"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="3SM-bs-rsz" secondAttribute="trailing" constant="10" id="eXk-tK-A9i"/>
+                            <constraint firstItem="3SM-bs-rsz" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="30" id="AjM-FQ-h7y"/>
+                            <constraint firstItem="fQQ-wI-zP8" firstAttribute="top" secondItem="3SM-bs-rsz" secondAttribute="bottom" id="CDO-NE-R6V"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="3SM-bs-rsz" secondAttribute="trailing" constant="10" id="Gwv-uY-Xrl"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fQQ-wI-zP8" secondAttribute="trailing" constant="10" id="OWc-ov-ypY"/>
+                            <constraint firstItem="3SM-bs-rsz" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="Pk0-2P-mfz"/>
+                            <constraint firstItem="fQQ-wI-zP8" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="SuD-Gc-ySP"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="fQQ-wI-zP8" secondAttribute="bottom" constant="30" id="vic-Bh-XwD"/>
                         </constraints>
                     </view>
                 </viewController>

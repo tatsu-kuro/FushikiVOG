@@ -513,9 +513,11 @@ class PlayViewController: UIViewController {
         }
         if vogImageView!.isHidden == false{
             vogImageView?.isHidden=true
+            seekBar.isHidden=false
         }else{
             vogImageView?.isHidden=false
             view.bringSubviewToFront(vogImageView!)
+            seekBar.isHidden=true
         }
     }
   
@@ -782,6 +784,9 @@ class PlayViewController: UIViewController {
 */
     }
     @IBAction func singleTapGesture(_ sender: UITapGestureRecognizer) {
+        if vogImageView?.isHidden==false{
+            return
+        }
         print("singletap",vogImageView?.isHidden,calcFlag)
 //        print(sender.numberOfTapsRequired)
 //        if vogImageView?.isHidden == false{
@@ -1091,7 +1096,7 @@ class PlayViewController: UIViewController {
 //                debugFace.isHidden=false
             }
         }
-        
+        seekBar.isHidden=true
         if calcFlag == true{
             calcFlag=false
             setButtons(flag: true)
@@ -1362,7 +1367,9 @@ class PlayViewController: UIViewController {
         }
 
         print("longPress")
-        
+        if vogImageView?.isHidden==false{
+            return
+        }
         if eyeORface == 0{//eye
             eyeORface=1
         }else{
