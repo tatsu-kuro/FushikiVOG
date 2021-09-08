@@ -56,7 +56,7 @@ class PlayViewController: UIViewController {
     var mailHeight:CGFloat=1600//VOG
     var videoWidth:CGFloat!
     var videoHeight:CGFloat!
-    var idNumber:Int = 0
+    var idNumber:String = ""
     var savedFlag:Bool = false
     @IBOutlet weak var waveButton: UIButton!
     @IBOutlet weak var mailButton: UIButton!
@@ -162,7 +162,7 @@ class PlayViewController: UIViewController {
             return
         }
         
-        let alert = UIAlertController(title: "FushikiETT", message: "Input ID number", preferredStyle: .alert)
+        let alert = UIAlertController(title: "input ID", message: "", preferredStyle: .alert)
         let saveAction = UIAlertAction(title: "OK", style: .default) { [self] (action:UIAlertAction!) -> Void in
             
             // 入力したテキストをコンソールに表示
@@ -170,7 +170,7 @@ class PlayViewController: UIViewController {
             #if DEBUG
             print("\(String(describing: textField.text))")
             #endif
-            self.idNumber = self.Field2value(field: textField)
+            self.idNumber = textField.text!// Field2value(field: textField)
             drawVogOnePage(count:vogCurPoint)//countまでの波を表示
             // イメージビューに設定する
 //            UIImageWriteToSavedPhotosAlbum(img, nil, nil, nil)
@@ -182,11 +182,12 @@ class PlayViewController: UIViewController {
             savePath2album(path: "temp.png")
          }
         let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (action:UIAlertAction!) -> Void in
-            self.idNumber = 1//キャンセルしてもここは通らない？
+            self.idNumber = ""//キャンセルしてもここは通らない？
         }
         // UIAlertControllerにtextFieldを追加
         alert.addTextField { (textField:UITextField!) -> Void in
-            textField.keyboardType = UIKeyboardType.numberPad
+            textField.keyboardType = UIKeyboardType.default//numbersAndPunctuation// decimalPad// default// denumberPad
+            
         }
         alert.addAction(cancelAction)//この行と下の行の並びを変えるとCancelとOKの左右が入れ替わる。
         alert.addAction(saveAction)
@@ -204,12 +205,12 @@ class PlayViewController: UIViewController {
         context.setLineWidth(2.0)
         context.setStrokeColor(UIColor.black.cgColor)
         // パスの初期化
-        let drawPath = UIBezierPath()
+//        let drawPath = UIBezierPath()
         let w=startingImage.size.width
         let h=startingImage.size.height
         let str1 = calcDate.components(separatedBy: ":")
-        let str2 = "ID:" + String(format: "%08d", idNumber) + "  " + str1[0] + ":" + str1[1]
-        let str3 = "FushikiETT"
+        let str2 = "ID:" + idNumber + "  " + str1[0] + ":" + str1[1]
+        let str3 = "2sec/scale"
         
         str2.draw(at: CGPoint(x: 20, y: h-100), withAttributes: [
                     NSAttributedString.Key.foregroundColor : UIColor.black,
@@ -328,8 +329,14 @@ class PlayViewController: UIViewController {
         // Get the current context
         let context = UIGraphicsGetCurrentContext()!
         // Draw a red line
-        context.setLineWidth(2.0)
-        context.setStrokeColor(UIColor.black.cgColor)
+        let drawPath0 = UIBezierPath()
+        let drawPath1 = UIBezierPath()
+        let drawPath2 = UIBezierPath()
+        drawPath0.lineWidth=3
+        drawPath1.lineWidth=3
+        drawPath2.lineWidth=3
+//        context.setLineWidth(2.0)
+//        context.setStrokeColor(UIColor.black.cgColor)
         
         var pointX = Array<CGPoint>()
         var pointXd = Array<CGPoint>()
@@ -338,13 +345,8 @@ class PlayViewController: UIViewController {
         let posR=CGFloat(posRatio)/20.0
         let veloR=CGFloat(veloRatio)
         let h=startingImage.size.height
-//        let vogPos_count=eyePosXfiltered.count//eyePosOrig.count
-//        var dx = Int((240/videoFps).rounded())// 1// xの間隔
-//        print("dx:",dx)
-//        dx = 1
         handlingDataNowFlag=true
         for i in start..<end {
-//            if i < vogPos_count{
                 let px = CGFloat(fpsXd * i)
                 let py1 = eyePosXFiltered[i] * posR + (h-240)/5
                 let py2 = eyeVeloXFiltered[i] * veloR + (h-240)*2/5
@@ -358,34 +360,40 @@ class PlayViewController: UIViewController {
                 pointXd.append(point2)
                 pointY.append(point3)
                 pointYd.append(point4)
-//            }
         }
         handlingDataNowFlag=false
         // 始点に移動する
-        context.move(to: pointX[0])
+        context.setStrokeColor(UIColor.red.cgColor)
+        drawPath0.move(to: pointX[0])
         // 配列から始点の値を取り除く
         pointX.removeFirst()
         // 配列から点を取り出して連結していく
         for pt in pointX {
-            context.addLine(to: pt)
+            drawPath0.addLine(to: pt)
         }
-        context.move(to: pointXd[0])
+        
+        drawPath2.move(to: pointXd[0])
         pointXd.removeFirst()
         for pt in pointXd {
-            context.addLine(to: pt)
+            drawPath2.addLine(to: pt)
         }
-        context.move(to: pointY[0])
+        drawPath1.move(to: pointY[0])
         pointY.removeFirst()
         for pt in pointY {
-            context.addLine(to: pt)
+            drawPath1.addLine(to: pt)
         }
-        context.move(to: pointYd[0])
+        drawPath2.move(to: pointYd[0])
         pointYd.removeFirst()
+        //context.setStrokeColor(UIColor.blue.cgColor)
         for pt in pointYd {
-            context.addLine(to: pt)
+            drawPath2.addLine(to: pt)
         }
-        // 線の色
-        context.strokePath()
+        UIColor.red.setStroke()
+        drawPath0.stroke()
+        UIColor.blue.setStroke()
+        drawPath1.stroke()
+        UIColor.black.setStroke()
+        drawPath2.stroke()
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image!
@@ -472,7 +480,7 @@ class PlayViewController: UIViewController {
         if calcFlag == true{
             elapsedTime=CFAbsoluteTimeGetCurrent()-startTime
         }
-        currTimeLabel.text=String(format:"%.1f/%.1f (%.0f)",seekBar.value + Float(eyePosXOrig.count)/videoFps,videoDuration,elapsedTime)
+        currTimeLabel.text=String(format:"%.1f/%.1f",seekBar.value + Float(eyePosXOrig.count)/videoFps,elapsedTime)
         if eyePosXFiltered.count < 5 {
             return
         }
@@ -672,8 +680,8 @@ class PlayViewController: UIViewController {
     
     func moveCenter(start:CGPoint,move:CGPoint,hani:CGRect)-> CGPoint{
         var returnPoint:CGPoint=CGPoint(x:0,y:0)//2種類の枠を代入、変更してreturnで返す
-        returnPoint.x = start.x + move.x/4
-        returnPoint.y = start.y + move.y/4
+        returnPoint.x = start.x + move.x/10
+        returnPoint.y = start.y + move.y/10
         if returnPoint.x < hani.origin.x{
             returnPoint.x = hani.origin.x
         }else if returnPoint.x > hani.origin.x+hani.width{
@@ -742,7 +750,7 @@ class PlayViewController: UIViewController {
     var zoomNum:Int=1
     var lastTapPoint:CGPoint=CGPoint(x:0,y:0)
      @IBAction func doubleTapGesture(_ sender: UITapGestureRecognizer) {
-        print("doubletap")
+  /*      print("doubletap")
         if eyeORface == 0{//eye
             eyeORface=1
         }else{
@@ -771,7 +779,7 @@ class PlayViewController: UIViewController {
 //        let layerCnt=view.layer.sublayers!.count//?.remove(at: <#T##Int#>)?.last=videoPlayerLayer
 //        view.layer.sublayers?.remove(at: layerCnt-1)
         viewDidLoad()
-
+*/
     }
     @IBAction func singleTapGesture(_ sender: UITapGestureRecognizer) {
         print("singletap",vogImageView?.isHidden,calcFlag)
@@ -794,9 +802,9 @@ class PlayViewController: UIViewController {
     
     @objc func update(tm: Timer) {
         if timer_vog?.isValid == true{
-            currTimeLabel.text=String(format:"%.1f/%.1f (%.0f)",seekBar.value + Float(eyePosXOrig.count)/videoFps,videoDuration,elapsedTime)
+            currTimeLabel.text=String(format:"%.1f/%.1f",seekBar.value + Float(eyePosXOrig.count)/videoFps,elapsedTime)
         }else{
-            currTimeLabel.text=String(format:"%.1f/%.1f (%.0f)",seekBar.value + Float(eyePosXOrig.count)/videoFps,videoDuration,elapsedTime)
+            currTimeLabel.text=String(format:"%.1f/%.1f",seekBar.value + Float(eyePosXOrig.count)/videoFps,elapsedTime)
         }
         if !((videoPlayer.rate != 0) && (videoPlayer.error == nil)) {//notplaying
             if seekBar.value>videoDuration-0.01{
@@ -866,7 +874,7 @@ class PlayViewController: UIViewController {
         let bh=bw*170/440
         let by = wh - bh - sp
         let seeky = by - bh
-        
+        autoreleasepool{
         videoDuration=Float(CMTimeGetSeconds(avAsset.duration))
         let playerItem: AVPlayerItem = AVPlayerItem(asset: avAsset)
         // Create AVPlayer
@@ -904,9 +912,9 @@ class PlayViewController: UIViewController {
             let value = Float(self.seekBar.maximumValue - self.seekBar.minimumValue) * Float(time) / Float(duration) + Float(self.seekBar.minimumValue)
             self.seekBar.value = value
         })
-        currTimeLabel.frame = CGRect(x:left+sp*2, y: 0, width: bw*1.2, height: bh*0.6)
-        currTimeLabel!.font=UIFont.monospacedDigitSystemFont(ofSize: 15, weight: .medium)
-        view.bringSubviewToFront(currTimeLabel)
+//        currTimeLabel.frame = CGRect(x:left+sp*2, y: 0, width: bw*1.2, height: bh*0.6)
+//        currTimeLabel!.font=UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .medium)
+//        view.bringSubviewToFront(currTimeLabel)
         // Create Movie Start Button
         mailButton.frame = CGRect(x:left+sp*2+bw*0,y:by,width:bw,height:bh)
         setButtonProperty(button: mailButton, color: UIColor.darkGray)
@@ -934,14 +942,19 @@ class PlayViewController: UIViewController {
         videoFps=getFPS(url: videoURL!)
         dispWakus()
         showWakuImages()
-        fpsLabel.frame=CGRect(x:left+ww - bw*1.2-sp*2,y:0,width: bw*1.2/*bw*2-sp*2*/,height: bh*0.6)
-        fpsLabel.text = String(format:"%.0f %.0fx%.0f",videoFps,videoSize.width,videoSize.height)
-        fpsLabel!.font=UIFont.monospacedDigitSystemFont(ofSize: 15, weight: .medium)
+        fpsLabel.frame=CGRect(x:left+bw*1.2+sp*2,y:0,width: bw*3,height: bh*0.6)
+        fpsLabel.text = String(format:"%.1fs %.0ffps %.0fx%.0f",videoDuration, videoFps,videoSize.width,videoSize.height)
+        fpsLabel!.font=UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .medium)
         view.bringSubviewToFront(fpsLabel)
+        currTimeLabel.frame = CGRect(x:left+sp*2, y: 0, width: bw*1.2, height: bh*0.6)
+        currTimeLabel!.font=UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .medium)
+        view.bringSubviewToFront(currTimeLabel)
+
         vogBoxHeight=ww*16/25
         vogBoxYmin=0//wh/2-vogBoxHeight/2
         vogBoxYcenter=wh/2
         fpsXd=Int((240.0/videoFps).rounded())
+    }
     }
   
     func setButtonProperty(button:UIButton,color:UIColor){
@@ -1349,6 +1362,39 @@ class PlayViewController: UIViewController {
         }
 
         print("longPress")
+        
+        if eyeORface == 0{//eye
+            eyeORface=1
+        }else{
+            eyeORface=0
+        }
+        dispWakus()
+        showWakuImages()
+        
+        zoomNum += 2
+        let zn=CGFloat(zoomNum)
+        let w=view.bounds.width
+        let h=view.bounds.height
+        if zoomNum == 3{
+            lastTapPoint = sender.location(in: self.view)
+        }
+        //            print("longpress",zn)
+        let x0 = -lastTapPoint.x*zn + w/2
+        let y0 = -lastTapPoint.y*zn + h/2
+        if zoomNum==9{
+            zoomNum=1
+            videoPlayerLayerRect=CGRect(x:0,y:0,width:0,height:0)
+            
+        }else{
+            videoPlayerLayerRect=CGRect(x:x0,y:y0,width:w*zn,height:h*zn)
+        }
+//        let layerCnt=view.layer.sublayers!.count//?.remove(at: <#T##Int#>)?.last=videoPlayerLayer
+//        view.layer.sublayers?.remove(at: layerCnt-1)
+        viewDidLoad()
+        
+        
+        
+ /*
         let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
         let avAsset = AVURLAsset(url: videoURL!, options: options)
         var reader: AVAssetReader! = nil
@@ -1436,5 +1482,6 @@ class PlayViewController: UIViewController {
         }
         dispWakus()
         showWakuImages()
+ */
     }
 }

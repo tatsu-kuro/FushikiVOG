@@ -15,8 +15,8 @@ class PlayParaViewController: UIViewController {
     
     @IBOutlet weak var default3Button: UIButton!
     @IBOutlet weak var default1Button: UIButton!
-    @IBOutlet weak var faceMark: UISwitch!
-    @IBOutlet weak var checkRects: UISwitch!
+    @IBOutlet weak var faceMarkSwitch: UISwitch!
+    @IBOutlet weak var showRectSwitch: UISwitch!
     @IBOutlet weak var exitButton: UIButton!
     @IBOutlet weak var para4: UITextField!
     @IBOutlet weak var para3: UITextField!
@@ -29,51 +29,52 @@ class PlayParaViewController: UIViewController {
     @IBOutlet weak var paraText4: UILabel!
     @IBOutlet weak var paraText5: UILabel!
     @IBOutlet weak var paraText6: UILabel!
-    var paraInt1:Int=0
-    var paraInt2:Int=0
-    var paraInt3:Int=0
-    var paraInt4:Int=0
-    var paraInt5:Int=0
-    var paraInt6:Int=0
+    var posRatio:Int=0
+    var veloRatio:Int=0
+    var wakuLength:Int=0
+    var eyeBorder:Int=0
+    var faceMark:Int=0
+    var showRect:Int=0
     
-    @IBAction func onCheckRects(_ sender: Any) {
-        if checkRects.isOn{
-            paraInt6=1
+    @IBAction func onShowRect(_ sender: Any) {
+        if showRectSwitch.isOn{
+            showRect=1
         }else{
-            paraInt6=0
+            showRect=0
         }
         setUserDefaults()
     }
     @IBAction func onFaceMark(_ sender: Any) {
-        if faceMark.isOn{
-            paraInt5=1
+         
+        if faceMarkSwitch.isOn{
+            faceMark=1
         }else{
-            paraInt5=0
+            faceMark=0
         }
         setUserDefaults()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
 //        paraInt1.delegate = self
-        paraInt1=UserDefaults.standard.integer(forKey:"posRatio")
-        paraInt2=UserDefaults.standard.integer(forKey:"veloRatio")
-        paraInt3=UserDefaults.standard.integer(forKey:"wakuLength")
-        paraInt4=UserDefaults.standard.integer(forKey:"eyeBorder")
-        paraInt5=UserDefaults.standard.integer(forKey:"faceMark")
-        paraInt6=UserDefaults.standard.integer(forKey: "checkRects")
-        para1.text = "\(paraInt1)"
-        para2.text = "\(paraInt2)"
-        para3.text = "\(paraInt3)"
-        para4.text = "\(paraInt4)"
-        if paraInt5==0{
-            faceMark.isOn=false
+        posRatio=UserDefaults.standard.integer(forKey:"posRatio")
+        veloRatio=UserDefaults.standard.integer(forKey:"veloRatio")
+        wakuLength=UserDefaults.standard.integer(forKey:"wakuLength")
+        eyeBorder=UserDefaults.standard.integer(forKey:"eyeBorder")
+        faceMark=UserDefaults.standard.integer(forKey:"faceMark")
+        showRect=UserDefaults.standard.integer(forKey: "showRect")
+        para1.text = "\(posRatio)"
+        para2.text = "\(veloRatio)"
+        para3.text = "\(wakuLength)"
+        para4.text = "\(eyeBorder)"
+        if faceMark==0{
+            faceMarkSwitch.isOn=false
         }else{
-            faceMark.isOn=true
+            faceMarkSwitch.isOn=true
         }
-        if paraInt6==0{
-            checkRects.isOn=false
+        if showRect==0{
+            showRectSwitch.isOn=false
         }else{
-            checkRects.isOn=true
+            showRectSwitch.isOn=true
         }
         setScreen()
         keyPadDownButton.isHidden=true
@@ -87,81 +88,81 @@ class PlayParaViewController: UIViewController {
       }
   
     @IBAction func onDefault1Button(_ sender: Any) {
-        paraInt1=100
-        paraInt2=100
+        posRatio=100
+        veloRatio=100
         if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
-            paraInt3 = 6
-            paraInt4 = 20
+            wakuLength = 6
+            eyeBorder = 20
         }else{//iphone
-            paraInt3 = 3
-            paraInt4 = 10
+            wakuLength = 3
+            eyeBorder = 10
         }
-        paraInt5=1
-        paraInt6=1
+        faceMark=1
+        showRect=1
         setUserDefaults()
     }
     @IBAction func onDefault2Button(_ sender: Any) {
-        paraInt1=100
-        paraInt2=100
+        posRatio=100
+        veloRatio=100
         if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
-            paraInt3 = 10
-            paraInt4 = 24
+            wakuLength = 10
+            eyeBorder = 24
         }else{//iphone
-            paraInt3 = 5
-            paraInt4 = 12
+            wakuLength = 5
+            eyeBorder = 12
         }
-        paraInt5=1
-        paraInt6=1
+        faceMark=1
+        showRect=1
         setUserDefaults()
     }
     @IBAction func onDefault3Button(_ sender: Any) {
-        paraInt1=100
-        paraInt2=100
+        posRatio=100
+        veloRatio=100
         if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
-            paraInt3 = 15
-            paraInt4 = 30
+            wakuLength = 15
+            eyeBorder = 30
         }else{//iphone
-            paraInt3 = 8
-            paraInt4 = 15
+            wakuLength = 8
+            eyeBorder = 15
         }
-        paraInt5=1
-        paraInt6=1
+        faceMark=1
+        showRect=1
         setUserDefaults()
     }
     @IBAction func onDefault4Button(_ sender: Any) {
-        paraInt1=100
-        paraInt2=100
+        posRatio=100
+        veloRatio=100
         if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
-            paraInt3 = 20
-            paraInt4 = 40
+            wakuLength = 20
+            eyeBorder = 40
         }else{//iphone
-            paraInt3 = 10
-            paraInt4 = 20
+            wakuLength = 10
+            eyeBorder = 20
         }
-        paraInt5=1
-        paraInt6=1
+        faceMark=1
+        showRect=1
         setUserDefaults()
     }
     func setUserDefaults(){
-        UserDefaults.standard.set(paraInt1, forKey: "posRatio")
-        UserDefaults.standard.set(paraInt2, forKey: "veloRatio")
-        UserDefaults.standard.set(paraInt3, forKey: "wakuLength")
-        UserDefaults.standard.set(paraInt4, forKey: "eyeBorder")
-        UserDefaults.standard.set(paraInt5, forKey: "faceMark")
-        UserDefaults.standard.set(paraInt6, forKey: "checkRects")
-        para1.text = "\(paraInt1)"
-        para2.text = "\(paraInt2)"
-        para3.text = "\(paraInt3)"
-        para4.text = "\(paraInt4)"
-        if paraInt5==0{
-            faceMark.isOn=false
+        UserDefaults.standard.set(posRatio, forKey: "posRatio")
+        UserDefaults.standard.set(veloRatio, forKey: "veloRatio")
+        UserDefaults.standard.set(wakuLength, forKey: "wakuLength")
+        UserDefaults.standard.set(eyeBorder, forKey: "eyeBorder")
+        UserDefaults.standard.set(faceMark, forKey: "faceMark")
+        UserDefaults.standard.set(showRect, forKey: "showRect")
+        para1.text = "\(posRatio)"
+        para2.text = "\(veloRatio)"
+        para3.text = "\(wakuLength)"
+        para4.text = "\(eyeBorder)"
+        if faceMark==0{
+            faceMarkSwitch.isOn=false
         }else{
-            faceMark.isOn=true
+            faceMarkSwitch.isOn=true
         }
-        if paraInt6==0{
-            checkRects.isOn=false
+        if showRect==0{
+            showRectSwitch.isOn=false
         }else{
-            checkRects.isOn=true
+            showRectSwitch.isOn=true
         }
      }
     func isAlphanumeric(text:String) -> Bool {
@@ -183,10 +184,10 @@ class PlayParaViewController: UIViewController {
         }
     }
     func setParas(){
-        paraInt1 = Field2value(field:para1)
-        paraInt2 = Field2value(field:para2)
-        paraInt3 = Field2value(field:para3)
-        paraInt4 = Field2value(field:para4)
+        posRatio = Field2value(field:para1)
+        veloRatio = Field2value(field:para2)
+        wakuLength = Field2value(field:para3)
+        eyeBorder = Field2value(field:para4)
         setUserDefaults()
         keyPadDownButton.isHidden=false
     }
@@ -228,7 +229,7 @@ class PlayParaViewController: UIViewController {
         let by=wh-bh-sp
         let lw=ww-bw*2
         let head=sp*2+left
-        camera.setButtonProperty(keyPadDownButton, x: bw*6+sp*8, y: sp, w: bw, h: bh, UIColor.darkGray)
+        camera.setButtonProperty(keyPadDownButton, x: head+bw*6+sp*6, y: sp, w: bw, h: bh, UIColor.darkGray)
         camera.setButtonProperty(exitButton,x:head+sp*6+bw*6,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(default1Button, x:head+sp*2+bw*2, y: by, w: bw, h: bh, UIColor.darkGray)
         camera.setButtonProperty(default2Button, x:head+sp*3+bw*3, y: by, w: bw, h: bh, UIColor.darkGray)
@@ -238,8 +239,8 @@ class PlayParaViewController: UIViewController {
         para2.frame=CGRect(x:head,y:sp*2+bh,width:bw,height: bh)
         para3.frame=CGRect(x:head,y:sp*3+bh*2,width:bw,height: bh)
         para4.frame=CGRect(x:head,y:sp*4+bh*3,width:bw,height: bh)
-        faceMark.frame=CGRect(x:head,y:sp*5+bh*4,width:bw,height: bh)
-        checkRects.frame=CGRect(x:head,y:sp*6+bh*5,width:bw,height: bh)
+        faceMarkSwitch.frame=CGRect(x:head,y:sp*5+bh*4,width:bw,height: bh)
+        showRectSwitch.frame=CGRect(x:head,y:sp*6+bh*5,width:bw,height: bh)
         paraText1.frame=CGRect(x:head+bw+3*sp,y:sp,width:lw,height: bh)
         paraText2.frame=CGRect(x:head+bw+3*sp,y:sp*2+bh,width:lw,height: bh)
         paraText3.frame=CGRect(x:head+bw+3*sp,y:sp*3+bh*2,width:lw,height: bh)

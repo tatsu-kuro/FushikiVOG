@@ -25,10 +25,10 @@ class SetteiViewController: UIViewController {
 //    var ettWidth:Int=50
     var targetMode:Int=0
     var screenBrightness:Float!
-    var ettModeTxt0:String=""
-    var ettModeTxt1:String=""
-    var ettModeTxt2:String=""
-    var ettModeTxt3:String=""
+    var ettModeText0:String=""
+    var ettModeText1:String=""
+    var ettModeText2:String=""
+    var ettModeText3:String=""
     var cameraMode:Int!
     var speakerOnOff:Int!
     @IBOutlet weak var frontCameraLabel: UILabel!
@@ -128,13 +128,13 @@ class SetteiViewController: UIViewController {
     @IBAction func onEttModeSwitch(_ sender: UISegmentedControl) {
         ettMode=sender.selectedSegmentIndex
         if ettMode==0{
-            ettText.text=ettModeTxt0
+            ettText.text=ettModeText0
         }else if ettMode==1{
-            ettText.text=ettModeTxt1
+            ettText.text=ettModeText1
         }else if ettMode==2{
-            ettText.text=ettModeTxt2
+            ettText.text=ettModeText2
         }else if ettMode==3{
-            ettText.text=ettModeTxt3
+            ettText.text=ettModeText3
         }
         setUserDefaults()
     }
@@ -148,10 +148,10 @@ class SetteiViewController: UIViewController {
         UserDefaults.standard.set(screenBrightness, forKey: "screenBrightness")
         UserDefaults.standard.set(cameraMode,forKey: "cameraMode")
         UserDefaults.standard.set(speakerOnOff,forKey: "speakerOnOff")
-        UserDefaults.standard.set(ettModeTxt0, forKey: "ettModeText0")
-        UserDefaults.standard.set(ettModeTxt1, forKey: "ettModeText1")
-        UserDefaults.standard.set(ettModeTxt2, forKey: "ettModeText2")
-        UserDefaults.standard.set(ettModeTxt3, forKey: "ettModeText3")
+        UserDefaults.standard.set(ettModeText0, forKey: "ettModeText0")
+        UserDefaults.standard.set(ettModeText1, forKey: "ettModeText1")
+        UserDefaults.standard.set(ettModeText2, forKey: "ettModeText2")
+        UserDefaults.standard.set(ettModeText3, forKey: "ettModeText3")
     }
 
     @IBAction func onBrightnessSlider(_ sender: UISlider) {
@@ -213,13 +213,13 @@ class SetteiViewController: UIViewController {
     }
     func setettMode(){
         if ettMode == 0{
-            ettText.text! = ettModeTxt0//" pursuit(30s) horizontal"
+            ettText.text! = ettModeText0//" pursuit(30s) horizontal"
         }else if ettMode == 1{
-            ettText.text! = ettModeTxt1
+            ettText.text! = ettModeText1
         }else if ettMode == 2{
-            ettText.text! = ettModeTxt2// " saccade(30s) horizontal & vertical"
+            ettText.text! = ettModeText2// " saccade(30s) horizontal & vertical"
         }else{
-            ettText.text! = ettModeTxt3//" pursuit(20s)->saccade(20s)->random(20s)"
+            ettText.text! = ettModeText3//" pursuit(20s)->saccade(20s)->random(20s)"
         }
     }
 
@@ -242,10 +242,10 @@ class SetteiViewController: UIViewController {
         cameraMode=UserDefaults.standard.integer(forKey: "cameraMode")
         screenBrightness = camera.getUserDefaultFloat(str: "screenBrightness", ret: 1.0)
         ettMode = camera.getUserDefaultInt(str:"ettMode",ret:0)
-        ettModeTxt0=camera.getUserDefaultString(str: "ettModeText0", ret: "0")
-        ettModeTxt1=camera.getUserDefaultString(str: "ettModeText1", ret: "1")
-        ettModeTxt2=camera.getUserDefaultString(str: "ettModeText2", ret: "2")
-        ettModeTxt3=camera.getUserDefaultString(str: "ettModeText3", ret: "3")
+        ettModeText0=camera.getUserDefaultString(str: "ettModeText0", ret: "0")
+        ettModeText1=camera.getUserDefaultString(str: "ettModeText1", ret: "1")
+        ettModeText2=camera.getUserDefaultString(str: "ettModeText2", ret: "2")
+        ettModeText3=camera.getUserDefaultString(str: "ettModeText3", ret: "3")
 
         ettExplanationText.text="円形視標の動作の設定方法  a:b:c,....\n"
         ettExplanationText.text! += "a[視標の動き方(1-6)]:b[速さ(0-3)]:c[時間(秒)]\n"
@@ -266,20 +266,19 @@ class SetteiViewController: UIViewController {
     @IBAction func tapOnEttText(_ sender: Any) {
         print("tap")
         let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
-//        alert.textFields![0].text!="kiiii"
         let saveAction = UIAlertAction(title: "OK", style: .default) { [self] (action:UIAlertAction!) -> Void in
             // 入力したテキストをコンソールに表示
             let textField = alert.textFields![0] as UITextField
             let ettString:String = textField.text!
             if ettString.isAlphanumeric(){//} isOnly(structuredBy: "0123456789:,") == true
                 if ettMode==0{
-                    ettModeTxt0=ettString
+                    ettModeText0=ettString
                 }else if ettMode==1{
-                    ettModeTxt1=ettString
+                    ettModeText1=ettString
                 }else if ettMode==2{
-                    ettModeTxt2=ettString
+                    ettModeText2=ettString
                 }else{
-                    ettModeTxt3=ettString
+                    ettModeText3=ettString
                 }
                 setUserDefaults()
                 ettText.text=ettString
@@ -298,15 +297,15 @@ class SetteiViewController: UIViewController {
         }
         // UIAlertControllerにtextFieldを追加
         alert.addTextField { (textField:UITextField!) -> Void in
-            textField.keyboardType = UIKeyboardType.default//.numberPad
+            textField.keyboardType = UIKeyboardType.numbersAndPunctuation// default//.numberPad
             if self.ettMode==0{
-                textField.text=self.ettModeTxt0
+                textField.text=self.ettModeText0
             }else if self.ettMode==1{
-                textField.text=self.ettModeTxt1
+                textField.text=self.ettModeText1
             }else if self.ettMode==2{
-                textField.text=self.ettModeTxt2
+                textField.text=self.ettModeText2
             }else{
-                textField.text=self.ettModeTxt3
+                textField.text=self.ettModeText3
             }
         }
         alert.addAction(cancelAction)//この行と下の行の並びを変えるとCancelとOKの左右が入れ替わる。
@@ -314,7 +313,39 @@ class SetteiViewController: UIViewController {
         present(alert, animated: true, completion: nil)
         
     }
-    
+//    func getSetValueAlert(text:UILabel) {
+//        print("tap")
+//        let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+//        alert.textFields![0].text!=text.text!
+//        let saveAction = UIAlertAction(title: "OK", style: .default) { [self] (action:UIAlertAction!) -> Void in
+//            // 入力したテキストをコンソールに表示
+//            let textField = alert.textFields![0] as UITextField
+//            let ettString:String = textField.text!
+//            if ettString.isAlphanumeric(){//} isOnly(structuredBy: "0123456789:,") == true
+//                text.text=ettString
+//            }else{
+//                let dialog = UIAlertController(title: "", message: "0123456789,: だけです.", preferredStyle: .alert)
+//                //ボタンのタイトル
+//                dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//                //実際に表示させる
+//                self.present(dialog, animated: true, completion: nil)
+////                print(",:0123456789以外は受け付けません")
+//            }
+////            print("\(String(describing: textField.text))")
+//        }
+//        
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (action:UIAlertAction!) -> Void in
+//        }
+//        // UIAlertControllerにtextFieldを追加
+//        alert.addTextField { (textField:UITextField!) -> Void in
+//            textField.keyboardType = UIKeyboardType.default//.numberPad
+//            textField.text=text.text
+//        }
+//        alert.addAction(cancelAction)//この行と下の行の並びを変えるとCancelとOKの左右が入れ替わる。
+//        alert.addAction(saveAction)
+//        present(alert, animated: true, completion: nil)
+//        
+//    }
     func setScreen(){
         
         let top=CGFloat(UserDefaults.standard.float(forKey: "top"))

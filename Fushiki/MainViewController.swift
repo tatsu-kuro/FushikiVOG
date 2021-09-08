@@ -29,6 +29,15 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var ettMode:Int = 0
     var ettWidth:Int=500
     var targetMode:Int = 6
+    var speakerOnOff:Int = 0
+    var cameraMode:Int = 0
+    var screenBrightness:Float = 0
+    var ettModeText0:String = ""
+    var ettModeText1:String = ""
+    var ettModeText2:String = ""
+    var ettModeText3:String = ""
+
+    
     @IBOutlet weak var tableView: UITableView!
     
     var soundPlayer: AVAudioPlayer? = nil
@@ -285,10 +294,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             tableView.isHidden=false
         }
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    
+    func getUserDefaultAll(){
         okpSpeed = camera.getUserDefaultInt(str: "okpSpeed", ret:100)
         okpTime = camera.getUserDefaultInt(str: "okpTime", ret: 5)
         okpMode = camera.getUserDefaultInt(str: "okpMode", ret: 0)
@@ -298,9 +304,26 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         ettMode = camera.getUserDefaultInt(str: "ettMode", ret: 0)
         ettWidth = camera.getUserDefaultInt(str: "ettWidth", ret: 90)
         targetMode = camera.getUserDefaultInt(str: "targetMode", ret: 6)
+        speakerOnOff = camera.getUserDefaultInt(str: "speakerOnOff", ret: 0)
+        cameraMode = camera.getUserDefaultInt(str: "cameraMode", ret: 0)
+        screenBrightness = camera.getUserDefaultFloat(str: "screenBrightness", ret: 1)
+        ettModeText0 = camera.getUserDefaultString(str: "ettModeText0", ret: "1:2:12,3:2:12,5:2:12")
+        ettModeText1 = camera.getUserDefaultString(str: "ettModeText1", ret: "2:2:12,4:2:12")
+        ettModeText2 = camera.getUserDefaultString(str: "ettModeText2", ret: "6:2:20")
+        ettModeText3 = camera.getUserDefaultString(str: "ettModeText3", ret: "6:3:20")
+        let posRatio=camera.getUserDefaultInt(str:"posRatio",ret:300)
+        let veloRatio=camera.getUserDefaultInt(str:"veloRatio",ret:300)
+        let wakuLenth=camera.getUserDefaultInt(str:"wakuLength",ret:3)
+        let eyeBorder=camera.getUserDefaultInt(str:"eyeBorder",ret:10)
+        let faceMark=camera.getUserDefaultInt(str:"faceMark",ret:1)
+        let showRect=camera.getUserDefaultInt(str:"showRect",ret:0)
+     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        getUserDefaultAll()
         print("viewDidLoad")
-//        setRotate(alp:1)
-        sound(snd:"silence")
+        sound(snd:"silence")//リモコンの操作権を貰う
         UIApplication.shared.beginReceivingRemoteControlEvents()
         self.becomeFirstResponder()
     }
@@ -396,50 +419,50 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 //        }
     }
     */
-     func setRotate(alp:CGFloat){
-
-         let ww:CGFloat=view.bounds.width-leftPadding-rightPadding
-         let wh:CGFloat=view.bounds.height-topPadding-bottomPadding
-         let sp=ww/120//間隙
-         let bw=(ww-sp*10)/7//ボタン幅
-         let bh=bw*170/440
-         let by=wh-bh-sp+topPadding
+    func setRotate(alp:CGFloat){
+        
+        let ww:CGFloat=view.bounds.width-leftPadding-rightPadding
+        let wh:CGFloat=view.bounds.height-topPadding-bottomPadding
+        let sp=ww/120//間隙
+        let bw=(ww-sp*10)/7//ボタン幅
+        let bh=bw*170/440
+        let by=wh-bh-sp+topPadding
         tableView.frame=CGRect(x:leftPadding,y:0,width:ww,height: by)
-
-         button0.alpha=alp
-         button1.alpha=alp
-         button2.alpha=alp
-         button3.alpha=alp
-         button4.alpha=alp
-         helpButton.alpha=alp
-         setteiButton.alpha=alp
- //        let cameraMode = Int(iroiro.getUserDefaultInt(str: "cameraMode", ret: 0))
-  
-         camera.setButtonProperty(button0,x:sp*2+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
+        
+        button0.alpha=alp
+        button1.alpha=alp
+        button2.alpha=alp
+        button3.alpha=alp
+        button4.alpha=alp
+        helpButton.alpha=alp
+        setteiButton.alpha=alp
+        //        let cameraMode = Int(iroiro.getUserDefaultInt(str: "cameraMode", ret: 0))
+        
+        camera.setButtonProperty(button0,x:sp*2+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(button1,x:bw*1+sp*3+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
-         camera.setButtonProperty(button2,x:bw*2+sp*4+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
-         camera.setButtonProperty(button3,x:bw*3+sp*5+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
-         camera.setButtonProperty(button4,x:bw*4+sp*6+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
-         camera.setButtonProperty(helpButton,x:bw*5+sp*7+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
-         camera.setButtonProperty(setteiButton,x:bw*6+sp*8+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
-
-         let logoY = ww/13
-
-         if ww/2 > by - logoY{
-             titleImage.frame.origin.y = logoY + topPadding
-             titleImage.frame.size.width = (by - logoY)*2
-             titleImage.frame.size.height = by - logoY
-             titleImage.frame.origin.x = (ww - titleImage.frame.size.width)/2+leftPadding
-         }else{
-             titleImage.frame.origin.x = leftPadding
-             titleImage.frame.size.width = ww
-             titleImage.frame.origin.y = logoY + (by - logoY - ww/2)/2
-             titleImage.frame.size.height = ww/2
-         }
-         logoImage.frame = CGRect(x: leftPadding, y: topPadding, width:ww, height:wh/10)
-
-     }
-     
+        camera.setButtonProperty(button2,x:bw*2+sp*4+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(button3,x:bw*3+sp*5+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(button4,x:bw*4+sp*6+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(helpButton,x:bw*5+sp*7+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(setteiButton,x:bw*6+sp*8+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
+        
+        let logoY = ww/13
+        
+        if ww/2 > by - logoY{
+            titleImage.frame.origin.y = logoY + topPadding
+            titleImage.frame.size.width = (by - logoY)*2
+            titleImage.frame.size.height = by - logoY
+            titleImage.frame.origin.x = (ww - titleImage.frame.size.width)/2+leftPadding
+        }else{
+            titleImage.frame.origin.x = leftPadding
+            titleImage.frame.size.width = ww
+            titleImage.frame.origin.y = logoY + (by - logoY - ww/2)/2
+            titleImage.frame.size.height = ww/2
+        }
+        logoImage.frame = CGRect(x: leftPadding, y: topPadding, width:ww, height:wh/10)
+        
+    }
+    
     
     
     override func didReceiveMemoryWarning() {
@@ -448,7 +471,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     //nuber of cell
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return camera.videoURL.count
+        return camera.videoURL.count
     }
     //set data on cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath:IndexPath) -> UITableViewCell{
@@ -494,20 +517,14 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
     }
     @IBAction func unwindAction(segue: UIStoryboardSegue) {
-//        UIApplication.shared.isIdleTimerDisabled = false//スリープする
+        print("main-unwind")
+        UIApplication.shared.isIdleTimerDisabled = false//スリープする
         let cameraMode = Int(camera.getUserDefaultInt(str: "cameraMode", ret: 0))
         if cameraMode == 1{
             doModeButton.isHidden=false
         }else{
             doModeButton.isHidden=true
         }
-        
-//        if let vc = segue.source as? PlayViewController {
-//            if vc.timer != nil{
-//                vc.timer?.invalidate()
-//            }
-//            print("index:",vc.currentIndex)
-//        }
-     }
+    }
 }
 

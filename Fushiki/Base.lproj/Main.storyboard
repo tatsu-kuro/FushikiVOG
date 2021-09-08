@@ -832,7 +832,7 @@
                                 <rect key="frame" x="62" y="234" width="49" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
-                                    <action selector="onCheckRects:" destination="lpw-bn-NhA" eventType="valueChanged" id="eJ9-Qn-fYg"/>
+                                    <action selector="onShowRect:" destination="lpw-bn-NhA" eventType="valueChanged" id="eJ9-Qn-fYg"/>
                                 </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="show rects" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JYq-gJ-daQ">
@@ -902,13 +902,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="nU6-lH-hJ7"/>
                     <connections>
-                        <outlet property="checkRects" destination="GYL-dS-vAD" id="tgC-cf-DMa"/>
                         <outlet property="default1Button" destination="gSP-oB-McO" id="qhx-yb-sSJ"/>
                         <outlet property="default2Button" destination="YqS-zP-FRM" id="rMJ-ta-G8i"/>
                         <outlet property="default3Button" destination="EVR-bO-bWw" id="ZSw-ox-ex9"/>
                         <outlet property="default4Button" destination="7PF-TW-04E" id="4qd-6U-kBx"/>
                         <outlet property="exitButton" destination="Nlq-Qa-G8v" id="FEp-Ld-2r8"/>
-                        <outlet property="faceMark" destination="Xmb-Ie-gpm" id="2jw-kj-a9a"/>
+                        <outlet property="faceMarkSwitch" destination="Xmb-Ie-gpm" id="2jw-kj-a9a"/>
                         <outlet property="keyPadDownButton" destination="f2P-e7-0Ay" id="41k-C8-430"/>
                         <outlet property="para1" destination="Yjf-ek-oMJ" id="TsU-6V-0Lc"/>
                         <outlet property="para2" destination="NLJ-Id-a9c" id="yNP-7L-lxH"/>
@@ -920,6 +919,7 @@
                         <outlet property="paraText4" destination="Opw-Lc-peG" id="z0c-Lt-iJF"/>
                         <outlet property="paraText5" destination="h6x-uh-nhk" id="yvs-Xo-7Vx"/>
                         <outlet property="paraText6" destination="JYq-gJ-daQ" id="erC-KS-PDP"/>
+                        <outlet property="showRectSwitch" destination="GYL-dS-vAD" id="tgC-cf-DMa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bF2-jJ-AI1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
