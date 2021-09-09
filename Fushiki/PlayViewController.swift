@@ -228,6 +228,10 @@ class PlayViewController: UIViewController {
     }
  
     @IBAction func onPlayButton(_ sender: Any) {
+        if vogImageView?.isHidden == false{
+//            vogImageView?.isHidden=true
+            return
+        }
         if (videoPlayer.rate != 0) && (videoPlayer.error == nil) {//playing
             videoPlayer.pause()
             currFrameNumber=Int(seekBar.value*videoFps)
@@ -240,9 +244,9 @@ class PlayViewController: UIViewController {
             }
             videoPlayer.seek(to: CMTimeMakeWithSeconds(Float64(seekBar.value), preferredTimescale: Int32(NSEC_PER_SEC)))
             videoPlayer.play()
-            if vogImageView?.isHidden == false{
-                vogImageView?.isHidden=true
-            }
+//            if vogImageView?.isHidden == false{
+//                vogImageView?.isHidden=true
+//            }
         }
     }
   
@@ -514,10 +518,12 @@ class PlayViewController: UIViewController {
         if vogImageView!.isHidden == false{
             vogImageView?.isHidden=true
             seekBar.isHidden=false
+//            playButton.isEnabled=true
         }else{
             vogImageView?.isHidden=false
             view.bringSubviewToFront(vogImageView!)
             seekBar.isHidden=true
+//            playButton.isEnabled=false
         }
     }
   
@@ -706,6 +712,9 @@ class PlayViewController: UIViewController {
         }
         let move:CGPoint = sender.translation(in: self.view)
         let pos = sender.location(in: self.view)
+        if pos.y>seekBarY-10{
+            return
+        }
         if sender.state == .began {
             startEyeCenter=eyeCenter
             startFaceCenter=faceCenter
@@ -884,6 +893,7 @@ class PlayViewController: UIViewController {
         UserDefaults.standard.set(faceCenter.x, forKey: "faceCenterX")
         UserDefaults.standard.set(faceCenter.y, forKey: "faceCenterY")
      }
+    var seekBarY:CGFloat!
     override func viewDidLoad() {
         super.viewDidLoad()
         getUserDefaults()
@@ -907,7 +917,7 @@ class PlayViewController: UIViewController {
         let bw=(ww-sp*10)/7//ボタン幅
         let bh=bw*170/440
         let by = wh - bh - sp
-        let seeky = by - bh
+        seekBarY = by - bh
         autoreleasepool{
         videoDuration=Float(CMTimeGetSeconds(avAsset.duration))
         let playerItem: AVPlayerItem = AVPlayerItem(asset: avAsset)
@@ -928,7 +938,7 @@ class PlayViewController: UIViewController {
 //        view.layer.sublayers?.insert( <#CALayer#>, at: )
         print("layerConut:",view.layer.sublayers?.count)
         // Create Movie SeekBar
-        seekBar.frame = CGRect(x: left+sp*2, y:seeky, width: ww - 4*sp, height: bh)
+        seekBar.frame = CGRect(x: left+sp*2, y:seekBarY, width: ww - 4*sp, height: bh)
         seekBar.thumbTintColor=UIColor.orange
         seekBar.minimumValue = 0
         seekBar.maximumValue = videoDuration
