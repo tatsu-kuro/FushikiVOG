@@ -350,12 +350,13 @@ class PlayViewController: UIViewController {
         let veloR=CGFloat(veloRatio)
         let h=startingImage.size.height
         handlingDataNowFlag=true
+        let yd=(h-120)/5
         for i in start..<end {
                 let px = CGFloat(fpsXd * i)
-                let py1 = eyePosXFiltered[i] * posR + (h-240)/5
-                let py2 = eyeVeloXFiltered[i] * veloR + (h-240)*2/5
-                let py3 = eyePosYFiltered[i] * posR + (h-240)*3/5
-                let py4 = eyeVeloYFiltered[i] * veloR + (h-240)*4/5
+                let py1 = eyePosXFiltered[i] * posR + yd//(h-240)/5
+                let py2 = eyeVeloXFiltered[i] * veloR + yd*2//(h-240)*2/5
+                let py3 = eyePosYFiltered[i] * posR + yd*3//(h-240)*3/5
+                let py4 = eyeVeloYFiltered[i] * veloR + yd*4//(h-240)*4/5
                 let point1 = CGPoint(x: px, y: py1)
                 let point2 = CGPoint(x: px, y: py2)
                 let point3 = CGPoint(x: px, y: py3)
