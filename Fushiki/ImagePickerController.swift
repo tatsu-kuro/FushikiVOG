@@ -48,6 +48,7 @@ class ImagePickerController: UIViewController,MFMailComposeViewControllerDelegat
             print("unknown error")
         }
         self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     
@@ -127,6 +128,9 @@ class ImagePickerController: UIViewController,MFMailComposeViewControllerDelegat
     // called when cancel select image
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         // close picker modal
+        print("cancel")
+//        mailButton.isEnabled=false//cancel の時はmailbuttonは効かなくする
+        dismiss(animated: true, completion: nil)
         dismiss(animated: true, completion: nil)
     }
 }
