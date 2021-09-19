@@ -322,7 +322,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         getUserDefaultAll()
-        print("viewDidLoad")
+        print("MainViewDidLoad")
         sound(snd:"silence")//リモコンの操作権を貰う
         UIApplication.shared.beginReceivingRemoteControlEvents()
         self.becomeFirstResponder()

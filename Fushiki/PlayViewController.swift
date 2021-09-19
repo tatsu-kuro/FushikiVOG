@@ -254,7 +254,7 @@ class PlayViewController: UIViewController {
         killTimer()
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
         print("playview_exit")
-//        self.present(mainView, animated: false, completion: nil)
+        self.present(mainView, animated: false, completion: nil)//なくても戻るが、viewDidLoad通らない
     }
     var eyeCenter = CGPoint(x:300.0,y:100.0)
     var faceCenter = CGPoint(x:300.0,y:200.0)
@@ -597,15 +597,16 @@ class PlayViewController: UIViewController {
         //landscape right homeに固定すると、
         guard let sample = readerOutput.copyNextSampleBuffer() else{
             print("get sample error")
+//            onExitButton(0)
             return
         }
         let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample)!
         var ciImage:CIImage!
-        if videoFps<backCameraFps-10.0{//if frontCamera
+//        if videoFps<backCameraFps-10.0{//if frontCamera
             ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
-        }else{
-            ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
-        }
+//        }else{
+//            ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
+//        }
         //起動時表示が一巡？するまでは　slowImage.frame はちょっと違う値を示す
         
         let eyeRect=getRectFromCenter(center: eyeCenter, len: wakuLength)
@@ -773,17 +774,17 @@ class PlayViewController: UIViewController {
         dispWakus()
         showWakuImages()
         
-        zoomNum += 2
+        zoomNum += 3
         let zn=CGFloat(zoomNum)
         let w=view.bounds.width
         let h=view.bounds.height
-        if zoomNum == 3{
+        if zoomNum == 4{
             lastTapPoint = sender.location(in: self.view)
         }
         //            print("longpress",zn)
         let x0 = -lastTapPoint.x*zn + w/2
         let y0 = -lastTapPoint.y*zn + h/2
-        if zoomNum==9{
+        if zoomNum==10{
             zoomNum=1
             videoPlayerLayerRect=CGRect(x:0,y:0,width:0,height:0)
             
@@ -1217,11 +1218,11 @@ class PlayViewController: UIViewController {
         sample = readerOutput.copyNextSampleBuffer()
         let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample!)!
         var ciImage:CIImage!
-        if videoFps<backCameraFps-10{//cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
+//        if videoFps<backCameraFps-10{//cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
             ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
-        }else{
-            ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
-        }
+//        }else{
+//            ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
+//        }
         videoWidth=ciImage.extent.width
         videoHeight=ciImage.extent.height
         let eyeRect = resizeR2(eyeRectOnScreen, viewRect:getVideoRectOnScreen(), image:ciImage)
@@ -1288,12 +1289,12 @@ class PlayViewController: UIViewController {
                         eyeWithBorderRect.origin.x=0
                         eyeWithBorderRect.origin.y=0
                     }
-                    if videoFps<backCameraFps-10{//cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
+//                    if videoFps<backCameraFps-10{//cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
                         ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
-                    }else{
-                        ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
-                    }
-                    
+//                    }else{
+//                        ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
+//                    }
+//
                     eyeWithBorderCGImage = context.createCGImage(ciImage, from: eyeWithBorderRect)!
                     eyeWithBorderUIImage = UIImage.init(cgImage: eyeWithBorderCGImage)
                     
