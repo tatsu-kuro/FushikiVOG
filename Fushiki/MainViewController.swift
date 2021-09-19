@@ -307,7 +307,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         speakerOnOff = camera.getUserDefaultInt(str: "speakerOnOff", ret: 0)
         cameraMode = camera.getUserDefaultInt(str: "cameraMode", ret: 0)
         screenBrightness = camera.getUserDefaultFloat(str: "screenBrightness", ret: 1)
-        ettModeText0 = camera.getUserDefaultString(str: "ettModeText0", ret: "1:2:12,3:2:12,5:2:12")
+        ettModeText0 = camera.getUserDefaultString(str: "ettModeText0", ret: "1:0:2,1:2:12,3:2:12,5:2:12")
         ettModeText1 = camera.getUserDefaultString(str: "ettModeText1", ret: "2:2:12,4:2:12")
         ettModeText2 = camera.getUserDefaultString(str: "ettModeText2", ret: "6:2:20")
         ettModeText3 = camera.getUserDefaultString(str: "ettModeText3", ret: "6:3:20")
