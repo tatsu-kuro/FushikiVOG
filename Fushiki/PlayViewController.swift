@@ -716,7 +716,7 @@ class PlayViewController: UIViewController {
         }
         let move:CGPoint = sender.translation(in: self.view)
         let pos = sender.location(in: self.view)
-        if pos.y>seekBarY-10{
+        if pos.y>seekBarY{
             return
         }
         if sender.state == .began {
@@ -768,6 +768,10 @@ class PlayViewController: UIViewController {
         if vogImageView?.isHidden==false{
             return
         }
+        if sender.location(in: view).y>buttonsY{
+            return
+        }
+        
         if eyeORface == 0{//eye
             eyeORface=1
         }else{
@@ -898,6 +902,7 @@ class PlayViewController: UIViewController {
         UserDefaults.standard.set(faceCenter.y, forKey: "faceCenterY")
      }
     var seekBarY:CGFloat!
+    var buttonsY:CGFloat!
     override func viewDidLoad() {
         super.viewDidLoad()
         getUserDefaults()
@@ -922,6 +927,7 @@ class PlayViewController: UIViewController {
         let bh=bw*170/440
         let by = wh - bh - sp
         seekBarY = by - bh
+        buttonsY = by
         autoreleasepool{
         videoDuration=Float(CMTimeGetSeconds(avAsset.duration))
         let playerItem: AVPlayerItem = AVPlayerItem(asset: avAsset)
