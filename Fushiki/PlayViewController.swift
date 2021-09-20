@@ -26,6 +26,7 @@ extension UIImage {
     }
 }
 class PlayViewController: UIViewController {
+    var pleaseReturnFlag=false
     var cameraMode:Int!
     let album = CameraAlbumEtc()//name:"Fushiki")
     let openCV = OpenCVWrapper()
@@ -784,18 +785,30 @@ class PlayViewController: UIViewController {
         let zn=CGFloat(zoomNum)
         let w=view.bounds.width
         let h=view.bounds.height
-        if zoomNum == 4{
-            lastTapPoint = sender.location(in: self.view)
+        var x0:CGFloat=0
+        var y0:CGFloat=0
+        if zoomNum == 4{//試したら上手くいったが、考えたわけではないぞ？？？
+            lastTapPoint = sender.location(in: view)
+            x0 = -lastTapPoint.x*zn + w/2
+            y0 = -lastTapPoint.y*zn + h/2
+            videoPlayerLayerRect=CGRect(x:x0,y:y0,width:w*zn,height:h*zn)
+            print(videoPlayerLayerRect)
+        }else if zoomNum == 7{//試したら上手くいったが、考えたわけではないぞ？？？
+            let tapPoint = sender.location(in: view)
+            let x1 = -(lastTapPoint.x - (w/2 - tapPoint.x)/4)*zn + w/2
+            let y1 = -(lastTapPoint.y - (h/2 - tapPoint.y)/4)*zn + h/2
+            videoPlayerLayerRect=CGRect(x:x1,y:y1,width:w*zn,height:h*zn)
         }
         //            print("longpress",zn)
-        let x0 = -lastTapPoint.x*zn + w/2
-        let y0 = -lastTapPoint.y*zn + h/2
-        if zoomNum==10{
+          if zoomNum==10{
             zoomNum=1
             videoPlayerLayerRect=CGRect(x:0,y:0,width:0,height:0)
-            
-        }else{
-            videoPlayerLayerRect=CGRect(x:x0,y:y0,width:w*zn,height:h*zn)
+            pleaseReturnFlag=true
+//            performSegue(withIdentifier: "fromPlay", sender: self)
+//            print("zoomNum10")
+//            onExitButton(0)
+//        }else{
+//            videoPlayerLayerRect=CGRect(x:x0,y:y0,width:w*zn,height:h*zn)
         }
         viewDidLoad()
   /*      print("doubletap")

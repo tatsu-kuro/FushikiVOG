@@ -658,7 +658,7 @@
                                 <state key="normal" title="Exit"/>
                                 <connections>
                                     <action selector="onExitButton:" destination="qHa-wQ-wFQ" eventType="touchUpInside" id="W9o-Vu-ALP"/>
-                                    <segue destination="Ccw-B3-5ju" kind="unwind" unwindAction="unwindActionWithSegue:" id="sgX-R4-NqE"/>
+                                    <segue destination="Ccw-B3-5ju" kind="unwind" identifier="fromPlay" unwindAction="unwindActionWithSegue:" id="sgX-R4-NqE"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="spatial" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fs4-ea-mju">

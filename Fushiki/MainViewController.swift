@@ -520,6 +520,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBAction func unwindAction(segue: UIStoryboardSegue) {
         print("main-unwind")
         UIApplication.shared.isIdleTimerDisabled = false//スリープする.監視する
+        
 //        let cameraMode = Int(camera.getUserDefaultInt(str: "cameraMode", ret: 0))
 //        if cameraMode == 1{
 //            doModeButton.isHidden=false
