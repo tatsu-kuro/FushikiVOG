@@ -251,10 +251,12 @@ class PlayViewController: UIViewController {
     }
   
     @IBAction func onExitButton(_ sender: Any) {
+        //exitButtonはunWindに紐づいている。
         killTimer()
-        let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
         print("playview_exit")
-        self.present(mainView, animated: false, completion: nil)//なくても戻るが、viewDidLoad通らない
+    //以下ではmainViewのviewDidLoadへ戻る。listControllもリセットされる。
+//                let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
+        //    self.present(mainView, animated: false, completion: nil)
     }
     var eyeCenter = CGPoint(x:300.0,y:100.0)
     var faceCenter = CGPoint(x:300.0,y:200.0)
