@@ -36,7 +36,7 @@ class PlayViewController: UIViewController {
     var startTime=CFAbsoluteTimeGetCurrent()
     var fpsXd:Int=2//240/videoFPS 1dataのピクセル数
     var videoPlayer: AVPlayer!
-    var videoPlayerLayerRect:CGRect = CGRect(x:0,y:0,width: 0,height: 0)
+//    var videoPlayerLayerRect:CGRect = CGRect(x:0,y:0,width: 0,height: 0)
     var videoDuration:Float=0
     var screenSize:CGSize!
     var currFrameNumber:Int=0
@@ -780,7 +780,7 @@ class PlayViewController: UIViewController {
         }
         dispWakus()
         showWakuImages()
-        
+        var videoPlayerLayerRect:CGRect!
         zoomNum += 3
         let zn=CGFloat(zoomNum)
         let w=view.bounds.width
@@ -792,60 +792,23 @@ class PlayViewController: UIViewController {
             x0 = -lastTapPoint.x*zn + w/2
             y0 = -lastTapPoint.y*zn + h/2
             videoPlayerLayerRect=CGRect(x:x0,y:y0,width:w*zn,height:h*zn)
-            print(videoPlayerLayerRect)
+//            print(videoPlayerLayerRect)<#default value#>)
         }else if zoomNum == 7{//試したら上手くいったが、考えたわけではないぞ？？？
             let tapPoint = sender.location(in: view)
             let x1 = -(lastTapPoint.x - (w/2 - tapPoint.x)/4)*zn + w/2
             let y1 = -(lastTapPoint.y - (h/2 - tapPoint.y)/4)*zn + h/2
             videoPlayerLayerRect=CGRect(x:x1,y:y1,width:w*zn,height:h*zn)
         }
-        //            print("longpress",zn)
           if zoomNum==10{
             zoomNum=1
-            videoPlayerLayerRect=view.bounds// CGRect(x:0,y:0,width:0,height:0)
+            videoPlayerLayerRect=view.bounds
             pleaseReturnFlag=true
-//            performSegue(withIdentifier: "fromPlay", sender: self)
-//            print("zoomNum10")
-//            onExitButton(0)
-//        }else{
-//            videoPlayerLayerRect=CGRect(x:x0,y:y0,width:w*zn,height:h*zn)
         }
         resizeVideoPlayer(rect: videoPlayerLayerRect)
         if zoomNum==1{
             dispWakus()
             showWakuImages()
         }
-//        viewDidLoad()
-  /*      print("doubletap")
-        if eyeORface == 0{//eye
-            eyeORface=1
-        }else{
-            eyeORface=0
-        }
-        dispWakus()
-        showWakuImages()
-        
-        zoomNum += 2
-        let zn=CGFloat(zoomNum)
-        let w=view.bounds.width
-        let h=view.bounds.height
-        if zoomNum == 3{
-            lastTapPoint = sender.location(in: self.view)
-        }
-        //            print("longpress",zn)
-        let x0 = -lastTapPoint.x*zn + w/2
-        let y0 = -lastTapPoint.y*zn + h/2
-        if zoomNum==9{
-            zoomNum=1
-            videoPlayerLayerRect=CGRect(x:0,y:0,width:0,height:0)
-            
-        }else{
-            videoPlayerLayerRect=CGRect(x:x0,y:y0,width:w*zn,height:h*zn)
-        }
-//        let layerCnt=view.layer.sublayers!.count//?.remove(at: <#T##Int#>)?.last=videoPlayerLayer
-//        view.layer.sublayers?.remove(at: layerCnt-1)
-        viewDidLoad()
-*/
     }
     @IBAction func singleTapGesture(_ sender: UITapGestureRecognizer) {
         if vogImageView?.isHidden==false{
@@ -946,7 +909,7 @@ class PlayViewController: UIViewController {
         let by = wh - bh - sp
         seekBarY = by - bh
         buttonsY = by
-        autoreleasepool{
+//        autoreleasepool{
         videoDuration=Float(CMTimeGetSeconds(avAsset.duration))
         let playerItem: AVPlayerItem = AVPlayerItem(asset: avAsset)
         // Create AVPlayer
@@ -956,9 +919,9 @@ class PlayViewController: UIViewController {
         videoPlayerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
         videoPlayerLayer.player = videoPlayer
 //        if videoPlayerLayerRect.width==0 {
-            videoPlayerLayerRect=view.bounds
+//            videoPlayerLayerRect=view.bounds
 //        }
-        videoPlayerLayer.frame = videoPlayerLayerRect
+        videoPlayerLayer.frame = view.bounds//videoPlayerLayerRect
         print("layerConut:",view.layer.sublayers?.count)
      
         view.layer.addSublayer(videoPlayerLayer)
@@ -1026,37 +989,44 @@ class PlayViewController: UIViewController {
         vogBoxYmin=0//wh/2-vogBoxHeight/2
         vogBoxYcenter=wh/2
         fpsXd=Int((240.0/videoFps).rounded())
+//    }
     }
-    }
+    var lastVideoLayerCount:Int=0
+    var lastVideoPlayerLayer = AVPlayerLayer()
     func resizeVideoPlayer(rect:CGRect){
-//        videoPlayer = AVPlayer(playerItem: playerItem)
-        // Add AVPlayer
         let videoPlayerLayer = AVPlayerLayer()
         videoPlayerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
         videoPlayerLayer.player = videoPlayer
-//        if videoPlayerLayerRect.width==0 {
-//            videoPlayerLayerRect=view.bounds
-//        }
         videoPlayerLayer.frame = rect
-//        view.layer.sublayers?.remove(at: 15)
-//        view.layer.insertSublayer(videoPlayerLayer, at: 14)
-        view.layer.addSublayer(videoPlayerLayer)
-        view.bringSubviewToFront(exitButton)
-        view.bringSubviewToFront(mailButton)
-        view.bringSubviewToFront(saveButton)
-        view.bringSubviewToFront(waveButton)
-        view.bringSubviewToFront(calcButton)
-        view.bringSubviewToFront(playButton)
-        view.bringSubviewToFront(setteiButton)
-        view.bringSubviewToFront(seekBar)
-        view.bringSubviewToFront(currTimeLabel)
-        view.bringSubviewToFront(fpsLabel)
- //        view.layer.insertSublayer(videoPlayerLayer, at: 16)
-        print("layerConut_resizeVideo:",view.layer.sublayers?.count)
-     
- //        view.layer.sublayers?.remove(at: )
-//        view.layer.sublayers?.insert( <#CALayer#>, at: )
-
+        if lastArraycount != 0{
+            view.layer.replaceSublayer(lastVideoPlayerLayer, with: videoPlayerLayer)
+//            lastVideoPlayerLayer.frame=CGRect(x:0,y:0,width: 0,height: 0)
+        }else{
+            view.layer.addSublayer(videoPlayerLayer)
+            view.bringSubviewToFront(exitButton)
+            view.bringSubviewToFront(mailButton)
+            view.bringSubviewToFront(saveButton)
+            view.bringSubviewToFront(waveButton)
+            view.bringSubviewToFront(calcButton)
+            view.bringSubviewToFront(playButton)
+            view.bringSubviewToFront(setteiButton)
+            view.bringSubviewToFront(seekBar)
+            view.bringSubviewToFront(currTimeLabel)
+            view.bringSubviewToFront(fpsLabel)
+        }
+        lastVideoPlayerLayer=videoPlayerLayer
+//        view.bringSubviewToFront(exitButton)
+//        view.bringSubviewToFront(mailButton)
+//        view.bringSubviewToFront(saveButton)
+//        view.bringSubviewToFront(waveButton)
+//        view.bringSubviewToFront(calcButton)
+//        view.bringSubviewToFront(playButton)
+//        view.bringSubviewToFront(setteiButton)
+//        view.bringSubviewToFront(seekBar)
+//        view.bringSubviewToFront(currTimeLabel)
+//        view.bringSubviewToFront(fpsLabel)
+        print("layerConut_resizeVideo:",view.layer.sublayers!.count)
+        lastVideoLayerCount=view.layer.sublayers!.count
     }
     func setButtonProperty(button:UIButton,color:UIColor){
         button.layer.borderColor = UIColor.black.cgColor
