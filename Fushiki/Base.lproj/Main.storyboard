@@ -84,7 +84,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="default"/>
                                 <connections>
-                                    <action selector="defaultAct:" destination="gOS-fU-nK5" eventType="touchUpInside" id="jLa-bx-HE4"/>
+                                    <action selector="onDefaultButton:" destination="gOS-fU-nK5" eventType="touchUpInside" id="jLa-bx-HE4"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vji-3f-Tqg">

@@ -171,12 +171,13 @@ class SetteiViewController: UIViewController {
         setUserDefaults()
     }
     
-    @IBAction func defaultAct(_ sender: Any) {
+    @IBAction func onDefaultButton(_ sender: Any) {
         okpMode=0
         okpTime=5
         oknMode=0
         oknTime=60
          ettMode=0
+        UserDefaults.standard.set(0, forKey: "zoomValue")
         setControlState()
         dispTexts()
     }
