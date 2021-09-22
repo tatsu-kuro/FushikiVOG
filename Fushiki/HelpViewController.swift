@@ -104,14 +104,21 @@ class HelpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let camera = CameraAlbumEtc()//name:"Fushiki")
-        let ww:CGFloat=view.bounds.width
-        let wh:CGFloat=view.bounds.height
+        
+        let top=CGFloat(UserDefaults.standard.float(forKey: "top"))
+        let bottom=CGFloat(UserDefaults.standard.float(forKey: "bottom"))
+        let left=CGFloat(UserDefaults.standard.float(forKey: "left"))
+        let right=CGFloat(UserDefaults.standard.float(forKey: "right"))
+    
+        let ww=view.bounds.width-(left+right)
+        let wh=view.bounds.height-(top+bottom)
         let sp=ww/120//間隙
         let bw=(ww-sp*10)/7//ボタン幅
         let bh=bw*170/440
         let by=wh-bh-sp
-        camera.setButtonProperty(exitButton,x:bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
-        camera.setButtonProperty(nextButton,x:2*sp,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(exitButton,x:left+bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(nextButton,x:left+2*sp,y:by,w:bw,h:bh,UIColor.darkGray)
+        helpView.frame=CGRect(x:left+2*sp,y:2*sp,width: ww-4*sp,height: wh-bh-3*sp)
         if UIApplication.shared.isIdleTimerDisabled == true{
             UIApplication.shared.isIdleTimerDisabled = false//監視する
         }

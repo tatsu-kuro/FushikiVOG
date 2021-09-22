@@ -373,8 +373,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="etthelp" translatesAutoresizingMaskIntoConstraints="NO" id="VTz-6I-kn3">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="etthelp" translatesAutoresizingMaskIntoConstraints="NO" id="VTz-6I-kn3">
                                 <rect key="frame" x="44" y="0.0" width="808" height="393"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <gestureRecognizers/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qIw-KK-ztU">
@@ -401,12 +402,6 @@
                         <viewLayoutGuide key="safeArea" id="CfK-RG-r1l"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
-                        <constraints>
-                            <constraint firstItem="VTz-6I-kn3" firstAttribute="top" secondItem="CfK-RG-r1l" secondAttribute="top" id="KMm-GH-B25"/>
-                            <constraint firstItem="VTz-6I-kn3" firstAttribute="bottom" secondItem="CfK-RG-r1l" secondAttribute="bottom" id="Zdr-7U-PQw"/>
-                            <constraint firstItem="VTz-6I-kn3" firstAttribute="leading" secondItem="CfK-RG-r1l" secondAttribute="leading" id="h77-Yd-gyI"/>
-                            <constraint firstItem="VTz-6I-kn3" firstAttribute="trailing" secondItem="CfK-RG-r1l" secondAttribute="trailing" id="ilo-LK-tGj"/>
-                        </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="zSj-ag-bUT" appends="YES" id="2JK-90-fZn"/>
                         </connections>
