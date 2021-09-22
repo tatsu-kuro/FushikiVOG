@@ -418,7 +418,7 @@ class SetteiViewController: UIViewController {
         speakerImage.frame = CGRect(x:x0+50,   y: b8y ,width: 30,height:30)
         speakerImage.isHidden=true//ない方がスッキリか？
         speakerText.frame = CGRect(x:x1,   y: b8y ,width: bw*5,height:bh)
-        cameraButton.frame = CGRect(x:x1-bw/4-sp,y:b7y+2,width:bw/4,height: bh)
+        cameraButton.frame = CGRect(x:x1-bw/4-2*sp,y:b7y+2,width:bw/4,height: bh)
 //        camera.setButtonProperty(cameraButton,x:x1-bw/4-sp,y:b7y+2,w:bw/4,h:bh,UIColor.red)
         cameraButton.layer.borderColor = UIColor.red.cgColor
         cameraButton.layer.borderWidth = 1.0
