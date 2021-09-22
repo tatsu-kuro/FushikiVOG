@@ -172,12 +172,15 @@ class SetteiViewController: UIViewController {
     }
     
     @IBAction func onDefaultButton(_ sender: Any) {
+        print("ondefault")
         okpMode=0
         okpTime=5
         oknMode=0
         oknTime=60
-         ettMode=0
+        ettMode=0
         UserDefaults.standard.set(0, forKey: "zoomValue")
+        ettModeText0 = "1:0:2,1:2:12,3:2:12,5:2:12"
+        setUserDefaults()
         setControlState()
         dispTexts()
     }
