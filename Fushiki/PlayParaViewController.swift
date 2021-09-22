@@ -55,6 +55,7 @@ class PlayParaViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+//        print("viewdidload")
 //        paraInt1.delegate = self
         posRatio=UserDefaults.standard.integer(forKey:"posRatio")
         veloRatio=UserDefaults.standard.integer(forKey:"veloRatio")
@@ -90,12 +91,13 @@ class PlayParaViewController: UIViewController {
     @IBAction func onDefault1Button(_ sender: Any) {
 //        posRatio=100
 //        veloRatio=100
+//        print("button1")
         if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
             wakuLength = 6
-            eyeBorder = 20
+            eyeBorder = 10
         }else{//iphone
             wakuLength = 3
-            eyeBorder = 10
+            eyeBorder = 5
         }
 //        faceMark=1
 //        showRect=1
@@ -106,10 +108,10 @@ class PlayParaViewController: UIViewController {
 //        veloRatio=100
         if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
             wakuLength = 10
-            eyeBorder = 24
+            eyeBorder = 16
         }else{//iphone
             wakuLength = 5
-            eyeBorder = 12
+            eyeBorder = 8
         }
 //        faceMark=1
 //        showRect=1
@@ -119,11 +121,11 @@ class PlayParaViewController: UIViewController {
 //        posRatio=100
 //        veloRatio=100
         if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
-            wakuLength = 15
-            eyeBorder = 30
+            wakuLength = 14
+            eyeBorder = 20
         }else{//iphone
-            wakuLength = 8
-            eyeBorder = 15
+            wakuLength = 7
+            eyeBorder = 10
         }
 //        faceMark=1
 //        showRect=1
@@ -133,11 +135,11 @@ class PlayParaViewController: UIViewController {
 //        posRatio=100
 //        veloRatio=100
         if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
-            wakuLength = 20
-            eyeBorder = 40
+            wakuLength = 18
+            eyeBorder = 24
         }else{//iphone
-            wakuLength = 10
-            eyeBorder = 20
+            wakuLength = 9
+            eyeBorder = 12
         }
 //        faceMark=1
 //        showRect=1

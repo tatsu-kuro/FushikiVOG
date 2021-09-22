@@ -314,7 +314,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let posRatio=camera.getUserDefaultInt(str:"posRatio",ret:300)
         let veloRatio=camera.getUserDefaultInt(str:"veloRatio",ret:300)
         let wakuLenth=camera.getUserDefaultInt(str:"wakuLength",ret:3)
-        let eyeBorder=camera.getUserDefaultInt(str:"eyeBorder",ret:10)
+        let eyeBorder=camera.getUserDefaultInt(str:"eyeBorder",ret:5)
         let faceMark=camera.getUserDefaultInt(str:"faceMark",ret:1)
         let showRect=camera.getUserDefaultInt(str:"showRect",ret:0)
      }

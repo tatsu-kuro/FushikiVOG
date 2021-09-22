@@ -373,7 +373,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="etthelp" translatesAutoresizingMaskIntoConstraints="NO" id="VTz-6I-kn3">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="etthelp" translatesAutoresizingMaskIntoConstraints="NO" id="VTz-6I-kn3">
                                 <rect key="frame" x="44" y="0.0" width="808" height="393"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <gestureRecognizers/>
@@ -1278,10 +1278,10 @@
     <resources>
         <image name="camera" catalog="system" width="128" height="94"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
-        <image name="etthelp" width="1334" height="750"/>
+        <image name="etthelp" width="1301" height="623"/>
         <image name="eye" width="212" height="212"/>
         <image name="face" width="212" height="212"/>
-        <image name="fushiki_e" width="1168" height="577"/>
+        <image name="fushiki_e" width="1021" height="445"/>
         <image name="logomejiro" width="1300" height="100"/>
         <image name="speaker.wave.2.circle" catalog="system" width="128" height="121"/>
         <systemColor name="opaqueSeparatorColor">
