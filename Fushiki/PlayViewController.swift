@@ -884,13 +884,12 @@ class PlayViewController: UIViewController {
      }
     var seekBarY:CGFloat!
     var buttonsY:CGFloat!
+    var lastVideoPlayerLayer = AVPlayerLayer()
     override func viewDidLoad() {
         super.viewDidLoad()
         getUserDefaults()
 //        cameraButton.selectedSegmentIndex = cameraMode
         //setteiしてなければ、以下
-        
-        
         let top=CGFloat(UserDefaults.standard.float(forKey: "top"))
         let bottom=CGFloat( UserDefaults.standard.float(forKey: "bottom"))
         let left=CGFloat( UserDefaults.standard.float(forKey: "left"))
@@ -909,7 +908,6 @@ class PlayViewController: UIViewController {
         let by = wh - bh - sp
         seekBarY = by - bh
         buttonsY = by
-//        autoreleasepool{
         videoDuration=Float(CMTimeGetSeconds(avAsset.duration))
         let playerItem: AVPlayerItem = AVPlayerItem(asset: avAsset)
         // Create AVPlayer
@@ -918,16 +916,10 @@ class PlayViewController: UIViewController {
         let videoPlayerLayer = AVPlayerLayer()
         videoPlayerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
         videoPlayerLayer.player = videoPlayer
-//        if videoPlayerLayerRect.width==0 {
-//            videoPlayerLayerRect=view.bounds
-//        }
         videoPlayerLayer.frame = view.bounds//videoPlayerLayerRect
-        print("layerConut:",view.layer.sublayers?.count)
-     
         view.layer.addSublayer(videoPlayerLayer)
-//        view.layer.sublayers?.remove(at: )
-//        view.layer.sublayers?.insert( <#CALayer#>, at: )
-        print("layerConut_videoPlayer:",view.layer.sublayers?.count)
+        lastVideoPlayerLayer=videoPlayerLayer
+//        print("layerConut_videoPlayer:",view.layer.sublayers?.count)
         // Create Movie SeekBar
         seekBar.frame = CGRect(x: left+sp*2, y:seekBarY, width: ww - 4*sp, height: bh)
         seekBar.thumbTintColor=UIColor.orange
@@ -947,9 +939,6 @@ class PlayViewController: UIViewController {
             let value = Float(self.seekBar.maximumValue - self.seekBar.minimumValue) * Float(time) / Float(duration) + Float(self.seekBar.minimumValue)
             self.seekBar.value = value
         })
-//        currTimeLabel.frame = CGRect(x:left+sp*2, y: 0, width: bw*1.2, height: bh*0.6)
-//        currTimeLabel!.font=UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .medium)
-//        view.bringSubviewToFront(currTimeLabel)
         // Create Movie Start Button
         mailButton.frame = CGRect(x:left+sp*2+bw*0,y:by,width:bw,height:bh)
         setButtonProperty(button: mailButton, color: UIColor.darkGray)
@@ -970,7 +959,7 @@ class PlayViewController: UIViewController {
         view.bringSubviewToFront(setteiButton)
         album.setButtonProperty(exitButton,x: left+sp*8+bw*6,y:by, w:bw,h:bh,UIColor.darkGray)
         view.bringSubviewToFront(exitButton)
-        print("layerConut:",view.layer.sublayers?.count)
+//        print("layerConut:",view.layer.sublayers?.count)
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         videoSize=resolutionSizeOfVideo(url:videoURL!)
         screenSize=view.bounds.size
@@ -989,44 +978,26 @@ class PlayViewController: UIViewController {
         vogBoxYmin=0//wh/2-vogBoxHeight/2
         vogBoxYcenter=wh/2
         fpsXd=Int((240.0/videoFps).rounded())
-//    }
     }
-    var lastVideoLayerCount:Int=0
-    var lastVideoPlayerLayer = AVPlayerLayer()
     func resizeVideoPlayer(rect:CGRect){
         let videoPlayerLayer = AVPlayerLayer()
         videoPlayerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
         videoPlayerLayer.player = videoPlayer
         videoPlayerLayer.frame = rect
-        if lastArraycount != 0{
-            view.layer.replaceSublayer(lastVideoPlayerLayer, with: videoPlayerLayer)
-//            lastVideoPlayerLayer.frame=CGRect(x:0,y:0,width: 0,height: 0)
-        }else{
-            view.layer.addSublayer(videoPlayerLayer)
-            view.bringSubviewToFront(exitButton)
-            view.bringSubviewToFront(mailButton)
-            view.bringSubviewToFront(saveButton)
-            view.bringSubviewToFront(waveButton)
-            view.bringSubviewToFront(calcButton)
-            view.bringSubviewToFront(playButton)
-            view.bringSubviewToFront(setteiButton)
-            view.bringSubviewToFront(seekBar)
-            view.bringSubviewToFront(currTimeLabel)
-            view.bringSubviewToFront(fpsLabel)
-        }
+        view.layer.replaceSublayer(lastVideoPlayerLayer, with: videoPlayerLayer)
+//            view.layer.addSublayer(videoPlayerLayer)
+//            view.bringSubviewToFront(exitButton)
+//            view.bringSubviewToFront(mailButton)
+//            view.bringSubviewToFront(saveButton)
+//            view.bringSubviewToFront(waveButton)
+//            view.bringSubviewToFront(calcButton)
+//            view.bringSubviewToFront(playButton)
+//            view.bringSubviewToFront(setteiButton)
+//            view.bringSubviewToFront(seekBar)
+//            view.bringSubviewToFront(currTimeLabel)
+//            view.bringSubviewToFront(fpsLabel)
         lastVideoPlayerLayer=videoPlayerLayer
-//        view.bringSubviewToFront(exitButton)
-//        view.bringSubviewToFront(mailButton)
-//        view.bringSubviewToFront(saveButton)
-//        view.bringSubviewToFront(waveButton)
-//        view.bringSubviewToFront(calcButton)
-//        view.bringSubviewToFront(playButton)
-//        view.bringSubviewToFront(setteiButton)
-//        view.bringSubviewToFront(seekBar)
-//        view.bringSubviewToFront(currTimeLabel)
-//        view.bringSubviewToFront(fpsLabel)
         print("layerConut_resizeVideo:",view.layer.sublayers!.count)
-        lastVideoLayerCount=view.layer.sublayers!.count
     }
     func setButtonProperty(button:UIButton,color:UIColor){
         button.layer.borderColor = UIColor.black.cgColor
