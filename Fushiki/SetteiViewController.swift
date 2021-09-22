@@ -43,15 +43,25 @@ class SetteiViewController: UIViewController {
         }
         UserDefaults.standard.set(speakerOnOff, forKey: "speakerOnOff")
     }
+    func setCameraMode(){
+        if cameraMode==0 {
+           frontCameraLabel.text="Adjust the zoom of the front camera"
+        }else{
+           cameraMode=2
+           frontCameraLabel.text="Record with the front camera"
+        }
+       dispTexts()
+       UserDefaults.standard.set(cameraMode, forKey: "cameraMode")
+
+    }
     @IBOutlet weak var speakerSwitch: UISwitch!
     @IBAction func onFrontCameraSwitch(_ sender: UISwitch) {
          if sender.isOn==true{
            cameraMode=0
-        }else{
+         }else{
             cameraMode=2
-        }
-        dispTexts()
-        UserDefaults.standard.set(cameraMode, forKey: "cameraMode")
+         }
+        setCameraMode()
     }
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var okpSwitch: UISegmentedControl!
@@ -182,6 +192,7 @@ class SetteiViewController: UIViewController {
         }else{//don't use camera
             frontCameraSwitch.isOn=false
         }
+        setCameraMode()
         if speakerOnOff==0{//front camera
             speakerSwitch.isOn=false
         }else{//don't use camera
@@ -228,6 +239,7 @@ class SetteiViewController: UIViewController {
         setOkpMode()
         setOknMode()
         setettMode()
+        
         if cameraMode==0{
             cameraButton.isHidden=false
         }else{
@@ -400,8 +412,14 @@ class SetteiViewController: UIViewController {
         frontCameraLabel.frame = CGRect(x:x1,y:b7y+2,width:bw*5,height:bh)
         speakerSwitch.frame = CGRect(x:x0,   y: b8y ,width: bw*5,height:bh)
         speakerImage.frame = CGRect(x:x0+50,   y: b8y ,width: 30,height:30)
+        speakerImage.isHidden=true//ない方がスッキリか？
         speakerText.frame = CGRect(x:x1,   y: b8y ,width: bw*5,height:bh)
-        cameraButton.frame = CGRect(x:(x0+x1)/2,y:b7y+2,width:30,height: 25)
+        cameraButton.frame = CGRect(x:x1-bw/4-sp,y:b7y+2,width:bw/4,height: bh)
+//        camera.setButtonProperty(cameraButton,x:x1-bw/4-sp,y:b7y+2,w:bw/4,h:bh,UIColor.red)
+        cameraButton.layer.borderColor = UIColor.red.cgColor
+        cameraButton.layer.borderWidth = 1.0
+        cameraButton.layer.cornerRadius = 5
+
         sp=ww/120//間隙
         bw=(ww-sp*10)/7//ボタン幅
         bh=bw*170/440
