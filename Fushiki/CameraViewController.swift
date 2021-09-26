@@ -117,10 +117,7 @@ class CameraViewController: UIViewController {
         let bw=(ww-sp*10)/7//ボタン幅
         let bh=bw*170/440
         let by=wh-bh-sp
-//        let cameraMode = Int(camera.getUserDefaultInt(str: "cameraMode", ret: 0))
         camera.setButtonProperty(exitButton,x:left+bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
-
-//        camera.setButtonProperty(exitButton,x:bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
         fpsButton.isHidden=true
         camera.setLabelProperty( fpsLabel,x:left+sp*2,y:by,w:bw*2,h:bh,UIColor.white)
         camera.setLabelProperty(zoomLabel,x:left+bw*6+sp*8,y:by-sp/3-bh,w:bw,h:bh,UIColor.white)

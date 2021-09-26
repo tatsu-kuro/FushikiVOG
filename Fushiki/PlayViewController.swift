@@ -82,15 +82,6 @@ class PlayViewController: UIViewController {
     @IBAction func onMailButton(_ sender: Any) {
     }
     
-//    @IBOutlet weak var cameraButton: UISegmentedControl!
-//
-//    @IBAction func onCameraButton(_ sender: Any) {
-//        cameraMode=cameraButton.selectedSegmentIndex
-//        UserDefaults.standard.set(cameraMode, forKey: "video_cameraMode")
-////        print("cameraMode:",cameraMode)
-//        dispWakus()
-//        showWakuImages()
-//    }
     func Field2value(field:UITextField) -> Int {
         if field.text?.count != 0 {
             return Int(field.text!)!
@@ -876,7 +867,7 @@ class PlayViewController: UIViewController {
             wakuLength = CGFloat(album.getUserDefaultInt(str: "wakuLength", ret: 3))
             eyeBorder = album.getUserDefaultInt(str: "eyeBorder", ret: 9)
         }
-        cameraMode = album.getUserDefaultInt(str: "video_cameraMode", ret: 0)
+        cameraMode = album.getUserDefaultInt(str: "cameraMode", ret: 0)
         posRatio = album.getUserDefaultInt(str: "posRatio", ret:100)
         veloRatio = album.getUserDefaultInt(str:"veloRatio",ret :100)
         eyeCenter.x = CGFloat(album.getUserDefaultInt(str: "eyeCenterX", ret: 320))
@@ -897,7 +888,6 @@ class PlayViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getUserDefaults()
-//        cameraButton.selectedSegmentIndex = cameraMode
         //setteiしてなければ、以下
         let top=CGFloat(UserDefaults.standard.float(forKey: "top"))
         let bottom=CGFloat( UserDefaults.standard.float(forKey: "bottom"))

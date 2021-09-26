@@ -126,11 +126,11 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
         }
         UserDefaults.standard.set(targetMode, forKey:"targetMode")
-        if targetMode==0{//pursuit
+        if targetMode==0{//ETT
             let nextView = storyboard.instantiateViewController(withIdentifier: "ETT") as! ETTViewController
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
-        }else if targetMode==1{//saccade
+        }else if targetMode==1{//OKP
             let nextView = storyboard.instantiateViewController(withIdentifier: "OKP") as! OKPViewController
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
@@ -139,13 +139,33 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }else if targetMode==3{//carolicETT
-            let nextView = storyboard.instantiateViewController(withIdentifier: "CarolicETT") as! CarolicETTViewController
-            nextView.targetMode = targetMode
-            self.present(nextView, animated: true, completion: nil)
+            if camera.getUserDefaultBool(str: "caloricEttOknFlag", ret: false)==true{
+                let nextView = storyboard.instantiateViewController(withIdentifier: "CarolicETT") as! CarolicETTViewController
+                nextView.targetMode = targetMode
+                self.present(nextView, animated: true, completion: nil)
+            }else{
+                if camera.getUserDefaultInt(str: "cameraMode", ret: 0)==0{
+                    return
+                }else{
+                    UserDefaults.standard.set(0, forKey: "cameraMode")
+                    setAlpha()
+                }
+                return                
+            }
         }else if targetMode==4{//carolicOKN
+            if camera.getUserDefaultBool(str: "caloricEttOknFlag", ret: false)==true{
             let nextView = storyboard.instantiateViewController(withIdentifier: "CarolicOKN") as! CarolicOKNViewController
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
+            }else{
+                if camera.getUserDefaultInt(str: "cameraMode", ret: 0)==2{
+                    return
+                }else{
+                    UserDefaults.standard.set(2, forKey: "cameraMode")
+                    setAlpha()
+                }
+                return
+            }
         }else if targetMode==5{//help
             let nextView = storyboard.instantiateViewController(withIdentifier: "HELP") as! HelpViewController
             nextView.targetMode = targetMode
@@ -438,8 +458,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         caloricOknButton.alpha=alp
         helpButton.alpha=alp
         setteiButton.alpha=alp
-        //        let cameraMode = Int(iroiro.getUserDefaultInt(str: "cameraMode", ret: 0))
-        
+ 
         camera.setButtonProperty(ettButton,x:sp*2+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(okpButton,x:bw*1+sp*3+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(oknButton,x:bw*2+sp*4+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
@@ -462,7 +481,20 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             titleImage.frame.size.height = ww/2
         }
         logoImage.frame = CGRect(x: leftPadding, y: topPadding, width:ww, height:wh/10)
-        
+        caloricEttOknFlag=camera.getUserDefaultBool(str: "caloricEttOknFlag", ret: false)
+        cameraMode=camera.getUserDefaultInt(str: "cameraMode", ret: 0)
+        if caloricEttOknFlag==false{
+            if cameraMode==0{
+            caloricEttButton.setTitle("Camera ON", for: .normal)
+            caloricOknButton.setTitle("Camera off", for: .normal)
+            }else{
+                caloricEttButton.setTitle("Camera on", for: .normal)
+                caloricOknButton.setTitle("Camera OFF", for: .normal)
+            }
+        }else{
+            caloricEttButton.setTitle("CaloricETT", for: .normal)
+            caloricOknButton.setTitle("CaloricOKN", for: .normal)
+        }
     }
     
     
@@ -521,13 +553,6 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBAction func unwindAction(segue: UIStoryboardSegue) {
         print("main-unwind")
         UIApplication.shared.isIdleTimerDisabled = false//スリープする.監視する
-        
-//        let cameraMode = Int(camera.getUserDefaultInt(str: "cameraMode", ret: 0))
-//        if cameraMode == 1{
-//            doModeButton.isHidden=false
-//        }else{
-//            doModeButton.isHidden=true
-//        }
     }
 }
 

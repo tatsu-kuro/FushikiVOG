@@ -93,7 +93,7 @@ class SetteiViewController: UIViewController {
                  print("Play")
                  if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
                      print("doubleTapPlay")
-                     goExit(0)
+                     goExit()
                      //                    self.dismiss(animated: true, completion: nil)
                  }
                  tapInterval=CFAbsoluteTimeGetCurrent()
@@ -101,7 +101,7 @@ class SetteiViewController: UIViewController {
                  print("TogglePlayPause")
                  if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
                      print("doubleTapTogglePlayPause")
-                     goExit(0)
+                     goExit()
                      //                    self.dismiss(animated: true, completion: nil)
                  }
                  tapInterval=CFAbsoluteTimeGetCurrent()
@@ -110,8 +110,25 @@ class SetteiViewController: UIViewController {
              }
          }
     }
- 
-    @IBAction func goExit(_ sender: Any) {
+    
+    @IBAction func doubleTapGesture(_ sender: UITapGestureRecognizer) {
+        let x=sender.location(in: view).x
+        let y=sender.location(in: view).y
+        print("doubletap",x,y)
+        if x>frontCameraSwitch.frame.maxX && x<frontCameraLabel.frame.minX && y>frontCameraLabel.frame.minY{
+            let flag=UserDefaults.standard.bool(forKey: "caloricEttOknFlag")
+            print("flag",flag)
+            if flag==true{
+                UserDefaults.standard.set(false, forKey: "caloricEttOknFlag")
+            }else{
+                UserDefaults.standard.set(true, forKey: "caloricEttOknFlag")
+            }
+            return
+        }
+        goExit()
+    }
+    
+    func goExit() {
         setUserDefaults()
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
         //delTimer()

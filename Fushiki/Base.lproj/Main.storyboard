@@ -230,7 +230,7 @@
                 <exit id="4AW-zU-c08" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer numberOfTapsRequired="2" id="3TM-bb-wSt">
                     <connections>
-                        <action selector="goExit:" destination="gOS-fU-nK5" id="UBl-cB-gqb"/>
+                        <action selector="doubleTapGesture:" destination="gOS-fU-nK5" id="BXo-3Q-w5h"/>
                     </connections>
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="v3Y-jM-4m8">
