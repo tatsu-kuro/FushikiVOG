@@ -44,15 +44,16 @@ class SetteiViewController: UIViewController {
         UserDefaults.standard.set(speakerOnOff, forKey: "speakerOnOff")
     }
     func setCameraMode(){
-        if cameraMode==0 {
-           frontCameraLabel.text="Adjust the zoom of the front camera"
-        }else{
-           cameraMode=2
-           frontCameraLabel.text="Record with the front camera"
-        }
-       dispTexts()
-       UserDefaults.standard.set(cameraMode, forKey: "cameraMode")
-
+//        if cameraMode==0 {
+            //           frontCameraLabel.text="Adjust the zoom of the front camera"
+//        }else{
+//            cameraMode=2
+            //           frontCameraLabel.text="Record with the front camera"
+//        }
+        frontCameraLabel.text="Record with the front camera"
+        
+        dispTexts()
+        UserDefaults.standard.set(cameraMode, forKey: "cameraMode")
     }
     @IBOutlet weak var speakerSwitch: UISwitch!
     @IBAction func onFrontCameraSwitch(_ sender: UISwitch) {
@@ -244,11 +245,11 @@ class SetteiViewController: UIViewController {
         setOknMode()
         setettMode()
         
-        if cameraMode==0{
-            cameraButton.isHidden=false
-        }else{
+//        if cameraMode==0{
+//            cameraButton.isHidden=false
+//        }else{
             cameraButton.isHidden=true
-        }
+//        }
         okpPauseTimeText.text="OKP-PAUSE:" + String(Int(okpTime)) + "sec"
         oknTimeText.text="OKN-TIME:" + String(Int(oknTime)) + "sec"
         setUserDefaults()

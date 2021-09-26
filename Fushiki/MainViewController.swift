@@ -18,7 +18,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var titleImage: UIImageView!
     
     @IBOutlet weak var logoImage: UIImageView!
-
+    var caloricEttOknFlag = false//falseでは、caloricEtt,Okn buttonがカメラオンオフボタンとなる。
     var videoArrayCount:Int = 0
     var oknSpeed:Int = 50
     var oknTime:Int = 50
@@ -308,6 +308,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         cameraMode = camera.getUserDefaultInt(str: "cameraMode", ret: 0)
         screenBrightness = camera.getUserDefaultFloat(str: "screenBrightness", ret: 1)
         ettModeText0 = camera.getUserDefaultString(str: "ettModeText0", ret: "1:0:2,1:2:12,3:2:12,5:2:12")
+        caloricEttOknFlag = camera.getUserDefaultBool(str: "caloricEttOknFlag", ret:false)
         ettModeText1 = camera.getUserDefaultString(str: "ettModeText1", ret: "2:2:12,4:2:12")
         ettModeText2 = camera.getUserDefaultString(str: "ettModeText2", ret: "6:2:20")
         ettModeText3 = camera.getUserDefaultString(str: "ettModeText3", ret: "6:3:20")
