@@ -965,8 +965,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="doMode0:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IQ8-Fi-Bmy"/>
-                                    <action selector="onBut0:" destination="BYZ-38-t0r" eventType="touchDragOutside" id="8PQ-Ov-zWB"/>
+                                    <action selector="onEttButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IQ8-Fi-Bmy"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cTd-rF-Jk7">
@@ -978,8 +977,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="doMode1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JGE-XG-crn"/>
-                                    <action selector="onBut1:" destination="BYZ-38-t0r" eventType="touchDragOutside" id="SfB-6F-JHB"/>
+                                    <action selector="onOkpButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JGE-XG-crn"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uQ1-87-BgY">
@@ -991,8 +989,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="doMode2:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0gv-vV-zuc"/>
-                                    <action selector="onBut2:" destination="BYZ-38-t0r" eventType="touchDragOutside" id="opf-b4-k86"/>
+                                    <action selector="onOknButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0gv-vV-zuc"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jef-4N-Mcg">
@@ -1002,8 +999,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="CaloricETT"/>
                                 <connections>
-                                    <action selector="doMode3:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nnd-G0-WOH"/>
-                                    <action selector="onBut3:" destination="BYZ-38-t0r" eventType="touchDragOutside" id="0mp-eX-kpV"/>
+                                    <action selector="onCaloricEttButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nnd-G0-WOH"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SgL-BM-Dbh">
@@ -1013,8 +1009,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="CaloricOKN"/>
                                 <connections>
-                                    <action selector="doMode4:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YZr-Wi-gpK"/>
-                                    <action selector="onBut4:" destination="BYZ-38-t0r" eventType="touchDragOutside" id="VpG-KI-mfX"/>
+                                    <action selector="onCaloricOknButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YZr-Wi-gpK"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="deG-Tq-o9U">
@@ -1024,7 +1019,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="HELP"/>
                                 <connections>
-                                    <action selector="doHelp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IhA-EU-kmL"/>
+                                    <action selector="onHelpButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IhA-EU-kmL"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CTI-eK-yKu" userLabel="Settei Button">
@@ -1036,7 +1031,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="doSettei:" destination="BYZ-38-t0r" eventType="touchUpInside" id="N5J-fQ-EGh"/>
+                                    <action selector="onSetteiButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="N5J-fQ-EGh"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1045,13 +1040,13 @@
                         <gestureRecognizers/>
                     </view>
                     <connections>
-                        <outlet property="button0" destination="S68-fh-yHQ" id="GSv-1T-ZgH"/>
-                        <outlet property="button1" destination="cTd-rF-Jk7" id="X69-7M-oPl"/>
-                        <outlet property="button2" destination="uQ1-87-BgY" id="ifl-hB-ox6"/>
-                        <outlet property="button3" destination="Jef-4N-Mcg" id="tnT-24-hnA"/>
-                        <outlet property="button4" destination="SgL-BM-Dbh" id="J3i-TL-HmM"/>
+                        <outlet property="caloricEttButton" destination="Jef-4N-Mcg" id="tnT-24-hnA"/>
+                        <outlet property="caloricOknButton" destination="SgL-BM-Dbh" id="J3i-TL-HmM"/>
+                        <outlet property="ettButton" destination="S68-fh-yHQ" id="GSv-1T-ZgH"/>
                         <outlet property="helpButton" destination="deG-Tq-o9U" id="myc-QC-YJO"/>
                         <outlet property="logoImage" destination="rFo-zO-z8q" id="2jU-kC-jYJ"/>
+                        <outlet property="oknButton" destination="uQ1-87-BgY" id="ifl-hB-ox6"/>
+                        <outlet property="okpButton" destination="cTd-rF-Jk7" id="X69-7M-oPl"/>
                         <outlet property="setteiButton" destination="CTI-eK-yKu" id="iDo-Lz-j12"/>
                         <outlet property="tableView" destination="2ai-kF-qQC" id="f4f-qq-JWj"/>
                         <outlet property="titleImage" destination="SBv-qp-uiy" id="WTZ-sb-JpI"/>

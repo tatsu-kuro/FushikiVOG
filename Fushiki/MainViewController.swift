@@ -76,47 +76,47 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         doModes()
     }
     
-    @IBAction func onBut0(_ sender: Any) {
-        targetMode=0
-        setAlpha()
-    }
-    @IBAction func doMode0(_ sender: Any) {
+//    @IBAction func onBut0(_ sender: Any) {
+//        targetMode=0
+//        setAlpha()
+//    }
+    @IBAction func onEttButton(_ sender: Any) {
         doModes_sub(mode: 0)
     }
-    @IBAction func onBut1(_ sender: Any) {
-        targetMode=1
-        setAlpha()
-    }
-    @IBAction func doMode1(_ sender: Any) {
+//    @IBAction func onBut1(_ sender: Any) {
+//        targetMode=1
+//        setAlpha()
+//    }
+    @IBAction func onOkpButton(_ sender: Any) {
         doModes_sub(mode: 1)
     }
-    @IBAction func onBut2(_ sender: Any) {
-        targetMode=2
-        setAlpha()
-    }
-    @IBAction func doMode2(_ sender: Any) {
+//    @IBAction func onBut2(_ sender: Any) {
+//        targetMode=2
+//        setAlpha()
+//    }
+    @IBAction func onOknButton(_ sender: Any) {
         doModes_sub(mode: 2)
     }
-    @IBAction func onBut3(_ sender: Any) {
-        targetMode=3
-        setAlpha()
-    }
-    @IBAction func doMode3(_ sender: Any) {
+//    @IBAction func onBut3(_ sender: Any) {
+//        targetMode=3
+//        setAlpha()
+//    }
+    @IBAction func onCaloricEttButton(_ sender: Any) {
         doModes_sub(mode: 3)
     }
-    @IBAction func onBut4(_ sender: Any) {
-        targetMode=4
-        setAlpha()
-    }
-    @IBAction func doMode4(_ sender: Any) {
+//    @IBAction func onBut4(_ sender: Any) {
+//        targetMode=4
+//        setAlpha()
+//    }
+    @IBAction func onCaloricOknButton(_ sender: Any) {
         doModes_sub(mode: 4)
     }
     
-    @IBAction func doHelp(_ sender: Any) {
+    @IBAction func onHelpButton(_ sender: Any) {
         doModes_sub(mode: 5)
     }
     
-    @IBAction func doSettei(_ sender: Any) {
+    @IBAction func onSetteiButton(_ sender: Any) {
         doModes_sub(mode: 6)
     }
     func doModes(){
@@ -159,15 +159,15 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     func setAlpha(){
         setRotate(alp: 0.6)
         if targetMode==0{
-            button0.alpha=1.0// saccadebut.alph=1.0
+            ettButton.alpha=1.0// saccadebut.alph=1.0
         }else if targetMode==1{
-            button1.alpha=1.0
+            okpButton.alpha=1.0
         }else if targetMode==2{
-            button2.alpha=1.0
+            oknButton.alpha=1.0
         }else if targetMode==3{
-            button3.alpha=1.0
+            caloricEttButton.alpha=1.0
         }else if targetMode==4{
-            button4.alpha=1.0
+            caloricOknButton.alpha=1.0
         }else if targetMode==5{
             helpButton.alpha=1.0
         }else{
@@ -197,15 +197,15 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     targetMode = 0
                 }
                 if targetMode==0{
-                    button0.alpha=1.0// saccadebut.alph=1.0
+                    ettButton.alpha=1.0// saccadebut.alph=1.0
                 }else if targetMode==1{
-                    button1.alpha=1.0
+                    okpButton.alpha=1.0
                 }else if targetMode==2{
-                    button2.alpha=1.0
+                    oknButton.alpha=1.0
                 }else if targetMode==3{
-                    button3.alpha=1.0
+                    caloricEttButton.alpha=1.0
                 }else if targetMode==4{
-                    button4.alpha=1.0
+                    caloricOknButton.alpha=1.0
                 }else if targetMode==5{
                     helpButton.alpha=1.0
                 }else{
@@ -224,15 +224,15 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     targetMode = 6
                 }
                 if targetMode==0{
-                    button0.alpha=1.0// saccadebut.alph=1.0
+                    ettButton.alpha=1.0// saccadebut.alph=1.0
                 }else if targetMode==1{
-                    button1.alpha=1.0
+                    okpButton.alpha=1.0
                 }else if targetMode==2{
-                    button2.alpha=1.0
+                    oknButton.alpha=1.0
                 }else if targetMode==3{
-                    button3.alpha=1.0
+                    caloricEttButton.alpha=1.0
                 }else if targetMode==4{
-                    button4.alpha=1.0
+                    caloricOknButton.alpha=1.0
                 }else if targetMode==5{
                     helpButton.alpha=1.0
                 }else{
@@ -253,15 +253,15 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
  
         setRotate(alp: 0.6)
         if targetMode==0{
-            button0.alpha=1.0
+            ettButton.alpha=1.0
         }else if targetMode==1{
-            button1.alpha=1.0
+            okpButton.alpha=1.0
         }else if targetMode==2{
-            button2.alpha=1.0
+            oknButton.alpha=1.0
         }else if targetMode==3{
-            button3.alpha=1.0
+            caloricEttButton.alpha=1.0
         }else if targetMode==4{
-            button4.alpha=1.0
+            caloricOknButton.alpha=1.0
         }else if targetMode==5{
             helpButton.alpha=1.0
         }else{
@@ -348,11 +348,11 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     @IBOutlet weak var setteiButton: UIButton!
     @IBOutlet weak var helpButton: UIButton!
-    @IBOutlet weak var button3: UIButton!
-    @IBOutlet weak var button4: UIButton!
-    @IBOutlet weak var button1: UIButton!
-    @IBOutlet weak var button0: UIButton!
-    @IBOutlet weak var button2: UIButton!
+    @IBOutlet weak var caloricEttButton: UIButton!
+    @IBOutlet weak var caloricOknButton: UIButton!
+    @IBOutlet weak var okpButton: UIButton!
+    @IBOutlet weak var ettButton: UIButton!
+    @IBOutlet weak var oknButton: UIButton!
     
 //    @IBOutlet weak var doModeButton: UIButton!
 //    @IBAction func onDoModeButton(_ sender: Any) {
@@ -430,20 +430,20 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let by=wh-bh-sp+topPadding
         tableView.frame=CGRect(x:leftPadding,y:0,width:ww,height: by)
         
-        button0.alpha=alp
-        button1.alpha=alp
-        button2.alpha=alp
-        button3.alpha=alp
-        button4.alpha=alp
+        ettButton.alpha=alp
+        okpButton.alpha=alp
+        oknButton.alpha=alp
+        caloricEttButton.alpha=alp
+        caloricOknButton.alpha=alp
         helpButton.alpha=alp
         setteiButton.alpha=alp
         //        let cameraMode = Int(iroiro.getUserDefaultInt(str: "cameraMode", ret: 0))
         
-        camera.setButtonProperty(button0,x:sp*2+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
-        camera.setButtonProperty(button1,x:bw*1+sp*3+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
-        camera.setButtonProperty(button2,x:bw*2+sp*4+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
-        camera.setButtonProperty(button3,x:bw*3+sp*5+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
-        camera.setButtonProperty(button4,x:bw*4+sp*6+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(ettButton,x:sp*2+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(okpButton,x:bw*1+sp*3+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(oknButton,x:bw*2+sp*4+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(caloricEttButton,x:bw*3+sp*5+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(caloricOknButton,x:bw*4+sp*6+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(helpButton,x:bw*5+sp*7+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(setteiButton,x:bw*6+sp*8+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         

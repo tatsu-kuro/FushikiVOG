@@ -806,12 +806,21 @@ class PlayViewController: UIViewController {
         }
         resizeVideoPlayer(rect: videoPlayerLayerRect)
         if zoomNum==1{
+            faceWakuL_image.isHidden=false
+            eyeWakuL_image.isHidden=false
+           eyeWaku_image.isHidden=false
+            faceWaku_image.isHidden=false
             dispWakus()
             showWakuImages()
+        }else{
+            faceWakuL_image.isHidden=true
+            eyeWakuL_image.isHidden=true
+            eyeWaku_image.isHidden=true
+            faceWaku_image.isHidden=true
         }
     }
     @IBAction func singleTapGesture(_ sender: UITapGestureRecognizer) {
-        if vogImageView?.isHidden==false{
+        if vogImageView?.isHidden==false || zoomNum != 1{
             return
         }
         print("singletap",vogImageView?.isHidden,calcFlag)
