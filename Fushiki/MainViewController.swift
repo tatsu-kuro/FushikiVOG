@@ -36,6 +36,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var ettModeText1:String = ""
     var ettModeText2:String = ""
     var ettModeText3:String = ""
+    var cameraON:Bool!
 
     
     @IBOutlet weak var tableView: UITableView!
@@ -139,29 +140,29 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
         }else if targetMode==3{//carolicETT
-            if camera.getUserDefaultBool(str: "caloricEttOknFlag", ret: false)==true{
+            if camera.getUserDefaultBool(str: "caloricEttOknFlag", ret: false){
                 let nextView = storyboard.instantiateViewController(withIdentifier: "CarolicETT") as! CarolicETTViewController
                 nextView.targetMode = targetMode
                 self.present(nextView, animated: true, completion: nil)
             }else{
-                if camera.getUserDefaultInt(str: "cameraMode", ret: 0)==0{
+                if camera.getUserDefaultBool(str: "cameraON", ret: true){
                     return
                 }else{
-                    UserDefaults.standard.set(0, forKey: "cameraMode")
+                    UserDefaults.standard.set(true, forKey: "cameraON")
                     setAlpha()
                 }
                 return                
             }
         }else if targetMode==4{//carolicOKN
-            if camera.getUserDefaultBool(str: "caloricEttOknFlag", ret: false)==true{
+            if camera.getUserDefaultBool(str: "caloricEttOknFlag", ret: false){
             let nextView = storyboard.instantiateViewController(withIdentifier: "CarolicOKN") as! CarolicOKNViewController
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
             }else{
-                if camera.getUserDefaultInt(str: "cameraMode", ret: 0)==2{
+                if !camera.getUserDefaultBool(str: "cameraON", ret: true){
                     return
                 }else{
-                    UserDefaults.standard.set(2, forKey: "cameraMode")
+                    UserDefaults.standard.set(false, forKey: "cameraON")
                     setAlpha()
                 }
                 return
@@ -329,6 +330,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         screenBrightness = camera.getUserDefaultFloat(str: "screenBrightness", ret: 1)
         ettModeText0 = camera.getUserDefaultString(str: "ettModeText0", ret: "1:0:2,1:2:12,3:2:12,5:2:12")
         caloricEttOknFlag = camera.getUserDefaultBool(str: "caloricEttOknFlag", ret:false)
+        cameraON = camera.getUserDefaultBool(str: "cameraON", ret: true)
         ettModeText1 = camera.getUserDefaultString(str: "ettModeText1", ret: "2:2:12,4:2:12")
         ettModeText2 = camera.getUserDefaultString(str: "ettModeText2", ret: "6:2:20")
         ettModeText3 = camera.getUserDefaultString(str: "ettModeText3", ret: "6:3:20")
@@ -482,11 +484,12 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         logoImage.frame = CGRect(x: leftPadding, y: topPadding, width:ww, height:wh/10)
         caloricEttOknFlag=camera.getUserDefaultBool(str: "caloricEttOknFlag", ret: false)
-        cameraMode=camera.getUserDefaultInt(str: "cameraMode", ret: 0)
+//        cameraMode=camera.getUserDefaultInt(str: "cameraMode", ret: 0)
+        cameraON=camera.getUserDefaultBool(str: "cameraON", ret: true)
         if caloricEttOknFlag==false{
-            if cameraMode==0{
-            caloricEttButton.setTitle("Camera ON", for: .normal)
-            caloricOknButton.setTitle("Camera off", for: .normal)
+            if cameraON{
+                caloricEttButton.setTitle("Camera ON", for: .normal)
+                caloricOknButton.setTitle("Camera off", for: .normal)
             }else{
                 caloricEttButton.setTitle("Camera on", for: .normal)
                 caloricOknButton.setTitle("Camera OFF", for: .normal)

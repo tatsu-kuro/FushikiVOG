@@ -168,7 +168,7 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
     }
     
     func setZoom(level:Float){//
-        if cameraMode==2{
+        if !UserDefaults.standard.bool(forKey: "cameraON"){
             return
         }
         if let device = videoDevice {
@@ -185,7 +185,7 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
     }
     
     func setFocus(focus:Float){//focus 0:最接近　0-1.0
-        if cameraMode==2{
+        if !UserDefaults.standard.bool(forKey: "cameraON"){
             return
         }
         if let device = videoDevice {
@@ -258,7 +258,7 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
     }
 
     func recordStart(){
-        if cameraMode==2{
+        if !UserDefaults.standard.bool(forKey: "cameraON"){
             return
         }
         if let soundUrl = URL(string:
@@ -277,14 +277,14 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
         fileOutput.startRecording(to: fileURL as URL, recordingDelegate: self)
     }
     func recordStop(){
-        if cameraMode==2{
+        if !UserDefaults.standard.bool(forKey: "cameraON"){
             return
         }
         captureSession.stopRunning()//下行と入れ替えても動く
         fileOutput.stopRecording()
      }
     func stopRunning(){
-        if cameraMode==2{
+        if !UserDefaults.standard.bool(forKey: "cameraON"){
             return
         }
         captureSession.stopRunning()
@@ -293,7 +293,7 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
     func initSession(camera:Int,bounds:CGRect,cameraView:UIImageView) {
         // セッション生成
         cameraMode=camera
-        if cameraMode==2{
+        if !UserDefaults.standard.bool(forKey: "cameraON"){
             return
         }
         captureSession = AVCaptureSession()
@@ -504,7 +504,8 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
         }
     }
     func setLedLevel(level:Float){
-        if cameraMode==2{
+        
+        if !UserDefaults.standard.bool(forKey: "cameraON"){
             return
         }
         if let device = videoDevice{

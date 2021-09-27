@@ -198,7 +198,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         self.setNeedsStatusBarAppearanceUpdate()
 
         recClarification.frame=camera.getRecClarificationRct(width:view.bounds.width,height:view.bounds.height)
-        if cameraMode == 2{
+        if !UserDefaults.standard.bool(forKey: "cameraON"){
             recClarification.isHidden=true
         }
         timerREC = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: true)

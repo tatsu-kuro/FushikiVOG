@@ -15,7 +15,7 @@ class CameraViewController: UIViewController {
     let camera = CameraAlbumEtc()//name:"Fushiki")
     @IBOutlet weak var fpsLabel: UILabel!
     @IBOutlet weak var cameraView: UIImageView!
-    @IBOutlet weak var fpsButton: UIButton!
+    @IBOutlet weak var cameraChangeButton: UIButton!
     @IBOutlet weak var cameraChan: UISegmentedControl!
     @IBOutlet weak var zoomBar: UISlider!
     @IBOutlet weak var focusBar: UISlider!
@@ -27,12 +27,17 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var ledLabel: UILabel!
     @IBOutlet weak var exitButton: UIButton!
 
-    @IBAction func onFpsButton(_ sender: Any) {
-    }
+    var cameraMode:Int=0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        getCameras()
+        print("camera:",wideAngleCamera,ultrawideCamera,telephotoCamera)
+//7 true,false,true
+        //12 mini true,true,false
+        //se(1th) true,false,false
         setButtons()
-        let cameraMode = Int(camera.getUserDefaultInt(str: "cameraMode", ret: 0))
+        cameraMode = Int(camera.getUserDefaultInt(str: "cameraMode", ret: 0))
         cameraChan.selectedSegmentIndex = cameraMode
         camera.initSession(camera: cameraMode, bounds:view.bounds, cameraView: cameraView)
         fpsLabel.text = String(format:"fps:%d %dx%d" ,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
@@ -62,8 +67,100 @@ class CameraViewController: UIViewController {
     override var prefersHomeIndicatorAutoHidden: Bool {
         return true
     }
-    
-    
+    @IBAction func onCameraChangeButton(_ sender: Any) {
+        cameraMode=camera.getUserDefaultInt(str: "cameraMode", ret: 0)
+        if cameraMode == 0{
+            cameraMode=1
+        }else{
+            cameraMode=0
+        }
+        UserDefaults.standard.set(cameraMode, forKey: "cameraMode")
+        camera.stopRunning()
+        camera.initSession(camera: cameraMode, bounds:view.bounds, cameraView: cameraView)
+        print("cameraMode:",cameraMode)
+        fpsLabel.text = String(format:"fps:%d %dx%d" ,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
+        camera.setLedLevel(level:camera.getUserDefaultFloat(str: "ledValue", ret:0))
+        if cameraMode == 1{
+            UserDefaults.standard.set(camera.fpsCurrent, forKey: "backCameraFps")
+        }
+        setButtons()
+     }
+    var wideAngleCamera:Bool=false//最低これはついている
+    var ultrawideCamera:Bool=false
+    var telephotoCamera:Bool=false
+    var cameraType:Int = 0
+    func getCameras(){
+        if AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) != nil{
+            wideAngleCamera=true
+        }
+        if AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) != nil{
+            ultrawideCamera=true
+        }
+        if AVCaptureDevice.default(.builtInTelephotoCamera, for: .video, position: .back) != nil{
+            telephotoCamera=true
+        }
+    }
+    func changeCameraMode()
+    {
+        if cameraMode==0{//front
+            cameraMode=1//wideAngle
+        }else if cameraMode==1{
+            if ultrawideCamera{
+                cameraMode=2//ultrawide
+            }else if telephotoCamera{
+                cameraMode=3//telephoto
+            }else{
+                cameraMode=0//front
+            }
+        }else if cameraMode==2{
+            if telephotoCamera{
+                cameraMode=3
+            }else{
+                cameraMode=0
+            }
+        }else{
+            cameraMode=0
+            
+        }
+    }
+    /*
+     @IBAction func onCameraChange(_ sender: Any) {//camera>1
+         cameraType=UserDefaults.standard.integer(forKey:"cameraType")
+         if cameraType==0{
+             if telephotoCamera == true{
+                 cameraType=1//telephoto
+             }else if ultrawideCamera == true{
+                 cameraType=2
+             }
+         }else if cameraType==1{
+             if ultrawideCamera==true{
+                 cameraType=2//ultraWide
+             }else{
+                 cameraType=0
+             }
+         }else{
+             cameraType=0//wideAngle
+         }
+         print("cameraType",cameraType)
+         UserDefaults.standard.set(cameraType, forKey: "cameraType")
+          if session.isRunning{
+         // セッションが始動中なら止める
+             print("isrunning")
+             session.stopRunning()
+         }
+         initSession(fps: fps_non_120_240)
+         setBars()
+     }
+     // 入力 : 背面カメラ
+     if cameraType==0{
+         videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
+     }else if cameraType==1{
+         videoDevice = AVCaptureDevice.default(.builtInTelephotoCamera, for: .video, position: .back)
+
+     }else if cameraType==2{
+         videoDevice = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back)
+
+     }*/
     @IBAction func onCameraChan(_ sender: UISegmentedControl) {
         let cameraMode=cameraChan.selectedSegmentIndex
         UserDefaults.standard.set(cameraMode, forKey: "cameraMode")
@@ -118,32 +215,33 @@ class CameraViewController: UIViewController {
         let bh=bw*170/440
         let by=wh-bh-sp
         camera.setButtonProperty(exitButton,x:left+bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
-        fpsButton.isHidden=true
-        camera.setLabelProperty( fpsLabel,x:left+sp*2,y:by,w:bw*2,h:bh,UIColor.white)
+        camera.setLabelProperty( fpsLabel,x:left+sp*3+bw,y:by,w:bw*2,h:bh,UIColor.white)
         camera.setLabelProperty(zoomLabel,x:left+bw*6+sp*8,y:by-sp/3-bh,w:bw,h:bh,UIColor.white)
-//        camera.setLabelProperty(focusLabel,x:bw*6+sp*8,y:by-sp*2/3-2*bh,w:bw,h:bh,UIColor.white)
-//        camera.setLabelProperty(ledLabel,x:bw*6+sp*8,y:by-sp*3/3-3*bh,w:bw,h:bh,UIColor.white)
-//        ledBar.frame=CGRect(x:5*sp,y:by-sp*3/3-3*bh,width:ww-7*sp-bw,height:bh)
-//        focusBar.frame=CGRect(x:5*sp,y:by-sp*2/3-2*bh,width:ww-7*sp-bw,height:bh)
+        camera.setButtonProperty(cameraChangeButton, x: left+sp*2, y: by, w: bw, h: bh,UIColor.orange)
+        
+        camera.setLabelProperty(focusLabel,x:bw*6+sp*8,y:by-sp*2/3-2*bh,w:bw,h:bh,UIColor.white)
+        camera.setLabelProperty(ledLabel,x:bw*6+sp*8,y:by-sp*3/3-3*bh,w:bw,h:bh,UIColor.white)
+        ledBar.frame=CGRect(x:left+2*sp,y:by-sp*3/3-3*bh,width:ww-7*sp-bw,height:bh)
+        focusBar.frame=CGRect(x:left+2*sp,y:by-sp*2/3-2*bh,width:ww-7*sp-bw,height:bh)
         zoomBar.frame=CGRect(x:left + 2*sp,y:by-sp/3-bh,width:ww-7*sp-bw,height:bh)
 //        cameraChan.frame=CGRect(x:bw*3+sp*5,y:by,width:bw*3+sp*2,height:bh)
-//        if cameraMode==2{
-//            cameraView.alpha=0.1
-//            focusBar.isHidden=true
-//            focusLabel.isHidden=true
-//            ledBar.isHidden=true
-//            ledLabel.isHidden=true
-//            zoomBar.isHidden=true
-//            zoomLabel.isHidden=true
-//        }else if cameraMode==1{
-//            cameraView.alpha=1
-//            focusBar.isHidden=false
-//            focusLabel.isHidden=false
-//            ledBar.isHidden=false
-//            ledLabel.isHidden=false
-//            zoomBar.isHidden=false
-//            zoomLabel.isHidden=false
-//        }else if cameraMode==0{
+        if cameraMode==2{
+            cameraView.alpha=0.1
+            focusBar.isHidden=true
+            focusLabel.isHidden=true
+            ledBar.isHidden=true
+            ledLabel.isHidden=true
+            zoomBar.isHidden=true
+            zoomLabel.isHidden=true
+        }else if cameraMode==1{
+            cameraView.alpha=1
+            focusBar.isHidden=false
+            focusLabel.isHidden=false
+            ledBar.isHidden=false
+            ledLabel.isHidden=false
+            zoomBar.isHidden=false
+            zoomLabel.isHidden=false
+        }else if cameraMode==0{
             cameraView.alpha=1
         cameraChan.isHidden=true
             focusBar.isHidden=true
@@ -152,7 +250,7 @@ class CameraViewController: UIViewController {
             ledLabel.isHidden=true
             zoomBar.isHidden=false
             zoomLabel.isHidden=false
-//    }
+    }
      }
 }
 

@@ -31,8 +31,9 @@ class SetteiViewController: UIViewController {
     var ettModeText3:String=""
     var cameraMode:Int!
     var speakerOnOff:Int!
-    @IBOutlet weak var frontCameraLabel: UILabel!
-    @IBOutlet weak var frontCameraSwitch: UISwitch!
+    var cameraON:Bool!
+    @IBOutlet weak var cameraLabel: UILabel!
+    @IBOutlet weak var cameraSwitch: UISwitch!
     @IBOutlet weak var speakerText: UILabel!
     @IBOutlet weak var speakerImage: UIImageView!
     @IBAction func onSpeakerSwitch(_ sender: UISwitch) {
@@ -50,19 +51,20 @@ class SetteiViewController: UIViewController {
 //            cameraMode=2
             //           frontCameraLabel.text="Record with the front camera"
 //        }
-        frontCameraLabel.text="Record with the front camera"
-        
+        cameraLabel.text="Recording"
         dispTexts()
-        UserDefaults.standard.set(cameraMode, forKey: "cameraMode")
+        UserDefaults.standard.set(cameraON, forKey: "cameraON")
     }
     @IBOutlet weak var speakerSwitch: UISwitch!
-    @IBAction func onFrontCameraSwitch(_ sender: UISwitch) {
+    @IBAction func onCameraSwitch(_ sender: UISwitch) {
          if sender.isOn==true{
-           cameraMode=0
+           cameraON=true
          }else{
-            cameraMode=2
+            cameraON=false
          }
-        setCameraMode()
+        UserDefaults.standard.set(cameraON, forKey: "cameraON")
+        dispTexts()
+//        setCameraMode()
     }
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var okpSwitch: UISegmentedControl!
@@ -115,7 +117,7 @@ class SetteiViewController: UIViewController {
         let x=sender.location(in: view).x
         let y=sender.location(in: view).y
         print("doubletap",x,y)
-        if x>frontCameraSwitch.frame.maxX && x<frontCameraLabel.frame.minX && y>frontCameraLabel.frame.minY{
+        if x>cameraSwitch.frame.maxX && x<cameraLabel.frame.minX && y>cameraLabel.frame.minY{
             let flag=UserDefaults.standard.bool(forKey: "caloricEttOknFlag")
             print("flag",flag)
             if flag==true{
@@ -176,6 +178,7 @@ class SetteiViewController: UIViewController {
         UserDefaults.standard.set(ettMode,forKey: "ettMode")
         UserDefaults.standard.set(screenBrightness, forKey: "screenBrightness")
         UserDefaults.standard.set(cameraMode,forKey: "cameraMode")
+        
         UserDefaults.standard.set(speakerOnOff,forKey: "speakerOnOff")
         UserDefaults.standard.set(ettModeText0, forKey: "ettModeText0")
         UserDefaults.standard.set(ettModeText1, forKey: "ettModeText1")
@@ -209,12 +212,12 @@ class SetteiViewController: UIViewController {
         oknTimeSlider.value=Float(oknTime)/100.0
         ettSwitch.selectedSegmentIndex=ettMode%4
         brightnessSlider.value=camera.getUserDefaultFloat(str: "screenBrightness", ret: 1.0)
-        if cameraMode==0{//front camera
-            frontCameraSwitch.isOn=true
+        if cameraON{//camera
+            cameraSwitch.isOn=true
         }else{//don't use camera
-            frontCameraSwitch.isOn=false
+            cameraSwitch.isOn=false
         }
-        setCameraMode()
+//        setCameraMode()
         if speakerOnOff==0{//front camera
             speakerSwitch.isOn=false
         }else{//don't use camera
@@ -262,11 +265,11 @@ class SetteiViewController: UIViewController {
         setOknMode()
         setettMode()
         
-//        if cameraMode==0{
-//            cameraButton.isHidden=false
-//        }else{
+        if cameraON{
+            cameraButton.isHidden=false
+        }else{
             cameraButton.isHidden=true
-//        }
+        }
         okpPauseTimeText.text="OKP-PAUSE:" + String(Int(okpTime)) + "sec"
         oknTimeText.text="OKN-TIME:" + String(Int(oknTime)) + "sec"
         setUserDefaults()
@@ -280,6 +283,7 @@ class SetteiViewController: UIViewController {
         oknTime = UserDefaults.standard.integer(forKey: "oknTime")
         speakerOnOff=UserDefaults.standard.integer(forKey: "speakerOnOff")
         cameraMode=UserDefaults.standard.integer(forKey: "cameraMode")
+        cameraON=UserDefaults.standard.bool(forKey: "cameraON")
         screenBrightness = camera.getUserDefaultFloat(str: "screenBrightness", ret: 1.0)
         ettMode = camera.getUserDefaultInt(str:"ettMode",ret:0)
         ettModeText0=camera.getUserDefaultString(str: "ettModeText0", ret: "0")
@@ -430,15 +434,15 @@ class SetteiViewController: UIViewController {
         oknTimeText.frame  = CGRect(x:x1,   y: b5y ,width: bw*5,height:bh)
         brightnessSlider.frame  = CGRect(x:x0,   y: b6y ,width: bw,height:bh)
         brightnessText.frame  = CGRect(x:x1,   y: b6y ,width: bw*5,height:bh)
-        frontCameraSwitch.frame = CGRect(x:x0,y:b7y,width:bw,height: bh)
-        frontCameraLabel.frame = CGRect(x:x1,y:b7y+2,width:bw*5,height:bh)
+        cameraSwitch.frame = CGRect(x:x0,y:b7y,width:bw,height: bh)
+        cameraLabel.frame = CGRect(x:x1,y:b7y+2,width:bw*5,height:bh)
         speakerSwitch.frame = CGRect(x:x0,   y: b8y ,width: bw*5,height:bh)
         speakerImage.frame = CGRect(x:x0+50,   y: b8y ,width: 30,height:30)
         speakerImage.isHidden=true//ない方がスッキリか？
         speakerText.frame = CGRect(x:x1,   y: b8y ,width: bw*5,height:bh)
         cameraButton.frame = CGRect(x:x1-bw/4-2*sp,y:b7y+2,width:bw/4,height: bh)
-//        camera.setButtonProperty(cameraButton,x:x1-bw/4-sp,y:b7y+2,w:bw/4,h:bh,UIColor.red)
-        cameraButton.layer.borderColor = UIColor.red.cgColor
+        camera.setButtonProperty(cameraButton,x:x1-bw/4-sp,y:b7y+2,w:bw/4,h:bh,UIColor.orange)
+        cameraButton.layer.borderColor = UIColor.orange.cgColor
         cameraButton.layer.borderWidth = 1.0
         cameraButton.layer.cornerRadius = 5
 

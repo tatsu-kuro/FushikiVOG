@@ -168,7 +168,7 @@
                                 <rect key="frame" x="74" y="319" width="49" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
-                                    <action selector="onFrontCameraSwitch:" destination="gOS-fU-nK5" eventType="valueChanged" id="Gwo-zO-NQV"/>
+                                    <action selector="onCameraSwitch:" destination="gOS-fU-nK5" eventType="valueChanged" id="Gwo-zO-NQV"/>
                                 </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sound at the start of recording" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d9U-Qr-Rh6">
@@ -187,7 +187,7 @@
                             <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dd6-zp-sxW">
                                 <rect key="frame" x="180" y="319" width="25" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="camera" catalog="system"/>
                                 <connections>
@@ -206,13 +206,13 @@
                         <outlet property="brightnessSlider" destination="rqo-3h-wbp" id="hf7-IT-zFx"/>
                         <outlet property="brightnessText" destination="YmA-od-BNX" id="Mls-lt-SYT"/>
                         <outlet property="cameraButton" destination="dd6-zp-sxW" id="pCm-gY-tMP"/>
+                        <outlet property="cameraLabel" destination="eaO-tb-IY3" id="OVt-s6-oUr"/>
+                        <outlet property="cameraSwitch" destination="OxW-Hi-sPf" id="ZOT-OK-W8J"/>
                         <outlet property="defaultButton" destination="wIu-wr-ffr" id="akP-bM-J7O"/>
                         <outlet property="ettExplanationText" destination="joF-RS-tH3" id="TgJ-j0-4KF"/>
                         <outlet property="ettSwitch" destination="7li-Aa-cfI" id="LGU-GW-Qef"/>
                         <outlet property="ettText" destination="ixO-Uv-LwA" id="5bk-rJ-YmM"/>
                         <outlet property="exitButton" destination="vji-3f-Tqg" id="4tC-Qb-6z9"/>
-                        <outlet property="frontCameraLabel" destination="eaO-tb-IY3" id="OVt-s6-oUr"/>
-                        <outlet property="frontCameraSwitch" destination="OxW-Hi-sPf" id="ZOT-OK-W8J"/>
                         <outlet property="oknSwitch" destination="wrz-kI-t9y" id="BP5-nK-RW9"/>
                         <outlet property="oknText" destination="bvF-vu-c8A" id="Klx-Cg-muc"/>
                         <outlet property="oknTimeSlider" destination="uh1-Tf-lNZ" id="10X-AN-mzs"/>
@@ -1180,13 +1180,14 @@
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XCC-bL-WBw">
-                                <rect key="frame" x="504" y="256" width="30" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XCC-bL-WBw">
+                                <rect key="frame" x="507" y="260" width="25" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="fps"/>
+                                <state key="normal" image="arrow.triangle.2.circlepath.camera" catalog="system"/>
                                 <connections>
-                                    <action selector="onFpsButton:" destination="c63-hm-Ug5" eventType="touchUpInside" id="Ug4-UY-med"/>
+                                    <action selector="onCameraChangeButton:" destination="c63-hm-Ug5" eventType="touchUpInside" id="Ug4-UY-med"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1202,11 +1203,11 @@
                     <navigationItem key="navigationItem" id="Dwi-dG-ECm"/>
                     <connections>
                         <outlet property="cameraChan" destination="IGF-X7-hOJ" id="7Ql-kA-cXk"/>
+                        <outlet property="cameraChangeButton" destination="XCC-bL-WBw" id="xCP-xB-FFx"/>
                         <outlet property="cameraView" destination="oPE-nE-3TS" id="HdR-E8-rF9"/>
                         <outlet property="exitButton" destination="9oI-63-ISV" id="TwE-rD-xHs"/>
                         <outlet property="focusBar" destination="8Wh-vx-bUz" id="LgS-Rj-5qL"/>
                         <outlet property="focusLabel" destination="txO-YV-qtb" id="Vd1-jV-K4e"/>
-                        <outlet property="fpsButton" destination="XCC-bL-WBw" id="xCP-xB-FFx"/>
                         <outlet property="fpsLabel" destination="l7C-ol-six" id="9Rk-Zl-NH6"/>
                         <outlet property="ledBar" destination="RB4-x1-m2N" id="UU6-KW-bld"/>
                         <outlet property="ledLabel" destination="X7W-At-DcH" id="EJs-4m-xfa"/>
@@ -1271,6 +1272,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow.triangle.2.circlepath.camera" catalog="system" width="128" height="94"/>
         <image name="camera" catalog="system" width="128" height="94"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="etthelp" width="1301" height="623"/>
@@ -1285,8 +1287,8 @@
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
