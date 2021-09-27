@@ -435,17 +435,13 @@ class SetteiViewController: UIViewController {
         brightnessSlider.frame  = CGRect(x:x0,   y: b6y ,width: bw,height:bh)
         brightnessText.frame  = CGRect(x:x1,   y: b6y ,width: bw*5,height:bh)
         cameraSwitch.frame = CGRect(x:x0,y:b7y,width:bw,height: bh)
-        cameraLabel.frame = CGRect(x:x1,y:b7y+2,width:bw*5,height:bh)
+        cameraLabel.frame = CGRect(x:x0+2*sp+cameraSwitch.frame.width,y:b7y+2,width:bw*5,height:bh)
         speakerSwitch.frame = CGRect(x:x0,   y: b8y ,width: bw*5,height:bh)
         speakerImage.frame = CGRect(x:x0+50,   y: b8y ,width: 30,height:30)
         speakerImage.isHidden=true//ない方がスッキリか？
-        speakerText.frame = CGRect(x:x1,   y: b8y ,width: bw*5,height:bh)
-        cameraButton.frame = CGRect(x:x1-bw/4-2*sp,y:b7y+2,width:bw/4,height: bh)
-        camera.setButtonProperty(cameraButton,x:x1-bw/4-sp,y:b7y+2,w:bw/4,h:bh,UIColor.orange)
-        cameraButton.layer.borderColor = UIColor.orange.cgColor
-        cameraButton.layer.borderWidth = 1.0
-        cameraButton.layer.cornerRadius = 5
-
+        speakerText.frame = CGRect(x:x0+2*sp+cameraSwitch.frame.width,   y: b8y ,width: bw*5,height:bh)
+//        cameraButton.frame = CGRect(x:x1-bw/4-2*sp,y:b7y+2,width:bw/4,height: bh)
+   
         sp=ww/120//間隙
         bw=(ww-sp*10)/7//ボタン幅
         bh=bw*170/440
@@ -453,6 +449,10 @@ class SetteiViewController: UIViewController {
 //        cameraButton.isHidden=true
         camera.setButtonProperty(defaultButton,x:left+bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(exitButton,x:left+bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
+        camera.setButtonProperty(cameraButton,x:left+bw*4+sp*6,y:by,w:bw,h:bh,UIColor.orange)
+           cameraButton.layer.borderColor = UIColor.orange.cgColor
+           cameraButton.layer.borderWidth = 1.0
+           cameraButton.layer.cornerRadius = 5
     }
     @IBAction func unwindPlayPara(segue: UIStoryboardSegue) {
     }
