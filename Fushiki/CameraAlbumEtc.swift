@@ -303,11 +303,14 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
         //builtInTelephontoCamera//7plus-right,8-error
         //builtInWideAngleCamera//12-lower, 7plus-left, 8
         if camera==0{
-        videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front)
-        }else{
-//            videoDevice = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back)
-//            videoDevice = AVCaptureDevice.default(.builtInTelephotoCamera, for: .video, position: .back)
+            videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front)
+        }else if camera==1{
             videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
+        }else if camera==2{
+            videoDevice = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back)
+        }else{
+            videoDevice = AVCaptureDevice.default(.builtInTelephotoCamera, for: .video, position: .back)
+
         }
         let videoInput = try! AVCaptureDeviceInput.init(device: videoDevice!)
         captureSession.addInput(videoInput)

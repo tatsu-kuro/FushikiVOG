@@ -69,18 +69,19 @@ class CameraViewController: UIViewController {
     }
     @IBAction func onCameraChangeButton(_ sender: Any) {
         cameraMode=camera.getUserDefaultInt(str: "cameraMode", ret: 0)
-        if cameraMode == 0{
-            cameraMode=1
-        }else{
-            cameraMode=0
-        }
+        changeCameraMode()
+//        if cameraMode == 0{
+//            cameraMode=1
+//        }else{
+//            cameraMode=0
+//        }
         UserDefaults.standard.set(cameraMode, forKey: "cameraMode")
         camera.stopRunning()
         camera.initSession(camera: cameraMode, bounds:view.bounds, cameraView: cameraView)
         print("cameraMode:",cameraMode)
         fpsLabel.text = String(format:"fps:%d %dx%d" ,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
         camera.setLedLevel(level:camera.getUserDefaultFloat(str: "ledValue", ret:0))
-        if cameraMode == 1{
+        if cameraMode > 0{
             UserDefaults.standard.set(camera.fpsCurrent, forKey: "backCameraFps")
         }
         setButtons()
@@ -120,8 +121,8 @@ class CameraViewController: UIViewController {
             }
         }else{
             cameraMode=0
-            
         }
+        print("cameraMode:",cameraMode)
     }
     /*
      @IBAction func onCameraChange(_ sender: Any) {//camera>1
@@ -219,8 +220,8 @@ class CameraViewController: UIViewController {
         camera.setLabelProperty(zoomLabel,x:left+bw*6+sp*8,y:by-sp/3-bh,w:bw,h:bh,UIColor.white)
         camera.setButtonProperty(cameraChangeButton, x: left+sp*2, y: by, w: bw, h: bh,UIColor.orange)
         
-        camera.setLabelProperty(focusLabel,x:bw*6+sp*8,y:by-sp*2/3-2*bh,w:bw,h:bh,UIColor.white)
-        camera.setLabelProperty(ledLabel,x:bw*6+sp*8,y:by-sp*3/3-3*bh,w:bw,h:bh,UIColor.white)
+        camera.setLabelProperty(focusLabel,x:left+bw*6+sp*8,y:by-sp*2/3-2*bh,w:bw,h:bh,UIColor.white)
+        camera.setLabelProperty(ledLabel,x:left+bw*6+sp*8,y:by-sp*3/3-3*bh,w:bw,h:bh,UIColor.white)
         ledBar.frame=CGRect(x:left+2*sp,y:by-sp*3/3-3*bh,width:ww-7*sp-bw,height:bh)
         focusBar.frame=CGRect(x:left+2*sp,y:by-sp*2/3-2*bh,width:ww-7*sp-bw,height:bh)
         zoomBar.frame=CGRect(x:left + 2*sp,y:by-sp/3-bh,width:ww-7*sp-bw,height:bh)
