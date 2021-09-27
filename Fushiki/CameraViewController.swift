@@ -16,7 +16,7 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var fpsLabel: UILabel!
     @IBOutlet weak var cameraView: UIImageView!
     @IBOutlet weak var cameraChangeButton: UIButton!
-    @IBOutlet weak var cameraChan: UISegmentedControl!
+//    @IBOutlet weak var cameraChan: UISegmentedControl!
     @IBOutlet weak var zoomBar: UISlider!
     @IBOutlet weak var focusBar: UISlider!
     
@@ -38,7 +38,7 @@ class CameraViewController: UIViewController {
         //se(1th) true,false,false
         setButtons()
         cameraMode = Int(camera.getUserDefaultInt(str: "cameraMode", ret: 0))
-        cameraChan.selectedSegmentIndex = cameraMode
+//        cameraChan.selectedSegmentIndex = cameraMode
         camera.initSession(camera: cameraMode, bounds:view.bounds, cameraView: cameraView)
         fpsLabel.text = String(format:"fps:%d %dx%d" ,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
  
@@ -101,6 +101,7 @@ class CameraViewController: UIViewController {
             telephotoCamera=true
         }
     }
+    //cameraMode 0:front 1:wideangle 2:ultrawide 3:telephoto
     func changeCameraMode()
     {
         if cameraMode==0{//front
@@ -162,6 +163,7 @@ class CameraViewController: UIViewController {
          videoDevice = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back)
 
      }*/
+    /*
     @IBAction func onCameraChan(_ sender: UISegmentedControl) {
         let cameraMode=cameraChan.selectedSegmentIndex
         UserDefaults.standard.set(cameraMode, forKey: "cameraMode")
@@ -179,7 +181,7 @@ class CameraViewController: UIViewController {
             UserDefaults.standard.set(camera.fpsCurrent, forKey: "backCameraFps")
         }
         setButtons()
-    }
+    }*/
     @objc func onLedValueChange(){
         camera.setLedLevel(level:ledBar.value)
         UserDefaults.standard.set(ledBar.value, forKey: "ledValue")
@@ -227,7 +229,7 @@ class CameraViewController: UIViewController {
         zoomBar.frame=CGRect(x:left + 2*sp,y:by-sp/3-bh,width:ww-7*sp-bw,height:bh)
 //        cameraChan.frame=CGRect(x:bw*3+sp*5,y:by,width:bw*3+sp*2,height:bh)
         if cameraMode==2{
-            cameraView.alpha=0.1
+//            cameraView.alpha=0.1
             focusBar.isHidden=true
             focusLabel.isHidden=true
             ledBar.isHidden=true
@@ -235,7 +237,7 @@ class CameraViewController: UIViewController {
             zoomBar.isHidden=true
             zoomLabel.isHidden=true
         }else if cameraMode==1{
-            cameraView.alpha=1
+//            cameraView.alpha=1
             focusBar.isHidden=false
             focusLabel.isHidden=false
             ledBar.isHidden=false
@@ -244,7 +246,7 @@ class CameraViewController: UIViewController {
             zoomLabel.isHidden=false
         }else if cameraMode==0{
             cameraView.alpha=1
-        cameraChan.isHidden=true
+//        cameraChan.isHidden=true
             focusBar.isHidden=true
             focusLabel.isHidden=true
             ledBar.isHidden=true
