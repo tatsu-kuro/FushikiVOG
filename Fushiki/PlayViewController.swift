@@ -66,10 +66,8 @@ class PlayViewController: UIViewController {
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var setteiButton: UIButton!
-//    @IBOutlet weak var debugEye: UIImageView!
-    @IBOutlet weak var debugEyeb: UIImageView!
-//    @IBOutlet weak var debugFace: UIImageView!
-    @IBOutlet weak var debugFaceb: UIImageView!
+    @IBOutlet weak var debugEyeWaku_imge: UIImageView!
+    @IBOutlet weak var debugFaceWaku_image: UIImageView!
     
     @IBOutlet weak var eyeWaku_image: UIImageView!
     @IBOutlet weak var faceWaku_image: UIImageView!
@@ -596,11 +594,11 @@ class PlayViewController: UIViewController {
         }
         let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample)!
         var ciImage:CIImage!
-//        if videoFps<backCameraFps-10.0{//if frontCamera
+        if videoFps<backCameraFps-10.0{//if frontCamera
             ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
-//        }else{
-//            ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
-//        }
+        }else{
+            ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
+        }
         //起動時表示が一巡？するまでは　slowImage.frame はちょっと違う値を示す
         
         let eyeRect=getRectFromCenter(center: eyeCenter, len: wakuLength)
@@ -610,8 +608,8 @@ class PlayViewController: UIViewController {
         UIeye = UIImage.init(cgImage: CGeye, scale:1.0, orientation:.up)//orientation)
         
         eyeWakuL_image.frame=CGRect(x:left+sp*2,y:25,width:bw*0.6,height:bw*0.6)
-        debugEyeb.frame=CGRect(x:left+sp*2,y:25+sp+bw*0.6,width:bw*0.6,height:bw*0.6)
-        debugFaceb.frame=CGRect(x:left+sp*2.2+bw*0.6,y:25+sp+bw*0.6,width:bw*0.6,height:bw*0.6)
+        debugEyeWaku_imge.frame=CGRect(x:left+sp*2,y:25+sp+bw*0.6,width:bw*0.6,height:bw*0.6)
+        debugFaceWaku_image.frame=CGRect(x:left+sp*2.2+bw*0.6,y:25+sp+bw*0.6,width:bw*0.6,height:bw*0.6)
 //        debugEyeb.layer.borderColor = UIColor.black.cgColor
 //        debugEyeb.layer.borderWidth = 1.0
 ////        debugEyeb.backgroundColor = UIColor.clear
@@ -796,19 +794,23 @@ class PlayViewController: UIViewController {
             pleaseReturnFlag=true
         }
         resizeVideoPlayer(rect: videoPlayerLayerRect)
-        if zoomNum==1{
-            faceWakuL_image.isHidden=false
-            eyeWakuL_image.isHidden=false
-           eyeWaku_image.isHidden=false
-            faceWaku_image.isHidden=false
-            dispWakus()
-            showWakuImages()
-        }else{
-            faceWakuL_image.isHidden=true
-            eyeWakuL_image.isHidden=true
-            eyeWaku_image.isHidden=true
-            faceWaku_image.isHidden=true
-        }
+         if zoomNum==1{
+             faceWakuL_image.isHidden=false
+             eyeWakuL_image.isHidden=false
+             eyeWaku_image.isHidden=false
+             faceWaku_image.isHidden=false
+//             debugFaceWaku_image.isHidden=false
+//             debugEyeWaku_imge.isHidden=false
+             dispWakus()
+             showWakuImages()
+         }else{
+             faceWakuL_image.isHidden=true
+             eyeWakuL_image.isHidden=true
+             eyeWaku_image.isHidden=true
+             faceWaku_image.isHidden=true
+             debugFaceWaku_image.isHidden=true
+             debugEyeWaku_imge.isHidden=true
+         }
     }
     @IBAction func singleTapGesture(_ sender: UITapGestureRecognizer) {
         if vogImageView?.isHidden==false || zoomNum != 1{
@@ -1120,15 +1122,15 @@ class PlayViewController: UIViewController {
             debugMode=false
         }
         if debugMode==false{
-            debugFaceb.isHidden=true
-            debugEyeb.isHidden=true
+            debugFaceWaku_image.isHidden=true
+            debugEyeWaku_imge.isHidden=true
         }else{
-            debugEyeb.isHidden=false
+            debugEyeWaku_imge.isHidden=false
             if faceMark==false{
-                debugFaceb.isHidden=true
+                debugFaceWaku_image.isHidden=true
 //                debugFace.isHidden=true
             }else{
-                debugFaceb.isHidden=false
+                debugFaceWaku_image.isHidden=false
 //                debugFace.isHidden=false
             }
         }
@@ -1213,11 +1215,11 @@ class PlayViewController: UIViewController {
         sample = readerOutput.copyNextSampleBuffer()
         let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample!)!
         var ciImage:CIImage!
-//        if videoFps<backCameraFps-10{//cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
+        if videoFps<backCameraFps-10{//cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
             ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
-//        }else{
-//            ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
-//        }
+        }else{
+            ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
+        }
         videoWidth=ciImage.extent.width
         videoHeight=ciImage.extent.height
         let eyeRect = resizeR2(eyeRectOnScreen, viewRect:getVideoRectOnScreen(), image:ciImage)
@@ -1284,12 +1286,12 @@ class PlayViewController: UIViewController {
                         eyeWithBorderRect.origin.x=0
                         eyeWithBorderRect.origin.y=0
                     }
-//                    if videoFps<backCameraFps-10{//cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
+                    if videoFps<backCameraFps-10{//cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
                         ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
-//                    }else{
-//                        ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
-//                    }
-//
+                    }else{
+                        ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
+                    }
+
                     eyeWithBorderCGImage = context.createCGImage(ciImage, from: eyeWithBorderRect)!
                     eyeWithBorderUIImage = UIImage.init(cgImage: eyeWithBorderCGImage)
                     
@@ -1297,8 +1299,8 @@ class PlayViewController: UIViewController {
                         //画面表示はmain threadで行う
                         DispatchQueue.main.async {
                             //                            debugEyeb.frame=CGRect(x:x,y:y,width:eyeWithBorderRect.size.width,height:eyeWithBorderRect.size.height)
-                            debugEyeb.image=eyeWithBorderUIImage
-                            view.bringSubviewToFront(debugEyeb)
+                            debugEyeWaku_imge.image=eyeWithBorderUIImage
+                            view.bringSubviewToFront(debugEyeWaku_imge)
                             x += eyeWithBorderRect.size.width + 5
                         }
                     }
@@ -1326,8 +1328,8 @@ class PlayViewController: UIViewController {
                     if debugMode == true && faceMark==true{
                         DispatchQueue.main.async {
 //                            debugFaceb.frame=CGRect(x:x,y:y,width:faceWithBorderRect.size.width,height:faceWithBorderRect.size.height)
-                            debugFaceb.image=faceWithBorderUIImage
-                            view.bringSubviewToFront(debugFaceb)
+                            debugFaceWaku_image.image=faceWithBorderUIImage
+                            view.bringSubviewToFront(debugFaceWaku_image)
                         }
                     }
                     context.clearCaches()

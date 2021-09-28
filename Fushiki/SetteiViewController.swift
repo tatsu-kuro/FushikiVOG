@@ -116,8 +116,9 @@ class SetteiViewController: UIViewController {
     @IBAction func doubleTapGesture(_ sender: UITapGestureRecognizer) {
         let x=sender.location(in: view).x
         let y=sender.location(in: view).y
-        print("doubletap",x,y)
-        if x>cameraSwitch.frame.maxX && x<cameraLabel.frame.minX && y>cameraLabel.frame.minY{
+//        print("doubletap",x,y)
+        if x>cameraLabel.frame.minX && x<cameraLabel.frame.maxX && y>cameraLabel.frame.minY{
+            //左下あたりをdoubleTapするとcaloricEtt,Oknボタンが現れる、消すことも可能。
             let flag=UserDefaults.standard.bool(forKey: "caloricEttOknFlag")
             print("flag",flag)
             if flag==true{

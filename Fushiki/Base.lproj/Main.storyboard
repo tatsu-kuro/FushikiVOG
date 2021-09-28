@@ -679,8 +679,8 @@
                     <connections>
                         <outlet property="calcButton" destination="ryP-oe-phP" id="IEs-DN-S5y"/>
                         <outlet property="currTimeLabel" destination="fCB-dg-Pfm" id="oB5-o4-fYb"/>
-                        <outlet property="debugEyeb" destination="08B-ab-fp8" id="wPp-o8-6JK"/>
-                        <outlet property="debugFaceb" destination="Lkb-hX-28d" id="9ri-iE-j2G"/>
+                        <outlet property="debugEyeWaku_imge" destination="08B-ab-fp8" id="wPp-o8-6JK"/>
+                        <outlet property="debugFaceWaku_image" destination="Lkb-hX-28d" id="9ri-iE-j2G"/>
                         <outlet property="exitButton" destination="JHV-lT-7mi" id="yUl-RL-ALz"/>
                         <outlet property="eyeWakuL_image" destination="d12-qp-QJR" id="mhZ-1G-6ep"/>
                         <outlet property="eyeWaku_image" destination="ETc-4Y-VEe" id="H7K-ga-j5C"/>
