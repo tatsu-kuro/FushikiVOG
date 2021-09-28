@@ -934,7 +934,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fushiki_e" translatesAutoresizingMaskIntoConstraints="NO" id="SBv-qp-uiy">
-                                <rect key="frame" x="224" y="368" width="226" height="25"/>
+                                <rect key="frame" x="217" y="350" width="233" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2ai-kF-qQC">
@@ -1200,9 +1200,9 @@
                     <navigationItem key="navigationItem" id="Dwi-dG-ECm"/>
                     <connections>
                         <outlet property="cameraChangeButton" destination="XCC-bL-WBw" id="xCP-xB-FFx"/>
+                        <outlet property="cameraFpsLabel" destination="l7C-ol-six" id="9Rk-Zl-NH6"/>
                         <outlet property="cameraTypeLabel" destination="73H-9L-FUj" id="hkH-VH-VgU"/>
                         <outlet property="cameraView" destination="oPE-nE-3TS" id="HdR-E8-rF9"/>
-                        <outlet property="camreaFpsLabel" destination="l7C-ol-six" id="9Rk-Zl-NH6"/>
                         <outlet property="exitButton" destination="9oI-63-ISV" id="TwE-rD-xHs"/>
                         <outlet property="focusBar" destination="8Wh-vx-bUz" id="LgS-Rj-5qL"/>
                         <outlet property="focusBarLabel" destination="txO-YV-qtb" id="Vd1-jV-K4e"/>

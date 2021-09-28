@@ -13,7 +13,7 @@ import Photos
 import CoreMotion
 class CameraViewController: UIViewController {
     let camera = CameraAlbumEtc()//name:"Fushiki")
-    @IBOutlet weak var camreaFpsLabel: UILabel!
+    @IBOutlet weak var cameraFpsLabel: UILabel!
     
     @IBOutlet weak var cameraTypeLabel: UILabel!
     @IBOutlet weak var cameraView: UIImageView!
@@ -27,7 +27,7 @@ class CameraViewController: UIViewController {
     
     @IBOutlet weak var ledBarLabel: UILabel!
     @IBOutlet weak var exitButton: UIButton!
-    let cameraTypeStrings : Array<String> = ["[frontCamera]","[wideAngleCamera]","[ultrawideCamera]","[telephotoCamera]"]
+    let cameraTypeStrings : Array<String> = ["frontCamera","wideAngleCamera","ultraWideCamera","telePhotoCamera"]
     var cameraType:Int=0
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,8 +42,8 @@ class CameraViewController: UIViewController {
 //        fpsLabel.text = String(format:"%s fps:%d %dx%d" ,cameraStr,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
 
 //        fpsLabel.text = String(format:"%s fps:%d %dx%d" ,cameraModeStrings[cameraMode],camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
-        let fpsLabeltext = String(format:"fps:%d %dx%d" ,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
-        camreaFpsLabel.text = cameraTypeStrings[cameraType] + " " + fpsLabeltext
+        cameraFpsLabel.text = String(format:"fps:%d %dx%d" ,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
+        cameraTypeLabel.text = cameraTypeStrings[cameraType]
         zoomBar.minimumValue = 0
         zoomBar.maximumValue = 0.1
         zoomBar.addTarget(self, action: #selector(onZoomValueChange), for: UIControl.Event.valueChanged)
@@ -83,8 +83,8 @@ class CameraViewController: UIViewController {
         print("camera:",cameraType,cameraTypeStrings[cameraType])
 //        let cameraStr=cameraModeStrings[cameraMode]
 //        fpsLabel.text = String(format:"%s fps:%d %dx%d" ,cameraStr,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
-        let fpsLabeltext = String(format:"fps:%d %dx%d" ,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
-        camreaFpsLabel.text = cameraTypeStrings[cameraType] + "  " + fpsLabeltext
+        cameraFpsLabel.text = String(format:"fps:%d %dx%d" ,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
+        cameraTypeLabel.text = cameraTypeStrings[cameraType]
 
 //        fpsLabel.text = String(format:"fps:%d %dx%d" ,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
         camera.setLedLevel(level:camera.getUserDefaultFloat(str: "ledValue", ret:0))
@@ -225,7 +225,8 @@ class CameraViewController: UIViewController {
         let bh=bw*170/440
         let by=wh-bh-sp
         camera.setButtonProperty(exitButton,x:left+bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
-        camera.setLabelProperty( camreaFpsLabel,x:left+sp*2,y:by,w:bw*4,h:bh,UIColor.white)
+        camera.setLabelProperty( cameraFpsLabel,x:left+bw*2+sp*3,y:by,w:bw*2,h:bh,UIColor.white)
+        camera.setLabelProperty( cameraTypeLabel,x:left+sp*2,y:by,w:bw*2,h:bh,UIColor.white)
         camera.setLabelProperty(zoomBarLabel,x:left+bw*6+sp*8,y:by-sp/3-bh,w:bw,h:bh,UIColor.white)
         camera.setButtonProperty(cameraChangeButton, x: left+bw*5+sp*7, y: by, w: bw, h: bh,UIColor.orange)
         

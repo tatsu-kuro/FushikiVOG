@@ -450,7 +450,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let sp=ww/120//間隙
         let bw=(ww-sp*10)/7//ボタン幅
         let bh=bw*170/440
-        let by=wh-bh-sp+topPadding
+        let by=wh-bh-3*sp-topPadding
         tableView.frame=CGRect(x:leftPadding,y:0,width:ww,height: by)
         
         ettButton.alpha=alp
@@ -469,20 +469,21 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         camera.setButtonProperty(helpButton,x:bw*5+sp*7+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(setteiButton,x:bw*6+sp*8+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         
-        let logoY = ww/13
+//        let logoY:CGFloat = 0//ww/13
         
-        if ww/2 > by - logoY{
-            titleImage.frame.origin.y = logoY + topPadding
-            titleImage.frame.size.width = (by - logoY)*2
-            titleImage.frame.size.height = by - logoY
+        if ww/2 > by{
+            titleImage.frame.origin.y = sp+topPadding
+            titleImage.frame.size.width = by*2
+            titleImage.frame.size.height = by
             titleImage.frame.origin.x = (ww - titleImage.frame.size.width)/2+leftPadding
         }else{
             titleImage.frame.origin.x = leftPadding
             titleImage.frame.size.width = ww
-            titleImage.frame.origin.y = logoY + (by - logoY - ww/2)/2
+            titleImage.frame.origin.y = (by - ww/2)/2
             titleImage.frame.size.height = ww/2
         }
         logoImage.frame = CGRect(x: leftPadding, y: topPadding, width:ww, height:wh/10)
+        logoImage.isHidden=true
         caloricEttOknFlag=camera.getUserDefaultBool(str: "caloricEttOknFlag", ret: false)
 //        cameraMode=camera.getUserDefaultInt(str: "cameraMode", ret: 0)
         cameraON=camera.getUserDefaultBool(str: "cameraON", ret: true)
