@@ -29,7 +29,7 @@ class SetteiViewController: UIViewController {
     var ettModeText1:String=""
     var ettModeText2:String=""
     var ettModeText3:String=""
-    var cameraMode:Int!
+    var cameraType:Int!
     var speakerOnOff:Int!
     var cameraON:Bool!
     @IBOutlet weak var cameraLabel: UILabel!
@@ -178,7 +178,7 @@ class SetteiViewController: UIViewController {
         UserDefaults.standard.set(oknMode, forKey: "oknMode")
         UserDefaults.standard.set(ettMode,forKey: "ettMode")
         UserDefaults.standard.set(screenBrightness, forKey: "screenBrightness")
-        UserDefaults.standard.set(cameraMode,forKey: "cameraMode")
+        UserDefaults.standard.set(cameraType,forKey: "cameraType")
         
         UserDefaults.standard.set(speakerOnOff,forKey: "speakerOnOff")
         UserDefaults.standard.set(ettModeText0, forKey: "ettModeText0")
@@ -283,7 +283,7 @@ class SetteiViewController: UIViewController {
         oknMode = UserDefaults.standard.integer(forKey: "oknMode")
         oknTime = UserDefaults.standard.integer(forKey: "oknTime")
         speakerOnOff=UserDefaults.standard.integer(forKey: "speakerOnOff")
-        cameraMode=UserDefaults.standard.integer(forKey: "cameraMode")
+        cameraType=UserDefaults.standard.integer(forKey: "cameraType")
         cameraON=UserDefaults.standard.bool(forKey: "cameraON")
         screenBrightness = camera.getUserDefaultFloat(str: "screenBrightness", ret: 1.0)
         ettMode = camera.getUserDefaultInt(str:"ettMode",ret:0)

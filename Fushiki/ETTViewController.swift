@@ -120,8 +120,8 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         mainBrightness=UIScreen.main.brightness//明るさを保持、終了時に戻す
         print(UIScreen.main.brightness)
         UIScreen.main.brightness = CGFloat(camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
-        let cameraMode = camera.getUserDefaultInt(str: "cameraMode", ret: 0)
-        camera.initSession(camera: Int(cameraMode), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
+        let cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
+        camera.initSession(camera: Int(cameraType), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
       
         let zoomValue=camera.getUserDefaultFloat(str: "zoomValue", ret:0)
         camera.setZoom(level: zoomValue)

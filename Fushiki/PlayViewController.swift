@@ -27,7 +27,7 @@ extension UIImage {
 }
 class PlayViewController: UIViewController {
     var pleaseReturnFlag=false
-    var cameraMode:Int!
+    var cameraType:Int!
     let album = CameraAlbumEtc()//name:"Fushiki")
     let openCV = OpenCVWrapper()
     var videoURL:URL?
@@ -869,7 +869,7 @@ class PlayViewController: UIViewController {
             wakuLength = CGFloat(album.getUserDefaultInt(str: "wakuLength", ret: 3))
             eyeBorder = album.getUserDefaultInt(str: "eyeBorder", ret: 9)
         }
-        cameraMode = album.getUserDefaultInt(str: "cameraMode", ret: 0)
+        cameraType = album.getUserDefaultInt(str: "cameraType", ret: 0)
         posRatio = album.getUserDefaultInt(str: "posRatio", ret:100)
         veloRatio = album.getUserDefaultInt(str:"veloRatio",ret :100)
         eyeCenter.x = CGFloat(album.getUserDefaultInt(str: "eyeCenterX", ret: 320))
@@ -1215,7 +1215,7 @@ class PlayViewController: UIViewController {
         sample = readerOutput.copyNextSampleBuffer()
         let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample!)!
         var ciImage:CIImage!
-        if videoFps<backCameraFps-10{//cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
+        if videoFps<backCameraFps-10{//cameraType == 0{//front Camera ここは画面表示とは関係なさそう
             ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
         }else{
             ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
@@ -1286,7 +1286,7 @@ class PlayViewController: UIViewController {
                         eyeWithBorderRect.origin.x=0
                         eyeWithBorderRect.origin.y=0
                     }
-                    if videoFps<backCameraFps-10{//cameraMode == 0{//front Camera ここは画面表示とは関係なさそう
+                    if videoFps<backCameraFps-10{//cameraType == 0
                         ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
                     }else{
                         ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)

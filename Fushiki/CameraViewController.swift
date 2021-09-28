@@ -27,15 +27,15 @@ class CameraViewController: UIViewController {
     
     @IBOutlet weak var ledBarLabel: UILabel!
     @IBOutlet weak var exitButton: UIButton!
-    let cameraModeStrings : Array<String> = ["[frontCamera]","[wideAngleCamera]","[ultrawideCamera]","[telephotoCamera]"]
-    var cameraMode:Int=0
+    let cameraTypeStrings : Array<String> = ["[frontCamera]","[wideAngleCamera]","[ultrawideCamera]","[telephotoCamera]"]
+    var cameraType:Int=0
     override func viewDidLoad() {
         super.viewDidLoad()
         getCameras()
-        cameraMode = Int(camera.getUserDefaultInt(str: "cameraMode", ret: 0))
+        cameraType = Int(camera.getUserDefaultInt(str: "cameraType", ret: 0))
         setButtons()
 //        print("camerwType:",cameraModeStrings[cameraMode])
-        camera.initSession(camera: cameraMode, bounds:view.bounds, cameraView: cameraView)
+        camera.initSession(camera: cameraType, bounds:view.bounds, cameraView: cameraView)
 //        print("camera:",cameraModeStrings[cameraMode])
 //        print("camera:",cameraMode,cameraModeStrings[cameraMode])
 //        let cameraStr=cameraModeStrings[cameraMode]
@@ -43,7 +43,7 @@ class CameraViewController: UIViewController {
 
 //        fpsLabel.text = String(format:"%s fps:%d %dx%d" ,cameraModeStrings[cameraMode],camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
         let fpsLabeltext = String(format:"fps:%d %dx%d" ,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
-        camreaFpsLabel.text = cameraModeStrings[cameraMode] + " " + fpsLabeltext
+        camreaFpsLabel.text = cameraTypeStrings[cameraType] + " " + fpsLabeltext
         zoomBar.minimumValue = 0
         zoomBar.maximumValue = 0.1
         zoomBar.addTarget(self, action: #selector(onZoomValueChange), for: UIControl.Event.valueChanged)
@@ -70,25 +70,25 @@ class CameraViewController: UIViewController {
         return true
     }
     @IBAction func onCameraChangeButton(_ sender: Any) {
-        cameraMode=camera.getUserDefaultInt(str: "cameraMode", ret: 0)
+        cameraType=camera.getUserDefaultInt(str: "cameraType", ret: 0)
         changeCameraMode()
 //        if cameraMode == 0{
 //            cameraMode=1
 //        }else{
 //            cameraMode=0
 //        }
-        UserDefaults.standard.set(cameraMode, forKey: "cameraMode")
+        UserDefaults.standard.set(cameraType, forKey: "cameraType")
         camera.stopRunning()
-        camera.initSession(camera: cameraMode, bounds:view.bounds, cameraView: cameraView)
-        print("camera:",cameraMode,cameraModeStrings[cameraMode])
+        camera.initSession(camera: cameraType, bounds:view.bounds, cameraView: cameraView)
+        print("camera:",cameraType,cameraTypeStrings[cameraType])
 //        let cameraStr=cameraModeStrings[cameraMode]
 //        fpsLabel.text = String(format:"%s fps:%d %dx%d" ,cameraStr,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
         let fpsLabeltext = String(format:"fps:%d %dx%d" ,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
-        camreaFpsLabel.text = cameraModeStrings[cameraMode] + "  " + fpsLabeltext
+        camreaFpsLabel.text = cameraTypeStrings[cameraType] + "  " + fpsLabeltext
 
 //        fpsLabel.text = String(format:"fps:%d %dx%d" ,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
         camera.setLedLevel(level:camera.getUserDefaultFloat(str: "ledValue", ret:0))
-        if cameraMode > 0{
+        if cameraType > 0{
             UserDefaults.standard.set(camera.fpsCurrent, forKey: "backCameraFps")
         }
         setButtons()
@@ -111,26 +111,26 @@ class CameraViewController: UIViewController {
     //cameraMode 0:front 1:wideangle 2:ultrawide 3:telephoto
     func changeCameraMode()
     {
-        if cameraMode==0{//front
-            cameraMode=1//wideAngle
-        }else if cameraMode==1{
+        if cameraType==0{//front
+            cameraType=1//wideAngle
+        }else if cameraType==1{
             if ultrawideCamera{
-                cameraMode=2//ultrawide
+                cameraType=2//ultrawide
             }else if telephotoCamera{
-                cameraMode=3//telephoto
+                cameraType=3//telephoto
             }else{
-                cameraMode=0//front
+                cameraType=0//front
             }
-        }else if cameraMode==2{
+        }else if cameraType==2{
             if telephotoCamera{
-                cameraMode=3
+                cameraType=3
             }else{
-                cameraMode=0
+                cameraType=0
             }
         }else{
-            cameraMode=0
+            cameraType=0
         }
-        print("cameraMode:",cameraMode)
+        print("cameraType:",cameraType)
     }
     /*
      @IBAction func onCameraChange(_ sender: Any) {//camera>1
@@ -242,7 +242,7 @@ class CameraViewController: UIViewController {
         zoomBar.isHidden=false
         zoomBarLabel.isHidden=false
         
-        if cameraMode==0{
+        if cameraType==0{
             ledBar.isHidden=true
             ledBarLabel.isHidden=true
         }

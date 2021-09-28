@@ -30,7 +30,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var ettWidth:Int=500
     var targetMode:Int = 6
     var speakerOnOff:Int = 0
-    var cameraMode:Int = 0
+    var cameraType:Int = 0
     var screenBrightness:Float = 0
     var ettModeText0:String = ""
     var ettModeText1:String = ""
@@ -326,7 +326,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         ettWidth = camera.getUserDefaultInt(str: "ettWidth", ret: 90)
         targetMode = camera.getUserDefaultInt(str: "targetMode", ret: 6)
         speakerOnOff = camera.getUserDefaultInt(str: "speakerOnOff", ret: 0)
-        cameraMode = camera.getUserDefaultInt(str: "cameraMode", ret: 0)
+        cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
         screenBrightness = camera.getUserDefaultFloat(str: "screenBrightness", ret: 1)
         ettModeText0 = camera.getUserDefaultString(str: "ettModeText0", ret: "1:0:2,1:2:12,3:2:12,5:2:12")
         caloricEttOknFlag = camera.getUserDefaultBool(str: "caloricEttOknFlag", ret:false)

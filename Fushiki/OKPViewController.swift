@@ -149,9 +149,9 @@ class OKPViewController: UIViewController{
         UIScreen.main.brightness = 1.0
         UIScreen.main.brightness = CGFloat(camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
         camera.makeAlbum()
-        let cameraMode = camera.getUserDefaultInt(str: "cameraMode", ret: 0)
-        camera.initSession(camera: Int(cameraMode), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
-        if cameraMode == 2{
+        let cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
+        camera.initSession(camera: Int(cameraType), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
+        if cameraType == 2{
             recClarification.isHidden=true
         }
         let zoomValue=camera.getUserDefaultFloat(str: "zoomValue", ret:0)
