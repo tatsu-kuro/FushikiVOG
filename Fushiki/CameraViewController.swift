@@ -13,27 +13,28 @@ import Photos
 import CoreMotion
 class CameraViewController: UIViewController {
     let camera = CameraAlbumEtc()//name:"Fushiki")
-    @IBOutlet weak var fpsLabel: UILabel!
+    @IBOutlet weak var camreaFpsLabel: UILabel!
+    
+    @IBOutlet weak var cameraTypeLabel: UILabel!
     @IBOutlet weak var cameraView: UIImageView!
     @IBOutlet weak var cameraChangeButton: UIButton!
-//    @IBOutlet weak var cameraChan: UISegmentedControl!
     @IBOutlet weak var zoomBar: UISlider!
     @IBOutlet weak var focusBar: UISlider!
     
     @IBOutlet weak var ledBar: UISlider!
-    @IBOutlet weak var zoomLabel: UILabel!
-    @IBOutlet weak var focusLabel: UILabel!
+    @IBOutlet weak var zoomBarLabel: UILabel!
+    @IBOutlet weak var focusBarLabel: UILabel!
     
-    @IBOutlet weak var ledLabel: UILabel!
+    @IBOutlet weak var ledBarLabel: UILabel!
     @IBOutlet weak var exitButton: UIButton!
     let cameraModeStrings : Array<String> = ["[frontCamera]","[wideAngleCamera]","[ultrawideCamera]","[telephotoCamera]"]
     var cameraMode:Int=0
     override func viewDidLoad() {
         super.viewDidLoad()
         getCameras()
-        setButtons()
         cameraMode = Int(camera.getUserDefaultInt(str: "cameraMode", ret: 0))
-        print("camerwType:",cameraModeStrings[cameraMode])
+        setButtons()
+//        print("camerwType:",cameraModeStrings[cameraMode])
         camera.initSession(camera: cameraMode, bounds:view.bounds, cameraView: cameraView)
 //        print("camera:",cameraModeStrings[cameraMode])
 //        print("camera:",cameraMode,cameraModeStrings[cameraMode])
@@ -42,7 +43,7 @@ class CameraViewController: UIViewController {
 
 //        fpsLabel.text = String(format:"%s fps:%d %dx%d" ,cameraModeStrings[cameraMode],camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
         let fpsLabeltext = String(format:"fps:%d %dx%d" ,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
-        fpsLabel.text = cameraModeStrings[cameraMode] + " " + fpsLabeltext
+        camreaFpsLabel.text = cameraModeStrings[cameraMode] + " " + fpsLabeltext
         zoomBar.minimumValue = 0
         zoomBar.maximumValue = 0.1
         zoomBar.addTarget(self, action: #selector(onZoomValueChange), for: UIControl.Event.valueChanged)
@@ -83,7 +84,7 @@ class CameraViewController: UIViewController {
 //        let cameraStr=cameraModeStrings[cameraMode]
 //        fpsLabel.text = String(format:"%s fps:%d %dx%d" ,cameraStr,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
         let fpsLabeltext = String(format:"fps:%d %dx%d" ,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
-        fpsLabel.text = cameraModeStrings[cameraMode] + "  " + fpsLabeltext
+        camreaFpsLabel.text = cameraModeStrings[cameraMode] + "  " + fpsLabeltext
 
 //        fpsLabel.text = String(format:"fps:%d %dx%d" ,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
         camera.setLedLevel(level:camera.getUserDefaultFloat(str: "ledValue", ret:0))
@@ -95,7 +96,7 @@ class CameraViewController: UIViewController {
     var wideAngleCamera:Bool=false//最低これはついている
     var ultrawideCamera:Bool=false
     var telephotoCamera:Bool=false
-    var cameraType:Int = 0
+//    var cameraType:Int = 0
     func getCameras(){
         if AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) != nil{
             wideAngleCamera=true
@@ -224,26 +225,26 @@ class CameraViewController: UIViewController {
         let bh=bw*170/440
         let by=wh-bh-sp
         camera.setButtonProperty(exitButton,x:left+bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
-        camera.setLabelProperty( fpsLabel,x:left+sp*2,y:by,w:bw*4,h:bh,UIColor.white)
-        camera.setLabelProperty(zoomLabel,x:left+bw*6+sp*8,y:by-sp/3-bh,w:bw,h:bh,UIColor.white)
+        camera.setLabelProperty( camreaFpsLabel,x:left+sp*2,y:by,w:bw*4,h:bh,UIColor.white)
+        camera.setLabelProperty(zoomBarLabel,x:left+bw*6+sp*8,y:by-sp/3-bh,w:bw,h:bh,UIColor.white)
         camera.setButtonProperty(cameraChangeButton, x: left+bw*5+sp*7, y: by, w: bw, h: bh,UIColor.orange)
         
-        camera.setLabelProperty(focusLabel,x:left+bw*6+sp*8,y:by-sp*2/3-2*bh,w:bw,h:bh,UIColor.white)
-        camera.setLabelProperty(ledLabel,x:left+bw*6+sp*8,y:by-sp*3/3-3*bh,w:bw,h:bh,UIColor.white)
+        camera.setLabelProperty(focusBarLabel,x:left+bw*6+sp*8,y:by-sp*2/3-2*bh,w:bw,h:bh,UIColor.white)
+        camera.setLabelProperty(ledBarLabel,x:left+bw*6+sp*8,y:by-sp*3/3-3*bh,w:bw,h:bh,UIColor.white)
         ledBar.frame=CGRect(x:left+2*sp,y:by-sp*3/3-3*bh,width:ww-7*sp-bw,height:bh)
         focusBar.frame=CGRect(x:left+2*sp,y:by-sp*2/3-2*bh,width:ww-7*sp-bw,height:bh)
         zoomBar.frame=CGRect(x:left + 2*sp,y:by-sp/3-bh,width:ww-7*sp-bw,height:bh)
         
         focusBar.isHidden=false
-        focusLabel.isHidden=false
+        focusBarLabel.isHidden=false
         ledBar.isHidden=false
-        ledLabel.isHidden=false
+        ledBarLabel.isHidden=false
         zoomBar.isHidden=false
-        zoomLabel.isHidden=false
+        zoomBarLabel.isHidden=false
         
         if cameraMode==0{
             ledBar.isHidden=true
-            ledLabel.isHidden=true
+            ledBarLabel.isHidden=true
         }
     }
 }
