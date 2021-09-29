@@ -61,7 +61,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             UserDefaults.standard.set(rightPadding, forKey: "right")
             print(topPadding,bottomPadding,leftPadding,rightPadding)    // iPhoneXなら44, その他は20.0
         }
-        setRotate(alp: 1)
+        setButtons()
     }
     
     func sound(snd:String){
@@ -72,7 +72,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     func doModes_sub(mode:Int){
         targetMode = mode
-        setAlpha()
+        setButtonsAlpha()
         sound(snd: "silence")
         doModes()
     }
@@ -122,7 +122,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     func doModes(){
         let storyboard: UIStoryboard = self.storyboard!
-        if targetMode<5 && tableView.visibleCells.count>5{//録画の時tableviewをトップに戻す
+        if targetMode<3 && tableView.visibleCells.count>5{//録画の時tableviewをトップに戻す
             
             tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
         }
@@ -149,7 +149,8 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     return
                 }else{
                     UserDefaults.standard.set(true, forKey: "cameraON")
-                    setAlpha()
+                    setButtonsAlpha()
+                    setCameraOnOffbuttons()
                 }
                 return                
             }
@@ -163,7 +164,8 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     return
                 }else{
                     UserDefaults.standard.set(false, forKey: "cameraON")
-                    setAlpha()
+                    setButtonsAlpha()
+                    setCameraOnOffbuttons()
                 }
                 return
             }
@@ -177,10 +179,16 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             self.present(nextView, animated: true, completion: nil)
         }
     }
-    func setAlpha(){
-        setRotate(alp: 0.6)
+    func setButtonsAlpha(){
+        ettButton.alpha=0.6
+        okpButton.alpha=0.6
+        oknButton.alpha=0.6
+        caloricEttButton.alpha=0.6
+        caloricOknButton.alpha=0.6
+        helpButton.alpha=0.6
+        setteiButton.alpha=0.6
         if targetMode==0{
-            ettButton.alpha=1.0// saccadebut.alph=1.0
+            ettButton.alpha=1.0
         }else if targetMode==1{
             okpButton.alpha=1.0
         }else if targetMode==2{
@@ -208,7 +216,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                print("TogglePlayPause")
                doModes()
             case .remoteControlNextTrack:
-                setRotate(alp: 0.6)
+                setButtons()
                 if(targetMode == -1){
                     targetMode=2
                 }else{
@@ -217,25 +225,11 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 if targetMode>6 {
                     targetMode = 0
                 }
-                if targetMode==0{
-                    ettButton.alpha=1.0// saccadebut.alph=1.0
-                }else if targetMode==1{
-                    okpButton.alpha=1.0
-                }else if targetMode==2{
-                    oknButton.alpha=1.0
-                }else if targetMode==3{
-                    caloricEttButton.alpha=1.0
-                }else if targetMode==4{
-                    caloricOknButton.alpha=1.0
-                }else if targetMode==5{
-                    helpButton.alpha=1.0
-                }else{
-                    setteiButton.alpha=1.0
-                }
+                setButtonsAlpha()
                 print("NextTrack")
                 print(targetMode)
             case .remoteControlPreviousTrack:
-                setRotate(alp: 0.6)
+                setButtons()
                 if(targetMode == -1){
                     targetMode = 2
                 }else{
@@ -244,22 +238,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 if targetMode<0{
                     targetMode = 6
                 }
-                if targetMode==0{
-                    ettButton.alpha=1.0// saccadebut.alph=1.0
-                }else if targetMode==1{
-                    okpButton.alpha=1.0
-                }else if targetMode==2{
-                    oknButton.alpha=1.0
-                }else if targetMode==3{
-                    caloricEttButton.alpha=1.0
-                }else if targetMode==4{
-                    caloricOknButton.alpha=1.0
-                }else if targetMode==5{
-                    helpButton.alpha=1.0
-                }else{
-                    setteiButton.alpha=1.0
-                }
-                print(targetMode)
+                setButtonsAlpha()
                 print("PreviousTrack")
             default:
                 print("Others")
@@ -271,23 +250,8 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         if UIApplication.shared.isIdleTimerDisabled == true{
             UIApplication.shared.isIdleTimerDisabled = false//監視する
         }
- 
-        setRotate(alp: 0.6)
-        if targetMode==0{
-            ettButton.alpha=1.0
-        }else if targetMode==1{
-            okpButton.alpha=1.0
-        }else if targetMode==2{
-            oknButton.alpha=1.0
-        }else if targetMode==3{
-            caloricEttButton.alpha=1.0
-        }else if targetMode==4{
-            caloricOknButton.alpha=1.0
-        }else if targetMode==5{
-            helpButton.alpha=1.0
-        }else{
-            setteiButton.alpha=1.0
-        }
+        setButtons()
+        setButtonsAlpha()
         print("didappear")
         camera.getAlbumAssets()
         for i in 0..<camera.videoURL.count{//cloud のURL->temp.mp4としている
@@ -361,11 +325,11 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        setRotate(alp:1)
+        setButtons()
         coordinator.animate(
             alongsideTransition: nil,
             completion: {(UIViewControllerTransitionCoordinatorContext) in
-                self.setRotate(alp:1)
+                self.setButtons()
         }
         )
     }
@@ -443,7 +407,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 //        }
     }
     */
-    func setRotate(alp:CGFloat){
+    func setButtons(){
         
         let ww:CGFloat=view.bounds.width-leftPadding-rightPadding
         let wh:CGFloat=view.bounds.height-topPadding-bottomPadding
@@ -452,14 +416,6 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let bh=bw*170/440
         let by=wh-bh-3*sp-topPadding
         tableView.frame=CGRect(x:leftPadding,y:0,width:ww,height: by)
-        
-        ettButton.alpha=alp
-        okpButton.alpha=alp
-        oknButton.alpha=alp
-        caloricEttButton.alpha=alp
-        caloricOknButton.alpha=alp
-        helpButton.alpha=alp
-        setteiButton.alpha=alp
  
         camera.setButtonProperty(ettButton,x:sp*2+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(okpButton,x:bw*1+sp*3+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
@@ -468,8 +424,6 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         camera.setButtonProperty(caloricOknButton,x:bw*4+sp*6+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(helpButton,x:bw*5+sp*7+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(setteiButton,x:bw*6+sp*8+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
-        
-//        let logoY:CGFloat = 0//ww/13
         
         if ww/2 > by{
             titleImage.frame.origin.y = sp+topPadding
@@ -484,8 +438,10 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         logoImage.frame = CGRect(x: leftPadding, y: topPadding, width:ww, height:wh/10)
         logoImage.isHidden=true
+        setCameraOnOffbuttons()
+    }
+    func setCameraOnOffbuttons(){
         caloricEttOknFlag=camera.getUserDefaultBool(str: "caloricEttOknFlag", ret: false)
-//        cameraMode=camera.getUserDefaultInt(str: "cameraMode", ret: 0)
         cameraON=camera.getUserDefaultBool(str: "cameraON", ret: true)
         if caloricEttOknFlag==false{
             if cameraON{
@@ -500,8 +456,6 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             caloricOknButton.setTitle("CaloricOKN", for: .normal)
         }
     }
-    
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
