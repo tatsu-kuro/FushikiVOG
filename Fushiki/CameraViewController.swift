@@ -198,7 +198,7 @@ class CameraViewController: UIViewController {
         UserDefaults.standard.set(zoomBar.value, forKey: "zoomValue")
     }
     @objc func onFocusValueChange(){
-        print("bar:",focusBar.value*100)
+//        print("bar:",focusBar.value*100)
         camera.setFocus(focus:focusBar.value)
         UserDefaults.standard.set(focusBar.value, forKey: "focusValue")
     }
@@ -247,6 +247,9 @@ class CameraViewController: UIViewController {
             ledBar.isHidden=true
             ledBarLabel.isHidden=true
         }
+        //視標のスクリーンが角膜に反射するのでLEDは使わなくて済みそう。
+        ledBar.isHidden=true
+        ledBarLabel.isHidden=true
     }
 }
 
