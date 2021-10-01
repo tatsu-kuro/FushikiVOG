@@ -311,6 +311,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         getUserDefaultAll()
         print("MainViewDidLoad")
         sound(snd:"silence")//リモコンの操作権を貰う
+//        setButtons()
         UIApplication.shared.isIdleTimerDisabled = false//スリープする。監視する
         UIApplication.shared.beginReceivingRemoteControlEvents()
         self.becomeFirstResponder()
@@ -408,13 +409,21 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     */
     func setButtons(){
+//        let top=CGFloat(UserDefaults.standard.float(forKey: "top"))
+//        let bottom=CGFloat(UserDefaults.standard.float(forKey: "bottom"))
+//        let left=CGFloat(UserDefaults.standard.float(forKey: "left"))
+//        let right=CGFloat(UserDefaults.standard.float(forKey: "right"))
+//
+//        let ww = view.bounds.width - left - right
+//        let wh = view.bounds.height - top - bottom
+
         
         let ww:CGFloat=view.bounds.width-leftPadding-rightPadding
         let wh:CGFloat=view.bounds.height-topPadding-bottomPadding
         let sp=ww/120//間隙
         let bw=(ww-sp*10)/7//ボタン幅
         let bh=bw*170/440
-        let by=wh-bh-3*sp-topPadding
+        let by=wh-bh-sp
         tableView.frame=CGRect(x:leftPadding,y:0,width:ww,height: by)
  
         camera.setButtonProperty(ettButton,x:sp*2+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
