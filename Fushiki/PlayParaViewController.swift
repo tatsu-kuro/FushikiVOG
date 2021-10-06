@@ -89,8 +89,8 @@ class PlayParaViewController: UIViewController {
       }
   
     @IBAction func onDefault1Button(_ sender: Any) {
-//        posRatio=100
-//        veloRatio=100
+        posRatio=250
+        veloRatio=250
 //        print("button1")
 //        if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
 //            wakuLength = 6
@@ -106,43 +106,43 @@ class PlayParaViewController: UIViewController {
         setUserDefaults()
     }
     @IBAction func onDefault2Button(_ sender: Any) {
-//        posRatio=100
-//        veloRatio=100
-        if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
-            wakuLength = 10
-            eyeBorder = 16
-        }else{//iphone
-            wakuLength = 5
+        posRatio=150
+        veloRatio=150
+//        if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
+//            wakuLength = 10
+//            eyeBorder = 16
+//        }else{//iphone
+            wakuLength = 4
             eyeBorder = 8
-        }
+//        }
 //        faceMark=1
 //        showRect=1
         setUserDefaults()
     }
     @IBAction func onDefault3Button(_ sender: Any) {
-//        posRatio=100
-//        veloRatio=100
-        if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
-            wakuLength = 14
-            eyeBorder = 20
-        }else{//iphone
-            wakuLength = 7
-            eyeBorder = 10
-        }
+        posRatio=200
+        veloRatio=200
+//        if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
+//            wakuLength = 14
+//            eyeBorder = 20
+//        }else{//iphone
+            wakuLength = 3
+            eyeBorder = 8
+//        }
 //        faceMark=1
 //        showRect=1
         setUserDefaults()
     }
     @IBAction func onDefault4Button(_ sender: Any) {
-//        posRatio=100
-//        veloRatio=100
-        if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
-            wakuLength = 18
-            eyeBorder = 24
-        }else{//iphone
-            wakuLength = 9
-            eyeBorder = 12
-        }
+        posRatio=300
+        veloRatio=200
+//        if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
+//            wakuLength = 18
+//            eyeBorder = 24
+//        }else{//iphone
+            wakuLength = 2
+            eyeBorder = 4
+//        }
 //        faceMark=1
 //        showRect=1
         setUserDefaults()
@@ -253,5 +253,8 @@ class PlayParaViewController: UIViewController {
         paraText5.frame=CGRect(x:head+bw+3*sp,y:sp*5+bh*4,width:lw,height: bh)
         paraText6.frame=CGRect(x:head+bw+3*sp,y:sp*6+bh*5,width:lw,height: bh)
         default1Button.setTitle("12-ultraWide", for: .normal)
+        default2Button.setTitle("12-wideAngle", for: .normal)
+        default3Button.setTitle("se(1st)-back", for: .normal)
+        default4Button.setTitle("se(1st)-front", for: .normal)
     }
 }
