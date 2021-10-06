@@ -163,11 +163,15 @@ class CarolicETTViewController: UIViewController{
         cirDiameter=ww/26
         ettW = (ww/2)-cirDiameter// *CGFloat(ettWidth)/100.0
         ettH = (wh/2)-cirDiameter// *CGFloat(ettWidth)/100.0
-
-        
-        
-        
-        
+        let ettTxt = UserDefaults.standard.string(forKey: "ettModeText0")!//１番パラメータの横振幅を使います。
+        let ettTxtComponents = ettTxt.components(separatedBy: ",")
+        var ettWidthX = Int(ettTxtComponents[0])!//横幅:1-5
+        if ettWidthX>5{
+            ettWidthX=5
+        }else if ettWidthX<0{
+            ettWidthX=0
+        }
+        ettW=ettH+(ettW-ettH)*CGFloat(ettWidthX)/5//１番パラメータの横振幅を使います。
         mainBrightness = UIScreen.main.brightness
         
         UIScreen.main.brightness = CGFloat(camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))

@@ -54,6 +54,26 @@ class CameraAlbumEtc: NSObject, AVCaptureFileOutputRecordingDelegate{
 //        let space=imgW*0.1
 //        return CGRect(x:width-imgW-space,y:height-imgH-space,width: imgW,height:imgH)
     }
+    func checkEttString(ettStr:String)->Bool{//ettTextがちゃんと並んでいるか like as 1,2:3:20,3:2:20
+        let ettTxtComponents = ettStr.components(separatedBy: ",")
+        let widthCnt = ettTxtComponents[0].components(separatedBy: ":").count
+        var paramCnt = 3
+        if ettTxtComponents.count<2{
+            return false
+        }
+        for i in 1...ettTxtComponents.count-1{//3個以外の時はその数値をセット
+            let str = ettTxtComponents[i].components(separatedBy: ":")
+            if str.count != 3{
+                paramCnt = str.count
+            }
+        }
+        
+        if widthCnt == 1 && paramCnt == 3 && ettStr.isAlphanumeric(){
+            return true
+        }else{
+            return false
+        }
+    }
     func albumExists() -> Bool {
         // ここで以下のようなエラーが出るが、なぜか問題なくアルバムが取得できている
         let albums = PHAssetCollection.fetchAssetCollections(with: PHAssetCollectionType.album, subtype:

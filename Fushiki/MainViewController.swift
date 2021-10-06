@@ -292,12 +292,24 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         speakerOnOff = camera.getUserDefaultInt(str: "speakerOnOff", ret: 0)
         cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
         screenBrightness = camera.getUserDefaultFloat(str: "screenBrightness", ret: 1)
-        ettModeText0 = camera.getUserDefaultString(str: "ettModeText0", ret: "1:0:2,1:2:12,3:2:12,5:2:12")
-        caloricEttOknFlag = camera.getUserDefaultBool(str: "caloricEttOknFlag", ret:false)
+            caloricEttOknFlag = camera.getUserDefaultBool(str: "caloricEttOknFlag", ret:false)
         cameraON = camera.getUserDefaultBool(str: "cameraON", ret: true)
-        ettModeText1 = camera.getUserDefaultString(str: "ettModeText1", ret: "2:2:12,4:2:12")
-        ettModeText2 = camera.getUserDefaultString(str: "ettModeText2", ret: "6:2:20")
-        ettModeText3 = camera.getUserDefaultString(str: "ettModeText3", ret: "6:3:20")
+        ettModeText0 = camera.getUserDefaultString(str: "ettModeText0", ret: "3,1:0:2,1:2:12,3:2:12,5:2:12")
+        if camera.checkEttString(ettStr: ettModeText0)==false{
+            UserDefaults.standard.set("3,1:0:2,1:2:12,3:2:12,5:2:12",forKey:"ettModeText0")
+        }
+        ettModeText1 = camera.getUserDefaultString(str: "ettModeText1", ret: "3,2:2:12,4:2:12")
+        if camera.checkEttString(ettStr: ettModeText1)==false{
+            UserDefaults.standard.set("3,2:2:12,4:2:12",forKey:"ettModeText1")
+        }
+        ettModeText2 = camera.getUserDefaultString(str: "ettModeText2", ret: "5,6:2:20")
+        if camera.checkEttString(ettStr: ettModeText2)==false{
+            UserDefaults.standard.set("5,6:2:20",forKey:"ettModeText2")
+        }
+        ettModeText3 = camera.getUserDefaultString(str: "ettModeText3", ret: "0,6:3:20")
+        if camera.checkEttString(ettStr: ettModeText3)==false{
+            UserDefaults.standard.set("0,6:3:20",forKey:"ettModeText3")
+        }
         let posRatio=camera.getUserDefaultInt(str:"posRatio",ret:300)
         let veloRatio=camera.getUserDefaultInt(str:"veloRatio",ret:300)
         let wakuLenth=camera.getUserDefaultInt(str:"wakuLength",ret:3)

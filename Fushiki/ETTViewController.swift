@@ -150,20 +150,18 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         }else{
             ettTxt = UserDefaults.standard.string(forKey: "ettModeText3")!
         }
-        let str0 = ettTxt.components(separatedBy: ",")
-        for i in 0...str0.count-1{
-            let str1 = str0[i].components(separatedBy: ":")
-            if str1.count == 3{
-                ettType.append(Int(str1[0])!)
-                ettSpeed.append(Int(str1[1])!)
-                ettSec.append(Double(str1[2])!)
+        let ettTxtComponents = ettTxt.components(separatedBy: ",")
+
+        var ettWidthX = Int(ettTxtComponents[0])!//横幅:1-5
+        for i in 1...ettTxtComponents.count-1{
+            let str = ettTxtComponents[i].components(separatedBy: ":")
+            if str.count == 3{
+                ettType.append(Int(str[0])!)
+                ettSpeed.append(Int(str[1])!)
+                ettSec.append(Double(str[2])!)
             }else{
                 break
             }
-        }
-        if ettType.count<1{
-            print("ettパラメータが不正です")
-            return
         }
         let top=UserDefaults.standard.float(forKey: "top")
         let bottom=UserDefaults.standard.float(forKey: "bottom")
@@ -175,12 +173,15 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         centerX=ww/2+CGFloat(left)
         centerY=wh/2+CGFloat(top)
         
-        
         cirDiameter=ww/26
         ettW = (ww/2)-cirDiameter// *CGFloat(ettWidth)/100.0
         ettH = (wh/2)-cirDiameter// *CGFloat(ettWidth)/100.0
-
-        
+        if ettWidthX>5{
+            ettWidthX=5
+        }else if ettWidthX<0{
+            ettWidthX=0
+        }
+        ettW=ettH+(ettW-ettH)*CGFloat(ettWidthX)/5
         displayLink = CADisplayLink(target: self, selector: #selector(self.update))
         displayLink!.preferredFramesPerSecond = 120
 
@@ -207,10 +208,12 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         }
         //          hideButtons(hide: true)
         UIApplication.shared.beginReceivingRemoteControlEvents()
-        self.becomeFirstResponder()
+        // ファーストレスポンダにする（その結果、キーボードが表示される）
+//        self.becomeFirstResponder()
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
-//        camera.sessionRecStart(fps:30)
+//        camera.sessionRect(fps:30)
+    
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -256,7 +259,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         else if(rand/3==1){yn = 0}
         else {yn=1}
         let x0=centerX
-        let xd=ettH// CGFloat(ettWidth)*x0/100
+        let xd=ettH
         let y0=centerY
         let yd=ettH
         return CGPoint(x:x0 + CGFloat(xn)*xd, y: y0 + CGFloat(yn)*yd)
@@ -269,17 +272,17 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         let elapset=CFAbsoluteTimeGetCurrent()-startTime
         if elapset<ettSec[currentEttNum]{
             let etttype=ettType[currentEttNum]
-            if etttype == 1{
+            if etttype == 1{//振り子横
                 let ettspeed=CGFloat(ettSpeed[currentEttNum])
                 let sinV=sin(CGFloat(elapset)*3.1415*0.3*ettspeed)
                 let cPoint:CGPoint = CGPoint(x:centerX + sinV*ettW, y: centerY)
                 drawCircle(cPoint:cPoint)
-            }else if etttype==2{
+            }else if etttype==2{//振り子縦
                 let ettspeed=CGFloat(ettSpeed[currentEttNum])
                 let sinV=sin(CGFloat(elapset)*3.1415*0.3*ettspeed)
                 let cPoint:CGPoint = CGPoint(x:centerX , y: centerY + sinV*ettH)
                 drawCircle(cPoint:cPoint)
-            }else if etttype==3{
+            }else if etttype==3{//衝動横
                 let ettspeed=Double(ettSpeed[currentEttNum])
                 let sec=Int(elapset*ettspeed/2)
                 if ettspeed==0{
@@ -293,7 +296,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
                         drawCircle(cPoint: cPoint)
                     }
                 }
-            }else if etttype==4{
+            }else if etttype==4{//衝動縦
                 let ettspeed=Double(ettSpeed[currentEttNum])
                 let sec=Int(elapset*ettspeed/2)
                 if ettspeed==0{
@@ -312,9 +315,9 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
                 let ettspeed=Double(ettSpeed[currentEttNum])
                 let sec=Int(elapset*ettspeed/2)
                 if sec != lastSec{
-                    if etttype==6{
-                        lastRandPoint=getRandPointXY()// randamDrawXY()
-                    }else{
+                    if etttype==6{//ランダム縦横
+                        lastRandPoint=getRandPointXY()
+                    }else{//5:ランダム横
                         lastRandPoint=getRandPointX()
                     }
                     print("time:",elapset)

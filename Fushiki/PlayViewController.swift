@@ -644,11 +644,11 @@ class PlayViewController: UIViewController {
     }
     
     func dispWakus(){
-        let left=CGFloat( UserDefaults.standard.float(forKey: "left"))
-        let right=CGFloat( UserDefaults.standard.float(forKey: "right"))
-        let ww=view.bounds.width-left-right
-        let sp=ww/120//間隙
-        let bw=(ww-sp*10)/7//ボタン幅
+//        let left=CGFloat( UserDefaults.standard.float(forKey: "left"))
+//        let right=CGFloat( UserDefaults.standard.float(forKey: "right"))
+//        let ww=view.bounds.width-left-right
+//        let sp=ww/120//間隙
+//        let bw=(ww-sp*10)/7//ボタン幅
         let d=(wakuLength+20)/2//matchingArea(center,wakuLength)
         if faceMark == false{
             eyeORface=0
@@ -1259,7 +1259,7 @@ class PlayViewController: UIViewController {
                 
                 //for test display
                 var x:CGFloat = 50.0
-                let y:CGFloat = 50.0
+//                let y:CGFloat = 50.0
                 autoreleasepool{
                     let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample)!
                     

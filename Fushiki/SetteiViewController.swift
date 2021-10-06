@@ -201,7 +201,7 @@ class SetteiViewController: UIViewController {
         oknTime=60
         ettMode=0
         UserDefaults.standard.set(0, forKey: "zoomValue")
-        ettModeText0 = "1:0:2,1:2:12,3:2:12,5:2:12"
+        ettModeText0 = "5,1:0:2,1:2:12,3:2:12,5:2:12"
         setUserDefaults()
         setControlState()
         dispTexts()
@@ -251,13 +251,13 @@ class SetteiViewController: UIViewController {
     }
     func setettMode(){
         if ettMode == 0{
-            ettText.text! = ettModeText0//" pursuit(30s) horizontal"
+            ettText.text! = ettModeText0
         }else if ettMode == 1{
             ettText.text! = ettModeText1
         }else if ettMode == 2{
-            ettText.text! = ettModeText2// " saccade(30s) horizontal & vertical"
+            ettText.text! = ettModeText2
         }else{
-            ettText.text! = ettModeText3//" pursuit(20s)->saccade(20s)->random(20s)"
+            ettText.text! = ettModeText3
         }
     }
 
@@ -292,8 +292,8 @@ class SetteiViewController: UIViewController {
         ettModeText2=camera.getUserDefaultString(str: "ettModeText2", ret: "2")
         ettModeText3=camera.getUserDefaultString(str: "ettModeText3", ret: "3")
 
-        ettExplanationText.text="円形視標の動作の設定方法  a:b:c,a1:b1:c1,....\n"
-        ettExplanationText.text! += "a[視標の動き方(1-6)]:b[速さ(0-3)]:c[時間(秒)]\n"
+        ettExplanationText.text="円形視標の動作の設定方法  w,a:b:c,a1:b1:c1,....\n"
+        ettExplanationText.text! += "w[横振幅(0-5)],a[視標の動き方(1-6)]:b[速さ(0-3)]:c[時間(秒)]\n"
         ettExplanationText.text! += "a) 1=振子横 2=同縦 3=衝動横 4=同縦 5=不規則横 6=同縦横"
             
         setScreen()
@@ -307,7 +307,23 @@ class SetteiViewController: UIViewController {
       override var prefersHomeIndicatorAutoHidden: Bool {
           return true
       }
-    
+//    func checkEttString(ettStr:String)->Bool{
+//        let ettTxtComponents = ettStr.components(separatedBy: ",")
+//        let widthCnt = ettTxtComponents[0].components(separatedBy: ":").count
+//        var paramCnt = 3
+//        for i in 1...ettTxtComponents.count-1{//3個以外の時はその数値をセット
+//            let str = ettTxtComponents[i].components(separatedBy: ":")
+//            if str.count != 3{
+//                paramCnt = str.count
+//            }
+//        }
+//        
+//        if widthCnt == 1 && paramCnt == 3 && ettStr.isAlphanumeric(){
+//            return true
+//        }else{
+//            return false
+//        }
+//    }
     @IBAction func tapOnEttText(_ sender: Any) {
         print("tap")
         let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
@@ -315,7 +331,19 @@ class SetteiViewController: UIViewController {
             // 入力したテキストをコンソールに表示
             let textField = alert.textFields![0] as UITextField
             let ettString:String = textField.text!
-            if ettString.isAlphanumeric(){//} isOnly(structuredBy: "0123456789:,") == true
+//            let ettTxtComponents = ettString.components(separatedBy: ",")
+//            let widthCnt = ettTxtComponents[0].components(separatedBy: ":").count
+//            var paramCnt = 3
+//            for i in 1...ettTxtComponents.count-1{//3個以外の時はその数値をセット
+//                let str = ettTxtComponents[i].components(separatedBy: ":")
+//                if str.count != 3{
+//                    paramCnt = str.count
+//                }
+//            }
+//
+//            if widthCnt == 1 && paramCnt == 3 && ettString.isAlphanumeric(){
+            if camera.checkEttString(ettStr: ettString){
+//            if ettString.isAlphanumeric(){//} isOnly(structuredBy: "0123456789:,") == true
                 if ettMode==0{
                     ettModeText0=ettString
                 }else if ettMode==1{
@@ -328,7 +356,7 @@ class SetteiViewController: UIViewController {
                 setUserDefaults()
                 ettText.text=ettString
             }else{
-                let dialog = UIAlertController(title: "", message: "0123456789,: だけです.", preferredStyle: .alert)
+                let dialog = UIAlertController(title: "", message: "0123456789,: are available.\nlike as 1,1:2:15,2:2:15", preferredStyle: .alert)
                 //ボタンのタイトル
                 dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 //実際に表示させる
