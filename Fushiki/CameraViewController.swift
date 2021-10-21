@@ -232,10 +232,10 @@ class CameraViewController: UIViewController {
         //zoomBarは使用できなくした。
            zoomBar.isHidden=true
            zoomBarLabel.isHidden=true
-        camera.setLabelProperty(focusBarLabel,x:left+bw*6+sp*8,y:by-sp*2/3-2*bh,w:bw,h:bh,UIColor.white)
-        camera.setLabelProperty(ledBarLabel,  x:left+bw*6+sp*8,y:by-sp*2/3-1*bh,w:bw,h:bh,UIColor.white)
-        ledBar.frame=CGRect(    x:left+2*sp,y:by-sp*2/3-1*bh,width:ww-7*sp-bw,height:bh)
-        focusBar.frame=CGRect(  x:left+2*sp,y:by-sp*2/3-2*bh,width:ww-7*sp-bw,height:bh)
+        camera.setLabelProperty(focusBarLabel,x:left+bw*6+sp*8,y:by-sp*2-2*bh,w:bw,h:bh,UIColor.white)
+        focusBar.frame=CGRect(  x:left+2*sp,y:by-sp*2-2*bh,width:ww-7*sp-bw,height:bh)
+        camera.setLabelProperty(ledBarLabel,  x:left+bw*6+sp*8,y:by-sp-1*bh,w:bw,h:bh,UIColor.white)
+        ledBar.frame=CGRect(    x:left+2*sp,y:by-sp-1*bh,width:ww-7*sp-bw,height:bh)
         //camera.setLabelProperty(zoomBarLabel,x:left+bw*6+sp*8,y:by-sp*2/3-2*bh,w:bw,h:bh,UIColor.white)
         //zoomBar.frame=CGRect(   x:left+2*sp,y:by-sp*2/3-2*bh,width:ww-7*sp-bw,height:bh)
         if cameraType==0 || cameraType==2 {
