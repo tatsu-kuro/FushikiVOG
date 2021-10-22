@@ -323,7 +323,9 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         getUserDefaultAll()
         print("MainViewDidLoad")
         sound(snd:"silence")//リモコンの操作権を貰う
-//        setButtons()
+        let mainBrightness=UIScreen.main.brightness//明るさを保持
+        UserDefaults.standard.set(mainBrightness, forKey: "mainBrightness")
+//        UIScreen.main.brightness = CGFloat(UserDefaults.standard.float(forKey: "mainBrightness"))
         UIApplication.shared.isIdleTimerDisabled = false//スリープする。監視する
         UIApplication.shared.beginReceivingRemoteControlEvents()
         self.becomeFirstResponder()
@@ -531,6 +533,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     @IBAction func unwindAction(segue: UIStoryboardSegue) {
         print("main-unwind")
+        UIScreen.main.brightness = CGFloat(UserDefaults.standard.float(forKey: "mainBrightness"))
         UIApplication.shared.isIdleTimerDisabled = false//スリープする.監視する
     }
 }

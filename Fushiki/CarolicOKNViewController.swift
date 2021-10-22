@@ -11,7 +11,7 @@ import AVFoundation
 import Photos
 class CarolicOKNViewController: UIViewController{
     let camera = CameraAlbumEtc()//name:"Fushiki")
-    var mainBrightness:CGFloat!
+//    var mainBrightness:CGFloat!
     var oknSpeed:Int = 0
     var oknMode:Int=0
     var targetMode:Int = 0
@@ -39,7 +39,7 @@ class CarolicOKNViewController: UIViewController{
     @IBAction func doubleTap(_ sender: Any) {
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
         mainView.targetMode=targetMode
-        UIScreen.main.brightness=mainBrightness!
+//        UIScreen.main.brightness=mainBrightness!
         delTimer()
         camera.recordStop()
         performSegue(withIdentifier: "fromCarolicOKN", sender: self)
@@ -168,7 +168,7 @@ class CarolicOKNViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         camera.makeAlbum()
-        mainBrightness = UIScreen.main.brightness
+//        mainBrightness = UIScreen.main.brightness
 
         UIScreen.main.brightness = CGFloat(camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
  

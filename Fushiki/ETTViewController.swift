@@ -15,7 +15,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     var startTime=CFAbsoluteTimeGetCurrent()
     var lastTime=CFAbsoluteTimeGetCurrent()
     var timerREC:Timer?
-    var mainBrightness:CGFloat?
+//    var mainBrightness:CGFloat?
     @IBOutlet weak var recClarification: UIImageView!
     var displayLinkF:Bool=false
     var displayLink:CADisplayLink?
@@ -39,7 +39,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         mainView.targetMode=targetMode
         delTimer()
         camera.recordStop()
-        UIScreen.main.brightness=mainBrightness!
+//        UIScreen.main.brightness=mainBrightness!
         performSegue(withIdentifier: "fromETT", sender: self)
     }
     func delTimer(){
@@ -117,7 +117,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         super.viewDidLoad()
    
         camera.makeAlbum()
-        mainBrightness=UIScreen.main.brightness//明るさを保持、終了時に戻す
+//        mainBrightness=UIScreen.main.brightness//明るさを保持、終了時に戻す
         print(UIScreen.main.brightness)
         UIScreen.main.brightness = CGFloat(camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
         let cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)

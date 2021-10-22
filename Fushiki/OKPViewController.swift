@@ -11,7 +11,7 @@ import AVFoundation
 import Photos
 class OKPViewController: UIViewController{
     let camera = CameraAlbumEtc()//name:"Fushiki")
-    var mainBrightness:CGFloat!
+//    var mainBrightness:CGFloat!
     @IBOutlet weak var speedLabel: UILabel!
     
     @IBOutlet var singleRec: UITapGestureRecognizer!
@@ -79,7 +79,7 @@ class OKPViewController: UIViewController{
     @IBAction func doubleTap(_ sender: Any) {
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
         mainView.targetMode=targetMode
-        UIScreen.main.brightness = mainBrightness
+//        UIScreen.main.brightness = mainBrightness
         delTimer()
         camera.recordStop()// fileOutput.stopRecording()
         performSegue(withIdentifier: "fromOKP", sender: self)
@@ -145,7 +145,7 @@ class OKPViewController: UIViewController{
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        mainBrightness = UIScreen.main.brightness
+//        mainBrightness = UIScreen.main.brightness
         UIScreen.main.brightness = 1.0
         UIScreen.main.brightness = CGFloat(camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
         camera.makeAlbum()

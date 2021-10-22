@@ -11,7 +11,7 @@ import AVFoundation
 import Photos
 class CarolicETTViewController: UIViewController{
     let camera = CameraAlbumEtc()//name:"Fushiki")
-    var mainBrightness:CGFloat?
+//    var mainBrightness:CGFloat?
 //    var ettWidth:Int = 0//1:narrow,2:wide
     var targetMode:Int = 0
     var cirDiameter:CGFloat = 0
@@ -27,7 +27,7 @@ class CarolicETTViewController: UIViewController{
     @IBAction func doubleTap(_ sender: Any) {
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
         mainView.targetMode=targetMode
-        UIScreen.main.brightness=mainBrightness!
+//        UIScreen.main.brightness=mainBrightness!
         delTimer()
         camera.recordStop() //fileOutput.stopRecording()
 //        self.present(mainView, animated: false, completion: nil)
@@ -172,7 +172,7 @@ class CarolicETTViewController: UIViewController{
             ettWidthX=0
         }
         ettW=ettH+(ettW-ettH)*CGFloat(ettWidthX)/5//１番パラメータの横振幅を使います。
-        mainBrightness = UIScreen.main.brightness
+//        mainBrightness = UIScreen.main.brightness
         
         UIScreen.main.brightness = CGFloat(camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
         
