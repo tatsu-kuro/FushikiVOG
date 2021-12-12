@@ -229,13 +229,17 @@ class OKNViewController: UIViewController{
                 UIApplication.shared.isIdleTimerDisabled = false//スリープする
             }
         }
+        if oknMode<2 && Int(currentTime - startTime)>oknTime+5{
+            doubleTap(0)
+        }
         if oknMode<2 && Int(currentTime - startTime)>oknTime{
             //stopTimer()
             drawBand(rectB:CGRect(x:0,y:0,width:ww,height:wh))
-            doubleTap(0)
+//            doubleTap(0)
 //            exit4OKN()
 //            return
         }
+        
         if oknMode == 0 || oknMode == 2{
             currentSpeed = Double(speed)
         }else{
