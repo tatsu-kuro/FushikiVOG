@@ -94,14 +94,14 @@ class OKNViewController: UIViewController{
     @IBOutlet var doubleRec: UITapGestureRecognizer!
     //    @IBOutlet var doubleRec:UITapGestureRecognizer!
     var tapInterval=CFAbsoluteTimeGetCurrent()
-    func exit4OKN(){
-        let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
-        mainView.targetMode=targetMode
-//        UIScreen.main.brightness=mainBrightness!
-        delTimer()
-        camera.recordStop()//fileOutput.stopRecording()
-        performSegue(withIdentifier: "fromOKN", sender: self)
-    }
+//    func exit4OKN(){
+//        let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
+//        mainView.targetMode=targetMode
+////        UIScreen.main.brightness=mainBrightness!
+//        delTimer()
+//        camera.recordStop()//fileOutput.stopRecording()
+//        performSegue(withIdentifier: "fromOKN", sender: self)
+//    }
     func delTimer(){
         if displayLinkF==true{
             displayLink?.invalidate()
@@ -110,9 +110,16 @@ class OKNViewController: UIViewController{
             timerREC!.invalidate()
         }
     }
-    @IBAction func doubleTap(_ sender: UITapGestureRecognizer) {
-            exit4OKN()
+    
+    @IBAction func doubleTap(_ sender: Any) {
+        let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
+        mainView.targetMode=targetMode
+//        UIScreen.main.brightness=mainBrightness!
+        delTimer()
+        camera.recordStop()//fileOutput.stopRecording()
+        performSegue(withIdentifier: "fromOKN", sender: self)
     }
+
     
     override func remoteControlReceived(with event: UIEvent?) {
         guard event?.type == .remoteControl else { return }
@@ -123,7 +130,7 @@ class OKNViewController: UIViewController{
             case .remoteControlPlay:
                 print("Play")
                 if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
-                    exit4OKN()
+                    doubleTap(0)// exit4OKN()
                 }
                 tapInterval=CFAbsoluteTimeGetCurrent()
             case .remoteControlTogglePlayPause:
@@ -131,7 +138,7 @@ class OKNViewController: UIViewController{
 //                changeDirection()
 //                singleTap(0)//change direction
                 if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
-                    exit4OKN()
+                    doubleTap(0)// exit4OKN()
                 }
                 tapInterval=CFAbsoluteTimeGetCurrent()
             case .remoteControlNextTrack:
@@ -225,7 +232,9 @@ class OKNViewController: UIViewController{
         if oknMode<2 && Int(currentTime - startTime)>oknTime{
             //stopTimer()
             drawBand(rectB:CGRect(x:0,y:0,width:ww,height:wh))
-            return
+            doubleTap(0)
+//            exit4OKN()
+//            return
         }
         if oknMode == 0 || oknMode == 2{
             currentSpeed = Double(speed)
@@ -276,9 +285,9 @@ class OKNViewController: UIViewController{
 //
         let cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
         camera.initSession(camera: Int(cameraType), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
-        if cameraType == 2{
-            recClarification.isHidden=true
-        }
+//        if cameraType == 2{
+//            recClarification.isHidden=true
+//        }
         let zoomValue=camera.getUserDefaultFloat(str: "zoomValue", ret:0)
         camera.setZoom(level: zoomValue)
         let focusValue=camera.getUserDefaultFloat(str: "focusValue", ret: 0)
@@ -289,11 +298,17 @@ class OKNViewController: UIViewController{
         oknSpeed = UserDefaults.standard.integer(forKey:"oknSpeed")
         oknTime = UserDefaults.standard.integer(forKey:"oknTime")
         oknMode = UserDefaults.standard.integer(forKey:"oknMode")
+        print("oknSpeed,time,mode:",oknSpeed,oknTime,oknMode)
         speed = oknSpeed*15
         speedLabel.isHidden=true
       //  singleRec.require(toFail: doubleRec)
-        timerREC = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: true)
-        recClarification.frame=camera.getRecClarificationRct(width: view.bounds.width, height: view.bounds.height)
+        
+        if !UserDefaults.standard.bool(forKey: "cameraON"){
+            recClarification.isHidden=true
+        }else{
+            timerREC = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: true)
+            recClarification.frame=camera.getRecClarificationRct(width:view.bounds.width,height:view.bounds.height)
+        }
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
         }

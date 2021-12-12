@@ -898,11 +898,7 @@ class PlayViewController: UIViewController {
         print("top",top,bottom,left,right)
         let ww=view.bounds.width-(left+right)
         let wh=view.bounds.height-(top+bottom)
-//        centerX=ww/2+CGFloat(left)
-//        centerY=wh/2+CGFloat(top)
         let avAsset = AVURLAsset(url: videoURL!)
-//        let ww:CGFloat=view.bounds.width
-//        let wh:CGFloat=view.bounds.height
         let sp=ww/120//間隙
         let bw=(ww-sp*10)/7//ボタン幅
         let bh=bw*170/440

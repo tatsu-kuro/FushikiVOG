@@ -34,6 +34,19 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
             displayLinkF=false
         }
     }
+    
+    /*
+     func exit4OKN(){
+         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
+         mainView.targetMode=targetMode
+ //        UIScreen.main.brightness=mainBrightness!
+         delTimer()
+         camera.recordStop()//fileOutput.stopRecording()
+         performSegue(withIdentifier: "fromOKN", sender: self)
+     }
+     */
+    
+    
     @IBAction func doubleTap(_ sender: Any) {
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
         mainView.targetMode=targetMode
@@ -198,11 +211,12 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
 
-        recClarification.frame=camera.getRecClarificationRct(width:view.bounds.width,height:view.bounds.height)
         if !UserDefaults.standard.bool(forKey: "cameraON"){
             recClarification.isHidden=true
+        }else{
+            timerREC = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: true)
+            recClarification.frame=camera.getRecClarificationRct(width:view.bounds.width,height:view.bounds.height)
         }
-        timerREC = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: true)
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
         }

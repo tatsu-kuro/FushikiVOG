@@ -292,7 +292,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         speakerOnOff = camera.getUserDefaultInt(str: "speakerOnOff", ret: 0)
         cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
         screenBrightness = camera.getUserDefaultFloat(str: "screenBrightness", ret: 1)
-            caloricEttOknFlag = camera.getUserDefaultBool(str: "caloricEttOknFlag", ret:false)
+        caloricEttOknFlag = camera.getUserDefaultBool(str: "caloricEttOknFlag", ret:false)
         cameraON = camera.getUserDefaultBool(str: "cameraON", ret: true)
         ettModeText0 = camera.getUserDefaultString(str: "ettModeText0", ret: "3,1:0:4,1:2:12,3:2:12,5:2:12")
         if camera.checkEttString(ettStr: ettModeText0)==false{
