@@ -254,10 +254,18 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         setButtonsAlpha()
         print("didappear")
         checkLibraryAuthorized()
+         print("checkLibraryAuthrizedflag1:",checkLibraryAuthrizedFlag)
+        var count:Int=0
         while checkLibraryAuthrizedFlag==0{
-            sleep(UInt32(0.1))
+//            sleep(UInt32(0.1))
+            usleep(1000)//0.001sec
+            count += 1
+            if count>5000{
+                break
+            }
         }
-        print("checkLibraryFlag",checkLibraryAuthrizedFlag)
+        print("checkLibraryAuthrizedflag2:",checkLibraryAuthrizedFlag)
+
         if checkLibraryAuthrizedFlag==1{
             camera.getAlbumAssets()
         }

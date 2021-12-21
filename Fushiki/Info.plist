@@ -27,9 +27,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>This app takes movies of eye movement and saves them in the album(fushiki).</string>
+	<string>This app takes a nystagmus image.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app make the album(fushiki) and put the recorded video into it.</string>
+	<string>This app creates an album &quot;Fushiki&quot;.</string>
 	<key>UIBackgroundModes</key>
 	<array/>
 	<key>UILaunchStoryboardName</key>
