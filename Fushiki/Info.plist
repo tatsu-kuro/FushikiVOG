@@ -29,7 +29,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>This app takes a nystagmus image.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app creates an album &quot;Fushiki&quot;.</string>
+	<string>This app creates an album "Fushiki".</string>
 	<key>UIBackgroundModes</key>
 	<array/>
 	<key>UILaunchStoryboardName</key>
