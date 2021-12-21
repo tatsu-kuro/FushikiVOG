@@ -253,7 +253,14 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         setButtons()
         setButtonsAlpha()
         print("didappear")
-        camera.getAlbumAssets()
+        checkLibraryAuthorized()
+        while checkLibraryAuthrizedFlag==0{
+            sleep(UInt32(0.1))
+        }
+        print("checkLibraryFlag",checkLibraryAuthrizedFlag)
+        if checkLibraryAuthrizedFlag==1{
+            camera.getAlbumAssets()
+        }
         for i in 0..<camera.videoURL.count{//cloud のURL->temp.mp4としている
             camera.videoURL[i] = camera.getURLfromPHAsset(asset: camera.videoAlbumAssets[i])
         }
@@ -317,7 +324,47 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let faceMark=camera.getUserDefaultInt(str:"faceMark",ret:1)
         let showRect=camera.getUserDefaultInt(str:"showRect",ret:0)
      }
-    
+    var checkLibraryAuthrizedFlag:Int=0
+    func checkLibraryAuthorized(){
+        //iOS14に対応
+        checkLibraryAuthrizedFlag=0//0：ここの処理が終わっていないとき　1：許可　−１：拒否
+        if #available(iOS 14.0, *) {
+            PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
+                switch status {
+                case .limited:
+                    self.checkLibraryAuthrizedFlag=1
+                    print("制限あり")
+                    break
+                case .authorized:
+                    self.checkLibraryAuthrizedFlag=1
+                    print("許可ずみ")
+                    break
+                case .denied:
+                    self.checkLibraryAuthrizedFlag = -1
+                    print("拒否ずみ")
+                    break
+                default:
+                    self.checkLibraryAuthrizedFlag = -1
+                    break
+                }
+            }
+        }
+        else  {
+            if PHPhotoLibrary.authorizationStatus() != .authorized {
+                PHPhotoLibrary.requestAuthorization { status in
+                    if status == .authorized {
+                        self.checkLibraryAuthrizedFlag=1
+                        print("許可ずみ")
+                    } else if status == .denied {
+                        self.checkLibraryAuthrizedFlag = -1
+                        print("拒否ずみ")
+                    }
+                }
+            } else {
+                self.checkLibraryAuthrizedFlag=1
+            }
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         getUserDefaultAll()
