@@ -269,7 +269,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         if checkLibraryAuthrizedFlag==1{
             camera.getAlbumAssets()
         }
-        for i in 0..<camera.videoURL.count{//cloud のURL->temp.mp4としている
+ /*       for i in 0..<camera.videoURL.count{//cloud のURL->temp.mp4としている
             camera.videoURL[i] = camera.getURLfromPHAsset(asset: camera.videoAlbumAssets[i])
         }
         for i in (0..<camera.videoURL.count).reversed(){//cloud(temp.mp4)は削除する
@@ -279,16 +279,20 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 camera.videoDate.remove(at: i)
                 camera.videoAlbumAssets.remove(at: i)
             }
-        }
-        videoArrayCount=camera.videoURL.count
-        print(videoArrayCount,camera.videoURL.count,camera.videoDate.count)
+        }*/
+        videoArrayCount=camera.videoDate.count
+        print(videoArrayCount,camera.videoDate.count,camera.videoDate.count)
         tableView.reloadData()
+        let contentOffsetY = CGFloat(camera.getUserDefaultFloat(str:"contentOffsetY",ret:0))
+        DispatchQueue.main.async { [self] in
+            self.tableView.contentOffset.y=contentOffsetY
+         }
         setToppage()
     }
     
     func setToppage()
     {
-        if camera.videoURL.count==0{
+        if camera.videoDate.count==0{
             tableView.isHidden=true
         }else{
             tableView.isHidden=false
@@ -534,14 +538,23 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             caloricOknButton.setTitle("CaloricOKN", for: .normal)
         }
     }
-    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        //            // 画面非表示直後の処理を書く
+        //            print("画面非表示直後")
+        //        UserDefaults.standard.set(0,forKey: "contentOffsetY")
+        //
+        let contentOffsetY = tableView.contentOffset.y
+        print("offset:",contentOffsetY)
+        UserDefaults.standard.set(contentOffsetY,forKey: "contentOffsetY")
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     //nuber of cell
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return camera.videoURL.count
+        return camera.videoDate.count
     }
     //set data on cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath:IndexPath) -> UITableViewCell{
@@ -550,12 +563,43 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         cell.textLabel!.text = number + camera.videoDate[indexPath.row]
         return cell
     }
+    
+    func requestAVAsset(asset: PHAsset)-> AVAsset? {
+        guard asset.mediaType == .video else { return nil }
+        let phVideoOptions = PHVideoRequestOptions()
+        phVideoOptions.version = .original
+        let group = DispatchGroup()
+        let imageManager = PHImageManager.default()
+        var avAsset: AVAsset?
+        group.enter()
+        imageManager.requestAVAsset(forVideo: asset, options: phVideoOptions) { (asset, _, _) in
+            avAsset = asset
+            group.leave()
+            
+        }
+        group.wait()
+        
+        return avAsset
+    }
     //play item
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard: UIStoryboard = self.storyboard!
         let nextView = storyboard.instantiateViewController(withIdentifier: "PLAY") as! PlayViewController
-        nextView.videoURL = camera.videoURL[indexPath.row]
+//        nextView.videoURL = camera.videoURL[indexPath.row]
         nextView.calcDate = camera.videoDate[indexPath.row]
+       
+        let phasset = camera.videoAlbumAssets[indexPath.row]
+        let avasset = requestAVAsset(asset: phasset)
+        let contentOffsetY = tableView.contentOffset.y
+        print("offset:",contentOffsetY)
+        UserDefaults.standard.set(contentOffsetY,forKey: "contentOffsetY")
+
+        if avasset == nil {//なぜ？icloudから落ちてきていないのか？
+            return
+        }
+        nextView.phasset = phasset
+        nextView.avasset = avasset
+
         self.present(nextView, animated: true, completion: nil)
         
     }
@@ -574,12 +618,12 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 sleep(UInt32(0.1))
             }
             if camera.dialogStatus==1{
-                camera.videoURL.remove(at: indexPath.row)
+//                camera.videoURL.remove(at: indexPath.row)
                 camera.videoDate.remove(at: indexPath.row)
                 tableView.reloadData()
-                if indexPath.row>4 && indexPath.row<camera.videoURL.count{
+                if indexPath.row>4 && indexPath.row<camera.videoDate.count{
                     tableView.reloadRows(at: [indexPath], with: .fade)
-                }else if indexPath.row == camera.videoURL.count && indexPath.row != 0{
+                }else if indexPath.row == camera.videoDate.count && indexPath.row != 0{
                     let indexPath1 = IndexPath(row:indexPath.row-1,section:0)
                     tableView.reloadRows(at: [indexPath1], with: .fade)
                 }

@@ -30,7 +30,9 @@ class PlayViewController: UIViewController {
     var cameraType:Int!
     let album = CameraAlbumEtc()//name:"Fushiki")
     let openCV = OpenCVWrapper()
-    var videoURL:URL?
+//    var videoURL:URL?
+    var phasset:PHAsset?
+    var avasset:AVAsset?
     var videoSize:CGSize!
     var videoFps:Float!
     var startTime=CFAbsoluteTimeGetCurrent()
@@ -553,19 +555,19 @@ class PlayViewController: UIViewController {
         if zoomNum != 1{
             return
         }
-        let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
-        let avAsset = AVURLAsset(url: videoURL!, options: options)
+//        let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
+//        let avAsset = AVURLAsset(url: videoURL!, options: options)
         var reader: AVAssetReader! = nil
         let backCameraFps=album.getUserDefaultFloat(str: "backCameraFps", ret:240.0)
         do {
-            reader = try AVAssetReader(asset: avAsset)
+            reader = try AVAssetReader(asset: avasset!)
         } catch {
             #if DEBUG
             print("could not initialize reader.")
             #endif
             return
         }
-        guard let videoTrack = avAsset.tracks(withMediaType: AVMediaType.video).last else {
+        guard let videoTrack = avasset!.tracks(withMediaType: AVMediaType.video).last else {
             #if DEBUG
             print("could not retrieve the video track.")
             #endif
@@ -855,6 +857,23 @@ class PlayViewController: UIViewController {
             timer!.invalidate()
         }
     }
+    func requestAVAsset(asset: PHAsset)-> AVAsset? {
+        guard asset.mediaType == .video else { return nil }
+        let phVideoOptions = PHVideoRequestOptions()
+        phVideoOptions.version = .original
+        let group = DispatchGroup()
+        let imageManager = PHImageManager.default()
+        var avAsset: AVAsset?
+        group.enter()
+        imageManager.requestAVAsset(forVideo: asset, options: phVideoOptions) { (asset, _, _) in
+            avAsset = asset
+            group.leave()
+            
+        }
+        group.wait()
+        
+        return avAsset
+    }
     func getFPS(url:URL) -> Float{
         let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
         let avAsset = AVURLAsset(url: url, options: options)
@@ -898,15 +917,15 @@ class PlayViewController: UIViewController {
         print("top",top,bottom,left,right)
         let ww=view.bounds.width-(left+right)
         let wh=view.bounds.height-(top+bottom)
-        let avAsset = AVURLAsset(url: videoURL!)
+//        let avAsset = AVURLAsset(url: videoURL!)
         let sp=ww/120//間隙
         let bw=(ww-sp*10)/7//ボタン幅
         let bh=bw*170/440
         let by = wh - bh - sp
         seekBarY = by - bh
         buttonsY = by
-        videoDuration=Float(CMTimeGetSeconds(avAsset.duration))
-        let playerItem: AVPlayerItem = AVPlayerItem(asset: avAsset)
+        videoDuration=Float(CMTimeGetSeconds(avasset!.duration))
+        let playerItem: AVPlayerItem = AVPlayerItem(asset: avasset!)
         // Create AVPlayer
         videoPlayer = AVPlayer(playerItem: playerItem)
         // Add AVPlayer
@@ -958,9 +977,11 @@ class PlayViewController: UIViewController {
         view.bringSubviewToFront(exitButton)
 //        print("layerConut:",view.layer.sublayers?.count)
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
-        videoSize=resolutionSizeOfVideo(url:videoURL!)
+//        videoSize=resolutionSizeOfVideo(url:videoURL!)
+//        videoFps=getFPS(url: videoURL!)
+        videoSize=avasset!.tracks.first!.naturalSize
+        videoFps=avasset!.tracks.first!.nominalFrameRate
         screenSize=view.bounds.size
-        videoFps=getFPS(url: videoURL!)
         dispWakus()
         showWakuImages()
         fpsLabel.frame=CGRect(x:left+bw*1.2+sp*2,y:0,width: bw*3,height: bh*0.6)
@@ -1160,19 +1181,19 @@ class PlayViewController: UIViewController {
         UIApplication.shared.isIdleTimerDisabled = true//sleepしない
         let eyeborder:CGFloat = CGFloat(eyeBorder)
         startTimer()//resizerectのチェックの時はここをコメントアウト*********************
-        let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
-        let avAsset = AVURLAsset(url: videoURL!, options: options)
+//        let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
+//        let avAsset = AVURLAsset(url: videoURL!, options: options)
 
         var reader: AVAssetReader! = nil
         do {
-            reader = try AVAssetReader(asset: avAsset)
+            reader = try AVAssetReader(asset: avasset!)
         } catch {
             #if DEBUG
             print("could not initialize reader.")
             #endif
             return
         }
-        guard let videoTrack = avAsset.tracks(withMediaType: AVMediaType.video).last else {
+        guard let videoTrack = avasset!.tracks(withMediaType: AVMediaType.video).last else {
             #if DEBUG
             print("could not retrieve the video track.")
             #endif
