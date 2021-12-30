@@ -560,7 +560,27 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     func tableView(_ tableView: UITableView, cellForRowAt indexPath:IndexPath) -> UITableViewCell{
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier:"cell",for :indexPath)
         let number = (indexPath.row+1).description + ") "
-        cell.textLabel!.text = number + camera.videoDate[indexPath.row]
+        let phasset = camera.videoAlbumAssets[indexPath.row]
+//        let avasset = requestAVAsset(asset: phasset)
+ //       phasset.pixelWidth
+//        DispatchQueue.global().async {
+//            let resources = PHAssetResource.assetResources(for: phasset)
+//            if let resource = resources.first {
+//                let fileName = resource.originalFilename
+//                let unsignedInt64 = resource.value(forKey: "fileSize") as? CLong
+//                let sizeOnDisk = Int64(bitPattern: UInt64(unsignedInt64!))
+//                let fileURL = resource.value(forKey: "fileURL") as? URL
+//                print("***********",fileName)
+//                print(fileURL)
+//            }
+//        }
+//        phasset.value(forKey: "filename")
+//        print("filename:",fileName)
+//        let videoSize=avasset!.tracks.first!.naturalSize
+//        let videoFps=avasset!.tracks.first!.nominalFrameRate
+   //     fpsLabel.text = String(format:"%.1fs %.0ffps %.0fx%.0f",videoDuration, videoFps,videoSize.width,videoSize.height)
+
+        cell.textLabel!.text = number + camera.videoDate[indexPath.row] + " (" + phasset.pixelWidth.description + "x" + phasset.pixelHeight.description + ")"
         return cell
     }
     
