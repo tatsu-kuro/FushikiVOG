@@ -405,6 +405,7 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
         let fileURL = NSURL(fileURLWithPath: tempFilePath)
         fileOutput.startRecording(to: fileURL as URL, recordingDelegate: self)
     }
+    
     func recordStop(){
         if !UserDefaults.standard.bool(forKey: "cameraON"){
             return

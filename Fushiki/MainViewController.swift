@@ -245,7 +245,18 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }
         }
     }
-
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        getUserDefaultAll()
+        print("MainViewDidLoad")
+        sound(snd:"silence")//リモコンの操作権を貰う
+        let mainBrightness=UIScreen.main.brightness//明るさを保持
+        UserDefaults.standard.set(mainBrightness, forKey: "mainBrightness")
+//        UIScreen.main.brightness = CGFloat(UserDefaults.standard.float(forKey: "mainBrightness"))
+        UIApplication.shared.isIdleTimerDisabled = false//スリープする。監視する
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+        self.becomeFirstResponder()
+    }
     override func viewDidAppear(_ animated: Bool) {
         if UIApplication.shared.isIdleTimerDisabled == true{
             UIApplication.shared.isIdleTimerDisabled = false//監視する
@@ -257,7 +268,6 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
          print("checkLibraryAuthrizedflag1:",checkLibraryAuthrizedFlag)
         var count:Int=0
         while checkLibraryAuthrizedFlag==0{
-//            sleep(UInt32(0.1))
             usleep(1000)//0.001sec
             count += 1
             if count>5000{
@@ -269,17 +279,6 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         if checkLibraryAuthrizedFlag==1{
             camera.getAlbumAssets()
         }
- /*       for i in 0..<camera.videoURL.count{//cloud のURL->temp.mp4としている
-            camera.videoURL[i] = camera.getURLfromPHAsset(asset: camera.videoAlbumAssets[i])
-        }
-        for i in (0..<camera.videoURL.count).reversed(){//cloud(temp.mp4)は削除する
-            let path = camera.videoURL[i]!.absoluteString
-            if path.contains("temp.mp4"){
-                camera.videoURL.remove(at: i)
-                camera.videoDate.remove(at: i)
-                camera.videoAlbumAssets.remove(at: i)
-            }
-        }*/
         videoArrayCount=camera.videoDate.count
         print(videoArrayCount,camera.videoDate.count,camera.videoDate.count)
         tableView.reloadData()
@@ -287,10 +286,10 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         DispatchQueue.main.async { [self] in
             self.tableView.contentOffset.y=contentOffsetY
          }
-        setToppage()
+        setTopPage()
     }
     
-    func setToppage()
+    func setTopPage()
     {
         if camera.videoDate.count==0{
             tableView.isHidden=true
@@ -329,12 +328,12 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         if camera.checkEttString(ettStr: ettModeText3)==false{
             UserDefaults.standard.set("0,6:3:20",forKey:"ettModeText3")
         }
-        let posRatio=camera.getUserDefaultInt(str:"posRatio",ret:300)
-        let veloRatio=camera.getUserDefaultInt(str:"veloRatio",ret:300)
-        let wakuLenth=camera.getUserDefaultInt(str:"wakuLength",ret:3)
-        let eyeBorder=camera.getUserDefaultInt(str:"eyeBorder",ret:5)
-        let faceMark=camera.getUserDefaultInt(str:"faceMark",ret:1)
-        let showRect=camera.getUserDefaultInt(str:"showRect",ret:0)
+        _=camera.getUserDefaultInt(str:"posRatio",ret:300)
+        _=camera.getUserDefaultInt(str:"veloRatio",ret:300)
+        _=camera.getUserDefaultInt(str:"wakuLength",ret:3)
+        _=camera.getUserDefaultInt(str:"eyeBorder",ret:5)
+        _=camera.getUserDefaultInt(str:"faceMark",ret:1)
+        _=camera.getUserDefaultInt(str:"showRect",ret:0)
      }
     var checkLibraryAuthrizedFlag:Int=0
     func checkLibraryAuthorized(){
@@ -345,15 +344,15 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 switch status {
                 case .limited:
                     self.checkLibraryAuthrizedFlag=1
-                    print("制限あり")
+                    print("limited")
                     break
                 case .authorized:
                     self.checkLibraryAuthrizedFlag=1
-                    print("許可ずみ")
+                    print("authorized")
                     break
                 case .denied:
                     self.checkLibraryAuthrizedFlag = -1
-                    print("拒否ずみ")
+                    print("denied")
                     break
                 default:
                     self.checkLibraryAuthrizedFlag = -1
@@ -366,28 +365,16 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 PHPhotoLibrary.requestAuthorization { status in
                     if status == .authorized {
                         self.checkLibraryAuthrizedFlag=1
-                        print("許可ずみ")
+                        print("authorized")
                     } else if status == .denied {
                         self.checkLibraryAuthrizedFlag = -1
-                        print("拒否ずみ")
+                        print("denied")
                     }
                 }
             } else {
                 self.checkLibraryAuthrizedFlag=1
             }
         }
-    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        getUserDefaultAll()
-        print("MainViewDidLoad")
-        sound(snd:"silence")//リモコンの操作権を貰う
-        let mainBrightness=UIScreen.main.brightness//明るさを保持
-        UserDefaults.standard.set(mainBrightness, forKey: "mainBrightness")
-//        UIScreen.main.brightness = CGFloat(UserDefaults.standard.float(forKey: "mainBrightness"))
-        UIApplication.shared.isIdleTimerDisabled = false//スリープする。監視する
-        UIApplication.shared.beginReceivingRemoteControlEvents()
-        self.becomeFirstResponder()
     }
   
     override var prefersStatusBarHidden: Bool {
@@ -608,12 +595,19 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         nextView.calcDate = camera.videoDate[indexPath.row]
         let phasset = camera.videoPHAsset[indexPath.row]
         let avasset = camera.requestAVAsset(asset: phasset)
-        let contentOffsetY = tableView.contentOffset.y
-        print("offset:",contentOffsetY)
-        UserDefaults.standard.set(contentOffsetY,forKey: "contentOffsetY")
-        nextView.phasset = phasset
-        nextView.avasset = avasset
-        self.present(nextView, animated: true, completion: nil)
+        if avasset == nil{
+//            if !camera.videoDate[indexPath.row].contains("*"){
+//                camera.videoDate[indexPath.row] += "*"
+//            }
+//            print("**********")
+        }else{
+            let contentOffsetY = tableView.contentOffset.y
+            print("offset:",contentOffsetY)
+            UserDefaults.standard.set(contentOffsetY,forKey: "contentOffsetY")
+            nextView.phasset = phasset
+            nextView.avasset = avasset
+            self.present(nextView, animated: true, completion: nil)
+        }
     }
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         print("set canMoveRowAt")
