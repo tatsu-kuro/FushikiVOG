@@ -89,7 +89,7 @@ class ImagePickerController: UIViewController,MFMailComposeViewControllerDelegat
         return true
     }
     func setButtons(){
-        let album = CameraAlbumEtc()//name:"Fushiki")
+        let album = myFunctions()//name:"Fushiki")
         let ww:CGFloat=view.bounds.width
         let wh:CGFloat=view.bounds.height
         let sp=ww/120//間隙

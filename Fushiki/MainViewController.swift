@@ -13,7 +13,7 @@ import Photos
 
 class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
-    let camera = CameraAlbumEtc()//name:"Fushiki")
+    let camera = myFunctions()//name:"Fushiki")
     var controllerF:Bool=false
     @IBOutlet weak var titleImage: UIImageView!
     
@@ -560,7 +560,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     func tableView(_ tableView: UITableView, cellForRowAt indexPath:IndexPath) -> UITableViewCell{
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier:"cell",for :indexPath)
         let number = (indexPath.row+1).description + ") "
-        let phasset = camera.videoAlbumAssets[indexPath.row]
+        let phasset = camera.videoPHAsset[indexPath.row]
 //        let avasset = requestAVAsset(asset: phasset)
  //       phasset.pixelWidth
 //        DispatchQueue.global().async {
@@ -584,44 +584,36 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         return cell
     }
     
-    func requestAVAsset(asset: PHAsset)-> AVAsset? {
-        guard asset.mediaType == .video else { return nil }
-        let phVideoOptions = PHVideoRequestOptions()
-        phVideoOptions.version = .original
-        let group = DispatchGroup()
-        let imageManager = PHImageManager.default()
-        var avAsset: AVAsset?
-        group.enter()
-        imageManager.requestAVAsset(forVideo: asset, options: phVideoOptions) { (asset, _, _) in
-            avAsset = asset
-            group.leave()
-            
-        }
-        group.wait()
-        
-        return avAsset
-    }
+//    func requestAVAsset(asset: PHAsset)-> AVAsset? {
+//        guard asset.mediaType == .video else { return nil }
+//        let phVideoOptions = PHVideoRequestOptions()
+//        phVideoOptions.version = .original
+//        let group = DispatchGroup()
+//        let imageManager = PHImageManager.default()
+//        var avAsset: AVAsset?
+//        group.enter()
+//        imageManager.requestAVAsset(forVideo: asset, options: phVideoOptions) { (asset, _, _) in
+//            avAsset = asset
+//            group.leave()
+//
+//        }
+//        group.wait()
+//
+//        return avAsset
+//    }
     //play item
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard: UIStoryboard = self.storyboard!
         let nextView = storyboard.instantiateViewController(withIdentifier: "PLAY") as! PlayViewController
-//        nextView.videoURL = camera.videoURL[indexPath.row]
         nextView.calcDate = camera.videoDate[indexPath.row]
-       
-        let phasset = camera.videoAlbumAssets[indexPath.row]
-        let avasset = requestAVAsset(asset: phasset)
+        let phasset = camera.videoPHAsset[indexPath.row]
+        let avasset = camera.requestAVAsset(asset: phasset)
         let contentOffsetY = tableView.contentOffset.y
         print("offset:",contentOffsetY)
         UserDefaults.standard.set(contentOffsetY,forKey: "contentOffsetY")
-
-        if avasset == nil {//なぜ？icloudから落ちてきていないのか？
-            return
-        }
         nextView.phasset = phasset
         nextView.avasset = avasset
-
         self.present(nextView, animated: true, completion: nil)
-        
     }
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         print("set canMoveRowAt")
@@ -638,7 +630,6 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 sleep(UInt32(0.1))
             }
             if camera.dialogStatus==1{
-//                camera.videoURL.remove(at: indexPath.row)
                 camera.videoDate.remove(at: indexPath.row)
                 tableView.reloadData()
                 if indexPath.row>4 && indexPath.row<camera.videoDate.count{
@@ -651,7 +642,11 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
     }
     @IBAction func unwindAction(segue: UIStoryboardSegue) {
-        print("main-unwind")
+        if segue.source is SetteiViewController || segue.source is HelpViewController || segue.source is PlayViewController{
+            print("main-unwind:HelpView or SetteiView")
+        }else{
+            print("Main-unwind: getAlbumAssets")
+        }
         UIScreen.main.brightness = CGFloat(UserDefaults.standard.float(forKey: "mainBrightness"))
         UIApplication.shared.isIdleTimerDisabled = false//スリープする.監視する
     }

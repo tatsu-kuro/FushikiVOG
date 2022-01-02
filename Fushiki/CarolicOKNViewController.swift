@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import Photos
 class CarolicOKNViewController: UIViewController{
-    let camera = CameraAlbumEtc()//name:"Fushiki")
+    let camera = myFunctions()//name:"Fushiki")
 //    var mainBrightness:CGFloat!
     var oknSpeed:Int = 0
     var oknMode:Int=0

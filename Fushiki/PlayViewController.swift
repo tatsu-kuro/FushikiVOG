@@ -28,7 +28,7 @@ extension UIImage {
 class PlayViewController: UIViewController {
     var pleaseReturnFlag=false
     var cameraType:Int!
-    let album = CameraAlbumEtc()//name:"Fushiki")
+    let album = myFunctions()//name:"Fushiki")
     let openCV = OpenCVWrapper()
 //    var videoURL:URL?
     var phasset:PHAsset?

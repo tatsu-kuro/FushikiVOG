@@ -12,7 +12,7 @@ import GLKit
 import Photos
 import CoreMotion
 class CameraViewController: UIViewController {
-    let camera = CameraAlbumEtc()//name:"Fushiki")
+    let camera = myFunctions()//name:"Fushiki")
     @IBOutlet weak var cameraFpsLabel: UILabel!
     
     @IBOutlet weak var cameraTypeLabel: UILabel!

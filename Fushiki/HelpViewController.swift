@@ -103,7 +103,7 @@ class HelpViewController: UIViewController {
      }
     override func viewDidLoad() {
         super.viewDidLoad()
-        let camera = CameraAlbumEtc()//name:"Fushiki")
+        let camera = myFunctions()//name:"Fushiki")
         
         let top=CGFloat(UserDefaults.standard.float(forKey: "top"))
         let bottom=CGFloat(UserDefaults.standard.float(forKey: "bottom"))

@@ -16,7 +16,7 @@ extension String {
 }
 
 class SetteiViewController: UIViewController {
-    let camera = CameraAlbumEtc()//name:"Fushiki")
+    let camera = myFunctions()//name:"Fushiki")
     var oknMode:Int=0
     var oknTime:Int = 50
     var okpMode:Int=0

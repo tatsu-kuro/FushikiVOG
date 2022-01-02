@@ -9,7 +9,7 @@
 import UIKit
 
 class PlayParaViewController: UIViewController {
-    let camera = CameraAlbumEtc()//name:"Fushiki")
+    let camera = myFunctions()//name:"Fushiki")
     @IBOutlet weak var default4Button: UIButton!
     @IBOutlet weak var default2Button: UIButton!
     

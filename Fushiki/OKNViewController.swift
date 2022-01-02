@@ -11,7 +11,7 @@ import CoreMotion
 import Photos
 import AVFoundation
 class OKNViewController: UIViewController{
-    let camera = CameraAlbumEtc()//name:"Fushiki")
+    let camera = myFunctions()//name:"Fushiki")
 //    var mainBrightness:CGFloat!
     var startTime=CFAbsoluteTimeGetCurrent()
     var lastTime=CFAbsoluteTimeGetCurrent()
