@@ -76,39 +76,23 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         sound(snd: "silence")
         doModes()
     }
-    
-//    @IBAction func onBut0(_ sender: Any) {
-//        targetMode=0
-//        setAlpha()
-//    }
+ 
     @IBAction func onEttButton(_ sender: Any) {
         doModes_sub(mode: 0)
     }
-//    @IBAction func onBut1(_ sender: Any) {
-//        targetMode=1
-//        setAlpha()
-//    }
+
     @IBAction func onOkpButton(_ sender: Any) {
         doModes_sub(mode: 1)
     }
-//    @IBAction func onBut2(_ sender: Any) {
-//        targetMode=2
-//        setAlpha()
-//    }
+
     @IBAction func onOknButton(_ sender: Any) {
         doModes_sub(mode: 2)
     }
-//    @IBAction func onBut3(_ sender: Any) {
-//        targetMode=3
-//        setAlpha()
-//    }
+
     @IBAction func onCaloricEttButton(_ sender: Any) {
         doModes_sub(mode: 3)
     }
-//    @IBAction func onBut4(_ sender: Any) {
-//        targetMode=4
-//        setAlpha()
-//    }
+
     @IBAction func onCaloricOknButton(_ sender: Any) {
         doModes_sub(mode: 4)
     }
@@ -179,6 +163,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             self.present(nextView, animated: true, completion: nil)
         }
     }
+    
     func setButtonsAlpha(){
         ettButton.alpha=0.6
         okpButton.alpha=0.6
@@ -203,6 +188,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             setteiButton.alpha=1.0
         }
     }
+    
     override func remoteControlReceived(with event: UIEvent?) {
         guard event?.type == .remoteControl else { return }
         
@@ -245,50 +231,58 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         getUserDefaultAll()
-        print("MainViewDidLoad")
-        sound(snd:"silence")//リモコンの操作権を貰う
+        print("MainViewDidLoad*****")
+//        sound(snd:"silence")//リモコンの操作権を貰う
         let mainBrightness=UIScreen.main.brightness//明るさを保持
         UserDefaults.standard.set(mainBrightness, forKey: "mainBrightness")
-//        UIScreen.main.brightness = CGFloat(UserDefaults.standard.float(forKey: "mainBrightness"))
+        if PHPhotoLibrary.authorizationStatus() != .authorized {
+            PHPhotoLibrary.requestAuthorization { status in
+                if status == .authorized {
+//                    self.checkLibraryAuthrizedFlag=1
+                    print("authorized")
+                } else if status == .denied {
+//                    self.checkLibraryAuthrizedFlag = -1
+                    print("denied")
+                }else{
+//                    self.checkLibraryAuthrizedFlag = -1
+                }
+            }
+        }else{
+            camera.getAlbumAssets()//完了したら戻ってくるようにしたつもり
+        }
         UIApplication.shared.isIdleTimerDisabled = false//スリープする。監視する
         UIApplication.shared.beginReceivingRemoteControlEvents()
         self.becomeFirstResponder()
+        fromUnwindFlag=false
     }
     override func viewDidAppear(_ animated: Bool) {
         if UIApplication.shared.isIdleTimerDisabled == true{
             UIApplication.shared.isIdleTimerDisabled = false//監視する
         }
+        sound(snd:"silence")//リモコンの操作権を貰う
         setButtons()
         setButtonsAlpha()
-        print("didappear")
-        checkLibraryAuthorized()
-         print("checkLibraryAuthrizedflag1:",checkLibraryAuthrizedFlag)
-        var count:Int=0
-        while checkLibraryAuthrizedFlag==0{
-            usleep(1000)//0.001sec
-            count += 1
-            if count>5000{
-                break
+        print("MainViewDidAppear*****")
+        if fromUnwindFlag==true{
+            if camera.videoDate.count<5{
+                camera.getAlbumAssets()
+            }else{
+                camera.getAlbumAssets_last()
             }
         }
-        print("checkLibraryAuthrizedflag2:",checkLibraryAuthrizedFlag)
-
-        if checkLibraryAuthrizedFlag==1{
-            camera.getAlbumAssets()
-        }
-        videoArrayCount=camera.videoDate.count
-        print(videoArrayCount,camera.videoDate.count,camera.videoDate.count)
-        tableView.reloadData()
+        fromUnwindFlag=false
+        print(camera.videoPHAsset.count,camera.videoDate.count)
         let contentOffsetY = CGFloat(camera.getUserDefaultFloat(str:"contentOffsetY",ret:0))
         DispatchQueue.main.async { [self] in
             self.tableView.contentOffset.y=contentOffsetY
-         }
-        setTopPage()
+            self.tableView.reloadData()
+        }
     }
-    
+ 
     func setTopPage()
     {
         if camera.videoDate.count==0{
@@ -401,83 +395,8 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var okpButton: UIButton!
     @IBOutlet weak var ettButton: UIButton!
     @IBOutlet weak var oknButton: UIButton!
-    
-//    @IBOutlet weak var doModeButton: UIButton!
-//    @IBAction func onDoModeButton(_ sender: Any) {
-//        sound(snd: "silence")
-//        doModes()
-//    }
-    
-//    @IBOutlet weak var cameraButton2: UIButton!
-//    @IBOutlet weak var cameraButton: UIButton!
- /*   //    @IBOutlet weak var titleImage: UIImageView!
-    func setRotate(alp:CGFloat){
 
-        let ww:CGFloat=view.bounds.width
-        let wh:CGFloat=view.bounds.height
-        let sp=ww/120//間隙
-        let bw=(ww-sp*10)/7//ボタン幅
-        let bh=bw*170/440
-        let by=wh-bh-sp
-        
-        tableView.frame=CGRect(x:0,y:0,width:ww,height: by)
-        button0.alpha=alp
-        button1.alpha=alp
-        button2.alpha=alp
-        button3.alpha=alp
-        button4.alpha=alp
-        helpButton.alpha=alp
-        setteiButton.alpha=alp
-        let cameraMode = Int(camera.getUserDefaultInt(str: "cameraMode", ret: 0))
-        if cameraMode == 1{
-            doModeButton.isHidden=false
-            camera.setButtonProperty(doModeButton, x: 0, y: 0, w: bw, h: bw, UIColor.white)
-        }else{
-            doModeButton.isHidden=true
-        }
-        camera.setButtonProperty(button0,x:sp*2,y:by,w:bw,h:bh,UIColor.darkGray)
-        camera.setButtonProperty(button1,x:bw*1+sp*3,y:by,w:bw,h:bh,UIColor.darkGray)
-        camera.setButtonProperty(button2,x:bw*2+sp*4,y:by,w:bw,h:bh,UIColor.darkGray)
-        camera.setButtonProperty(button3,x:bw*3+sp*5,y:by,w:bw,h:bh,UIColor.darkGray)
-        camera.setButtonProperty(button4,x:bw*4+sp*6,y:by,w:bw,h:bh,UIColor.darkGray)
-        camera.setButtonProperty(helpButton,x:bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
-        camera.setButtonProperty(setteiButton,x:bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
-        camera.setButtonProperty(cameraButton, x: bw*6+sp*8, y: by-bh-sp, w: bw, h: bh, UIColor.orange)
-//        cameraButton.frame=CGRect(x:bw*6+sp*8,y:by-bh-sp,width:bw,height: bh)
-//        setteiButton.frame=CGRect(x:bw*6+sp*8,y:by,width:bw,height: bh)
-        //seにおいてカメラボタンが反応しにくいので　tableViewの上にあるためか？
-        cameraButton2.frame=CGRect(x:ww-bw,y:by-bh,width:bw,height:bh+sp*2)
-
-        let logoY = ww/13
-        if view.bounds.width/2 > by - logoY{
-            titleImage.frame.origin.y = logoY
-            //view.bounds.width*56/730
-            titleImage.frame.size.width = (by - logoY)*2
-            //view.bounds.height/2*1800/700
-            titleImage.frame.size.height = by - logoY//view.bounds.height/2
-            titleImage.frame.origin.x = (view.bounds.width - titleImage.frame.size.width)/2
-        }else{
-            titleImage.frame.origin.x = 0
-            titleImage.frame.size.width = view.bounds.width
-            titleImage.frame.origin.y = logoY + (by - logoY - view.bounds.width/2)/2
-            titleImage.frame.size.height = view.bounds.width/2
-        }
-        logoImage.frame = CGRect(x: 0, y: 0, width:view.bounds.width, height:view.bounds.height/10)
-//        if UIApplication.shared.isIdleTimerDisabled == true{
-//            UIApplication.shared.isIdleTimerDisabled = false//監視する
-//        }
-    }
-    */
     func setButtons(){
-//        let top=CGFloat(UserDefaults.standard.float(forKey: "top"))
-//        let bottom=CGFloat(UserDefaults.standard.float(forKey: "bottom"))
-//        let left=CGFloat(UserDefaults.standard.float(forKey: "left"))
-//        let right=CGFloat(UserDefaults.standard.float(forKey: "right"))
-//
-//        let ww = view.bounds.width - left - right
-//        let wh = view.bounds.height - top - bottom
-
-        
         let ww:CGFloat=view.bounds.width-leftPadding-rightPadding
         let wh:CGFloat=view.bounds.height-topPadding-bottomPadding
         let sp=ww/120//間隙
@@ -548,46 +467,10 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier:"cell",for :indexPath)
         let number = (indexPath.row+1).description + ") "
         let phasset = camera.videoPHAsset[indexPath.row]
-//        let avasset = requestAVAsset(asset: phasset)
- //       phasset.pixelWidth
-//        DispatchQueue.global().async {
-//            let resources = PHAssetResource.assetResources(for: phasset)
-//            if let resource = resources.first {
-//                let fileName = resource.originalFilename
-//                let unsignedInt64 = resource.value(forKey: "fileSize") as? CLong
-//                let sizeOnDisk = Int64(bitPattern: UInt64(unsignedInt64!))
-//                let fileURL = resource.value(forKey: "fileURL") as? URL
-//                print("***********",fileName)
-//                print(fileURL)
-//            }
-//        }
-//        phasset.value(forKey: "filename")
-//        print("filename:",fileName)
-//        let videoSize=avasset!.tracks.first!.naturalSize
-//        let videoFps=avasset!.tracks.first!.nominalFrameRate
-   //     fpsLabel.text = String(format:"%.1fs %.0ffps %.0fx%.0f",videoDuration, videoFps,videoSize.width,videoSize.height)
-
         cell.textLabel!.text = number + camera.videoDate[indexPath.row] + " (" + phasset.pixelWidth.description + "x" + phasset.pixelHeight.description + ")"
         return cell
     }
-    
-//    func requestAVAsset(asset: PHAsset)-> AVAsset? {
-//        guard asset.mediaType == .video else { return nil }
-//        let phVideoOptions = PHVideoRequestOptions()
-//        phVideoOptions.version = .original
-//        let group = DispatchGroup()
-//        let imageManager = PHImageManager.default()
-//        var avAsset: AVAsset?
-//        group.enter()
-//        imageManager.requestAVAsset(forVideo: asset, options: phVideoOptions) { (asset, _, _) in
-//            avAsset = asset
-//            group.leave()
-//
-//        }
-//        group.wait()
-//
-//        return avAsset
-//    }
+
     //play item
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard: UIStoryboard = self.storyboard!
@@ -595,12 +478,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         nextView.calcDate = camera.videoDate[indexPath.row]
         let phasset = camera.videoPHAsset[indexPath.row]
         let avasset = camera.requestAVAsset(asset: phasset)
-        if avasset == nil{
-//            if !camera.videoDate[indexPath.row].contains("*"){
-//                camera.videoDate[indexPath.row] += "*"
-//            }
-//            print("**********")
-        }else{
+        if avasset != nil{//not neccesary
             let contentOffsetY = tableView.contentOffset.y
             print("offset:",contentOffsetY)
             UserDefaults.standard.set(contentOffsetY,forKey: "contentOffsetY")
@@ -635,11 +513,19 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }
         }
     }
+   
+    var fromUnwindFlag:Bool=false//ここではgetAlbumAssetsできないので
+    //didappearでチェックしてgetAlbumAssetsする
     @IBAction func unwindAction(segue: UIStoryboardSegue) {
         if segue.source is SetteiViewController || segue.source is HelpViewController || segue.source is PlayViewController{
             print("main-unwind:HelpView or SetteiView")
         }else{
-            print("Main-unwind: getAlbumAssets")
+            print("Main-unwind:getAlbumAssets",camera.videoDate.count)
+            fromUnwindFlag=true
+            UserDefaults.standard.set(0,forKey: "contentOffsetY")
+            DispatchQueue.main.async { [self] in
+                self.tableView.contentOffset.y=0
+            }
         }
         UIScreen.main.brightness = CGFloat(UserDefaults.standard.float(forKey: "mainBrightness"))
         UIApplication.shared.isIdleTimerDisabled = false//スリープする.監視する

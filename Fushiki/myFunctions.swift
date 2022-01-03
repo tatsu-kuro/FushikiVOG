@@ -143,7 +143,7 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
         return avAsset
     }
     var gettingAlbumF:Bool = false
-    func getAlbumAssets_last(){
+   /* func getAlbumAssets_last(){
         gettingAlbumF = true
         getAlbumAssets_last_sub()
         while gettingAlbumF == true{
@@ -179,6 +179,52 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
                     videoDate.append(date + "(" + duration + ")")
                 }
             }
+            gettingAlbumF = false
+        }else{
+            gettingAlbumF = false
+        }
+    }
+*/
+    func getAlbumAssets_last(){
+        gettingAlbumF = true
+        getAlbumAssets_last_sub()
+        while gettingAlbumF == true{
+            sleep(UInt32(0.1))
+        }
+    }
+    
+    func getAlbumAssets_last_sub(){
+        let requestOptions = PHImageRequestOptions()
+        requestOptions.isSynchronous = false
+        requestOptions.isNetworkAccessAllowed = false//これでもicloud上のvideoを取ってしまう
+        requestOptions.deliveryMode = .highQualityFormat
+        // アルバムをフェッチ
+        let assetFetchOptions = PHFetchOptions()
+        assetFetchOptions.predicate = NSPredicate(format: "title == %@", albumName)
+        let assetCollections = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .smartAlbumVideos, options: assetFetchOptions)
+        if (assetCollections.count > 0) {//アルバムが存在しない時
+            //同じ名前のアルバムは一つしかないはずなので最初のオブジェクトを使用
+            let assetCollection = assetCollections.object(at:0)
+            // creationDate降順でアルバム内のアセットをフェッチ
+            let fetchOptions = PHFetchOptions()
+            fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+            let assets = PHAsset.fetchAssets(in: assetCollection, options: fetchOptions)
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+//            for i in (assets.count-2)..<assets.count{
+                let asset=assets[0]
+                if asset.duration>0{//静止画を省く
+                    videoPHAsset.insert(asset,at:0)
+//                    print("asset:",asset)
+//                    videoURL.append(nil)
+                    let date_sub = asset.creationDate
+                    let date = formatter.string(from: date_sub!)
+                    let duration = String(format:"%.1fs",asset.duration)
+                    videoDate.insert(date + "(" + duration + ")",at:0)
+//                    asset.video
+//                    videoDura.append(duration)
+                }
+//            }
             gettingAlbumF = false
         }else{
             gettingAlbumF = false
