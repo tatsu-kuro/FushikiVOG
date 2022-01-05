@@ -252,9 +252,9 @@ class PlayParaViewController: UIViewController {
         paraText4.frame=CGRect(x:head+bw+3*sp,y:sp*4+bh*3,width:lw,height: bh)
         paraText5.frame=CGRect(x:head+bw+3*sp,y:sp*5+bh*4,width:lw,height: bh)
         paraText6.frame=CGRect(x:head+bw+3*sp,y:sp*6+bh*5,width:lw,height: bh)
-        default1Button.setTitle("12-ultraWide", for: .normal)
-        default2Button.setTitle("12-wideAngle", for: .normal)
-        default3Button.setTitle("se(1st)-back", for: .normal)
-        default4Button.setTitle("se(1st)-front", for: .normal)
+//        default1Button.setTitle("12-ultraWide", for: .normal)
+//        default2Button.setTitle("12-wideAngle", for: .normal)
+//        default3Button.setTitle("se(1st)-back", for: .normal)
+//        default4Button.setTitle("se(1st)-front", for: .normal)
     }
 }

@@ -32,6 +32,8 @@
 /* Begin PBXFileReference section */
 		691613B525C9F328009AAB64 /* PlayParaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayParaViewController.swift; sourceTree = "<group>"; };
 		6938C23B24C103370066CD69 /* SetteiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetteiViewController.swift; sourceTree = "<group>"; };
+		693CD7DC2785363C00F8008B /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		693CD7DD2785363C00F8008B /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		693DBAD925B31F3E00E9B534 /* PlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewController.swift; sourceTree = "<group>"; };
 		6959E1BF25CEDF4D00617C64 /* ImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
 		69C7640B25C2EAEB008AECAD /* Fushiki-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Fushiki-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
 			);
 			mainGroup = 8EE77EB920EF742C00517DEC;
 			productRefGroup = 8EE77EC320EF742C00517DEC /* Products */;
@@ -225,6 +228,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				8EE77ECA20EF742C00517DEC /* Base */,
+				693CD7DC2785363C00F8008B /* ja */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -233,6 +237,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				8EE77ECF20EF742E00517DEC /* Base */,
+				693CD7DD2785363C00F8008B /* ja */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -244,6 +249,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -304,6 +310,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -360,7 +367,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.9.8;
+				CURRENT_PROJECT_VERSION = 1.9.9;
 				DEVELOPMENT_TEAM = YKSHGZ7H3T;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -388,7 +395,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.9.8;
+				CURRENT_PROJECT_VERSION = 1.9.9;
 				DEVELOPMENT_TEAM = YKSHGZ7H3T;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

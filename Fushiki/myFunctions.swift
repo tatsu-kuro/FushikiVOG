@@ -237,13 +237,13 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
         while gettingAlbumF == true{
             sleep(UInt32(0.1))
         }
-//        for i in (0..<videoDate.count).reversed(){//cloudのは見ない・削除する
-//            let avasset = requestAVAsset(asset: videoPHAsset[i])
-//            if avasset == nil{
-//                videoPHAsset.remove(at: i)
-//                videoDate.remove(at: i)
-//            }
-//        }
+        for i in (0..<videoDate.count).reversed(){//cloudのは見ない・削除する
+            let avasset = requestAVAsset(asset: videoPHAsset[i])
+            if avasset == nil{
+                videoPHAsset.remove(at: i)
+                videoDate.remove(at: i)
+            }
+        }
     }
     
     func getAlbumAssets_sub(){

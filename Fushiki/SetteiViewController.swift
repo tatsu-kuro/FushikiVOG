@@ -292,9 +292,9 @@ class SetteiViewController: UIViewController {
         ettModeText2=camera.getUserDefaultString(str: "ettModeText2", ret: "2")
         ettModeText3=camera.getUserDefaultString(str: "ettModeText3", ret: "3")
 
-        ettExplanationText.text="円形視標の動作の設定方法  w,a:b:c,a1:b1:c1,....\n"
-        ettExplanationText.text! += "w[横振幅(0-5)],a[視標の動き方(1-6)]:b[速さ(0-3)]:c[時間(秒)]\n"
-        ettExplanationText.text! += "a) 1=振子横 2=同縦 3=衝動横 4=同縦 5=不規則横 6=同縦横"
+//        ettExplanationText.text="円形視標の動作の設定方法  w,a:b:c,a1:b1:c1,....\n"
+//        ettExplanationText.text! += "w[横振幅(0-5)],a[視標の動き方(1-6)]:b[速さ(0-3)]:c[時間(秒)]\n"
+//        ettExplanationText.text! += "a) 1=振子横 2=同縦 3=衝動横 4=同縦 5=不規則横 6=同縦横"
             
         setScreen()
         dispTexts()
