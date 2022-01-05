@@ -1,0 +1,9 @@
+/* 
+  File.strings
+  Fushiki
+
+  Created by 黒田建彰 on 2022/01/05.
+  Copyright © 2022 tatsuaki.Fushiki. All rights reserved.
+*/
+NSCameraUsageDescription = "目の動画を撮影し、アルバム( Fushiki)に保存します。";
+NSPhotoLibraryUsageDescription = "アルバム( Fushiki)を作成し、そこに目の動画を保存します。";

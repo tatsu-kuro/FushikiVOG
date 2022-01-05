@@ -27,9 +27,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>This app takes a nystagmus image.</string>
+	<string>This app takes a nystagmus image and put it in the album( Fushiki).</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app creates an album "Fushiki".</string>
+	<string>This app creates an album "Fushiki" and put a nystagmus image in it.</string>
 	<key>UIBackgroundModes</key>
 	<array/>
 	<key>UIFileSharingEnabled</key>

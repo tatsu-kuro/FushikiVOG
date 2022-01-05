@@ -11,6 +11,7 @@
 		6938C23C24C103370066CD69 /* SetteiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6938C23B24C103370066CD69 /* SetteiViewController.swift */; };
 		693DBADA25B31F3E00E9B534 /* PlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693DBAD925B31F3E00E9B534 /* PlayViewController.swift */; };
 		6959E1C025CEDF4D00617C64 /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6959E1BF25CEDF4D00617C64 /* ImagePickerController.swift */; };
+		698A19322785CA08004C4CE9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 698A19342785CA08004C4CE9 /* InfoPlist.strings */; };
 		69C7640925C2EA55008AECAD /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69DB12C023AEF297000C733A /* GameController.framework */; };
 		69CEA65225D3AEE900B34871 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CEA65125D3AEE900B34871 /* CameraViewController.swift */; };
 		69D0D83225AAFC3B00658D61 /* myFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D0D83125AAFC3B00658D61 /* myFunctions.swift */; };
@@ -36,6 +37,7 @@
 		693CD7DD2785363C00F8008B /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		693DBAD925B31F3E00E9B534 /* PlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewController.swift; sourceTree = "<group>"; };
 		6959E1BF25CEDF4D00617C64 /* ImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
+		698A19332785CA08004C4CE9 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		69C7640B25C2EAEB008AECAD /* Fushiki-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Fushiki-Bridging-Header.h"; sourceTree = "<group>"; };
 		69CEA65125D3AEE900B34871 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		69D0D83125AAFC3B00658D61 /* myFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myFunctions.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				69CEA65125D3AEE900B34871 /* CameraViewController.swift */,
 				6959E1BF25CEDF4D00617C64 /* ImagePickerController.swift */,
 				691613B525C9F328009AAB64 /* PlayParaViewController.swift */,
+				698A19342785CA08004C4CE9 /* InfoPlist.strings */,
 				693DBAD925B31F3E00E9B534 /* PlayViewController.swift */,
 				8EE77ECC20EF742E00517DEC /* Assets.xcassets */,
 				8EE77ECE20EF742E00517DEC /* LaunchScreen.storyboard */,
@@ -190,6 +193,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				698A19322785CA08004C4CE9 /* InfoPlist.strings in Resources */,
 				8EE77ED020EF742E00517DEC /* LaunchScreen.storyboard in Resources */,
 				8EE77ECD20EF742E00517DEC /* Assets.xcassets in Resources */,
 				8EE77ECB20EF742C00517DEC /* Main.storyboard in Resources */,
@@ -224,6 +228,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		698A19342785CA08004C4CE9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				698A19332785CA08004C4CE9 /* ja */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		8EE77EC920EF742C00517DEC /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -367,7 +379,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.9.9;
+				CURRENT_PROJECT_VERSION = 2.0.0;
 				DEVELOPMENT_TEAM = YKSHGZ7H3T;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -395,7 +407,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.9.9;
+				CURRENT_PROJECT_VERSION = 2.0.0;
 				DEVELOPMENT_TEAM = YKSHGZ7H3T;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
