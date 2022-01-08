@@ -94,7 +94,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="EXIT"/>
                                 <connections>
-                                    <segue destination="4AW-zU-c08" kind="unwind" unwindAction="unwindActionWithSegue:" id="QoD-80-OWg"/>
+                                    <segue destination="4AW-zU-c08" kind="unwind" identifier="fromSettei" unwindAction="unwindActionWithSegue:" id="QoD-80-OWg"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JNE-pm-V4S">
@@ -388,7 +388,7 @@ a) 1=hori. 2=vert. 3=hori.saccade 4=vert.saccade 5=vert.randum 6=randum</string>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="EXIT"/>
                                 <connections>
-                                    <segue destination="aXj-Bo-ygl" kind="unwind" unwindAction="unwindActionWithSegue:" id="Zf4-zi-KUe"/>
+                                    <segue destination="aXj-Bo-ygl" kind="unwind" identifier="fromHelp" unwindAction="unwindActionWithSegue:" id="Zf4-zi-KUe"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleAspectFill" semanticContentAttribute="playback" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n7m-sE-d1T">

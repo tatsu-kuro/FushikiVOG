@@ -134,9 +134,8 @@ class SetteiViewController: UIViewController {
     func goExit() {
         setUserDefaults()
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
-        //delTimer()
         mainView.targetMode=targetMode
-        self.present(mainView, animated: false, completion: nil)
+        performSegue(withIdentifier: "fromSettei", sender: self)
     }
     
      @IBAction func onOkpModeSwitch(_ sender: UISegmentedControl) {

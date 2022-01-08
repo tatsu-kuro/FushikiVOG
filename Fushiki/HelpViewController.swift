@@ -39,11 +39,21 @@ class HelpViewController: UIViewController {
         }
         tapInterval=CFAbsoluteTimeGetCurrent()
     }
+    /*
+     @IBAction func doubleTap(_ sender: Any) {
+         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
+         mainView.targetMode=targetMode
+         delTimer()
+         performSegue(withIdentifier: "fromETT", sender: self)
+     }
+     */
+    
+    
     func returnMain(){
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
-
         mainView.targetMode=targetMode
-        self.present(mainView, animated: false, completion: nil)
+//        self.present(mainView, animated: false, completion: nil)
+        performSegue(withIdentifier: "fromHelp", sender: self)
     }
     func chanLang(){
         helpNumber += 1
@@ -89,7 +99,7 @@ class HelpViewController: UIViewController {
             }
         }
     }
-    
+  
     @IBAction func goExit(_ sender: Any) {
         returnMain()
     }
