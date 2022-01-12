@@ -61,13 +61,13 @@ class HelpViewController: UIViewController {
             helpNumber=0
         }
         if(helpNumber==0){
-            helpView.image=UIImage(named:"fushiki_j")
+            helpView.image=UIImage(named:"etthelp0")
         }else if helpNumber==1{
-            helpView.image=UIImage(named:"etthelp")
+            helpView.image=UIImage(named:"etthelp1")
         }else if helpNumber==2{
-            helpView.image=UIImage(named:"fushiki_e")
+            helpView.image=UIImage(named:"etthelpeng0")
         }else{
-            helpView.image=UIImage(named:"etthelpeng")
+            helpView.image=UIImage(named:"etthelpeng1")
         }
     }
     override func remoteControlReceived(with event: UIEvent?) {
@@ -132,6 +132,6 @@ class HelpViewController: UIViewController {
         if UIApplication.shared.isIdleTimerDisabled == true{
             UIApplication.shared.isIdleTimerDisabled = false//監視する
         }
-        helpView.image=UIImage(named:"fushiki_j")
+        helpView.image=UIImage(named:"etthelp0")
     }
 }
