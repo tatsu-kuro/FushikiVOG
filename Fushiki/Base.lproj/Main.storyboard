@@ -398,7 +398,7 @@ a) 1=hori. 2=vert. 3=hori.saccade 4=vert.saccade 5=vert.randum 6=randum</string>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="next"/>
                                 <connections>
-                                    <action selector="globeBut:" destination="YRo-aS-cBq" eventType="touchUpInside" id="2d2-v6-V8F"/>
+                                    <action selector="onNextButton:" destination="YRo-aS-cBq" eventType="touchUpInside" id="k5c-dK-6uU"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -407,6 +407,7 @@ a) 1=hori. 2=vert. 3=hori.saccade 4=vert.saccade 5=vert.randum 6=randum</string>
                         <gestureRecognizers/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="zSj-ag-bUT" appends="YES" id="2JK-90-fZn"/>
+                            <outletCollection property="gestureRecognizers" destination="Z9D-aU-kPq" appends="YES" id="NnO-J3-K6e"/>
                         </connections>
                     </view>
                     <connections>
@@ -422,6 +423,11 @@ a) 1=hori. 2=vert. 3=hori.saccade 4=vert.saccade 5=vert.randum 6=randum</string>
                         <action selector="doubleTap:" destination="YRo-aS-cBq" id="XSX-YK-7EC"/>
                     </connections>
                 </tapGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="Z9D-aU-kPq">
+                    <connections>
+                        <action selector="panGesture:" destination="YRo-aS-cBq" id="ddd-Fc-NRf"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="68.973214285714278" y="-2795.6521739130435"/>
         </scene>
