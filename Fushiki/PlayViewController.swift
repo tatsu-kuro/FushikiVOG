@@ -1254,10 +1254,10 @@ class PlayViewController: UIViewController {
         faceWithBorderCGImage = context.createCGImage(ciImage, from:faceWithBorderRect)!
         faceWithBorderUIImage = UIImage.init(cgImage: faceWithBorderCGImage)
       
-        let osEyeX:CGFloat = (eyeWithBorderRect.size.width - eyeRect.size.width) / 2.0//上下方向への差
-        let osEyeY:CGFloat = (eyeWithBorderRect.size.height - eyeRect.size.height) / 2.0//左右方向への差
-        let osFacX:CGFloat = (faceWithBorderRect.size.width - faceRect.size.width) / 2.0//上下方向への差
-        let osFacY:CGFloat = (faceWithBorderRect.size.height - faceRect.size.height) / 2.0//左右方向への差
+        let offsetEyeX:CGFloat = (eyeWithBorderRect.size.width - eyeRect.size.width) / 2.0//上下方向への差
+        let offsetEyeY:CGFloat = (eyeWithBorderRect.size.height - eyeRect.size.height) / 2.0//左右方向への差
+        let offsetFaceX:CGFloat = (faceWithBorderRect.size.width - faceRect.size.width) / 2.0//上下方向への差
+        let offsetFaceY:CGFloat = (faceWithBorderRect.size.height - faceRect.size.height) / 2.0//左右方向への差
         //   "ofset:" osEyeX=osFac,osEyeY=osFacY eyeとface同じ
         let xDiffer=faceWithBorderRect.origin.x - eyeWithBorderRect.origin.x
         let yDiffer = faceWithBorderRect.origin.y - eyeWithBorderRect.origin.y
@@ -1284,8 +1284,8 @@ class PlayViewController: UIViewController {
                         if faceWithBorderRect.minX>0 && faceWithBorderRect.maxX<videoWidth && faceWithBorderRect.minY>0 && faceWithBorderRect.maxY<videoHeight{
                             maxFaceV=openCV.matching(faceWithBorderUIImage, narrow: faceUIImage, x: fX, y: fY)
                             if maxFaceV>0.91{
-                                fx = CGFloat(fX.pointee) - osFacX
-                                fy = borderRectDiffer - CGFloat(fY.pointee) - osFacY
+                                fx = CGFloat(fX.pointee) - offsetFaceX
+                                fy = borderRectDiffer - CGFloat(fY.pointee) - offsetFaceY
                             }else{
                                 fx=0
                                 fy=0
@@ -1335,8 +1335,8 @@ class PlayViewController: UIViewController {
                         }else{//検出できた時
                             //eXはポインタなので、".pointee"でそのポインタの内容が取り出せる。Cでいうところの"*"
                             //上で宣言しているとおりInt32が返ってくるのでCGFloatに変換して代入
-                            ex = CGFloat(eX.pointee) - osEyeX
-                            ey = /*borderRectDiffer*/ CGFloat(eY.pointee) - osEyeY
+                            ex = CGFloat(eX.pointee) - offsetEyeX
+                            ey = /*borderRectDiffer*/ CGFloat(eY.pointee) - offsetEyeY
                         }
                     }
                     
