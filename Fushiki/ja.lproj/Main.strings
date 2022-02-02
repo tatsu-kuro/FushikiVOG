@@ -71,8 +71,6 @@
 /* Class = "UIButton"; normalTitle = "EXIT"; ObjectID = "Nlq-Qa-G8v"; */
 "Nlq-Qa-G8v.normalTitle" = "EXIT";
 
-/* Class = "UILabel"; text = "(point) wide area width for matching"; ObjectID = "Opw-Lc-peG"; */
-"Opw-Lc-peG.text" = "(point) 比較する範囲の幅";
 
 /* Class = "UIButton"; normalTitle = "Mail"; ObjectID = "RGj-7J-RhQ"; */
 "RGj-7J-RhQ.normalTitle" = "メール";
@@ -87,7 +85,9 @@
 "TY4-cW-kPP.normalTitle" = "波形保存";
 
 /* Class = "UILabel"; text = "(point) narrow area width for matching"; ObjectID = "UAG-8Q-itb"; */
-"UAG-8Q-itb.text" = "(point) 比較検出画像の幅";
+"UAG-8Q-itb.text" = "角膜上の光源画像の幅";
+/* Class = "UILabel"; text = "(point) wide area width for matching"; ObjectID = "Opw-Lc-peG"; */
+"Opw-Lc-peG.text" = "光源画像を探す範囲の幅";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Umf-QT-HY0"; */
 "Umf-QT-HY0.normalTitle" = "Button";
