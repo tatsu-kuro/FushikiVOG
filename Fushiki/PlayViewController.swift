@@ -1244,7 +1244,7 @@ class PlayViewController: UIViewController {
         let faceRect = resizeR2(faceRectOnScreen, viewRect:getVideoRectOnScreen(), image:ciImage)
         var faceWithBorderRect = resizeR2(faceWithBorderRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
         //eyeWithBorderRectとeyeRect の差、faceでの差も同じ
-        let borderRectDiffer=faceWithBorderRect.width-faceRect.width
+//        let borderRectDiffer=faceWithBorderRect.width-faceRect.width
         
         let eyeCGImage = context.createCGImage(ciImage, from: eyeRect)!
         let eyeUIImage = UIImage.init(cgImage: eyeCGImage)
@@ -1259,7 +1259,7 @@ class PlayViewController: UIViewController {
         let offsetFaceX:CGFloat = (faceWithBorderRect.size.width - faceRect.size.width) / 2.0//上下方向への差
         let offsetFaceY:CGFloat = (faceWithBorderRect.size.height - faceRect.size.height) / 2.0//左右方向への差
         //   "ofset:" osEyeX=osFac,osEyeY=osFacY eyeとface同じ
-        let xDiffer=faceWithBorderRect.origin.x - eyeWithBorderRect.origin.x
+        let xDiffer = faceWithBorderRect.origin.x - eyeWithBorderRect.origin.x
         let yDiffer = faceWithBorderRect.origin.y - eyeWithBorderRect.origin.y
         var maxEyeV:Double = 0
         var maxFaceV:Double = 0
@@ -1269,10 +1269,10 @@ class PlayViewController: UIViewController {
         }
         DispatchQueue.global(qos: .default).async { [self] in
             while let sample = readerOutput.copyNextSampleBuffer(), self.calcFlag != false {
-                var ex:CGFloat = 0
-                var ey:CGFloat = 0
-                var fx:CGFloat = 0
-                var fy:CGFloat = 0
+                var eyeX:CGFloat = 0
+                var eyeY:CGFloat = 0
+                var faceX:CGFloat = 0
+                var faceY:CGFloat = 0
                 
                 //for test display
                 var x:CGFloat = 50.0
@@ -1284,18 +1284,18 @@ class PlayViewController: UIViewController {
                         if faceWithBorderRect.minX>0 && faceWithBorderRect.maxX<videoWidth && faceWithBorderRect.minY>0 && faceWithBorderRect.maxY<videoHeight{
                             maxFaceV=openCV.matching(faceWithBorderUIImage, narrow: faceUIImage, x: fX, y: fY)
                             if maxFaceV>0.91{
-                                fx = CGFloat(fX.pointee) - offsetFaceX
-                                fy = borderRectDiffer - CGFloat(fY.pointee) - offsetFaceY
+                                faceX = CGFloat(fX.pointee) - offsetFaceX
+                                faceY = -CGFloat(fY.pointee) + offsetFaceY
                             }else{
-                                fx=0
-                                fy=0
+                                faceX=0
+                                faceY=0
                             }
                         }else{
-                            fx=0
-                            fy=0
+                            faceX=0
+                            faceY=0
                         }
-                        faceWithBorderRect.origin.x += fx
-                        faceWithBorderRect.origin.y += fy
+                        faceWithBorderRect.origin.x += faceX
+                        faceWithBorderRect.origin.y += faceY
                     }
                     eyeWithBorderRect.origin.x = faceWithBorderRect.origin.x - xDiffer
                     eyeWithBorderRect.origin.y = faceWithBorderRect.origin.y - yDiffer
@@ -1315,36 +1315,30 @@ class PlayViewController: UIViewController {
                     if debugMode == true{
                         //画面表示はmain threadで行う
                         DispatchQueue.main.async {
-                            //                            debugEyeb.frame=CGRect(x:x,y:y,width:eyeWithBorderRect.size.width,height:eyeWithBorderRect.size.height)
                             debugEyeWaku_imge.image=eyeWithBorderUIImage
                             view.bringSubviewToFront(debugEyeWaku_imge)
                             x += eyeWithBorderRect.size.width + 5
                         }
                     }
                     if eyeWithBorderRect.minX<0 || eyeWithBorderRect.maxX>videoWidth || eyeWithBorderRect.minY<0 || eyeWithBorderRect.maxY>videoHeight{
-                        ex=0
-                        ey=0
+                        eyeX=0
+                        eyeY=0
                     }else{
-                        maxEyeV=openCV.matching(eyeWithBorderUIImage,
-                                                narrow: eyeUIImage,
-                                                x: eX,
-                                                y: eY)
+                        maxEyeV=openCV.matching(eyeWithBorderUIImage,narrow: eyeUIImage,x: eX,y: eY)
                         if maxEyeV < 0.7{
-                            ex = 0
-                            ey = 0
+                            eyeX = 0
+                            eyeY = 0
                         }else{//検出できた時
                             //eXはポインタなので、".pointee"でそのポインタの内容が取り出せる。Cでいうところの"*"
                             //上で宣言しているとおりInt32が返ってくるのでCGFloatに変換して代入
-                            ex = CGFloat(eX.pointee) - offsetEyeX
-                            ey = /*borderRectDiffer*/ CGFloat(eY.pointee) - offsetEyeY
+                            eyeX = CGFloat(eX.pointee) - offsetEyeX
+                            eyeY = CGFloat(eY.pointee) - offsetEyeY
                         }
                     }
-                    
                     faceWithBorderCGImage = context.createCGImage(ciImage, from:faceWithBorderRect)!
                     faceWithBorderUIImage = UIImage.init(cgImage: faceWithBorderCGImage)
                     if debugMode == true && faceMark==true{
                         DispatchQueue.main.async {
-//                            debugFaceb.frame=CGRect(x:x,y:y,width:faceWithBorderRect.size.width,height:faceWithBorderRect.size.height)
                             debugFaceWaku_image.image=faceWithBorderUIImage
                             view.bringSubviewToFront(debugFaceWaku_image)
                         }
@@ -1353,10 +1347,10 @@ class PlayViewController: UIViewController {
                     while handlingDataNowFlag==true{
                         sleep(UInt32(0.1))
                     }
-                    eyePosXOrig.append(ex)
-                    eyePosYOrig.append(ey)
-                    eyePosXFiltered.append(-1*Kalman(value: ex,num: 0))
-                    eyePosYFiltered.append(-1*Kalman(value: ey,num: 1))
+                    eyePosXOrig.append(eyeX)
+                    eyePosYOrig.append(eyeY)
+                    eyePosXFiltered.append(-1*Kalman(value: eyeX,num: 0))
+                    eyePosYFiltered.append(-1*Kalman(value: eyeY,num: 1))
                     let cnt=eyePosXOrig.count
                     eyeVeloXFiltered.append(Kalman(value:eyePosXFiltered[cnt-1]-eyePosXFiltered[cnt-2],num:2))
                     eyeVeloYFiltered.append(Kalman(value:eyePosYFiltered[cnt-1]-eyePosYFiltered[cnt-2],num:3))
@@ -1367,7 +1361,7 @@ class PlayViewController: UIViewController {
                     if debugMode == true{
                         usleep(200)
                     }
-                }
+                }//autoReleasePool
             }
             calcFlag = false
         }
