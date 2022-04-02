@@ -106,6 +106,9 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     func doModes(){
         let storyboard: UIStoryboard = self.storyboard!
+        let mainBrightness=UIScreen.main.brightness//明るさを保持
+        UserDefaults.standard.set(mainBrightness, forKey: "mainBrightness")
+
         if targetMode<3 && tableView.visibleCells.count>5{//録画の時tableviewをトップに戻す
             
             tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
@@ -237,8 +240,8 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         getUserDefaultAll()
         print("MainViewDidLoad*****")
 //        sound(snd:"silence")//リモコンの操作権を貰う
-        let mainBrightness=UIScreen.main.brightness//明るさを保持
-        UserDefaults.standard.set(mainBrightness, forKey: "mainBrightness")
+//        let mainBrightness=UIScreen.main.brightness//明るさを保持
+//        UserDefaults.standard.set(mainBrightness, forKey: "mainBrightness")
         if PHPhotoLibrary.authorizationStatus() != .authorized {
             PHPhotoLibrary.requestAuthorization { status in
                 if status == .authorized {
