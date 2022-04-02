@@ -15,9 +15,8 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 
     let camera = myFunctions()//name:"Fushiki")
     var controllerF:Bool=false
-    @IBOutlet weak var titleImage: UIImageView!
-    
-    @IBOutlet weak var logoImage: UIImageView!
+//    @IBOutlet weak var titleImage: UIImageView!
+//    @IBOutlet weak var logoImage: UIImageView!
     var caloricEttOknFlag = false//falseでは、caloricEtt,Okn buttonがカメラオンオフボタンとなる。
     var videoArrayCount:Int = 0
     var oknSpeed:Int = 50
@@ -37,7 +36,11 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var ettModeText2:String = ""
     var ettModeText3:String = ""
     var cameraON:Bool!
-
+    @IBAction func onStartHideButton(_ sender: Any) {
+        doModes()
+    }
+    
+    @IBOutlet weak var startHideButton: UIButton!
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -415,20 +418,20 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         camera.setButtonProperty(caloricOknButton,x:bw*4+sp*6+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(helpButton,x:bw*5+sp*7+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(setteiButton,x:bw*6+sp*8+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
-        
-        if ww/2 > by{
-            titleImage.frame.origin.y = sp+topPadding
-            titleImage.frame.size.width = by*2
-            titleImage.frame.size.height = by
-            titleImage.frame.origin.x = (ww - titleImage.frame.size.width)/2+leftPadding
-        }else{
-            titleImage.frame.origin.x = leftPadding
-            titleImage.frame.size.width = ww
-            titleImage.frame.origin.y = (by - ww/2)/2
-            titleImage.frame.size.height = ww/2
-        }
-        logoImage.frame = CGRect(x: leftPadding, y: topPadding, width:ww, height:wh/10)
-        logoImage.isHidden=true
+        camera.setButtonProperty(startHideButton, x: sp*2+leftPadding, y: wh*1.5/4, w: bw, h: wh/4, UIColor.darkGray)
+//        if ww/2 > by{
+//            titleImage.frame.origin.y = sp+topPadding
+//            titleImage.frame.size.width = by*2
+//            titleImage.frame.size.height = by
+//            titleImage.frame.origin.x = (ww - titleImage.frame.size.width)/2+leftPadding
+//        }else{
+//            titleImage.frame.origin.x = leftPadding
+//            titleImage.frame.size.width = ww
+//            titleImage.frame.origin.y = (by - ww/2)/2
+//            titleImage.frame.size.height = ww/2
+//        }
+//        logoImage.frame = CGRect(x: leftPadding, y: topPadding, width:ww, height:wh/10)
+//        logoImage.isHidden=true
         setCameraOnOffbuttons()
     }
     func setCameraOnOffbuttons(){
