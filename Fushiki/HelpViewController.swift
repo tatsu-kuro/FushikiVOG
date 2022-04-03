@@ -16,27 +16,27 @@ class HelpViewController: UIViewController {
     var helpImageName:String = ""
     var tapInterval=CFAbsoluteTimeGetCurrent()
     @IBOutlet weak var helpView: UIImageView!
-    @IBOutlet weak var nextButton: UIButton!
+//    @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var exitButton: UIButton!
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func onNextButton(_ sender: Any) {
-        helpNumber += 1
-        if helpNumber>1{
-            helpNumber=0
-        }
-        setHelpImageName()
-        setHelpImage()
-    }
+//    @IBAction func onNextButton(_ sender: Any) {
+//        helpNumber += 1
+//        if helpNumber>1{
+//            helpNumber=0
+//        }
+//        setHelpImageName()
+//        setHelpImage()
+//    }
     @IBAction func doubleTap(_ sender: Any) {//singleTapに変更したが、名前はそのまま
         if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
             print("doubleTapPlay")
             returnMain()
-        }else{
-            onNextButton(0)
+//        }else{
+//            onNextButton(0)
         }
         tapInterval=CFAbsoluteTimeGetCurrent()
     }
@@ -66,42 +66,50 @@ class HelpViewController: UIViewController {
         let caloricFlag=UserDefaults.standard.bool(forKey: "caloricEttOknFlag")
         if Locale.preferredLanguages.first!.contains("ja"){
             print("japan")
-            if helpNumber == 0{
-                helpImageName="etthelp0"
-            }else if helpNumber == 1{
-                if caloricFlag{
-                    helpImageName="etthelp2"
-                }else{
-                    helpImageName="etthelp1"
-                }
-            }else if helpNumber == 2{
-                helpImageName="etthelpeng0"
-            }else{
-                if caloricFlag{
-                    helpImageName="etthelpeng2"
-                }else{
-                    helpImageName="etthelpeng1"
-                }
+            helpImageName="etthelp"
+            if caloricFlag{
+                helpImageName="etthelp2"
             }
+//            if helpNumber == 0{
+//                helpImageName="etthelp0"
+//            }else if helpNumber == 1{
+//                if caloricFlag{
+//                    helpImageName="etthelp2"
+//                }else{
+//                    helpImageName="etthelp1"
+//                }
+//            }else if helpNumber == 2{
+//                helpImageName="etthelpeng0"
+//            }else{
+//                if caloricFlag{
+//                    helpImageName="etthelpeng2"
+//                }else{
+//                    helpImageName="etthelpeng1"
+//                }
+//            }
         }else{
             print("english")
-            if helpNumber == 0{
-                helpImageName="etthelpeng0"
-            }else if helpNumber == 1{
-                if caloricFlag{
-                    helpImageName="etthelpeng2"
-                }else{
-                    helpImageName="etthelpeng1"
-                }
-            }else if helpNumber == 2{
-                helpImageName="etthelp0"
-            }else{
-                if caloricFlag{
-                    helpImageName="etthelp2"
-                }else{
-                    helpImageName="etthelp1"
-                }
+            helpImageName="etthelpeng"
+            if caloricFlag{
+                helpImageName="etthelpeng2"
             }
+//            if helpNumber == 0{
+//                helpImageName="etthelpeng0"
+//            }else if helpNumber == 1{
+//                if caloricFlag{
+//                    helpImageName="etthelpeng2"
+//                }else{
+//                    helpImageName="etthelpeng1"
+//                }
+//            }else if helpNumber == 2{
+//                helpImageName="etthelp0"
+//            }else{
+//                if caloricFlag{
+//                    helpImageName="etthelp2"
+//                }else{
+//                    helpImageName="etthelp1"
+//                }
+//            }
         }
         print("helpImageName:",helpNumber,helpImageName)
     }
@@ -117,8 +125,8 @@ class HelpViewController: UIViewController {
                 if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
                     print("doubleTapPlay")
                     returnMain()
-                }else{
-                    onNextButton(0)
+//                }else{
+//                    onNextButton(0)
                 }
                 tapInterval=CFAbsoluteTimeGetCurrent()
             case .remoteControlTogglePlayPause:
@@ -126,8 +134,8 @@ class HelpViewController: UIViewController {
                 if (CFAbsoluteTimeGetCurrent()-tapInterval)<0.3{
                     print("doubleTap")
                     returnMain()
-                }else{
-                    onNextButton(0)
+//                }else{
+//                    onNextButton(0)
                 }
                 tapInterval=CFAbsoluteTimeGetCurrent()
             default:
@@ -177,7 +185,7 @@ class HelpViewController: UIViewController {
         let bh=bw*170/440
         let by=wh-bh-sp
         camera.setButtonProperty(exitButton,x:left+bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
-        camera.setButtonProperty(nextButton,x:left+2*sp,y:by,w:bw,h:bh,UIColor.darkGray)
+//        camera.setButtonProperty(nextButton,x:left+2*sp,y:by,w:bw,h:bh,UIColor.darkGray)
         helpView.frame=CGRect(x:left+2*sp,y:2*sp,width: ww-4*sp,height: wh-bh-3*sp)
         if UIApplication.shared.isIdleTimerDisabled == true{
             UIApplication.shared.isIdleTimerDisabled = false//監視する

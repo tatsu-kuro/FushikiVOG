@@ -391,16 +391,6 @@ a) 1=hori. 2=vert. 3=hori.saccade 4=vert.saccade 5=vert.randum 6=randum</string>
                                     <segue destination="aXj-Bo-ygl" kind="unwind" identifier="fromHelp" unwindAction="unwindActionWithSegue:" id="Zf4-zi-KUe"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleAspectFill" semanticContentAttribute="playback" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n7m-sE-d1T">
-                                <rect key="frame" x="777" y="47" width="59" height="67"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="next"/>
-                                <connections>
-                                    <action selector="onNextButton:" destination="YRo-aS-cBq" eventType="touchUpInside" id="k5c-dK-6uU"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="CfK-RG-r1l"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -413,7 +403,6 @@ a) 1=hori. 2=vert. 3=hori.saccade 4=vert.saccade 5=vert.randum 6=randum</string>
                     <connections>
                         <outlet property="exitButton" destination="qIw-KK-ztU" id="UbX-Iq-ZCT"/>
                         <outlet property="helpView" destination="VTz-6I-kn3" id="YAU-pv-Xdk"/>
-                        <outlet property="nextButton" destination="n7m-sE-d1T" id="tL3-Cw-jdO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SHZ-t8-76y" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1295,7 +1284,7 @@ a) 1=hori. 2=vert. 3=hori.saccade 4=vert.saccade 5=vert.randum 6=randum</string>
         <image name="arrow.triangle.2.circlepath.camera" catalog="system" width="128" height="94"/>
         <image name="camera" catalog="system" width="128" height="94"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
-        <image name="etthelp" width="1301" height="623"/>
+        <image name="etthelp" width="1148" height="1328"/>
         <image name="eye" width="212" height="212"/>
         <image name="face" width="212" height="212"/>
         <image name="gearshape" catalog="system" width="128" height="121"/>
