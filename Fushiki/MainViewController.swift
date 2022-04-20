@@ -508,7 +508,9 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 sleep(UInt32(0.1))
             }
             if camera.dialogStatus==1{
+                camera.videoPHAsset.remove(at: indexPath.row)
                 camera.videoDate.remove(at: indexPath.row)
+                
                 tableView.reloadData()
                 if indexPath.row>4 && indexPath.row<camera.videoDate.count{
                     tableView.reloadRows(at: [indexPath], with: .fade)
