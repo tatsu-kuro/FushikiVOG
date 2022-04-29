@@ -12,14 +12,14 @@ import AVFoundation
 class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegate {
     let camera = myFunctions()//name:"Fushiki")
     var cirDiameter:CGFloat = 0
-    var startTime=CFAbsoluteTimeGetCurrent()
+//    var startTime=CFAbsoluteTimeGetCurrent()
     var lastTime=CFAbsoluteTimeGetCurrent()
     var timerREC:Timer?
 //    var mainBrightness:CGFloat?
     @IBOutlet weak var recClarification: UIImageView!
     var displayLinkF:Bool=false
     var displayLink:CADisplayLink?
-    var tcount: Int = 0
+//    var tcount: Int = 0
     var ettWidth:Int = 50
     var ettMode:Int = 0
     var targetMode:Int = 0
@@ -83,14 +83,14 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
                     doubleTap(0)
                 }
                 tapInterval=CFAbsoluteTimeGetCurrent()
-            case .remoteControlNextTrack:
+//            case .remoteControlNextTrack:
 //                ettWidth = 2
 //                setETTwidth(width: 2)
-                tcount=1
-            case .remoteControlPreviousTrack:
+//                tcount=1
+//            case .remoteControlPreviousTrack:
 //                ettWidth = 1
 //                setETTwidth(width: 1)
-                tcount=1
+//                tcount=1
             default:
                 print("Others")
             }
@@ -107,17 +107,17 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     }
  
     var cntREC:Int=0
-    @objc func updateRecClarification(tm: Timer) {//録画していることを明確に示す必要がある
+    @objc func updateRecClarification(tm: Timer) {//録画していることを明確に示す必要がある 0.05
         cntREC += 1
         recClarification.alpha=camera.updateRecClarification(tm: cntREC)
-        if cntREC==20{
+        if cntREC==10{//ここはカメラOFF時は通らない
             camera.recordStart()//ここだと暗くならない
+            //実際に録画スタートした時にcamera.recordStartTimeが設定される
         }
-//        if cntREC==6{
-//            camera.setFocus(focus: 0.1)
-//        }else if cntREC==20{
-//            camera.setFocus(focus: 0.9)
-//        }
+        if camera.recordStartTime>0 && displayLinkF==false{//実際に録画がスタートしたら視標表示を開始
+            displayLink?.add(to: RunLoop.main, forMode: .common)
+            displayLinkF=true
+        }
     }
     var ettType = Array<Int>()
     var ettSpeed = Array<Int>()
@@ -128,11 +128,10 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-   
         camera.makeAlbum()
-//        mainBrightness=UIScreen.main.brightness//明るさを保持、終了時に戻す
         print(UIScreen.main.brightness)
         UIScreen.main.brightness = CGFloat(camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
+        
         let cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
         camera.initSession(camera: Int(cameraType), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
       
@@ -144,15 +143,11 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
 
         ettMode=UserDefaults.standard.integer(forKey: "ettMode")
         ettWidth=UserDefaults.standard.integer(forKey: "ettWidth")
-//        let w=view.bounds.width/2
-        
-//        ettMode=UserDefaults.standard.integer(forKey: "ettMode")
-//        ettWidth=UserDefaults.standard.integer(forKey: "ettWidth")
         ettType.removeAll()
         ettSpeed.removeAll()
         ettSec.removeAll()
         currentEttNum=0
-        startTime=CFAbsoluteTimeGetCurrent()
+//        startTime=CFAbsoluteTimeGetCurrent()
         var ettTxt:String = ""
         if ettMode==0{
             ettTxt = UserDefaults.standard.string(forKey: "ettModeText0")!
@@ -197,11 +192,18 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         ettW=ettH+(ettW-ettH)*CGFloat(ettWidthX)/5
         displayLink = CADisplayLink(target: self, selector: #selector(self.update))
         displayLink!.preferredFramesPerSecond = 120
-
-        tcount=0
-        displayLink?.add(to: RunLoop.main, forMode: .common)
-        displayLinkF=true
- 
+        //まず中心に円を表示
+        drawCircle(cPoint: CGPoint(x:centerX,y:centerY))
+        if UserDefaults.standard.bool(forKey: "cameraON")==false{
+            //非録画モードなら、ここでdisplayLinkスタート
+            //録画モードでは、timerRecで録画スタートさせて、実際に録画が始まるところをチェックしてdisplayLinkをスタート
+//        camera.recordStartTime=0//0にセットしておく
+            displayLink?.add(to: RunLoop.main, forMode: .common)
+            displayLinkF=true
+        }
+//        if UserDefaults.standard.bool(forKey: "kameraON")==false{
+//            camera.recordStart()
+//        }
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
         }
@@ -216,18 +218,19 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         }else{
             timerREC = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: true)
             recClarification.frame=camera.getRecClarificationRct(width:view.bounds.width,height:view.bounds.height)
+//            sleep(UInt32(1.0))
+//            camera.recordStart()
+            //録画モードでは、timerRecで録画スタートさせて、実際に録画が始まる時間を取得
         }
+       
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
         }
-        //          hideButtons(hide: true)
         UIApplication.shared.beginReceivingRemoteControlEvents()
         // ファーストレスポンダにする（その結果、キーボードが表示される）
-//        self.becomeFirstResponder()
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
-//        camera.sessionRect(fps:30)
-    
+      
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -279,11 +282,16 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         return CGPoint(x:x0 + CGFloat(xn)*xd, y: y0 + CGFloat(yn)*yd)
     }
     @objc func update() {//pursuit
-        if tcount > 0{
+//        if tcount > 0{
             view.layer.sublayers?.removeLast()
-        }
-        tcount += 1
-        let elapset=CFAbsoluteTimeGetCurrent()-startTime
+//        }
+//        tcount += 1
+//        if camera.recordingFlag==true{
+//            startTime=camera.recordStartTime
+//            camera.recordingFlag=false
+//        }
+        //実際に録画が開始した時間を基準にする。(10-20msec程度はずれてしまう）
+        let elapset=CFAbsoluteTimeGetCurrent()-camera.recordStartTime// recordstartTime
         if elapset<ettSec[currentEttNum]{
             let etttype=ettType[currentEttNum]
             if etttype == 1{//振り子横
@@ -299,16 +307,16 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
             }else if etttype==3{//衝動横
                 let ettspeed=Double(ettSpeed[currentEttNum])
                 let sec=Int(elapset*ettspeed/2)
-                if ettspeed==0{
+                      if ettspeed==0{
                     drawCircle(cPoint: CGPoint(x:centerX,y:centerY))
                 }else{
                     if sec%2==0{
                         let cPoint=CGPoint(x:centerX+ettW,y:centerY)
                         drawCircle(cPoint: cPoint)
-                    }else{
+                      }else{
                         let cPoint=CGPoint(x:centerX-ettW,y:centerY)
                         drawCircle(cPoint: cPoint)
-                    }
+                      }
                 }
             }else if etttype==4{//衝動縦
                 let ettspeed=Double(ettSpeed[currentEttNum])
@@ -342,13 +350,14 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         }else{
             currentEttNum += 1
             if ettType.count-1<currentEttNum{
-                if tcount%100==0{
-                    print("owari!!")
-                    doubleTap(0)
-                }
-                currentEttNum -= 1
+//                if tcount%100==0{//何をしたかったのか？かわからない
+//                    print("owari!!")
+//                    doubleTap(0)
+//                }
+//                currentEttNum -= 1
+                doubleTap(0)
             }else{
-                startTime=CFAbsoluteTimeGetCurrent()
+                camera.recordStartTime=CFAbsoluteTimeGetCurrent()
             }
             drawCircle(cPoint: CGPoint(x:-200,y:-200))//damy
         }

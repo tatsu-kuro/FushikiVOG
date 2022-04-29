@@ -20,6 +20,8 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
     var videoDate = Array<String>()
 //    var videoURL = Array<URL?>()
     var videoPHAsset = Array<PHAsset>()
+//    var recordingFlag:Bool = false
+    var recordStartTime=CFAbsoluteTimeGetCurrent()
 
     var albumExistFlag:Bool = false
     var dialogStatus:Int=0
@@ -579,6 +581,12 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
         }
         return retF
     }
+    func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection]) {
+        //視標表示の開始をrecordStartTimeに合わせる。
+        recordStartTime=CFAbsoluteTimeGetCurrent()
+//        recordingFlag=true
+        print("録画開始")
+    }
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         if let soundUrl = URL(string:
                                 "/System/Library/Audio/UISounds/end_record.caf"/*photoShutter.caf*/){
@@ -631,8 +639,6 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
         while saved2album==false{
             sleep(UInt32(0.1))
         }
-//        captureSession.stopRunning()
-        //         performSegue(withIdentifier: "fromRecordToMain", sender: self)
     }
     func setLabelProperty(_ label:UILabel,x:CGFloat,y:CGFloat,w:CGFloat,h:CGFloat,_ color:UIColor){
         label.frame = CGRect(x:x, y:y, width: w, height: h)
@@ -642,7 +648,7 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
         label.layer.cornerRadius = 5
         label.backgroundColor = color
     }
-    //button.backgroundColor = color
+ 
     func setButtonProperty(_ button:UIButton,x:CGFloat,y:CGFloat,w:CGFloat,h:CGFloat,_ color:UIColor){
         button.frame   = CGRect(x:x, y:y, width: w, height: h)
         button.layer.borderColor = UIColor.black.cgColor

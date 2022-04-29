@@ -37,7 +37,8 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var ettModeText3:String = ""
     var cameraON:Bool!
     @IBAction func onStartHideButton(_ sender: Any) {
-        doModes()
+//        doModes()
+        onEttButton(0)
     }
     
     @IBOutlet weak var startHideButton: UIButton!
