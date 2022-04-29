@@ -959,7 +959,7 @@ a) 1=hori. 2=vert. 3=hori.saccade 4=vert.saccade 5=vert.randum 6=randum</string>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="START"/>
+                                <buttonConfiguration key="configuration" style="plain" title="ETT"/>
                                 <connections>
                                     <action selector="onStartHideButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cvw-6U-CL2"/>
                                 </connections>
