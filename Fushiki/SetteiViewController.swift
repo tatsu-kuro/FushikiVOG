@@ -176,7 +176,7 @@ class SetteiViewController: UIViewController {
         UserDefaults.standard.set(oknTime, forKey: "oknTime")
         UserDefaults.standard.set(oknMode, forKey: "oknMode")
         UserDefaults.standard.set(ettMode,forKey: "ettMode")
-        UserDefaults.standard.set(screenBrightness, forKey: "screenBrightness")
+//        UserDefaults.standard.set(screenBrightness, forKey: "screenBrightness")
         UserDefaults.standard.set(cameraType,forKey: "cameraType")
         
         UserDefaults.standard.set(speakerOnOff,forKey: "speakerOnOff")
@@ -187,9 +187,8 @@ class SetteiViewController: UIViewController {
     }
 
     @IBAction func onBrightnessSlider(_ sender: UISlider) {
-//        UserDefaults.standard.set(sender.value, forKey: "screenBrightness")
-        screenBrightness=sender.value
-        setUserDefaults()
+//        screenBrightness=sender.value
+//        setUserDefaults()
     }
     
     @IBAction func onDefaultButton(_ sender: Any) {
@@ -211,7 +210,7 @@ class SetteiViewController: UIViewController {
         oknSwitch.selectedSegmentIndex=oknMode%4
         oknTimeSlider.value=Float(oknTime)/100.0
         ettSwitch.selectedSegmentIndex=ettMode%4
-        brightnessSlider.value=camera.getUserDefaultFloat(str: "screenBrightness", ret: 1.0)
+//        brightnessSlider.value=camera.getUserDefaultFloat(str: "screenBrightness", ret: 1.0)
         if cameraON{//camera
             cameraSwitch.isOn=true
         }else{//don't use camera
@@ -284,7 +283,7 @@ class SetteiViewController: UIViewController {
         speakerOnOff=UserDefaults.standard.integer(forKey: "speakerOnOff")
         cameraType=UserDefaults.standard.integer(forKey: "cameraType")
         cameraON=UserDefaults.standard.bool(forKey: "cameraON")
-        screenBrightness = camera.getUserDefaultFloat(str: "screenBrightness", ret: 1.0)
+//        screenBrightness = camera.getUserDefaultFloat(str: "screenBrightness", ret: 1.0)
         ettMode = camera.getUserDefaultInt(str:"ettMode",ret:0)
         ettModeText0=camera.getUserDefaultString(str: "ettModeText0", ret: "0")
         ettModeText1=camera.getUserDefaultString(str: "ettModeText1", ret: "1")
@@ -298,6 +297,8 @@ class SetteiViewController: UIViewController {
         setScreen()
         dispTexts()
         setControlState()
+        brightnessText.isHidden=true
+        brightnessSlider.isHidden=true
     }
     
       override var prefersStatusBarHidden: Bool {
@@ -460,8 +461,8 @@ class SetteiViewController: UIViewController {
         oknText.frame  = CGRect(x:x1,   y: b4y ,width: bw*5, height: bh)
         oknTimeSlider.frame  = CGRect(x:x0,   y: b5y ,width: bw,height:bh)
         oknTimeText.frame  = CGRect(x:x1,   y: b5y ,width: bw*5,height:bh)
-        brightnessSlider.frame  = CGRect(x:x0,   y: b6y ,width: bw,height:bh)
-        brightnessText.frame  = CGRect(x:x1,   y: b6y ,width: bw*5,height:bh)
+//        brightnessSlider.frame  = CGRect(x:x0,   y: b6y ,width: bw,height:bh)
+//        brightnessText.frame  = CGRect(x:x1,   y: b6y ,width: bw*5,height:bh)
         cameraSwitch.frame = CGRect(x:x0,y:b7y,width:bw,height: bh)
         cameraLabel.frame = CGRect(x:x0+2*sp+cameraSwitch.frame.width,y:b7y+2,width:bw*5,height:bh)
         speakerSwitch.frame = CGRect(x:x0,   y: b8y ,width: bw*5,height:bh)

@@ -15,7 +15,6 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
 //    var startTime=CFAbsoluteTimeGetCurrent()
     var lastTime=CFAbsoluteTimeGetCurrent()
     var timerREC:Timer?
-//    var mainBrightness:CGFloat?
     @IBOutlet weak var recClarification: UIImageView!
     var displayLinkF:Bool=false
     var displayLink:CADisplayLink?
@@ -35,24 +34,11 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         }
     }
     
-    /*
-     func exit4OKN(){
-         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
-         mainView.targetMode=targetMode
- //        UIScreen.main.brightness=mainBrightness!
-         delTimer()
-         camera.recordStop()//fileOutput.stopRecording()
-         performSegue(withIdentifier: "fromOKN", sender: self)
-     }
-     */
-    
-    
     @IBAction func doubleTap(_ sender: Any) {
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
         mainView.targetMode=targetMode
         delTimer()
         camera.recordStop()
-//        UIScreen.main.brightness=mainBrightness!
         performSegue(withIdentifier: "fromETT", sender: self)
     }
     func delTimer(){
