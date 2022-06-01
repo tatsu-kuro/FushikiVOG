@@ -101,12 +101,15 @@ class CameraViewController: UIViewController {
         if AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) != nil{
             wideAngleCamera=true
         }
-        if AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) != nil{
-            ultrawideCamera=true
-        }
-        if AVCaptureDevice.default(.builtInTelephotoCamera, for: .video, position: .back) != nil{
-            telephotoCamera=true
-        }
+        //以下は選べないように変更
+        ultrawideCamera=false
+        telephotoCamera=false
+//        if AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) != nil{
+//            ultrawideCamera=true
+//        }
+//        if AVCaptureDevice.default(.builtInTelephotoCamera, for: .video, position: .back) != nil{
+//            telephotoCamera=true
+//        }
     }
     //cameraMode 0:front 1:wideangle 2:ultrawide 3:telephoto
     func changeCameraMode()
@@ -132,63 +135,7 @@ class CameraViewController: UIViewController {
         }
         print("cameraType:",cameraType)
     }
-    /*
-     @IBAction func onCameraChange(_ sender: Any) {//camera>1
-         cameraType=UserDefaults.standard.integer(forKey:"cameraType")
-         if cameraType==0{
-             if telephotoCamera == true{
-                 cameraType=1//telephoto
-             }else if ultrawideCamera == true{
-                 cameraType=2
-             }
-         }else if cameraType==1{
-             if ultrawideCamera==true{
-                 cameraType=2//ultraWide
-             }else{
-                 cameraType=0
-             }
-         }else{
-             cameraType=0//wideAngle
-         }
-         print("cameraType",cameraType)
-         UserDefaults.standard.set(cameraType, forKey: "cameraType")
-          if session.isRunning{
-         // セッションが始動中なら止める
-             print("isrunning")
-             session.stopRunning()
-         }
-         initSession(fps: fps_non_120_240)
-         setBars()
-     }
-     // 入力 : 背面カメラ
-     if cameraType==0{
-         videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
-     }else if cameraType==1{
-         videoDevice = AVCaptureDevice.default(.builtInTelephotoCamera, for: .video, position: .back)
-
-     }else if cameraType==2{
-         videoDevice = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back)
-
-     }*/
-    /*
-    @IBAction func onCameraChan(_ sender: UISegmentedControl) {
-        let cameraMode=cameraChan.selectedSegmentIndex
-        UserDefaults.standard.set(cameraMode, forKey: "cameraMode")
-        if cameraMode==2{
-            cameraView.alpha=0
-        }else{
-            cameraView.alpha=1
-        }
-        camera.stopRunning()
-        camera.initSession(camera: cameraMode, bounds:view.bounds, cameraView: cameraView)
-        print("cameraMode:",cameraMode)
-        fpsLabel.text = String(format:"fps:%d %dx%d" ,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
-        camera.setLedLevel(level:camera.getUserDefaultFloat(str: "ledValue", ret:0))
-        if cameraMode == 1{
-            UserDefaults.standard.set(camera.fpsCurrent, forKey: "backCameraFps")
-        }
-        setButtons()
-    }*/
+ 
     @objc func onLedValueChange(){
         camera.setLedLevel(level:ledBar.value)
         UserDefaults.standard.set(ledBar.value, forKey: "ledValue")
@@ -232,27 +179,29 @@ class CameraViewController: UIViewController {
         //zoomBarは使用できなくした。
            zoomBar.isHidden=true
            zoomBarLabel.isHidden=true
-        camera.setLabelProperty(focusBarLabel,x:left+bw*6+sp*8,y:by-sp*2-2*bh,w:bw,h:bh,UIColor.white)
-        focusBar.frame=CGRect(  x:left+2*sp,y:by-sp*2-2*bh,width:ww-7*sp-bw,height:bh)
-        camera.setLabelProperty(ledBarLabel,  x:left+bw*6+sp*8,y:by-sp-1*bh,w:bw,h:bh,UIColor.white)
-        ledBar.frame=CGRect(    x:left+2*sp,y:by-sp-1*bh,width:ww-7*sp-bw,height:bh)
-        //camera.setLabelProperty(zoomBarLabel,x:left+bw*6+sp*8,y:by-sp*2/3-2*bh,w:bw,h:bh,UIColor.white)
-        //zoomBar.frame=CGRect(   x:left+2*sp,y:by-sp*2/3-2*bh,width:ww-7*sp-bw,height:bh)
-        if cameraType==0 || cameraType==2 {
-            focusBar.isHidden=true
-            focusBarLabel.isHidden=true
-        }else{
-            focusBar.isHidden=false
-            focusBarLabel.isHidden=false
-        }
-//        print("setButtonsCameraTyep:",cameraType)
-        if cameraType==0{
-            ledBar.isHidden=true
-            ledBarLabel.isHidden=true
-        }else{
-            ledBar.isHidden=false
-            ledBarLabel.isHidden=false
-        }
+        focusBar.isHidden=true
+        focusBarLabel.isHidden=true
+        ledBar.isHidden=true
+        ledBarLabel.isHidden=true
+//        camera.setLabelProperty(focusBarLabel,x:left+bw*6+sp*8,y:by-sp*2-2*bh,w:bw,h:bh,UIColor.white)
+//        focusBar.frame=CGRect(  x:left+2*sp,y:by-sp*2-2*bh,width:ww-7*sp-bw,height:bh)
+//        camera.setLabelProperty(ledBarLabel,  x:left+bw*6+sp*8,y:by-sp-1*bh,w:bw,h:bh,UIColor.white)
+//        ledBar.frame=CGRect(    x:left+2*sp,y:by-sp-1*bh,width:ww-7*sp-bw,height:bh)
+//        if cameraType==0 || cameraType==2 {
+//            focusBar.isHidden=true
+//            focusBarLabel.isHidden=true
+//        }else{
+//            focusBar.isHidden=false
+//            focusBarLabel.isHidden=false
+//        }
+////        print("setButtonsCameraTyep:",cameraType)
+//        if cameraType==0{
+//            ledBar.isHidden=true
+//            ledBarLabel.isHidden=true
+//        }else{
+//            ledBar.isHidden=false
+//            ledBarLabel.isHidden=false
+//        }
     }
 }
 

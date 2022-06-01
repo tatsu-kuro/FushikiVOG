@@ -126,7 +126,7 @@
 "e37-qg-MW6.normalTitle" = "メール";
 
 /* Class = "UILabel"; text = "Recording"; ObjectID = "eaO-tb-IY3"; */
-"eaO-tb-IY3.text" = "目の動きを録画する";
+"eaO-tb-IY3.text" = "目の動きを録画しない";
 
 /* Class = "UIButton"; normalTitle = "pad down"; ObjectID = "f2P-e7-0Ay"; */
 "f2P-e7-0Ay.normalTitle" = "pad down";

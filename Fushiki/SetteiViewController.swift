@@ -33,7 +33,9 @@ class SetteiViewController: UIViewController {
     var speakerOnOff:Int!
     var cameraON:Bool!
     @IBOutlet weak var cameraLabel: UILabel!
-    @IBOutlet weak var cameraSwitch: UISwitch!
+//    @IBOutlet weak var cameraSwitch_old: UISwitch!
+//    @IBOutlet weak var cameraSwitch: UISegmentedControl!
+    @IBOutlet weak var cameraSwitch: UISegmentedControl!
     @IBOutlet weak var speakerText: UILabel!
     @IBOutlet weak var speakerImage: UIImageView!
     @IBAction func onSpeakerSwitch(_ sender: UISwitch) {
@@ -56,16 +58,16 @@ class SetteiViewController: UIViewController {
         UserDefaults.standard.set(cameraON, forKey: "cameraON")
     }
     @IBOutlet weak var speakerSwitch: UISwitch!
-    @IBAction func onCameraSwitch(_ sender: UISwitch) {
-         if sender.isOn==true{
-           cameraON=true
-         }else{
-            cameraON=false
-         }
-        UserDefaults.standard.set(cameraON, forKey: "cameraON")
-        dispTexts()
-//        setCameraMode()
-    }
+//    @IBAction func onCameraSwitch(_ sender: UISwitch) {
+//         if sender.isOn==true{
+//           cameraON=true
+//         }else{
+//            cameraON=false
+//         }
+//        UserDefaults.standard.set(cameraON, forKey: "cameraON")
+//        dispTexts()
+////        setCameraMode()
+//    }
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var okpSwitch: UISegmentedControl!
     @IBOutlet weak var okpPauseTimeSlider: UISlider!
@@ -137,8 +139,40 @@ class SetteiViewController: UIViewController {
         mainView.targetMode=targetMode
         performSegue(withIdentifier: "fromSettei", sender: self)
     }
-    
-     @IBAction func onOkpModeSwitch(_ sender: UISegmentedControl) {
+    func changeCameraMode(n:Int){
+        cameraON=true
+        if Locale.preferredLanguages.first!.contains("ja"){
+            if n==0{
+                cameraLabel.text="目の動きを録画しない"
+                cameraON=false
+            }else if n==1{
+                cameraLabel.text="フロントカメラ"
+                cameraType=0
+            }else{
+                cameraLabel.text="バックカメラ"
+                cameraType=1
+            }
+        }else{
+            if n==0{
+                cameraLabel.text="Don't Record eye movement"
+                cameraON=false
+            }else if n==1{
+                cameraLabel.text="front Camera"
+                cameraType=0
+            }else{
+                cameraLabel.text="back Camera"
+                cameraType=1
+            }
+        }
+        UserDefaults.standard.set(cameraType,forKey: "cameraType")
+        UserDefaults.standard.set(cameraON,forKey:"cameraON")
+    }
+    @IBAction func onCameraSwitch(_ sender: UISegmentedControl) {
+        print("cameraswitch:",sender.selectedSegmentIndex)
+        changeCameraMode(n: sender.selectedSegmentIndex)
+     
+    }
+    @IBAction func onOkpModeSwitch(_ sender: UISegmentedControl) {
           okpMode=sender.selectedSegmentIndex
           dispTexts()
       }
@@ -178,7 +212,7 @@ class SetteiViewController: UIViewController {
         UserDefaults.standard.set(ettMode,forKey: "ettMode")
 //        UserDefaults.standard.set(screenBrightness, forKey: "screenBrightness")
         UserDefaults.standard.set(cameraType,forKey: "cameraType")
-        
+        UserDefaults.standard.set(cameraON,forKey:"cameraON")
         UserDefaults.standard.set(speakerOnOff,forKey: "speakerOnOff")
         UserDefaults.standard.set(ettModeText0, forKey: "ettModeText0")
         UserDefaults.standard.set(ettModeText1, forKey: "ettModeText1")
@@ -210,12 +244,19 @@ class SetteiViewController: UIViewController {
         oknSwitch.selectedSegmentIndex=oknMode%4
         oknTimeSlider.value=Float(oknTime)/100.0
         ettSwitch.selectedSegmentIndex=ettMode%4
-//        brightnessSlider.value=camera.getUserDefaultFloat(str: "screenBrightness", ret: 1.0)
-        if cameraON{//camera
-            cameraSwitch.isOn=true
-        }else{//don't use camera
-            cameraSwitch.isOn=false
+        if cameraON==false{
+            cameraSwitch.selectedSegmentIndex=0
+        }else if cameraType==0{
+            cameraSwitch.selectedSegmentIndex=1
+        }else{
+            cameraSwitch.selectedSegmentIndex=2
         }
+//        brightnessSlider.value=camera.getUserDefaultFloat(str: "screenBrightness", ret: 1.0)
+//        if cameraON{//camera
+//            cameraSwitch_old.isOn=true
+//        }else{//don't use camera
+//            cameraSwitch_old.isOn=false
+//        }
 //        setCameraMode()
         if speakerOnOff==0{//front camera
             speakerSwitch.isOn=false
@@ -283,6 +324,13 @@ class SetteiViewController: UIViewController {
         speakerOnOff=UserDefaults.standard.integer(forKey: "speakerOnOff")
         cameraType=UserDefaults.standard.integer(forKey: "cameraType")
         cameraON=UserDefaults.standard.bool(forKey: "cameraON")
+        if cameraON==false{
+            changeCameraMode(n: 0)
+        }else if cameraType==0{
+            changeCameraMode(n: 1)
+        }else{
+            changeCameraMode(n: 2)
+        }
 //        screenBrightness = camera.getUserDefaultFloat(str: "screenBrightness", ret: 1.0)
         ettMode = camera.getUserDefaultInt(str:"ettMode",ret:0)
         ettModeText0=camera.getUserDefaultString(str: "ettModeText0", ret: "0")
@@ -468,7 +516,7 @@ class SetteiViewController: UIViewController {
         speakerSwitch.frame = CGRect(x:x0,   y: b8y ,width: bw*5,height:bh)
         speakerImage.frame = CGRect(x:x0+50,   y: b8y ,width: 30,height:30)
         speakerImage.isHidden=true//ない方がスッキリか？
-        speakerText.frame = CGRect(x:x0+2*sp+cameraSwitch.frame.width,   y: b8y ,width: bw*5,height:bh)
+        speakerText.frame = CGRect(x:x0+2*sp+speakerSwitch.frame.width,   y: b8y ,width: bw*5,height:bh)
 //        cameraButton.frame = CGRect(x:x1-bw/4-2*sp,y:b7y+2,width:bw/4,height: bh)
    
         sp=ww/120//間隙
@@ -478,10 +526,11 @@ class SetteiViewController: UIViewController {
 //        cameraButton.isHidden=true
         camera.setButtonProperty(defaultButton,x:left+bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(exitButton,x:left+bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
-        camera.setButtonProperty(cameraButton,x:left+bw*4+sp*6,y:by,w:bw,h:bh,UIColor.orange)
-           cameraButton.layer.borderColor = UIColor.orange.cgColor
-           cameraButton.layer.borderWidth = 1.0
-           cameraButton.layer.cornerRadius = 5
+        cameraButton.isHidden=true
+//        camera.setButtonProperty(cameraButton,x:left+bw*4+sp*6,y:by,w:bw,h:bh,UIColor.orange)
+//           cameraButton.layer.borderColor = UIColor.orange.cgColor
+//           cameraButton.layer.borderWidth = 1.0
+//           cameraButton.layer.cornerRadius = 5
     }
     @IBAction func unwindPlayPara(segue: UIStoryboardSegue) {
     }

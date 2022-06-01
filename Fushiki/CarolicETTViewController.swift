@@ -181,10 +181,10 @@ class CarolicETTViewController: UIViewController{
 //        if cameraType == 2{
 //            recClarification.isHidden=true
 //        }
-        let zoomValue=camera.getUserDefaultFloat(str: "zoomValue", ret:0)
-        camera.setZoom(level: zoomValue)
-        let focusValue=camera.getUserDefaultFloat(str: "focusValue", ret: 0)
-        camera.setFocus(focus: focusValue)
+//        let zoomValue=camera.getUserDefaultFloat(str: "zoomValue", ret:0)
+        camera.setZoom(level: 0)//zoomValue)
+//        let focusValue=camera.getUserDefaultFloat(str: "focusValue", ret: 0)
+        camera.setFocus(focus: 0)//focusValue)
         
         camera.setLedLevel(level:camera.getUserDefaultFloat(str: "ledValue", ret:0))
 
