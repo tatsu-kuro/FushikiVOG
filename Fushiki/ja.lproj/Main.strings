@@ -6,7 +6,7 @@
 "73H-9L-FUj.text" = "Label";
 
 /* Class = "UIButton"; normalTitle = "default4"; ObjectID = "7PF-TW-04E"; */
-"7PF-TW-04E.normalTitle" = "設定4";
+"7PF-TW-04E.normalTitle" = "既定値";
 
 /* Class = "UILabel"; text = "(%)  position wave height"; ObjectID = "7SE-Hs-5uN"; */
 "7SE-Hs-5uN.text" = "(%)  位置波形の高さ";

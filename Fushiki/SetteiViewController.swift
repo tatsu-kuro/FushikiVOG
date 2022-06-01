@@ -130,7 +130,7 @@ class SetteiViewController: UIViewController {
             }
             return
         }
-        goExit()
+//        goExit()
     }
     
     func goExit() {
@@ -170,7 +170,6 @@ class SetteiViewController: UIViewController {
     @IBAction func onCameraSwitch(_ sender: UISegmentedControl) {
         print("cameraswitch:",sender.selectedSegmentIndex)
         changeCameraMode(n: sender.selectedSegmentIndex)
-     
     }
     @IBAction func onOkpModeSwitch(_ sender: UISegmentedControl) {
           okpMode=sender.selectedSegmentIndex
@@ -305,11 +304,11 @@ class SetteiViewController: UIViewController {
         setOknMode()
         setettMode()
         
-        if cameraON{
-            cameraButton.isHidden=false
-        }else{
-            cameraButton.isHidden=true
-        }
+//        if cameraON{
+//            cameraButton.isHidden=false
+//        }else{
+//            cameraButton.isHidden=true
+//        }
         okpPauseTimeText.text="OKP-PAUSE:" + String(Int(okpTime)) + "sec"
         oknTimeText.text="OKN-TIME:" + String(Int(oknTime)) + "sec"
         setUserDefaults()
@@ -523,7 +522,6 @@ class SetteiViewController: UIViewController {
         bw=(ww-sp*10)/7//ボタン幅
         bh=bw*170/440
         let by=wh-bh-sp
-//        cameraButton.isHidden=true
         camera.setButtonProperty(defaultButton,x:left+bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(exitButton,x:left+bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
         cameraButton.isHidden=true

@@ -10,7 +10,7 @@ import UIKit
 
 class PlayParaViewController: UIViewController {
     let camera = myFunctions()//name:"Fushiki")
-    @IBOutlet weak var default4Button: UIButton!
+    @IBOutlet weak var defaultButton: UIButton!
     @IBOutlet weak var default2Button: UIButton!
     
     @IBOutlet weak var default3Button: UIButton!
@@ -89,8 +89,8 @@ class PlayParaViewController: UIViewController {
       }
   
     @IBAction func onDefault1Button(_ sender: Any) {
-        posRatio=250
-        veloRatio=250
+        posRatio=80
+        veloRatio=60
 //        print("button1")
 //        if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
 //            wakuLength = 6
@@ -99,8 +99,8 @@ class PlayParaViewController: UIViewController {
 //            wakuLength = 3
 //            eyeBorder = 5
 //        }
-        wakuLength = 3
-        eyeBorder = 6
+        wakuLength = 6
+        eyeBorder = 12
 //        faceMark=1
 //        showRect=1
         setUserDefaults()
@@ -133,15 +133,15 @@ class PlayParaViewController: UIViewController {
 //        showRect=1
         setUserDefaults()
     }
-    @IBAction func onDefault4Button(_ sender: Any) {
-        posRatio=300
-        veloRatio=200
+    @IBAction func onDefaultButton(_ sender: Any) {
+        posRatio=80
+        veloRatio=60
 //        if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
 //            wakuLength = 18
 //            eyeBorder = 24
 //        }else{//iphone
-            wakuLength = 2
-            eyeBorder = 4
+            wakuLength = 6
+            eyeBorder = 12
 //        }
 //        faceMark=1
 //        showRect=1
@@ -239,7 +239,7 @@ class PlayParaViewController: UIViewController {
         camera.setButtonProperty(default1Button, x:head, y: by, w: bw_wide, h: bh, UIColor.darkGray)
         camera.setButtonProperty(default2Button, x:head+sp+bw_wide, y: by, w: bw_wide, h: bh, UIColor.darkGray)
         camera.setButtonProperty(default3Button, x:head+sp*2+bw_wide*2, y: by, w: bw_wide, h: bh, UIColor.darkGray)
-        camera.setButtonProperty(default4Button, x:head+sp*3+bw_wide*3, y: by, w: bw_wide, h: bh, UIColor.darkGray)
+        camera.setButtonProperty(defaultButton, x:head+sp*3+bw_wide*3, y: by, w: bw_wide, h: bh, UIColor.darkGray)
         para1.frame=CGRect(x:head,y:sp,width:bw,height: bh)
         para2.frame=CGRect(x:head,y:sp*2+bh,width:bw,height: bh)
         para3.frame=CGRect(x:head,y:sp*3+bh*2,width:bw,height: bh)
@@ -252,6 +252,10 @@ class PlayParaViewController: UIViewController {
         paraText4.frame=CGRect(x:head+bw+3*sp,y:sp*4+bh*3,width:lw,height: bh)
         paraText5.frame=CGRect(x:head+bw+3*sp,y:sp*5+bh*4,width:lw,height: bh)
         paraText6.frame=CGRect(x:head+bw+3*sp,y:sp*6+bh*5,width:lw,height: bh)
+        
+        default1Button.isHidden=true
+        default2Button.isHidden=true
+        default3Button.isHidden=true
 //        default1Button.setTitle("12-ultraWide", for: .normal)
 //        default2Button.setTitle("12-wideAngle", for: .normal)
 //        default3Button.setTitle("se(1st)-back", for: .normal)

@@ -329,11 +329,11 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         if camera.checkEttString(ettStr: ettModeText3)==false{
             UserDefaults.standard.set("0,6:3:20",forKey:"ettModeText3")
         }
-        _=camera.getUserDefaultInt(str:"posRatio",ret:300)
-        _=camera.getUserDefaultInt(str:"veloRatio",ret:300)
-        _=camera.getUserDefaultInt(str:"wakuLength",ret:3)
-        _=camera.getUserDefaultInt(str:"eyeBorder",ret:5)
-        _=camera.getUserDefaultInt(str:"faceMark",ret:1)
+        _=camera.getUserDefaultInt(str:"posRatio",ret:80)
+        _=camera.getUserDefaultInt(str:"veloRatio",ret:60)
+        _=camera.getUserDefaultInt(str:"wakuLength",ret:6)
+        _=camera.getUserDefaultInt(str:"eyeBorder",ret:12)
+        _=camera.getUserDefaultInt(str:"faceMark",ret:0)
         _=camera.getUserDefaultInt(str:"showRect",ret:0)
      }
     var checkLibraryAuthrizedFlag:Int=0
