@@ -110,9 +110,11 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     func doModes(){
         let storyboard: UIStoryboard = self.storyboard!
-        let mainBrightness=UIScreen.main.brightness//明るさを保持
-        UserDefaults.standard.set(mainBrightness, forKey: "mainBrightness")
-
+        if targetMode>=0 && targetMode<=4{
+            let mainBrightness=UIScreen.main.brightness//明るさを保持
+            UserDefaults.standard.set(mainBrightness, forKey: "mainBrightness")
+            print("mainBrightness saved****")
+        }
         if targetMode<3 && tableView.visibleCells.count>5{//録画の時tableviewをトップに戻す
             
             tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
@@ -526,7 +528,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var fromUnwindFlag:Bool=false//ここではgetAlbumAssetsできないので
     //didappearでチェックしてgetAlbumAssetsする
     @IBAction func unwindAction(segue: UIStoryboardSegue) {
-        if segue.source is SetteiViewController || segue.source is HelpViewController || segue.source is PlayViewController{
+        if segue.source is SetteiViewController || segue.source is HelpViewController || segue.source is PlayViewController || segue.source is ImagePickerController || segue.source is PlayParaViewController{
             print("main-unwind:HelpView or SetteiView")
         }else{
             print("Main-unwind:getAlbumAssets",camera.videoDate.count)
@@ -535,9 +537,10 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             DispatchQueue.main.async { [self] in
                 self.tableView.contentOffset.y=0
             }
+            UIScreen.main.brightness = CGFloat(UserDefaults.standard.float(forKey: "mainBrightness"))
+            print("mainScreenBrightness restored****************")
         }
-        UIScreen.main.brightness = CGFloat(UserDefaults.standard.float(forKey: "mainBrightness"))
-        UIApplication.shared.isIdleTimerDisabled = false//スリープする.監視する
+         UIApplication.shared.isIdleTimerDisabled = false//スリープする.監視する
     }
 }
 
