@@ -6,7 +6,7 @@
 "73H-9L-FUj.text" = "Label";
 
 /* Class = "UIButton"; normalTitle = "default4"; ObjectID = "7PF-TW-04E"; */
-"7PF-TW-04E.normalTitle" = "既定値";
+"7PF-TW-04E.normalTitle" = "Default";
 
 /* Class = "UILabel"; text = "(%)  position wave height"; ObjectID = "7SE-Hs-5uN"; */
 "7SE-Hs-5uN.text" = "(%)  位置波形の高さ";
@@ -33,7 +33,7 @@
 "9oI-63-ISV.normalTitle" = "EXIT";
 
 /* Class = "UIButton"; normalTitle = "Parameter"; ObjectID = "CTI-eK-yKu"; */
-"CTI-eK-yKu.normalTitle" = "パラメータ";
+/*"CTI-eK-yKu.normalTitle" = "パラメータ";*/
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "Czw-Go-oXf"; */
 "Czw-Go-oXf.text" = "Label";
@@ -48,7 +48,7 @@
 "IbT-Qc-U1W.text" = "ズーム";
 
 /* Class = "UIButton"; normalTitle = "Exit"; ObjectID = "JHV-lT-7mi"; */
-"JHV-lT-7mi.normalTitle" = "Exit";
+"JHV-lT-7mi.normalTitle" = "EXIT";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "JNE-pm-V4S"; */
 "JNE-pm-V4S.text" = "Label";
@@ -73,7 +73,7 @@
 
 
 /* Class = "UIButton"; normalTitle = "Mail"; ObjectID = "RGj-7J-RhQ"; */
-"RGj-7J-RhQ.normalTitle" = "メール";
+/*"RGj-7J-RhQ.normalTitle" = "メール";*/
 
 /* Class = "UIButton"; normalTitle = "ETT"; ObjectID = "S68-fh-yHQ"; */
 "S68-fh-yHQ.normalTitle" = "ETT";
@@ -111,7 +111,7 @@
 "bvF-vu-c8A.text" = "Label";
 
 /* Class = "UIButton"; normalTitle = "Play"; ObjectID = "cRW-v2-GZO"; */
-"cRW-v2-GZO.normalTitle" = "再生";
+/*"cRW-v2-GZO.normalTitle" = "再生";*/
 
 /* Class = "UIButton"; normalTitle = "OKP"; ObjectID = "cTd-rF-Jk7"; */
 "cTd-rF-Jk7.normalTitle" = "OKP";
@@ -123,7 +123,7 @@
 "deG-Tq-o9U.normalTitle" = "使い方";
 
 /* Class = "UIButton"; normalTitle = "mail"; ObjectID = "e37-qg-MW6"; */
-"e37-qg-MW6.normalTitle" = "メール";
+/*"e37-qg-MW6.normalTitle" = "メール";*/
 
 /* Class = "UILabel"; text = "Recording"; ObjectID = "eaO-tb-IY3"; */
 "eaO-tb-IY3.text" = "目の動きを録画しない";
@@ -138,7 +138,7 @@
 "fW5-cC-8PD.text" = "(%)  速度波形の高さ";
 
 /* Class = "UIButton"; normalTitle = "Parameter"; ObjectID = "fs4-ea-mju"; */
-"fs4-ea-mju.normalTitle" = "パラメータ";
+/*"fs4-ea-mju.normalTitle" = "パラメータ";*/
 
 /* Class = "UIButton"; normalTitle = "Wave"; ObjectID = "gJH-gO-4hU"; */
 "gJH-gO-4hU.normalTitle" = "波形表示";
@@ -195,7 +195,7 @@
 "vji-3f-Tqg.normalTitle" = "EXIT";
 
 /* Class = "UIButton"; normalTitle = "default"; ObjectID = "wIu-wr-ffr"; */
-"wIu-wr-ffr.normalTitle" = "default";
+"wIu-wr-ffr.normalTitle" = "Default";
 
 /* Class = "UISegmentedControl"; wrz-kI-t9y.segmentTitles[0] = "0"; ObjectID = "wrz-kI-t9y"; */
 "wrz-kI-t9y.segmentTitles[0]" = "0";

@@ -82,7 +82,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="default"/>
+                                <state key="normal" title="Default"/>
                                 <connections>
                                     <action selector="onDefaultButton:" destination="gOS-fU-nK5" eventType="touchUpInside" id="jLa-bx-HE4"/>
                                 </connections>
@@ -662,13 +662,13 @@ a) 1=hori. 2=vert. 3=hori.saccade 4=vert.saccade 5=vert.randum 6=randum</string>
                                     <segue destination="Ccw-B3-5ju" kind="unwind" identifier="fromPlay" unwindAction="unwindActionWithSegue:" id="sgX-R4-NqE"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="spatial" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fs4-ea-mju">
-                                <rect key="frame" x="600" y="315" width="67" height="29"/>
+                            <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="spatial" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fs4-ea-mju">
+                                <rect key="frame" x="711" y="315" width="21" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Parameter"/>
+                                <state key="normal" image="gearshape" catalog="system"/>
                                 <connections>
                                     <segue destination="lpw-bn-NhA" kind="show" id="qxK-X4-tBt"/>
                                 </connections>
@@ -885,9 +885,9 @@ a) 1=hori. 2=vert. 3=hori.saccade 4=vert.saccade 5=vert.randum 6=randum</string>
                                 <rect key="frame" x="655" y="339" width="90" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="default"/>
+                                <state key="normal" title="Default"/>
                                 <connections>
                                     <action selector="onDefaultButton:" destination="lpw-bn-NhA" eventType="touchUpInside" id="QLp-n7-9eZ"/>
                                 </connections>
@@ -1095,7 +1095,7 @@ a) 1=hori. 2=vert. 3=hori.saccade 4=vert.saccade 5=vert.randum 6=randum</string>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="mail"/>
+                                <state key="normal" title="Mail"/>
                                 <connections>
                                     <action selector="onMailButton" destination="3OQ-RC-qrq" eventType="touchUpInside" id="8uw-In-8Hr"/>
                                 </connections>
