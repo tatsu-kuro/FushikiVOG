@@ -421,7 +421,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         camera.setButtonProperty(caloricOknButton,x:bw*4+sp*6+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(helpButton,x:bw*5+sp*7+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(setteiButton,x:bw*6+sp*8+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
-        camera.setButtonProperty(startHideButton, x: leftPadding+ww-2*sp-bw, y: wh*1.5/4, w: bw, h: wh/4, UIColor.darkGray)
+        camera.setButtonProperty(startHideButton, x: leftPadding+ww-2*sp-bw, y: by/10, w: bw, h: by*4/5, UIColor.darkGray)
 //        if ww/2 > by{
 //            titleImage.frame.origin.y = sp+topPadding
 //            titleImage.frame.size.width = by*2
