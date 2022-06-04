@@ -848,39 +848,6 @@ a) 1=hori. 2=vert. 3=hori.saccade 4=vert.saccade 5=vert.randum 6=randum</string>
                                     <action selector="onKeyPadDownButton:" destination="lpw-bn-NhA" eventType="touchUpInside" id="FtR-yu-4EJ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gSP-oB-McO">
-                                <rect key="frame" x="308" y="339" width="90" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="config.1"/>
-                                <connections>
-                                    <action selector="onDefault1Button:" destination="lpw-bn-NhA" eventType="touchUpInside" id="eIC-0l-Y5Z"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YqS-zP-FRM">
-                                <rect key="frame" x="437" y="339" width="88" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="config.2"/>
-                                <connections>
-                                    <action selector="onDefault2Button:" destination="lpw-bn-NhA" eventType="touchUpInside" id="JmZ-qV-xrw"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EVR-bO-bWw">
-                                <rect key="frame" x="548" y="339" width="79" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="config.3"/>
-                                <connections>
-                                    <action selector="onDefault3Button:" destination="lpw-bn-NhA" eventType="touchUpInside" id="18x-E6-ecm"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7PF-TW-04E">
                                 <rect key="frame" x="655" y="339" width="90" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -902,9 +869,6 @@ a) 1=hori. 2=vert. 3=hori.saccade 4=vert.saccade 5=vert.randum 6=randum</string>
                     </view>
                     <navigationItem key="navigationItem" id="nU6-lH-hJ7"/>
                     <connections>
-                        <outlet property="default1Button" destination="gSP-oB-McO" id="qhx-yb-sSJ"/>
-                        <outlet property="default2Button" destination="YqS-zP-FRM" id="rMJ-ta-G8i"/>
-                        <outlet property="default3Button" destination="EVR-bO-bWw" id="ZSw-ox-ex9"/>
                         <outlet property="defaultButton" destination="7PF-TW-04E" id="4qd-6U-kBx"/>
                         <outlet property="exitButton" destination="Nlq-Qa-G8v" id="FEp-Ld-2r8"/>
                         <outlet property="faceMarkSwitch" destination="Xmb-Ie-gpm" id="2jw-kj-a9a"/>

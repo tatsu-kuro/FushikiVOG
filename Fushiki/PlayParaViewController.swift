@@ -11,10 +11,6 @@ import UIKit
 class PlayParaViewController: UIViewController {
     let camera = myFunctions()//name:"Fushiki")
     @IBOutlet weak var defaultButton: UIButton!
-    @IBOutlet weak var default2Button: UIButton!
-    
-    @IBOutlet weak var default3Button: UIButton!
-    @IBOutlet weak var default1Button: UIButton!
     @IBOutlet weak var faceMarkSwitch: UISwitch!
     @IBOutlet weak var showRectSwitch: UISwitch!
     @IBOutlet weak var exitButton: UIButton!
@@ -88,61 +84,12 @@ class PlayParaViewController: UIViewController {
           return true
       }
   
-    @IBAction func onDefault1Button(_ sender: Any) {
-        posRatio=80
-        veloRatio=60
-//        print("button1")
-//        if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
-//            wakuLength = 6
-//            eyeBorder = 10
-//        }else{//iphone
-//            wakuLength = 3
-//            eyeBorder = 5
-//        }
-        wakuLength = 6
-        eyeBorder = 12
-//        faceMark=1
-//        showRect=1
-        setUserDefaults()
-    }
-    @IBAction func onDefault2Button(_ sender: Any) {
-        posRatio=150
-        veloRatio=150
-//        if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
-//            wakuLength = 10
-//            eyeBorder = 16
-//        }else{//iphone
-            wakuLength = 4
-            eyeBorder = 8
-//        }
-//        faceMark=1
-//        showRect=1
-        setUserDefaults()
-    }
-    @IBAction func onDefault3Button(_ sender: Any) {
-        posRatio=200
-        veloRatio=200
-//        if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
-//            wakuLength = 14
-//            eyeBorder = 20
-//        }else{//iphone
-            wakuLength = 3
-            eyeBorder = 8
-//        }
-//        faceMark=1
-//        showRect=1
-        setUserDefaults()
-    }
+  
     @IBAction func onDefaultButton(_ sender: Any) {
         posRatio=80
         veloRatio=60
-//        if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
-//            wakuLength = 18
-//            eyeBorder = 24
-//        }else{//iphone
-            wakuLength = 6
-            eyeBorder = 12
-//        }
+        wakuLength = 6
+        eyeBorder = 15
 //        faceMark=1
 //        showRect=1
         setUserDefaults()
@@ -229,16 +176,13 @@ class PlayParaViewController: UIViewController {
 
         let sp=ww/120//間隙
         let bw=(ww-sp*10)/7//ボタン幅
-//        let bw_wide=(ww-bw-8*sp)/4
+
         let bh=bw*170/440
         let by=wh-bh-sp
         let lw=ww-bw*2
         let head=sp*2+left
         camera.setButtonProperty(keyPadDownButton, x: head+bw*6+sp*6, y: sp, w: bw, h: bh, UIColor.darkGray)
         camera.setButtonProperty(exitButton,x:head+sp*6+bw*6,y:by,w:bw,h:bh,UIColor.darkGray)
-//        camera.setButtonProperty(default1Button, x:head, y: by, w: bw_wide, h: bh, UIColor.darkGray)
-//        camera.setButtonProperty(default2Button, x:head+sp+bw_wide, y: by, w: bw_wide, h: bh, UIColor.darkGray)
-//        camera.setButtonProperty(default3Button, x:head+sp*2+bw_wide*2, y: by, w: bw_wide, h: bh, UIColor.darkGray)
         camera.setButtonProperty(defaultButton, x:head+sp*5+bw*5, y: by, w: bw, h: bh, UIColor.darkGray)
         para1.frame=CGRect(x:head,y:sp,width:bw,height: bh)
         para2.frame=CGRect(x:head,y:sp*2+bh,width:bw,height: bh)
@@ -252,13 +196,5 @@ class PlayParaViewController: UIViewController {
         paraText4.frame=CGRect(x:head+bw+3*sp,y:sp*4+bh*3,width:lw,height: bh)
         paraText5.frame=CGRect(x:head+bw+3*sp,y:sp*5+bh*4,width:lw,height: bh)
         paraText6.frame=CGRect(x:head+bw+3*sp,y:sp*6+bh*5,width:lw,height: bh)
-        
-        default1Button.isHidden=true
-        default2Button.isHidden=true
-        default3Button.isHidden=true
-//        default1Button.setTitle("12-ultraWide", for: .normal)
-//        default2Button.setTitle("12-wideAngle", for: .normal)
-//        default3Button.setTitle("se(1st)-back", for: .normal)
-//        default4Button.setTitle("se(1st)-front", for: .normal)
-    }
+     }
 }
