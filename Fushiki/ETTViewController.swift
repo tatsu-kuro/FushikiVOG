@@ -93,10 +93,10 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     }
  
     var cntREC:Int=0
-    @objc func updateRecClarification(tm: Timer) {//録画していることを明確に示す必要がある 0.05
+    @objc func updateRecClarification(tm: Timer) {//録画していることを明確に示す必要がある 0.02
         cntREC += 1
         recClarification.alpha=camera.updateRecClarification(tm: cntREC)
-        if cntREC==10{//ここはカメラOFF時は通らない
+        if cntREC==150{//ここはカメラOFF時は通らない 3sec待って録画開始
             camera.recordStart()//ここだと暗くならない
             //実際に録画スタートした時にcamera.recordStartTimeが設定される
         }
@@ -111,6 +111,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     var currentEttNum:Int = 0
     var centerX:CGFloat=0
     var centerY:CGFloat=0
+    var soundIdx:SystemSoundID = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -186,14 +187,21 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         drawCircle(cPoint: CGPoint(x:centerX,y:centerY))
         if UserDefaults.standard.bool(forKey: "cameraON")==false{
             //非録画モードなら、ここでdisplayLinkスタート
-            //録画モードでは、timerRecで録画スタートさせて、実際に録画が始まるところをチェックしてdisplayLinkをスタート
-//        camera.recordStartTime=0//0にセットしておく
             displayLink?.add(to: RunLoop.main, forMode: .common)
             displayLinkF=true
+        }else{
+            //録画モードでは、timerRecで録画スタートさせて、実際に録画が始まるところをチェックしてdisplayLinkをスタート
+//            if let soundUrl = URL(string:
+//                                    "/System/Library/Audio/UISounds/end_record.caf"/*photoShutter.caf*/){
+//                let speakerOnOff=UserDefaults.standard.integer(forKey: "speakerOnOff")
+//                if speakerOnOff==1{
+//
+//                AudioServicesCreateSystemSoundID(soundUrl as CFURL, &soundIdx)
+//                AudioServicesPlaySystemSound(soundIdx)
+//                }
+//            }
+            camera.recordStartTime=0
         }
-//        if UserDefaults.standard.bool(forKey: "kameraON")==false{
-//            camera.recordStart()
-//        }
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
         }
@@ -206,10 +214,8 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         if !UserDefaults.standard.bool(forKey: "cameraON"){
             recClarification.isHidden=true
         }else{
-            timerREC = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: true)
+            timerREC = Timer.scheduledTimer(timeInterval: 0.02, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: true)
             recClarification.frame=camera.getRecClarificationRct(width:view.bounds.width,height:view.bounds.height)
-//            sleep(UInt32(1.0))
-//            camera.recordStart()
             //録画モードでは、timerRecで録画スタートさせて、実際に録画が始まる時間を取得
         }
        
