@@ -35,6 +35,9 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     }
     
     @IBAction func doubleTap(_ sender: Any) {
+        if displayLinkF==false{//録画が始まっていない時は帰る
+            return
+        }
         let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
         mainView.targetMode=targetMode
         delTimer()
@@ -115,6 +118,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         camera.makeAlbum()
         print(UIScreen.main.brightness)
         UIScreen.main.brightness = CGFloat(camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
