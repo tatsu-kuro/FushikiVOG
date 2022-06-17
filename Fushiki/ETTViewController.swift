@@ -126,13 +126,12 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         let cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
         camera.initSession(camera: Int(cameraType), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
       
-//        let zoomValue=camera.getUserDefaultFloat(str: "zoomValue", ret:0)
         if cameraType==0{
-        camera.setZoom(level:0.03)// zoomValue)0.0-0.1
+        camera.setZoom(level:0.03)
         }else{
             camera.setZoom(level: 0)
         }
-//        let focusValue=camera.getUserDefaultFloat(str: "focusValue", ret: 0)
+
         camera.setFocus(focus: 0)//focusValue)
         camera.setLedLevel(level:camera.getUserDefaultFloat(str: "ledValue", ret:0))
 
@@ -142,7 +141,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         ettSpeed.removeAll()
         ettSec.removeAll()
         currentEttNum=0
-//        startTime=CFAbsoluteTimeGetCurrent()
+
         var ettTxt:String = ""
         if ettMode==0{
             ettTxt = UserDefaults.standard.string(forKey: "ettModeText0")!
@@ -282,41 +281,44 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         return CGPoint(x:x0 + CGFloat(xn)*xd, y: y0 + CGFloat(yn)*yd)
     }
     @objc func update() {//pursuit
-//        if tcount > 0{
-            view.layer.sublayers?.removeLast()
-//        }
-//        tcount += 1
-//        if camera.recordingFlag==true{
-//            startTime=camera.recordStartTime
-//            camera.recordingFlag=false
-//        }
-        //実際に録画が開始した時間を基準にする。(10-20msec程度はずれてしまう）
+        view.layer.sublayers?.removeLast()
+        //実際に録画が開始した時間を基準にする。(10-20msec程度はずれてしまうと思われる）
         let elapset=CFAbsoluteTimeGetCurrent()-camera.recordStartTime// recordstartTime
         if elapset<ettSec[currentEttNum]{
             let etttype=ettType[currentEttNum]
-            if etttype == 1{//振り子横
-                let ettspeed=CGFloat(ettSpeed[currentEttNum])
+            let ettspeed=CGFloat(ettSpeed[currentEttNum])
+            if etttype==0{
+                if ettspeed==0{
+                    drawCircle(cPoint: CGPoint(x:centerX,y:centerY))
+                }else if ettspeed==1{
+                    drawCircle(cPoint: CGPoint(x:centerX-ettW,y:centerY))
+                }else if ettspeed==2{
+                    drawCircle(cPoint: CGPoint(x:centerX+ettW,y:centerY))
+                }else if ettspeed==3{
+                    drawCircle(cPoint: CGPoint(x:centerX,y:centerY-ettH))
+                }else{
+                    drawCircle(cPoint: CGPoint(x:centerX,y:centerY+ettH))
+                }
+            }else if etttype == 1{//振り子横
                 let sinV=sin(CGFloat(elapset)*3.1415*0.3*ettspeed)
                 let cPoint:CGPoint = CGPoint(x:centerX + sinV*ettW, y: centerY)
                 drawCircle(cPoint:cPoint)
             }else if etttype==2{//振り子縦
-                let ettspeed=CGFloat(ettSpeed[currentEttNum])
                 let sinV=sin(CGFloat(elapset)*3.1415*0.3*ettspeed)
                 let cPoint:CGPoint = CGPoint(x:centerX , y: centerY + sinV*ettH)
                 drawCircle(cPoint:cPoint)
             }else if etttype==3{//衝動横
-                let ettspeed=Double(ettSpeed[currentEttNum])
                 let sec=Int(elapset*ettspeed/2)
-                      if ettspeed==0{
+                if ettspeed==0{
                     drawCircle(cPoint: CGPoint(x:centerX,y:centerY))
                 }else{
                     if sec%2==0{
                         let cPoint=CGPoint(x:centerX+ettW,y:centerY)
                         drawCircle(cPoint: cPoint)
-                      }else{
+                    }else{
                         let cPoint=CGPoint(x:centerX-ettW,y:centerY)
                         drawCircle(cPoint: cPoint)
-                      }
+                    }
                 }
             }else if etttype==4{//衝動縦
                 let ettspeed=Double(ettSpeed[currentEttNum])
@@ -332,9 +334,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
                         drawCircle(cPoint: cPoint)
                     }
                 }
-//            }else if etttype==5{
             }else{
-                let ettspeed=Double(ettSpeed[currentEttNum])
                 let sec=Int(elapset*ettspeed/2)
                 if sec != lastSec{
                     if etttype==6{//ランダム縦横
@@ -347,19 +347,16 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
                 drawCircle(cPoint: lastRandPoint)
                 lastSec=sec
             }
+            
         }else{
             currentEttNum += 1
             if ettType.count-1<currentEttNum{
-//                if tcount%100==0{//何をしたかったのか？かわからない
-//                    print("owari!!")
-//                    doubleTap(0)
-//                }
-//                currentEttNum -= 1
                 doubleTap(0)
             }else{
                 camera.recordStartTime=CFAbsoluteTimeGetCurrent()
             }
-            drawCircle(cPoint: CGPoint(x:-200,y:-200))//damy
+            drawCircle(cPoint: CGPoint(x:-200,y:-200))
+            //damy
         }
     }
  
