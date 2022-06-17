@@ -286,9 +286,14 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         let elapset=CFAbsoluteTimeGetCurrent()-camera.recordStartTime// recordstartTime
         if elapset<ettSec[currentEttNum]{
             let etttype=ettType[currentEttNum]
-            let ettspeed=CGFloat(ettSpeed[currentEttNum])
-            if etttype==0{
-                if ettspeed==0{
+            var ettspeed=CGFloat(ettSpeed[currentEttNum])
+            if ettspeed==0{//静止モードは別に作ったので、0の時は１の半分のスピードとした。
+                ettspeed=0.5
+            }
+            let sec=Int(elapset*ettspeed/2)
+            let sinV=sin(CGFloat(elapset)*3.1415*0.3*ettspeed)
+            if etttype==0{//静止モードではspeedで位置指定する
+                if ettspeed==0.5{
                     drawCircle(cPoint: CGPoint(x:centerX,y:centerY))
                 }else if ettspeed==1{
                     drawCircle(cPoint: CGPoint(x:centerX-ettW,y:centerY))
@@ -300,42 +305,30 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
                     drawCircle(cPoint: CGPoint(x:centerX,y:centerY+ettH))
                 }
             }else if etttype == 1{//振り子横
-                let sinV=sin(CGFloat(elapset)*3.1415*0.3*ettspeed)
-                let cPoint:CGPoint = CGPoint(x:centerX + sinV*ettW, y: centerY)
-                drawCircle(cPoint:cPoint)
+                drawCircle(cPoint:CGPoint(x:centerX + sinV*ettW, y: centerY))
             }else if etttype==2{//振り子縦
-                let sinV=sin(CGFloat(elapset)*3.1415*0.3*ettspeed)
-                let cPoint:CGPoint = CGPoint(x:centerX , y: centerY + sinV*ettH)
-                drawCircle(cPoint:cPoint)
+                drawCircle(cPoint:CGPoint(x:centerX , y: centerY + sinV*ettH))
             }else if etttype==3{//衝動横
-                let sec=Int(elapset*ettspeed/2)
                 if ettspeed==0{
                     drawCircle(cPoint: CGPoint(x:centerX,y:centerY))
                 }else{
                     if sec%2==0{
-                        let cPoint=CGPoint(x:centerX+ettW,y:centerY)
-                        drawCircle(cPoint: cPoint)
+                        drawCircle(cPoint:CGPoint(x:centerX+ettW,y:centerY))
                     }else{
-                        let cPoint=CGPoint(x:centerX-ettW,y:centerY)
-                        drawCircle(cPoint: cPoint)
+                        drawCircle(cPoint: CGPoint(x:centerX-ettW,y:centerY))
                     }
                 }
             }else if etttype==4{//衝動縦
-                let ettspeed=Double(ettSpeed[currentEttNum])
-                let sec=Int(elapset*ettspeed/2)
                 if ettspeed==0{
                     drawCircle(cPoint: CGPoint(x:centerX,y:centerY))
                 }else{
                     if sec%2==0{
-                        let cPoint=CGPoint(x:centerX,y:centerY+ettH)
-                        drawCircle(cPoint: cPoint)
+                        drawCircle(cPoint: CGPoint(x:centerX,y:centerY+ettH))
                     }else{
-                        let cPoint=CGPoint(x:centerX,y:centerY-ettH)
-                        drawCircle(cPoint: cPoint)
+                        drawCircle(cPoint: CGPoint(x:centerX,y:centerY-ettH))
                     }
                 }
             }else{
-                let sec=Int(elapset*ettspeed/2)
                 if sec != lastSec{
                     if etttype==6{//ランダム縦横
                         lastRandPoint=getRandPointXY()

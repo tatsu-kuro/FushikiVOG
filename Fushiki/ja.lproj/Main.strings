@@ -165,7 +165,7 @@
 "ixO-Uv-LwA.text" = "Label";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "joF-RS-tH3"; */
-"joF-RS-tH3.text" = "円形視標の動きの設定方法 W,a:b:c,a1,b1,c1,...\nW[振幅(0-5)],a[動き方(1-6)],b[速さ(0-5)],c:[時間(秒)]\na) 1:横 2:縦 3:横サッケード 4:縦サッケード 5:横ランダム 6:ランダム";
+"joF-RS-tH3.text" = "円形視標の動きの設定方法 W,a:b:c,a1,b1,c1,...\nW[振幅(0-5)],a[動き方(0-6)],b[速さ(0-5)],c:[時間(秒)]\na) 0:静止 1:横 2:縦 3:横サッケード 4:縦サッケード 5:横ランダム 6:ランダム";
 
 /* Class = "UILabel"; text = "120fps"; ObjectID = "l7C-ol-six"; */
 "l7C-ol-six.text" = "120fps";

@@ -184,8 +184,8 @@
                                 <rect key="frame" x="81" y="46" width="599" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <string key="text">how to set the movement of the target / w,a:b:c,a1:b1:c1,....
-w[moving width(0-5)],a[moving type(1-6)]:b[speed(0-5)]:c[length(sec)]
-a) 1=hori. 2=vert. 3=hori.saccade 4=vert.saccade 5=vert.randum 6=randum</string>
+w[moving width(0-5)],a[moving type(0-6)]:b[speed(0-5)]:c[length(sec)]
+a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.randum 6:randum</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1253,7 +1253,7 @@ a) 1=hori. 2=vert. 3=hori.saccade 4=vert.saccade 5=vert.randum 6=randum</string>
         <image name="arrow.triangle.2.circlepath.camera" catalog="system" width="128" height="94"/>
         <image name="camera" catalog="system" width="128" height="94"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
-        <image name="etthelp" width="1148" height="1328"/>
+        <image name="etthelp" width="1141" height="1330"/>
         <image name="eye" width="212" height="212"/>
         <image name="face" width="212" height="212"/>
         <image name="gearshape" catalog="system" width="128" height="121"/>

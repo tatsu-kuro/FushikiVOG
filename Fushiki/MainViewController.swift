@@ -315,9 +315,9 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         screenBrightness = camera.getUserDefaultFloat(str: "screenBrightness", ret: 1)
         caloricEttOknFlag = camera.getUserDefaultBool(str: "caloricEttOknFlag", ret:false)
         cameraON = camera.getUserDefaultBool(str: "cameraON", ret: true)
-        ettModeText0 = camera.getUserDefaultString(str: "ettModeText0", ret: "3,1:0:2,1:2:12,3:2:12,5:2:12")
-        if camera.checkEttString(ettStr: ettModeText0)==false{
-            UserDefaults.standard.set("3,1:0:4,1:2:12,3:2:12,5:2:12",forKey:"ettModeText0")
+        ettModeText0 = camera.getUserDefaultString(str: "ettModeText0", ret: "3,0:0:2,1:2:12,3:2:12,5:2:12")
+        if camera.checkEttString(ettStr: ettModeText0)==false{//パラメータ並びをチェック
+            UserDefaults.standard.set("3,0:0:2,1:2:12,3:2:12,5:2:12",forKey:"ettModeText0")
         }
         ettModeText1 = camera.getUserDefaultString(str: "ettModeText1", ret: "3,2:2:12,4:2:12")
         if camera.checkEttString(ettStr: ettModeText1)==false{
@@ -421,7 +421,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         camera.setButtonProperty(caloricOknButton,x:bw*4+sp*6+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(helpButton,x:bw*5+sp*7+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(setteiButton,x:bw*6+sp*8+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
-        camera.setButtonProperty(startHideButton, x: leftPadding+ww-2*sp-bw, y: by/10, w: bw, h: by*4/5, UIColor.darkGray)
+        camera.setButtonProperty(startHideButton, x: bw*5+sp*7+leftPadding, y: by/10, w: bw, h: by*4/5, UIColor.darkGray)
 //        if ww/2 > by{
 //            titleImage.frame.origin.y = sp+topPadding
 //            titleImage.frame.size.width = by*2

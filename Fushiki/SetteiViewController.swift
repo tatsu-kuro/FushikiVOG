@@ -232,7 +232,7 @@ class SetteiViewController: UIViewController {
         oknTime=60
         ettMode=0
         UserDefaults.standard.set(0, forKey: "zoomValue")
-        ettModeText0 = "3,1:0:2,1:2:12,3:2:12,5:2:12"
+        ettModeText0 = "3,0:0:2,1:2:12,3:2:12,5:2:12"
         setUserDefaults()
         setControlState()
         dispTexts()
@@ -490,12 +490,7 @@ class SetteiViewController: UIViewController {
         let b7y=b6y+bh+sp
         let b8y=b7y+bh+sp*2
         let ettTextWidth=view.bounds.width-right-x1-sp*2
-
-//        let b9y=b8y+bh+sp
         ettSwitch.frame  = CGRect(x:x0,   y: b0y ,width: bw,height:bh)
-//        ettText.frame  = CGRect(x:x1,   y: b0y ,width: bw*5,height:bh)
-//        ettText.frame  = CGRect(x:x1,   y: b0y-2 ,width: ettTextWidth, height: bh+4)
-//        ettText.backgroundColor = UIColor.gray
         camera.setLabelProperty(ettText, x: x1, y: b0y-2, w: ettTextWidth, h: wh/15+4, UIColor.systemGray5)
         ettText.layer.cornerRadius=3
 
@@ -508,8 +503,6 @@ class SetteiViewController: UIViewController {
         oknText.frame  = CGRect(x:x1,   y: b4y ,width: bw*5, height: bh)
         oknTimeSlider.frame  = CGRect(x:x0,   y: b5y ,width: bw,height:bh)
         oknTimeText.frame  = CGRect(x:x1,   y: b5y ,width: bw*5,height:bh)
-//        brightnessSlider.frame  = CGRect(x:x0,   y: b6y ,width: bw,height:bh)
-//        brightnessText.frame  = CGRect(x:x1,   y: b6y ,width: bw*5,height:bh)
         cameraSwitch.frame = CGRect(x:x0,y:b7y,width:bw,height: bh)
         cameraLabel.frame = CGRect(x:x0+2*sp+cameraSwitch.frame.width,y:b7y+2,width:bw*5,height:bh)
         speakerSwitch.frame = CGRect(x:x0,   y: b8y ,width: bw*5,height:bh)
