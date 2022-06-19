@@ -302,7 +302,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
                     drawCircle(cPoint: CGPoint(x:centerX-ettW,y:centerY))
                 }else if ettspeed==3{
                     drawCircle(cPoint: CGPoint(x:centerX+ettW,y:centerY))
-                }else if ettspeed==3{
+                }else if ettspeed==4{
                     drawCircle(cPoint: CGPoint(x:centerX,y:centerY-ettH))
                 }else{
                     drawCircle(cPoint: CGPoint(x:centerX,y:centerY+ettH))

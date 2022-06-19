@@ -315,9 +315,9 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         screenBrightness = camera.getUserDefaultFloat(str: "screenBrightness", ret: 1)
         caloricEttOknFlag = camera.getUserDefaultBool(str: "caloricEttOknFlag", ret:false)
         cameraON = camera.getUserDefaultBool(str: "cameraON", ret: true)
-        ettModeText0 = camera.getUserDefaultString(str: "ettModeText0", ret: "3,0:0:2,1:2:12,3:2:12,5:2:12")
+        ettModeText0 = camera.getUserDefaultString(str: "ettModeText0", ret: "3,0:1:2,1:2:12,3:2:12,5:2:12")
         if camera.checkEttString(ettStr: ettModeText0)==false{//パラメータ並びをチェック
-            UserDefaults.standard.set("3,0:0:2,1:2:12,3:2:12,5:2:12",forKey:"ettModeText0")
+            UserDefaults.standard.set("3,0:1:2,1:2:12,3:2:12,5:2:12",forKey:"ettModeText0")
         }
         ettModeText1 = camera.getUserDefaultString(str: "ettModeText1", ret: "3,2:2:12,4:2:12")
         if camera.checkEttString(ettStr: ettModeText1)==false{
