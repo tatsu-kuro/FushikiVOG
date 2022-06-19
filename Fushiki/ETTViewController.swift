@@ -175,8 +175,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         centerX=ww/2+CGFloat(left)
         centerY=wh/2+CGFloat(top)
         
-        cirDiameter=ww/26
-        ettW = (ww/2)-cirDiameter// *CGFloat(ettWidth)/100.0
+            ettW = (ww/2)-cirDiameter// *CGFloat(ettWidth)/100.0
         ettH = (wh/2)-cirDiameter// *CGFloat(ettWidth)/100.0
         if ettWidthX>5{
             ettWidthX=5
@@ -186,8 +185,10 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         ettW=ettH+(ettW-ettH)*CGFloat(ettWidthX)/5
         displayLink = CADisplayLink(target: self, selector: #selector(self.update))
         displayLink!.preferredFramesPerSecond = 120
-        //まず中心に円を表示
-        drawCircle(cPoint: CGPoint(x:centerX,y:centerY))
+        cirDiameter=ww/26
+        //まず見えないところに円を表示
+        drawCircle(cPoint: CGPoint(x:-100,y:-100))//damy
+  
         if UserDefaults.standard.bool(forKey: "cameraON")==false{
             //非録画モードなら、ここでdisplayLinkスタート
             displayLink?.add(to: RunLoop.main, forMode: .common)
@@ -294,10 +295,12 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
             let sinV=sin(CGFloat(elapset)*3.1415*0.3*ettspeed)
             if etttype==0{//静止モードではspeedで位置指定する
                 if ettspeed==0.5{
-                    drawCircle(cPoint: CGPoint(x:centerX,y:centerY))
+                    drawCircle(cPoint: CGPoint(x:-100,y:-100))//damy
                 }else if ettspeed==1{
-                    drawCircle(cPoint: CGPoint(x:centerX-ettW,y:centerY))
+                    drawCircle(cPoint: CGPoint(x:centerX,y:centerY))
                 }else if ettspeed==2{
+                    drawCircle(cPoint: CGPoint(x:centerX-ettW,y:centerY))
+                }else if ettspeed==3{
                     drawCircle(cPoint: CGPoint(x:centerX+ettW,y:centerY))
                 }else if ettspeed==3{
                     drawCircle(cPoint: CGPoint(x:centerX,y:centerY-ettH))

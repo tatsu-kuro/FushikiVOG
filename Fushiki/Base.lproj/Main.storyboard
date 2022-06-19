@@ -185,7 +185,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <string key="text">how to set the movement of the target / w,a:b:c,a1:b1:c1,....
 w[moving width(0-5)],a[moving type(0-6)]:b[speed(0-5)]:c[length(sec)]
-a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.randum 6:randum</string>
+a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
