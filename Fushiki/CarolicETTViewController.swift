@@ -155,12 +155,11 @@ class CarolicETTViewController: UIViewController{
         let right=UserDefaults.standard.float(forKey: "right")
     
         let ww=view.bounds.width-CGFloat(left+right)
-        let wh=view.bounds.height-CGFloat(top+bottom)
+        let wh=view.bounds.height//-CGFloat(top+bottom)
         centerX=ww/2+CGFloat(left)
         centerY=wh/2+CGFloat(top)
-        
-        
         cirDiameter=ww/26
+        
         ettW = (ww/2)-cirDiameter// *CGFloat(ettWidth)/100.0
         ettH = (wh/2)-cirDiameter// *CGFloat(ettWidth)/100.0
         let ettTxt = UserDefaults.standard.string(forKey: "ettModeText0")!//１番パラメータの横振幅を使います。
