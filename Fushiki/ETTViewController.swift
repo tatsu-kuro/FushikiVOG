@@ -131,9 +131,9 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         }else{
             camera.setZoom(level: 0)
         }
-
+//focudは最短　LEDは光らせない
         camera.setFocus(focus: 0)//focusValue)
-        camera.setLedLevel(level:camera.getUserDefaultFloat(str: "ledValue", ret:0))
+        camera.setLedLevel(level:0)//camera.getUserDefaultFloat(str: "ledValue", ret:0))
 
         ettMode=UserDefaults.standard.integer(forKey: "ettMode")
         ettWidth=UserDefaults.standard.integer(forKey: "ettWidth")
