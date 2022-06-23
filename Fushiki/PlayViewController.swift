@@ -1170,6 +1170,7 @@ class PlayViewController: UIViewController {
         eyePosYFiltered.removeAll()
         eyeVeloXFiltered.removeAll()
         eyeVeloYFiltered.removeAll()
+  
         eyePosXOrig.append(0)
         eyePosXFiltered.append(0)
         eyePosYOrig.append(0)
@@ -1209,6 +1210,18 @@ class PlayViewController: UIViewController {
         let timeRange = CMTimeRange(start: startTime, end:CMTime.positiveInfinity)
         reader.timeRange = timeRange //読み込む範囲を`timeRange`で指定
         reader.startReading()
+        print("currFrameNumber:",currFrameNumber)
+        if currFrameNumber>0{
+            let n=currFrameNumber
+            for _ in 0..<n {
+            eyePosXOrig.append(0)
+            eyePosXFiltered.append(0)
+            eyePosYOrig.append(0)
+            eyePosYFiltered.append(0)
+            eyeVeloXFiltered.append(0)
+            eyeVeloYFiltered.append(0)
+            }
+        }
         // UnsafeとMutableはまあ調べてもらうとして、eX, eY等は<Int32>が一つ格納されている場所へのポインタとして宣言される。
         let eX = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
         let eY = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
