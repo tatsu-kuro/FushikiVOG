@@ -881,13 +881,13 @@ class PlayViewController: UIViewController {
     }
     
     func getUserDefaults(){
-        if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
+//        if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
+//            wakuLength = CGFloat(album.getUserDefaultInt(str: "wakuLength", ret: 6))
+//            eyeBorder = album.getUserDefaultInt(str: "eyeBorder", ret: 20)
+//        }else{//iphone
             wakuLength = CGFloat(album.getUserDefaultInt(str: "wakuLength", ret: 6))
             eyeBorder = album.getUserDefaultInt(str: "eyeBorder", ret: 20)
-        }else{//iphone
-            wakuLength = CGFloat(album.getUserDefaultInt(str: "wakuLength", ret: 3))
-            eyeBorder = album.getUserDefaultInt(str: "eyeBorder", ret: 9)
-        }
+//        }
         cameraType = album.getUserDefaultInt(str: "cameraType", ret: 0)
         posRatio = album.getUserDefaultInt(str: "posRatio", ret:100)
         veloRatio = album.getUserDefaultInt(str:"veloRatio",ret :100)
