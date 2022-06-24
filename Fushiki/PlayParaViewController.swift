@@ -89,7 +89,7 @@ class PlayParaViewController: UIViewController {
         posRatio=80
         veloRatio=60
         wakuLength = 6
-        eyeBorder = 15
+        eyeBorder = 20//v2.2.6 
 //        faceMark=1
 //        showRect=1
         setUserDefaults()
