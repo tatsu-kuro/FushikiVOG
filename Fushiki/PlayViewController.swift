@@ -429,8 +429,18 @@ class PlayViewController: UIViewController {
         // 画面に表示する
         view.addSubview(vogImageView!)
     }
-    
-    func initVogImage(width w:CGFloat,height h:CGFloat) -> UIImage {
+    func getFpsZureRate(fps:Float)->CGFloat{//実際のFPSと想定したFPSの比率
+        var tempRate=CGFloat(fps)/240
+        if fps>100 && fps<200{
+            tempRate=CGFloat(fps)/120
+        }else if fps>50 && fps<70{
+            tempRate=CGFloat(fps)/60
+        }else if fps<50{
+            tempRate=CGFloat(fps)/30
+        }
+        return tempRate
+    }
+    func initVogImage(width w:CGFloat,height h:CGFloat) -> UIImage {//vogImageの背景の白、縦横線を作る
         let size = CGSize(width:w, height:h)
         // イメージ処理の開始
         UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
@@ -446,7 +456,7 @@ class PlayViewController: UIViewController {
         
         UIColor.black.setStroke()
         
-        let wid:CGFloat=w/90.0
+        let wid:CGFloat=w/90.0*getFpsZureRate(fps: videoFps)
         for i in 0..<90 {
             let xp = CGFloat(i)*wid
             drawPath.move(to: CGPoint(x:xp,y:0))
@@ -459,6 +469,20 @@ class PlayViewController: UIViewController {
         //UIColor.blue.setStroke()
         drawPath.lineWidth = 2.0//1.0
         drawPath.stroke()
+        //20mseごとに細線を描く
+        for i in 0..<90*10 {
+            let xp = CGFloat(i)*wid/10
+            drawPath.move(to: CGPoint(x:xp,y:0))
+            drawPath.addLine(to: CGPoint(x:xp,y:h-120))
+        }
+        drawPath.move(to:CGPoint(x:0,y:0))
+        drawPath.addLine(to: CGPoint(x:w,y:0))
+        drawPath.move(to:CGPoint(x:0,y:h-120))
+        drawPath.addLine(to: CGPoint(x:w,y:h-120))
+        //UIColor.blue.setStroke()
+        drawPath.lineWidth = 0.1
+        drawPath.stroke()
+
         // イメージコンテキストからUIImageを作る
         let image = UIGraphicsGetImageFromCurrentImageContext()
         // イメージ処理の終了
@@ -874,11 +898,11 @@ class PlayViewController: UIViewController {
         
         return avAsset
     }
-    func getFPS(url:URL) -> Float{
-        let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
-        let avAsset = AVURLAsset(url: url, options: options)
-        return avAsset.tracks.first!.nominalFrameRate
-    }
+//    func getFPS(url:URL) -> Float{
+//        let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
+//        let avAsset = AVURLAsset(url: url, options: options)
+//        return avAsset.tracks.first!.nominalFrameRate
+//    }
     
     func getUserDefaults(){
 //        if ( UIDevice.current.model.range(of: "iPad") != nil){//ipad
@@ -977,8 +1001,6 @@ class PlayViewController: UIViewController {
         view.bringSubviewToFront(exitButton)
 //        print("layerConut:",view.layer.sublayers?.count)
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
-//        videoSize=resolutionSizeOfVideo(url:videoURL!)
-//        videoFps=getFPS(url: videoURL!)
         videoSize=avasset!.tracks.first!.naturalSize
         videoFps=avasset!.tracks.first!.nominalFrameRate
         screenSize=view.bounds.size
@@ -1205,13 +1227,16 @@ class PlayViewController: UIViewController {
         let readerOutput = AVAssetReaderTrackOutput(track: videoTrack, outputSettings: readerOutputSettings)
         
         reader.add(readerOutput)
-        let frameRate = videoTrack.nominalFrameRate
-        let startTime = CMTime(value: CMTimeValue(currFrameNumber), timescale: CMTimeScale(frameRate))
+ //       let frameRate = videoTrack.nominalFrameRate
+//        print("framerare:",frameRate,videoFps)
+        let startTime = CMTime(value: CMTimeValue(currFrameNumber/*CGFloat(24+currFrameNumber)*getFpsZureRate(fps: videoFps)*/), timescale: CMTimeScale(videoFps))
         let timeRange = CMTimeRange(start: startTime, end:CMTime.positiveInfinity)
         reader.timeRange = timeRange //読み込む範囲を`timeRange`で指定
         reader.startReading()
         print("currFrameNumber:",currFrameNumber)
         if currFrameNumber>0{
+            //下行は訳わかっていないが、getFpsZureRateで割り、さらにもう一度割る。
+//            let n=Int(CGFloat(currFrameNumber)/getFpsZureRate(fps: videoFps)/getFpsZureRate(fps: videoFps))
             let n=currFrameNumber
             for _ in 0..<n {
             eyePosXOrig.append(0)
@@ -1394,7 +1419,7 @@ class PlayViewController: UIViewController {
             view.bringSubviewToFront(vogImageView!)
         }
     }
-    func drawWakulines(width w:CGFloat,height h:CGFloat) ->UIImage{
+/*    func drawWakulines(width w:CGFloat,height h:CGFloat) ->UIImage{
         let size = CGSize(width:w, height:h)
         // イメージ処理の開始
         UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
@@ -1421,6 +1446,7 @@ class PlayViewController: UIViewController {
         UIGraphicsEndImageContext()
         return image!
     }
+ */
      //longPressでeye(sikaku),face(maru)を探して、そこに枠を近づける。２〜３回繰り返すと良いか。
 //    var faceMarkType:Int = 0
 //    @IBAction func longPress(_ sender: UILongPressGestureRecognizer) {

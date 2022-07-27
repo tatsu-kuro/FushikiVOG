@@ -26,6 +26,8 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     var ettH:CGFloat = 0
     var recordedF:Bool = false
 
+    @IBOutlet weak var blackRightImageView: UIImageView!
+    @IBOutlet weak var blackLeftImageView: UIImageView!
     var tapInterval=CFAbsoluteTimeGetCurrent()
     func stopDisplaylink(){
         if displayLinkF==true{
@@ -169,9 +171,14 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         let bottom=UserDefaults.standard.float(forKey: "bottom")
         let left=UserDefaults.standard.float(forKey: "left")
         let right=UserDefaults.standard.float(forKey: "right")
-    
+//    print("top,bottom,left,right",top,bottom,left,right)
+        
         let ww=view.bounds.width-CGFloat(left+right)
         let wh=view.bounds.height//-CGFloat(top+bottom)
+        blackLeftImageView.frame=CGRect(x:0,y:0,width: view.bounds.width/4,height: view.bounds.height)
+        blackRightImageView.frame=CGRect(x:view.bounds.width*3/4,y:0,width: view.bounds.width/4,height: view.bounds.height)
+        blackLeftImageView.alpha=0
+        blackRightImageView.alpha=0
         centerX=ww/2+CGFloat(left)
         centerY=wh/2+CGFloat(top)
         cirDiameter=ww/26
@@ -281,11 +288,29 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         let yd=ettH
         return CGPoint(x:x0 + CGFloat(xn)*xd, y: y0 + CGFloat(yn)*yd)
     }
+    func getSumEttSec(num:Int)->Double{
+        var sumEttSec:Double=0
+        for i in 0...num{
+            sumEttSec += ettSec[i]
+        }
+        return sumEttSec
+    }
+    func leftRightSetBlack(amari:CGFloat){
+        if amari<0.1 {
+            blackLeftImageView.alpha=1
+            blackRightImageView.alpha=1
+        }else{
+            blackLeftImageView.alpha=0
+            blackRightImageView.alpha=0
+        }
+    }
     @objc func update() {//pursuit
         view.layer.sublayers?.removeLast()
         //実際に録画が開始した時間を基準にする。(10-20msec程度はずれてしまうと思われる）
-        let elapset=CFAbsoluteTimeGetCurrent()-camera.recordStartTime// recordstartTime
-        if elapset<ettSec[currentEttNum]{
+        //+0.1(100ms)で縦線と表示の同期が取れるようだ。
+        let elapset=CFAbsoluteTimeGetCurrent()-camera.recordStartTime+0.1// recordstartTime
+        if elapset<getSumEttSec(num:currentEttNum){
+
             let etttype=ettType[currentEttNum]
             var ettspeed=CGFloat(ettSpeed[currentEttNum])
             if ettspeed==0{//静止モードは別に作ったので、0の時は１の半分のスピードとした。
@@ -294,17 +319,21 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
             let sec=Int(elapset*ettspeed/2)
             let sinV=sin(CGFloat(elapset)*3.1415*0.3*ettspeed)
             if etttype==0{//静止モードではspeedで位置指定する
-                if ettspeed==0.5{
+                if ettspeed==0.5{//視標なし
                     drawCircle(cPoint: CGPoint(x:-100,y:-100))//damy
-                }else if ettspeed==1{
+                }else if ettspeed==1 || ettspeed>5{
                     drawCircle(cPoint: CGPoint(x:centerX,y:centerY))
+                    if ettspeed>5{
+                        let amari=elapset-Double(Int(elapset)/1*1)//every 10sec
+                        leftRightSetBlack(amari:amari)//1秒ごとに100msec画面を縮小表示
+                    }
                 }else if ettspeed==2{
                     drawCircle(cPoint: CGPoint(x:centerX-ettW,y:centerY))
                 }else if ettspeed==3{
                     drawCircle(cPoint: CGPoint(x:centerX+ettW,y:centerY))
                 }else if ettspeed==4{
                     drawCircle(cPoint: CGPoint(x:centerX,y:centerY-ettH))
-                }else{
+                }else if ettspeed==5{
                     drawCircle(cPoint: CGPoint(x:centerX,y:centerY+ettH))
                 }
             }else if etttype == 1{//振り子横
@@ -348,8 +377,8 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
             currentEttNum += 1
             if ettType.count-1<currentEttNum{
                 doubleTap(0)
-            }else{
-                camera.recordStartTime=CFAbsoluteTimeGetCurrent()
+//            }else{
+//                camera.recordStartTime=CFAbsoluteTimeGetCurrent()
             }
             drawCircle(cPoint: CGPoint(x:-200,y:-200))
             //damy

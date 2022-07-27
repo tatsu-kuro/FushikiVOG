@@ -315,21 +315,21 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         screenBrightness = camera.getUserDefaultFloat(str: "screenBrightness", ret: 1)
         caloricEttOknFlag = camera.getUserDefaultBool(str: "caloricEttOknFlag", ret:false)
         cameraON = camera.getUserDefaultBool(str: "cameraON", ret: true)
-        ettModeText0 = camera.getUserDefaultString(str: "ettModeText0", ret: "3,0:1:2,1:2:12,3:2:12,5:2:12")
+        ettModeText0 = camera.getUserDefaultString(str: "ettModeText0", ret: "3,0:1:2,1:2:10,3:2:10,5:2:10,0:1:2,2:2:10,4:2:10")
         if camera.checkEttString(ettStr: ettModeText0)==false{//パラメータ並びをチェック
-            UserDefaults.standard.set("3,0:1:2,1:2:12,3:2:12,5:2:12",forKey:"ettModeText0")
+            UserDefaults.standard.set("3,0:1:2,1:2:10,3:2:10,5:2:10,0:1:2,2:2:10,4:2:10",forKey:"ettModeText0")
         }
-        ettModeText1 = camera.getUserDefaultString(str: "ettModeText1", ret: "3,2:2:12,4:2:12")
+        ettModeText1 = camera.getUserDefaultString(str: "ettModeText1", ret: "3,0:6:2,1:2:10,3:2:10,5:2:10,0:6:2,2:2:10,4:2:10")
         if camera.checkEttString(ettStr: ettModeText1)==false{
-            UserDefaults.standard.set("3,2:2:12,4:2:12",forKey:"ettModeText1")
+            UserDefaults.standard.set("3,0:6:2,1:2:10,3:2:10,5:2:10,0:6:2,2:2:10,4:2:10",forKey:"ettModeText1")
         }
-        ettModeText2 = camera.getUserDefaultString(str: "ettModeText2", ret: "5,6:2:20")
+        ettModeText2 = camera.getUserDefaultString(str: "ettModeText2", ret: "3,0:1:2,1:2:12,3:2:12,5:2:12")
         if camera.checkEttString(ettStr: ettModeText2)==false{
-            UserDefaults.standard.set("5,6:2:20",forKey:"ettModeText2")
+            UserDefaults.standard.set("3,0:1:2,1:2:12,3:2:12,5:2:12",forKey:"ettModeText2")
         }
-        ettModeText3 = camera.getUserDefaultString(str: "ettModeText3", ret: "0,6:3:20")
+        ettModeText3 = camera.getUserDefaultString(str: "ettModeText3", ret: "5,0:1:2,6:2:20")
         if camera.checkEttString(ettStr: ettModeText3)==false{
-            UserDefaults.standard.set("0,6:3:20",forKey:"ettModeText3")
+            UserDefaults.standard.set("5,0:1:2,6:2:20",forKey:"ettModeText3")
         }
         _=camera.getUserDefaultInt(str:"posRatio",ret:80)
         _=camera.getUserDefaultInt(str:"veloRatio",ret:60)
