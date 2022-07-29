@@ -37,8 +37,10 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var ettModeText3:String = ""
     var cameraON:Bool!
     @IBAction func onStartHideButton(_ sender: Any) {
-//        doModes()
-        onEttButton(0)
+        if targetMode>2{//ETT,OKP,OKN以外の場合はETT
+            targetMode=0
+        }
+        doModes_sub(mode: targetMode)
     }
     
     @IBOutlet weak var startHideButton: UIButton!
@@ -82,14 +84,17 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
  
     @IBAction func onEttButton(_ sender: Any) {
+        startHideButton.setTitle("ETT", for: .normal)
         doModes_sub(mode: 0)
     }
 
     @IBAction func onOkpButton(_ sender: Any) {
+        startHideButton.setTitle("OKP", for: .normal)
         doModes_sub(mode: 1)
     }
 
     @IBAction func onOknButton(_ sender: Any) {
+        startHideButton.setTitle("OKN", for: .normal)
         doModes_sub(mode: 2)
     }
 
