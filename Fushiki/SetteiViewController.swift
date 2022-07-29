@@ -143,7 +143,8 @@ class SetteiViewController: UIViewController {
         cameraON=true
         ledText.isHidden=true
         ledSlider.isHidden=true
-
+        camera.setLedLevel(0)
+        ledValue = camera.getUserDefaultFloat(str: "ledValue", ret: 0)
         if Locale.preferredLanguages.first!.contains("ja"){
             if n==0{
                 cameraLabel.text="目の動きを録画しない"
@@ -156,7 +157,7 @@ class SetteiViewController: UIViewController {
                 cameraType=1
                 ledText.isHidden=false
                 ledSlider.isHidden=false
-
+                camera.setLedLevel(ledValue)
             }
         }else{
             if n==0{
@@ -170,6 +171,7 @@ class SetteiViewController: UIViewController {
                 cameraType=1
                 ledText.isHidden=false
                 ledSlider.isHidden=false
+                camera.setLedLevel(ledValue)
             }
         }
         UserDefaults.standard.set(cameraType,forKey: "cameraType")
