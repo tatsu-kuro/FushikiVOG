@@ -503,7 +503,7 @@ class PlayViewController: UIViewController {
         if calcFlag == true{
             elapsedTime=CFAbsoluteTimeGetCurrent()-startTime
         }
-        currTimeLabel.text=String(format:"%.1f/%.1f",seekBar.value + Float(eyePosXOrig.count)/videoFps,elapsedTime)
+        currTimeLabel.text=String(format:"%.1f/%.1f",Float(eyePosXOrig.count)/videoFps,elapsedTime)
         if eyePosXFiltered.count < 5 {
             return
         }
@@ -861,11 +861,11 @@ class PlayViewController: UIViewController {
     }
     
     @objc func update(tm: Timer) {
-        if timer_vog?.isValid == true{
-            currTimeLabel.text=String(format:"%.1f/%.1f",seekBar.value + Float(eyePosXOrig.count)/videoFps,elapsedTime)
-        }else{
-            currTimeLabel.text=String(format:"%.1f/%.1f",seekBar.value + Float(eyePosXOrig.count)/videoFps,elapsedTime)
-        }
+//        if timer_vog?.isValid == true{
+//            currTimeLabel.text=String(format:"%.1f/%.1f", Float(eyePosXOrig.count)/videoFps,elapsedTime)
+//        }else{
+            currTimeLabel.text=String(format:"%.1f/%.1f", Float(eyePosXOrig.count)/videoFps,elapsedTime)
+//        }
         if !((videoPlayer.rate != 0) && (videoPlayer.error == nil)) {//notplaying
             if seekBar.value>videoDuration-0.01{
                 seekBar.value=0
@@ -1227,26 +1227,25 @@ class PlayViewController: UIViewController {
         let readerOutput = AVAssetReaderTrackOutput(track: videoTrack, outputSettings: readerOutputSettings)
         
         reader.add(readerOutput)
- //       let frameRate = videoTrack.nominalFrameRate
-//        print("framerare:",frameRate,videoFps)
-        let startTime = CMTime(value: CMTimeValue(currFrameNumber/*CGFloat(24+currFrameNumber)*getFpsZureRate(fps: videoFps)*/), timescale: CMTimeScale(videoFps))
+//        let startTime = CMTime(value: CMTimeValue(currFrameNumber/*CGFloat(24+currFrameNumber)*getFpsZureRate(fps: videoFps)*/), timescale: CMTimeScale(videoFps))
+        let startTime = CMTime(value: CMTimeValue(0), timescale: CMTimeScale(videoFps))
         let timeRange = CMTimeRange(start: startTime, end:CMTime.positiveInfinity)
         reader.timeRange = timeRange //読み込む範囲を`timeRange`で指定
         reader.startReading()
-        print("currFrameNumber:",currFrameNumber)
-        if currFrameNumber>0{
-            //下行は訳わかっていないが、getFpsZureRateで割り、さらにもう一度割る。
-//            let n=Int(CGFloat(currFrameNumber)/getFpsZureRate(fps: videoFps)/getFpsZureRate(fps: videoFps))
-            let n=currFrameNumber
-            for _ in 0..<n {
-            eyePosXOrig.append(0)
-            eyePosXFiltered.append(0)
-            eyePosYOrig.append(0)
-            eyePosYFiltered.append(0)
-            eyeVeloXFiltered.append(0)
-            eyeVeloYFiltered.append(0)
-            }
-        }
+//        print("currFrameNumber:",currFrameNumber)
+//        if currFrameNumber>0{
+//            //下行は訳わかっていないが、getFpsZureRateで割り、さらにもう一度割る。
+////            let n=Int(CGFloat(currFrameNumber)/getFpsZureRate(fps: videoFps)/getFpsZureRate(fps: videoFps))
+//            let n=currFrameNumber
+//            for _ in 0..<n {
+//            eyePosXOrig.append(0)
+//            eyePosXFiltered.append(0)
+//            eyePosYOrig.append(0)
+//            eyePosYFiltered.append(0)
+//            eyeVeloXFiltered.append(0)
+//            eyeVeloYFiltered.append(0)
+//            }
+//        }
         // UnsafeとMutableはまあ調べてもらうとして、eX, eY等は<Int32>が一つ格納されている場所へのポインタとして宣言される。
         let eX = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
         let eY = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
@@ -1283,7 +1282,6 @@ class PlayViewController: UIViewController {
         var faceWithBorderRect = resizeR2(faceWithBorderRectOnScreen, viewRect:getVideoRectOnScreen()/*view.frame*/, image:ciImage)
         //eyeWithBorderRectとeyeRect の差、faceでの差も同じ
 //        let borderRectDiffer=faceWithBorderRect.width-faceRect.width
-        
         let eyeCGImage = context.createCGImage(ciImage, from: eyeRect)!
         let eyeUIImage = UIImage.init(cgImage: eyeCGImage)
         let faceCGImage = context.createCGImage(ciImage, from: faceRect)!
@@ -1305,6 +1303,7 @@ class PlayViewController: UIViewController {
         while reader.status != AVAssetReader.Status.reading {
             sleep(UInt32(0.1))
         }
+        var currNumber=currFrameNumber+1
         DispatchQueue.global(qos: .default).async { [self] in
             while let sample = readerOutput.copyNextSampleBuffer(), self.calcFlag != false {
                 var eyeX:CGFloat = 0
@@ -1312,9 +1311,18 @@ class PlayViewController: UIViewController {
                 var faceX:CGFloat = 0
                 var faceY:CGFloat = 0
                 
-                //for test display
                 var x:CGFloat = 50.0
-//                let y:CGFloat = 50.0
+                currNumber -= 1
+                if currNumber>0{
+                    eyePosXOrig.append(0)
+                    eyePosXFiltered.append(0)
+                    eyePosYOrig.append(0)
+                    eyePosYFiltered.append(0)
+                    eyeVeloXFiltered.append(0)
+                    eyeVeloYFiltered.append(0)
+                    continue
+                }
+        
                 autoreleasepool{
                     let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample)!
                     
