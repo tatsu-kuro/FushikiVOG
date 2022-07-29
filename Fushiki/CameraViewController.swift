@@ -54,7 +54,7 @@ class CameraViewController: UIViewController {
         ledBar.maximumValue = 0.1
         ledBar.addTarget(self, action: #selector(onLedValueChange), for: UIControl.Event.valueChanged)
         ledBar.value=camera.getUserDefaultFloat(str: "ledValue", ret:0)
-        camera.setLedLevel(level: ledBar.value)
+        camera.setLedLevel(ledBar.value)
         
         focusBar.minimumValue = 0
         focusBar.maximumValue = 1.0
@@ -87,7 +87,7 @@ class CameraViewController: UIViewController {
         cameraTypeLabel.text = cameraTypeStrings[cameraType]
 
 //        fpsLabel.text = String(format:"fps:%d %dx%d" ,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
-        camera.setLedLevel(level:camera.getUserDefaultFloat(str: "ledValue", ret:0))
+        camera.setLedLevel(camera.getUserDefaultFloat(str: "ledValue", ret:0))
         if cameraType > 0{
             UserDefaults.standard.set(camera.fpsCurrent, forKey: "backCameraFps")
         }
@@ -137,7 +137,7 @@ class CameraViewController: UIViewController {
     }
  
     @objc func onLedValueChange(){
-        camera.setLedLevel(level:ledBar.value)
+        camera.setLedLevel(ledBar.value)
         UserDefaults.standard.set(ledBar.value, forKey: "ledValue")
     }
     @objc func onZoomValueChange(){

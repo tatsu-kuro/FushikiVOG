@@ -99,7 +99,7 @@
 "Yjf-ek-oMJ.text" = "123";
 
 /* Class = "UILabel"; text = "Screen Brightness"; ObjectID = "YmA-od-BNX"; */
-"YmA-od-BNX.text" = "スクリーンの明るさ";
+"YmA-od-BNX.text" = "LEDの明るさ";
 
 /* Class = "UIButton"; normalTitle = "default2"; ObjectID = "YqS-zP-FRM"; */
 "YqS-zP-FRM.normalTitle" = "設定2";

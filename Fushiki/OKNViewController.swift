@@ -300,7 +300,9 @@ class OKNViewController: UIViewController{
         }
 //        let focusValue=camera.getUserDefaultFloat(str: "focusValue", ret: 0)
         camera.setFocus(focus: 0)//focusValue)
-        camera.setLedLevel(level:camera.getUserDefaultFloat(str: "ledValue", ret:0))
+        camera.setLedLevel(camera.getUserDefaultFloat(str: "ledValue", ret:0))
+//        camera.setLedLevel(level:0.1)//camera.getUserDefaultFloat(str: "ledValue", ret:0))
+
 //        camera.initSession(fps: 120)
         //       timerPara.isHidden=true
         oknSpeed = UserDefaults.standard.integer(forKey:"oknSpeed")

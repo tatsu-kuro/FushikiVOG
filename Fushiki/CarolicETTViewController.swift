@@ -189,7 +189,7 @@ class CarolicETTViewController: UIViewController{
         //        let focusValue=camera.getUserDefaultFloat(str: "focusValue", ret: 0)
         camera.setFocus(focus: 0)//focusValue)
         
-        camera.setLedLevel(level:camera.getUserDefaultFloat(str: "ledValue", ret:0))
+        camera.setLedLevel(camera.getUserDefaultFloat(str: "ledValue", ret:0))
 
         epTim.append(10)
         epTim.append(100)

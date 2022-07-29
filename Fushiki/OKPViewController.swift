@@ -147,7 +147,7 @@ class OKPViewController: UIViewController{
         super.viewDidLoad()
 //        mainBrightness = UIScreen.main.brightness
         UIScreen.main.brightness = 1.0
-        UIScreen.main.brightness = CGFloat(camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
+        UIScreen.main.brightness = CGFloat(1)//camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
         camera.makeAlbum()
         let cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
         camera.initSession(camera: Int(cameraType), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
@@ -162,7 +162,7 @@ class OKPViewController: UIViewController{
         }
 //        let focusValue=camera.getUserDefaultFloat(str: "focusValue", ret: 0)
         camera.setFocus(focus:0)// focusValue)
-        camera.setLedLevel(level:camera.getUserDefaultFloat(str: "ledValue", ret:0))
+        camera.setLedLevel(camera.getUserDefaultFloat(str: "ledValue", ret:0))
 
         ww=view.bounds.width
         wh=view.bounds.height

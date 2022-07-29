@@ -73,8 +73,9 @@
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="rqo-3h-wbp">
                                 <rect key="frame" x="72" y="284" width="118" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" systemColor="systemOrangeColor"/>
                                 <connections>
-                                    <action selector="onBrightnessSlider:" destination="gOS-fU-nK5" eventType="valueChanged" id="snd-j4-uEJ"/>
+                                    <action selector="onLedSlider:" destination="gOS-fU-nK5" eventType="valueChanged" id="8rf-5v-9mj"/>
                                 </connections>
                             </slider>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wIu-wr-ffr">
@@ -136,8 +137,8 @@
                                     <outletCollection property="gestureRecognizers" destination="v3Y-jM-4m8" appends="YES" id="pvG-14-1mc"/>
                                 </connections>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Screen Brightness" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YmA-od-BNX">
-                                <rect key="frame" x="259" y="284" width="140" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LED Brightness" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YmA-od-BNX">
+                                <rect key="frame" x="259" y="284" width="117" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -211,8 +212,6 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="brightnessSlider" destination="rqo-3h-wbp" id="hf7-IT-zFx"/>
-                        <outlet property="brightnessText" destination="YmA-od-BNX" id="Mls-lt-SYT"/>
                         <outlet property="cameraButton" destination="dd6-zp-sxW" id="pCm-gY-tMP"/>
                         <outlet property="cameraLabel" destination="eaO-tb-IY3" id="OVt-s6-oUr"/>
                         <outlet property="cameraSwitch" destination="wwi-Vq-M0x" id="9qj-e1-6si"/>
@@ -221,6 +220,8 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                         <outlet property="ettSwitch" destination="7li-Aa-cfI" id="LGU-GW-Qef"/>
                         <outlet property="ettText" destination="ixO-Uv-LwA" id="5bk-rJ-YmM"/>
                         <outlet property="exitButton" destination="vji-3f-Tqg" id="4tC-Qb-6z9"/>
+                        <outlet property="ledSlider" destination="rqo-3h-wbp" id="hf7-IT-zFx"/>
+                        <outlet property="ledText" destination="YmA-od-BNX" id="Mls-lt-SYT"/>
                         <outlet property="oknSwitch" destination="wrz-kI-t9y" id="BP5-nK-RW9"/>
                         <outlet property="oknText" destination="bvF-vu-c8A" id="Klx-Cg-muc"/>
                         <outlet property="oknTimeSlider" destination="uh1-Tf-lNZ" id="10X-AN-mzs"/>

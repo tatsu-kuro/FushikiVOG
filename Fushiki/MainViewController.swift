@@ -30,7 +30,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var targetMode:Int = 6
     var speakerOnOff:Int = 0
     var cameraType:Int = 0
-    var screenBrightness:Float = 0
+    var ledValue:Float = 0
     var ettModeText0:String = ""
     var ettModeText1:String = ""
     var ettModeText2:String = ""
@@ -317,7 +317,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         targetMode = camera.getUserDefaultInt(str: "targetMode", ret: 6)
         speakerOnOff = camera.getUserDefaultInt(str: "speakerOnOff", ret: 0)
         cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
-        screenBrightness = camera.getUserDefaultFloat(str: "screenBrightness", ret: 1)
+        ledValue = camera.getUserDefaultFloat(str: "ledValue", ret: 0)
         caloricEttOknFlag = camera.getUserDefaultBool(str: "caloricEttOknFlag", ret:false)
         cameraON = camera.getUserDefaultBool(str: "cameraON", ret: true)
         ettModeText0 = camera.getUserDefaultString(str: "ettModeText0", ret: "3,0:1:2,1:2:10,3:2:10,5:2:10,0:1:2,2:2:10,4:2:10")
@@ -546,6 +546,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             print("mainScreenBrightness restored****************")
         }
          UIApplication.shared.isIdleTimerDisabled = false//スリープする.監視する
+        camera.setLedLevel(0)
     }
 }
 

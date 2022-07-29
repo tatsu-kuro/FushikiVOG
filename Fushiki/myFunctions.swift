@@ -688,7 +688,43 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
             return ret
         }
     }
-    func setLedLevel(level:Float){
+    func setLedLevel(_ level: Float){
+//          let level = Float(sl.value)
+          if let avDevice = AVCaptureDevice.default(for: AVMediaType.video){
+              
+              if avDevice.hasTorch {
+                  do {
+                      // torch device lock on
+                      try avDevice.lockForConfiguration()
+                      
+                      if (level > 0.0){
+                          do {
+                              try avDevice.setTorchModeOn(level: level)
+                          } catch {
+                              print("error")
+                          }
+                          
+                      } else {
+                          // flash LED OFF
+                          // 注意しないといけないのは、0.0はエラーになるのでLEDをoffさせます。
+                          avDevice.torchMode = AVCaptureDevice.TorchMode.off
+                      }
+                      // torch device unlock
+                      avDevice.unlockForConfiguration()
+                      
+                  } catch {
+                      print("Torch could not be used")
+                  }
+              } else {
+                  print("Torch is not available")
+              }
+          }
+          else{
+              // no support
+          }
+      }
+    
+/*    func setLedLevel(level:Float){
         
         if !UserDefaults.standard.bool(forKey: "cameraON"){
             return
@@ -721,5 +757,5 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
                 }
             }
         }
-    }
+    }*/
 }
