@@ -37,8 +37,14 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var ettModeText3:String = ""
     var cameraON:Bool!
     @IBAction func onStartHideButton(_ sender: Any) {
-        if targetMode>2{//ETT,OKP,OKN以外の場合はETT
+        let text=startHideButton.title(for: .normal)
+        if text == "ETT"
+        {
             targetMode=0
+        }else if text == "OKP"{
+            targetMode=1
+        }else if text == "OKN"{
+            targetMode=2
         }
         doModes_sub(mode: targetMode)
     }
