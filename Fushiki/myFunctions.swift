@@ -5,6 +5,7 @@
 //  Created by 黒田建彰 on 2021/01/10.
 //  Copyright © 2021 tatsuaki.Fushiki. All rights reserved.
 //
+
 import UIKit
 import Photos
 import AVFoundation
@@ -759,3 +760,4 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
         }
     }*/
 }
+
