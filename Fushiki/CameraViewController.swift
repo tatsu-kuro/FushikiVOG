@@ -102,14 +102,14 @@ class CameraViewController: UIViewController {
             wideAngleCamera=true
         }
         //以下は選べないように変更
-        ultrawideCamera=false
-        telephotoCamera=false
-//        if AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) != nil{
-//            ultrawideCamera=true
-//        }
-//        if AVCaptureDevice.default(.builtInTelephotoCamera, for: .video, position: .back) != nil{
-//            telephotoCamera=true
-//        }
+//        ultrawideCamera=false
+//        telephotoCamera=false
+        if AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) != nil{
+            ultrawideCamera=true
+        }
+        if AVCaptureDevice.default(.builtInTelephotoCamera, for: .video, position: .back) != nil{
+            telephotoCamera=true
+        }
     }
     //cameraMode 0:front 1:wideangle 2:ultrawide 3:telephoto
     func changeCameraMode()
@@ -177,31 +177,31 @@ class CameraViewController: UIViewController {
  
         camera.setButtonProperty(cameraChangeButton, x: left+bw*5+sp*7, y: by, w: bw, h: bh,UIColor.orange)
         //zoomBarは使用できなくした。
-           zoomBar.isHidden=true
-           zoomBarLabel.isHidden=true
+//           zoomBar.isHidden=true
+//           zoomBarLabel.isHidden=true
         focusBar.isHidden=true
         focusBarLabel.isHidden=true
         ledBar.isHidden=true
         ledBarLabel.isHidden=true
-//        camera.setLabelProperty(focusBarLabel,x:left+bw*6+sp*8,y:by-sp*2-2*bh,w:bw,h:bh,UIColor.white)
-//        focusBar.frame=CGRect(  x:left+2*sp,y:by-sp*2-2*bh,width:ww-7*sp-bw,height:bh)
-//        camera.setLabelProperty(ledBarLabel,  x:left+bw*6+sp*8,y:by-sp-1*bh,w:bw,h:bh,UIColor.white)
-//        ledBar.frame=CGRect(    x:left+2*sp,y:by-sp-1*bh,width:ww-7*sp-bw,height:bh)
-//        if cameraType==0 || cameraType==2 {
-//            focusBar.isHidden=true
-//            focusBarLabel.isHidden=true
-//        }else{
-//            focusBar.isHidden=false
-//            focusBarLabel.isHidden=false
-//        }
-////        print("setButtonsCameraTyep:",cameraType)
-//        if cameraType==0{
-//            ledBar.isHidden=true
-//            ledBarLabel.isHidden=true
-//        }else{
-//            ledBar.isHidden=false
-//            ledBarLabel.isHidden=false
-//        }
+        camera.setLabelProperty(focusBarLabel,x:left+bw*6+sp*8,y:by-sp*2-2*bh,w:bw,h:bh,UIColor.white)
+        focusBar.frame=CGRect(  x:left+2*sp,y:by-sp*2-2*bh,width:ww-7*sp-bw,height:bh)
+        camera.setLabelProperty(ledBarLabel,  x:left+bw*6+sp*8,y:by-sp-1*bh,w:bw,h:bh,UIColor.white)
+        ledBar.frame=CGRect(    x:left+2*sp,y:by-sp-1*bh,width:ww-7*sp-bw,height:bh)
+        if cameraType==0 || cameraType==2 {
+            focusBar.isHidden=true
+            focusBarLabel.isHidden=true
+        }else{
+            focusBar.isHidden=false
+            focusBarLabel.isHidden=false
+        }
+//        print("setButtonsCameraTyep:",cameraType)
+        if cameraType==0{
+            ledBar.isHidden=true
+            ledBarLabel.isHidden=true
+        }else{
+            ledBar.isHidden=false
+            ledBarLabel.isHidden=false
+        }
     }
 }
 
