@@ -140,41 +140,18 @@ class SetteiViewController: UIViewController {
         performSegue(withIdentifier: "fromSettei", sender: self)
     }
     func changeCameraMode(n:Int){
-        cameraON=true
-        ledText.isHidden=true
-        ledSlider.isHidden=true
-        camera.setLedLevel(0)
-        ledValue = camera.getUserDefaultFloat(str: "ledValue", ret: 0)
-        if Locale.preferredLanguages.first!.contains("ja"){
-            if n==0{
-                cameraLabel.text="目の動きを録画しない"
-                cameraON=false
-            }else if n==1{
-                cameraLabel.text="フロントカメラ"
-                cameraType=0
-            }else{
-                cameraLabel.text="バックカメラ"
-                cameraType=1
-                ledText.isHidden=false
-                ledSlider.isHidden=false
-                camera.setLedLevel(ledValue)
-            }
-        }else{
-            if n==0{
-                cameraLabel.text="Don't Record eye movement"
-                cameraON=false
-            }else if n==1{
-                cameraLabel.text="front Camera"
-                cameraType=0
-            }else{
-                cameraLabel.text="back Camera"
-                cameraType=1
-                ledText.isHidden=false
-                ledSlider.isHidden=false
-                camera.setLedLevel(ledValue)
-            }
+        if n==0{
+            cameraON=false
+            cameraButton.alpha=0.5
+            cameraButton.isEnabled=false
+            cameraSwitch.selectedSegmentIndex=0
+        }else if n==1{
+            cameraButton.alpha=1
+            cameraButton.isEnabled=true
+            cameraON=true
+            cameraSwitch.selectedSegmentIndex=1
+            
         }
-        UserDefaults.standard.set(cameraType,forKey: "cameraType")
         UserDefaults.standard.set(cameraON,forKey:"cameraON")
     }
     @IBAction func onCameraSwitch(_ sender: UISegmentedControl) {
@@ -255,12 +232,12 @@ class SetteiViewController: UIViewController {
         ettSwitch.selectedSegmentIndex=ettMode%4
         if cameraON==false{
             cameraSwitch.selectedSegmentIndex=0
-        }else if cameraType==0{
-            cameraSwitch.selectedSegmentIndex=1
+//        }else if cameraType==0{
+//            cameraSwitch.selectedSegmentIndex=1
         }else{
-            cameraSwitch.selectedSegmentIndex=2
+            cameraSwitch.selectedSegmentIndex=1
         }
-        ledSlider.value=camera.getUserDefaultFloat(str: "ledValue", ret: 0)
+//        ledSlider.value=camera.getUserDefaultFloat(str: "ledValue", ret: 0)
 //        if cameraON{//camera
 //            cameraSwitch_old.isOn=true
 //        }else{//don't use camera
@@ -339,14 +316,9 @@ class SetteiViewController: UIViewController {
         ledSlider.isHidden=true
         if cameraON==false{
             changeCameraMode(n: 0)
-        }else if cameraType==0{
-            changeCameraMode(n: 1)
         }else{
-            changeCameraMode(n: 2)
-            ledText.isHidden=false
-            ledSlider.isHidden=false
-            camera.setLedLevel(ledValue)
-        }
+            changeCameraMode(n: 1)
+         }
  
         ettMode = camera.getUserDefaultInt(str:"ettMode",ret:0)
         ettModeText0=camera.getUserDefaultString(str: "ettModeText0", ret: "0")
@@ -532,12 +504,13 @@ class SetteiViewController: UIViewController {
         oknTimeSlider.frame  = CGRect(x:x0,   y: b5y ,width: bw,height:bh)
         oknTimeText.frame  = CGRect(x:x1,   y: b5y ,width: bw*5,height:bh)
         cameraSwitch.frame = CGRect(x:x0,y:b7y,width:bw,height: bh)
-        cameraLabel.frame = CGRect(x:x0+2*sp+cameraSwitch.frame.width,y:b7y,width:bw*5,height:bh)
+        let x3=x0+2*sp+cameraSwitch.frame.width
+        cameraLabel.frame = CGRect(x:x3+sp+bh*1.5,y:b7y,width:bw*5,height:bh)
+        cameraButton.frame = CGRect(x:x3,y:b7y,width:bh*1.5,height: bh)
         speakerSwitch.frame = CGRect(x:x0,   y: b6y ,width: bw*5,height:bh)
         speakerImage.frame = CGRect(x:x0+50,   y: b6y ,width: 30,height:30)
         speakerImage.isHidden=true//ない方がスッキリか？
         speakerText.frame = CGRect(x:x0+2*sp+speakerSwitch.frame.width,   y: b6y ,width: bw*5,height:bh)
-//        cameraButton.frame = CGRect(x:x1-bw/4-2*sp,y:b7y+2,width:bw/4,height: bh)
         ledSlider.frame  = CGRect(x:x0,   y: b8y ,width: bw,height:bh)
         ledText.frame = CGRect(x:x1,y:b8y,width:bw*5,height: bh)
         sp=ww/120//間隙
@@ -546,7 +519,7 @@ class SetteiViewController: UIViewController {
         let by=wh-bh-sp
         camera.setButtonProperty(defaultButton,x:left+bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(exitButton,x:left+bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
-        cameraButton.isHidden=true
+//        cameraButton.isHidden=true
 //        camera.setButtonProperty(cameraButton,x:left+bw*4+sp*6,y:by,w:bw,h:bh,UIColor.orange)
 //           cameraButton.layer.borderColor = UIColor.orange.cgColor
 //           cameraButton.layer.borderWidth = 1.0
