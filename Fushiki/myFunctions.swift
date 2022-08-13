@@ -361,8 +361,38 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
             }
         }
     }
-    
-    func setFocus(focus:Float){//focus 0:最接近　0-1.0
+    var focusChangeable:Bool=true
+    func setFocus(focus:Float) {//focus 0:最接近　0-1.0
+        focusChangeable=false
+        if let device = videoDevice{
+            if device.isFocusModeSupported(.autoFocus) && device.isFocusPointOfInterestSupported {
+                print("focus_supported")
+                do {
+                    try device.lockForConfiguration()
+                    device.focusMode = .locked
+                    device.setFocusModeLocked(lensPosition: focus, completionHandler: { _ in
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
+                            device.unlockForConfiguration()
+                        })
+                    })
+                    device.unlockForConfiguration()
+                    focusChangeable=true
+                }
+                catch {
+                    // just ignore
+                    print("focuserror")
+                }
+            }else{
+                print("focus_not_supported")
+
+//                if cameraType==2{
+//                    setZoom(level: focus*4/10)//vHITに比べてすでに1/4にしてあるので
+//                    return
+//                }
+            }
+        }
+    }
+/*    func setFocus(focus:Float){//focus 0:最接近　0-1.0
         if !UserDefaults.standard.bool(forKey: "cameraON"){
             return
         }
@@ -381,7 +411,7 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
                 device.unlockForConfiguration()
             }
         }
-    }
+    }*/
     
     func eraseVideo(number:Int) {
         dialogStatus=0
