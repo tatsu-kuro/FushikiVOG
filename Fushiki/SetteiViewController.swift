@@ -140,13 +140,28 @@ class SetteiViewController: UIViewController {
         mainView.targetMode=targetMode
         performSegue(withIdentifier: "fromSettei", sender: self)
     }
-    func changeCameraMode(n:Int){
-        if n==0{
+//    func changeCameraMode(n:Int){
+//        if n==0{
+//            cameraON=false
+//            cameraButton.alpha=0.5
+//            cameraButton.isEnabled=false
+//            cameraSwitchold.selectedSegmentIndex=0
+//        }else if n==1{
+//            cameraButton.alpha=1
+//            cameraButton.isEnabled=true
+//            cameraON=true
+//            cameraSwitchold.selectedSegmentIndex=1
+//
+//        }
+//        UserDefaults.standard.set(cameraON,forKey:"cameraON")
+//    }
+    @IBAction func onCameraSwitch(_ sender: UISwitch) {
+        if sender.isOn == false {
             cameraON=false
             cameraButton.alpha=0.5
             cameraButton.isEnabled=false
             cameraSwitchold.selectedSegmentIndex=0
-        }else if n==1{
+        }else{
             cameraButton.alpha=1
             cameraButton.isEnabled=true
             cameraON=true
@@ -155,12 +170,10 @@ class SetteiViewController: UIViewController {
         }
         UserDefaults.standard.set(cameraON,forKey:"cameraON")
     }
-    @IBAction func onCameraSwitch(_ sender: UISwitch) {
-    }
 
     @IBAction func onCameraSwitchold(_ sender: UISegmentedControl) {
-        print("cameraswitch:",sender.selectedSegmentIndex)
-        changeCameraMode(n: sender.selectedSegmentIndex)
+//        print("cameraswitch:",sender.selectedSegmentIndex)
+//        changeCameraMode(n: sender.selectedSegmentIndex)
     }
     @IBAction func onOkpModeSwitch(_ sender: UISegmentedControl) {
           okpMode=sender.selectedSegmentIndex
@@ -320,9 +333,15 @@ class SetteiViewController: UIViewController {
         ledText.isHidden=true
         ledSlider.isHidden=true
         if cameraON==false{
-            changeCameraMode(n: 0)
+            cameraSwitch.isOn=false
+            cameraButton.isEnabled=false
+            cameraButton.alpha=0.5
         }else{
-            changeCameraMode(n: 1)
+            cameraSwitch.isOn=true
+            cameraButton.isEnabled=true
+            cameraButton.alpha=1.0
+
+//            changeCameraMode(n: 1)
          }
  
         ettMode = camera.getUserDefaultInt(str:"ettMode",ret:0)
