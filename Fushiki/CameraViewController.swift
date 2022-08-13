@@ -69,7 +69,7 @@ class CameraViewController: UIViewController {
     override var prefersHomeIndicatorAutoHidden: Bool {
         return true
     }
-    
+  /*
      @IBAction func onCameraChangeButton(_ sender: Any) {
         cameraType=UserDefaults.standard.integer(forKey:"cameraType")
          if cameraType==0{
@@ -133,8 +133,8 @@ class CameraViewController: UIViewController {
      }
      
     
-    
-/*
+    */
+
     @IBAction func onCameraChangeButton(_ sender: Any) {
         cameraType=camera.getUserDefaultInt(str: "cameraType", ret: 0)
         changeCameraMode()
@@ -158,7 +158,7 @@ class CameraViewController: UIViewController {
             UserDefaults.standard.set(camera.fpsCurrent, forKey: "backCameraFps")
         }
         setButtons()
-     }*/
+     }
     var wideAngleCamera:Bool=false//最低これはついている
     var ultrawideCamera:Bool=false
     var telephotoCamera:Bool=false
