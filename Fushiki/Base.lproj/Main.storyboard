@@ -189,7 +189,7 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                                     <segment title="ON"/>
                                 </segments>
                                 <connections>
-                                    <action selector="onCameraSwitch:" destination="gOS-fU-nK5" eventType="valueChanged" id="IKV-bx-QzA"/>
+                                    <action selector="onCameraSwitchold:" destination="gOS-fU-nK5" eventType="valueChanged" id="jz9-4l-wWB"/>
                                 </connections>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dd6-zp-sxW">
@@ -202,6 +202,13 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                                     <segue destination="c63-hm-Ug5" kind="show" id="Zj2-IF-7jJ"/>
                                 </connections>
                             </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sXa-4n-OHT">
+                                <rect key="frame" x="377" y="325" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="onCameraSwitch:" destination="gOS-fU-nK5" eventType="valueChanged" id="cjy-yS-5AB"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="53f-q3-sSQ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -213,7 +220,8 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                     <connections>
                         <outlet property="cameraButton" destination="dd6-zp-sxW" id="pCm-gY-tMP"/>
                         <outlet property="cameraLabel" destination="eaO-tb-IY3" id="OVt-s6-oUr"/>
-                        <outlet property="cameraSwitch" destination="wwi-Vq-M0x" id="9qj-e1-6si"/>
+                        <outlet property="cameraSwitch" destination="sXa-4n-OHT" id="vyw-A2-a4J"/>
+                        <outlet property="cameraSwitchold" destination="wwi-Vq-M0x" id="9qj-e1-6si"/>
                         <outlet property="defaultButton" destination="wIu-wr-ffr" id="akP-bM-J7O"/>
                         <outlet property="ettExplanationText" destination="joF-RS-tH3" id="TgJ-j0-4KF"/>
                         <outlet property="ettSwitch" destination="7li-Aa-cfI" id="LGU-GW-Qef"/>

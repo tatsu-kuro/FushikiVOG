@@ -35,7 +35,8 @@ class SetteiViewController: UIViewController {
     @IBOutlet weak var cameraLabel: UILabel!
 //    @IBOutlet weak var cameraSwitch_old: UISwitch!
 //    @IBOutlet weak var cameraSwitch: UISegmentedControl!
-    @IBOutlet weak var cameraSwitch: UISegmentedControl!
+    @IBOutlet weak var cameraSwitch: UISwitch!
+    @IBOutlet weak var cameraSwitchold: UISegmentedControl!
     @IBOutlet weak var speakerText: UILabel!
     @IBOutlet weak var speakerImage: UIImageView!
     @IBAction func onSpeakerSwitch(_ sender: UISwitch) {
@@ -144,17 +145,20 @@ class SetteiViewController: UIViewController {
             cameraON=false
             cameraButton.alpha=0.5
             cameraButton.isEnabled=false
-            cameraSwitch.selectedSegmentIndex=0
+            cameraSwitchold.selectedSegmentIndex=0
         }else if n==1{
             cameraButton.alpha=1
             cameraButton.isEnabled=true
             cameraON=true
-            cameraSwitch.selectedSegmentIndex=1
+            cameraSwitchold.selectedSegmentIndex=1
             
         }
         UserDefaults.standard.set(cameraON,forKey:"cameraON")
     }
-    @IBAction func onCameraSwitch(_ sender: UISegmentedControl) {
+    @IBAction func onCameraSwitch(_ sender: UISwitch) {
+    }
+
+    @IBAction func onCameraSwitchold(_ sender: UISegmentedControl) {
         print("cameraswitch:",sender.selectedSegmentIndex)
         changeCameraMode(n: sender.selectedSegmentIndex)
     }
@@ -163,7 +167,8 @@ class SetteiViewController: UIViewController {
           dispTexts()
       }
      
-     @IBAction func onOkpTimeSlider(_ sender: UISlider) {
+
+    @IBAction func onOkpTimeSlider(_ sender: UISlider) {
          okpTime=Int(sender.value*50)
          dispTexts()
      }
@@ -231,11 +236,11 @@ class SetteiViewController: UIViewController {
         oknTimeSlider.value=Float(oknTime)/100.0
         ettSwitch.selectedSegmentIndex=ettMode%4
         if cameraON==false{
-            cameraSwitch.selectedSegmentIndex=0
+            cameraSwitchold.selectedSegmentIndex=0
 //        }else if cameraType==0{
 //            cameraSwitch.selectedSegmentIndex=1
         }else{
-            cameraSwitch.selectedSegmentIndex=1
+            cameraSwitchold.selectedSegmentIndex=1
         }
 //        ledSlider.value=camera.getUserDefaultFloat(str: "ledValue", ret: 0)
 //        if cameraON{//camera
@@ -486,9 +491,9 @@ class SetteiViewController: UIViewController {
         let b3y=b2y+bh+sp
         let b4y=b3y+bh+sp*3
         let b5y=b4y+bh+sp
-        let b6y=b5y+bh+sp
-        let b7y=b6y+bh+sp*2.0
-        let b8y=b7y+bh+sp
+        let b6y=b5y+bh+sp*2
+//        let b7y=b6y+bh+sp*2
+//        let b8y=b7y+bh+sp
         let ettTextWidth=view.bounds.width-right-x1-sp*2
         ettSwitch.frame  = CGRect(x:x0,   y: b0y ,width: bw,height:bh)
         camera.setLabelProperty(ettText, x: x1, y: b0y-2, w: ettTextWidth, h: wh/15+4, UIColor.systemGray5)
@@ -503,16 +508,23 @@ class SetteiViewController: UIViewController {
         oknText.frame  = CGRect(x:x1,   y: b4y ,width: bw*5, height: bh)
         oknTimeSlider.frame  = CGRect(x:x0,   y: b5y ,width: bw,height:bh)
         oknTimeText.frame  = CGRect(x:x1,   y: b5y ,width: bw*5,height:bh)
+        speakerSwitch.frame = CGRect(x:x0,   y: b6y ,width: bw,height:bh)
+        let switchHeight=speakerSwitch.frame.height
+        let switchWidth=speakerSwitch.frame.width
+        let x3=x0+2*sp+switchWidth
+        let dy3=(switchHeight-bh)/2
+        let b7y=b6y+switchHeight+sp*2
+
+        speakerText.frame = CGRect(x:x3,   y: b6y+dy3,width: bw*5,height:bh)
         cameraSwitch.frame = CGRect(x:x0,y:b7y,width:bw,height: bh)
-        let x3=x0+2*sp+cameraSwitch.frame.width
-        cameraLabel.frame = CGRect(x:x3+sp+bh*1.5,y:b7y,width:bw*5,height:bh)
-        cameraButton.frame = CGRect(x:x3,y:b7y,width:bh*1.5,height: bh)
-        speakerSwitch.frame = CGRect(x:x0,   y: b6y ,width: bw*5,height:bh)
-        speakerImage.frame = CGRect(x:x0+50,   y: b6y ,width: 30,height:30)
-        speakerImage.isHidden=true//ない方がスッキリか？
-        speakerText.frame = CGRect(x:x0+2*sp+speakerSwitch.frame.width,   y: b6y ,width: bw*5,height:bh)
-        ledSlider.frame  = CGRect(x:x0,   y: b8y ,width: bw,height:bh)
-        ledText.frame = CGRect(x:x1,y:b8y,width:bw*5,height: bh)
+        cameraButton.frame = CGRect(x:x3,y:b7y+dy3,width:bh*1.5,height: bh)
+        cameraLabel.frame = CGRect(x:x3+bh*1.5+sp,y:b7y+dy3,width:bw*5,height:bh)
+        speakerImage.isHidden=true
+        cameraSwitchold.isHidden=true
+//        speakerImage.frame = CGRect(x:x0+50,   y: b6y ,width: 30,height:30)
+//        speakerImage.isHidden=true//ない方がスッキリか？
+//        ledSlider.frame  = CGRect(x:x0,   y: b8y ,width: bw,height:bh)
+//        ledText.frame = CGRect(x:x1,y:b8y,width:bw*5,height: bh)
         sp=ww/120//間隙
         bw=(ww-sp*10)/7//ボタン幅
         bh=bw*170/440

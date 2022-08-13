@@ -689,7 +689,7 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
             return ret
         }
     }
-    func setLedLevel(_ level: Float){
+    func setLedLevel_NewDevice(_ level: Float){//videoDeviceがない時はこちらを使う
 //          let level = Float(sl.value)
           if let avDevice = AVCaptureDevice.default(for: AVMediaType.video){
               
@@ -725,7 +725,7 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
           }
       }
     
-/*    func setLedLevel(level:Float){
+    func setLedLevel(_ level:Float){
         
         if !UserDefaults.standard.bool(forKey: "cameraON"){
             return
@@ -758,6 +758,6 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
                 }
             }
         }
-    }*/
+    }
 }
 
