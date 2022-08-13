@@ -172,39 +172,23 @@ class CameraViewController: UIViewController {
         let bh=bw*170/440
         let by=wh-bh-sp
         
-//        camera.setButtonProperty(exitButton,x:left+bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
-//        camera.setLabelProperty( cameraFpsLabel,x:left+bw*2+sp*3,y:by,w:bw*2,h:bh,UIColor.white)
-//        camera.setLabelProperty( cameraTypeLabel,x:left+sp*2,y:by,w:bw*2,h:bh,UIColor.white)
+        camera.setLabelProperty(focusBarLabel,x:left+bw*6+sp*8,y:by-sp*2/3-2*bh,w:bw,h:bh,UIColor.white)
+        focusBar.frame=CGRect(x:left+2*sp,y:by-sp*2/3-2*bh,width:ww-7*sp-bw,height:bh)
 
-        //        camera.setButtonProperty(cameraChangeButton, x: left+bw*5+sp*7, y: by, w: bw, h: bh,UIColor.orange)
-//
-//        camera.setLabelProperty(focusBarLabel,x:left+bw*6+sp*8,y:by-sp*2/3-2*bh,w:bw,h:bh,UIColor.white)
-//        focusBar.frame=CGRect(x:left+2*sp,y:by-sp*2/3-2*bh,width:ww-7*sp-bw,height:bh)
+        camera.setLabelProperty(ledBarLabel,x:left+bw*6+sp*8,y:by-sp*3/3-3*bh,w:bw,h:bh,UIColor.white)
+        ledBar.frame=CGRect(x:left+2*sp,y:by-sp*3/3-3*bh,width:ww-7*sp-bw,height:bh)
 
-//        camera.setLabelProperty(ledBarLabel,x:left+bw*6+sp*8,y:by-sp*3/3-3*bh,w:bw,h:bh,UIColor.white)
-//        ledBar.frame=CGRect(x:left+2*sp,y:by-sp*3/3-3*bh,width:ww-7*sp-bw,height:bh)
-
-//        camera.setLabelProperty(zoomBarLabel,x:left+bw*6+sp*8,y:by-sp/3-bh,w:bw,h:bh,UIColor.white)
-//        zoomBar.frame=CGRect(x:left + 2*sp,y:by-sp/3-bh,width:ww-7*sp-bw,height:bh)
+        camera.setLabelProperty(zoomBarLabel,x:left+bw*6+sp*8,y:by-sp/3-bh,w:bw,h:bh,UIColor.white)
+        zoomBar.frame=CGRect(x:left + 2*sp,y:by-sp/3-bh,width:ww-7*sp-bw,height:bh)
 
         camera.setButtonProperty(exitButton,x:left+bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setLabelProperty( cameraFpsLabel,x:left+bw*2+sp*3,y:by,w:bw*2,h:bh,UIColor.white)
         camera.setLabelProperty( cameraTypeLabel,x:left+sp*2,y:by,w:bw*2,h:bh,UIColor.orange)
         camera.setButtonProperty(cameraChangeButton, x: left+bw*5+sp*7, y: by, w: bw, h: bh,UIColor.orange)
-        //zoomBarは使用できなくした。
-//           zoomBar.isHidden=true
-//           zoomBarLabel.isHidden=true
         focusBar.isHidden=true
         focusBarLabel.isHidden=true
         ledBar.isHidden=true
         ledBarLabel.isHidden=true
-
-        camera.setLabelProperty(focusBarLabel,x:left+bw*6+sp*8,y:by-sp*2-2*bh,w:bw,h:bh,UIColor.white)
-        focusBar.frame=CGRect(  x:left+2*sp,y:by-sp*2-2*bh,width:ww-7*sp-bw,height:bh)
-  
-        camera.setLabelProperty(ledBarLabel,  x:left+bw*6+sp*8,y:by-sp-1*bh,w:bw,h:bh,UIColor.white)
-        ledBar.frame=CGRect(    x:left+2*sp,y:by-sp-1*bh,width:ww-7*sp-bw,height:bh)
-        
         if cameraType==0 || cameraType==2 {
             focusBar.isHidden=true
             focusBarLabel.isHidden=true
@@ -212,13 +196,17 @@ class CameraViewController: UIViewController {
             focusBar.isHidden=false
             focusBarLabel.isHidden=false
         }
-//        print("setButtonsCameraTyep:",cameraType)
+        print("setButtonsCameraType:",cameraType)
         if cameraType==0{
             ledBar.isHidden=true
             ledBarLabel.isHidden=true
-        }else{
+        }else if cameraType==1{
             ledBar.isHidden=false
             ledBarLabel.isHidden=false
+        }else if cameraType==2{
+            
+        }else{
+            
         }
     }
     /*
