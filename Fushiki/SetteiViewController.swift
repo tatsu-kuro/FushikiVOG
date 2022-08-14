@@ -36,9 +36,9 @@ class SetteiViewController: UIViewController {
 //    @IBOutlet weak var cameraSwitch_old: UISwitch!
 //    @IBOutlet weak var cameraSwitch: UISegmentedControl!
     @IBOutlet weak var cameraSwitch: UISwitch!
-    @IBOutlet weak var cameraSwitchold: UISegmentedControl!
+//    @IBOutlet weak var cameraSwitchold: UISegmentedControl!
     @IBOutlet weak var speakerText: UILabel!
-    @IBOutlet weak var speakerImage: UIImageView!
+//    @IBOutlet weak var speakerImage: UIImageView!
     @IBAction func onSpeakerSwitch(_ sender: UISwitch) {
         if sender.isOn==true{
             speakerOnOff=1
@@ -160,12 +160,12 @@ class SetteiViewController: UIViewController {
             cameraON=false
             cameraButton.alpha=0.5
             cameraButton.isEnabled=false
-            cameraSwitchold.selectedSegmentIndex=0
+//            cameraSwitchold.selectedSegmentIndex=0
         }else{
             cameraButton.alpha=1
             cameraButton.isEnabled=true
             cameraON=true
-            cameraSwitchold.selectedSegmentIndex=1
+//            cameraSwitchold.selectedSegmentIndex=1
             
         }
         UserDefaults.standard.set(cameraON,forKey:"cameraON")
@@ -248,13 +248,13 @@ class SetteiViewController: UIViewController {
         oknSwitch.selectedSegmentIndex=oknMode%4
         oknTimeSlider.value=Float(oknTime)/100.0
         ettSwitch.selectedSegmentIndex=ettMode%4
-        if cameraON==false{
-            cameraSwitchold.selectedSegmentIndex=0
+//        if cameraON==false{
+//            cameraSwitchold.selectedSegmentIndex=0
 //        }else if cameraType==0{
 //            cameraSwitch.selectedSegmentIndex=1
-        }else{
-            cameraSwitchold.selectedSegmentIndex=1
-        }
+//        }else{
+//            cameraSwitchold.selectedSegmentIndex=1
+//        }
 //        ledSlider.value=camera.getUserDefaultFloat(str: "ledValue", ret: 0)
 //        if cameraON{//camera
 //            cameraSwitch_old.isOn=true
@@ -538,8 +538,8 @@ class SetteiViewController: UIViewController {
         cameraSwitch.frame = CGRect(x:x0,y:b7y,width:bw,height: bh)
         cameraButton.frame = CGRect(x:x3,y:b7y+dy3,width:bh*1.5,height: bh)
         cameraLabel.frame = CGRect(x:x3+bh*1.5+sp,y:b7y+dy3,width:bw*5,height:bh)
-        speakerImage.isHidden=true
-        cameraSwitchold.isHidden=true
+//        speakerImage.isHidden=true
+//        cameraSwitchold.isHidden=true
 //        speakerImage.frame = CGRect(x:x0+50,   y: b6y ,width: 30,height:30)
 //        speakerImage.isHidden=true//ない方がスッキリか？
 //        ledSlider.frame  = CGRect(x:x0,   y: b8y ,width: bw,height:bh)
