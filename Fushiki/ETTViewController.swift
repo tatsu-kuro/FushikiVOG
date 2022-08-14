@@ -128,15 +128,17 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         let cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
         camera.initSession(camera: Int(cameraType), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
       
-        if cameraType==0{
-        camera.setZoom(level:0.03)
-        }else{
-            camera.setZoom(level: 0)
-        }
+//        if cameraType==0{
+//        camera.setZoom(level:0.03)
+//        }else{
+//            camera.setZoom(level: 0)
+//        }
 //focudは最短
-        camera.setFocus(focus: 0)//focusValue)
-        camera.setLedLevel(camera.getUserDefaultFloat(str: "ledValue", ret:0))
-
+        camera.setZoom(level:camera.getUserDefaultFloat(str: "zoomValue", ret: 0))
+        camera.setFocus(focus: camera.getUserDefaultFloat(str: "focusValue", ret: 0))
+        if cameraType != 0{
+            camera.setLedLevel(camera.getUserDefaultFloat(str: "ledValue", ret:0))
+        }
         ettMode=UserDefaults.standard.integer(forKey: "ettMode")
         ettWidth=UserDefaults.standard.integer(forKey: "ettWidth")
         ettType.removeAll()

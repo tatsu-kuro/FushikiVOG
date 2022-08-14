@@ -69,10 +69,11 @@ class CameraViewController: UIViewController {
     override var prefersHomeIndicatorAutoHidden: Bool {
         return true
     }
-  /*
+/*
      @IBAction func onCameraChangeButton(_ sender: Any) {
         cameraType=UserDefaults.standard.integer(forKey:"cameraType")
-         if cameraType==0{
+         
+       if cameraType==0{
              cameraType=1
          }else if cameraType==1{
              if telephotoCamera == true{
@@ -97,9 +98,9 @@ class CameraViewController: UIViewController {
          camera.stopRunning()
          camera.initSession(camera: cameraType, bounds:view.bounds, cameraView: cameraView)
 
-         onLedValueChange()
-         onZoomValueChange()
-         onFocusValueChange()
+//         onLedValueChange()
+//         onZoomValueChange()
+//         onFocusValueChange()
          if cameraType==0{
 //             zoomBar.value=UserDefaults.standard.float(forKey: "zoomValue")
 //             LEDBar.alpha=0.3// isHidden=true
@@ -131,10 +132,9 @@ class CameraViewController: UIViewController {
          setButtons()
 
      }
-     
+ */
     
-    */
-
+    
     @IBAction func onCameraChangeButton(_ sender: Any) {
         cameraType=camera.getUserDefaultInt(str: "cameraType", ret: 0)
         changeCameraMode()
@@ -157,6 +157,13 @@ class CameraViewController: UIViewController {
         if cameraType > 0{
             UserDefaults.standard.set(camera.fpsCurrent, forKey: "backCameraFps")
         }
+        camera.setLedLevel(ledBar.value)
+        camera.setLedLevel(ledBar.value)
+        camera.setZoom(level:zoomBar.value)
+
+//        onLedValueChange()
+//        onZoomValueChange()
+//        onFocusValueChange()
         setButtons()
      }
     var wideAngleCamera:Bool=false//最低これはついている
@@ -201,7 +208,7 @@ class CameraViewController: UIViewController {
         }
         print("cameraType:",cameraType)
     }
- 
+  
     @objc func onLedValueChange(){
         camera.setLedLevel(ledBar.value)
         UserDefaults.standard.set(ledBar.value, forKey: "ledValue")
@@ -238,12 +245,11 @@ class CameraViewController: UIViewController {
         let bh=bw*170/440
         let by=wh-bh-sp
         
-        camera.setLabelProperty(ledBarLabel,x:left+bw*6+sp*8,y:by-sp*2/3-2*bh,w:bw,h:bh,UIColor.white)
-        ledBar.frame=CGRect(x:left+2*sp,y:by-sp*2/3-2*bh,width:ww-7*sp-bw,height:bh)
-
+  
         camera.setLabelProperty(focusBarLabel,x:left+bw*6+sp*8,y:by-sp*3/3-3*bh,w:bw,h:bh,UIColor.white)
         focusBar.frame=CGRect(x:left+2*sp,y:by-sp*3/3-3*bh,width:ww-7*sp-bw,height:bh)
-
+        camera.setLabelProperty(ledBarLabel,x:left+bw*6+sp*8,y:by-sp*2/3-2*bh,w:bw,h:bh,UIColor.white)
+        ledBar.frame=CGRect(x:left+2*sp,y:by-sp*2/3-2*bh,width:ww-7*sp-bw,height:bh)
         camera.setLabelProperty(zoomBarLabel,x:left+bw*6+sp*8,y:by-sp/3-bh,w:bw,h:bh,UIColor.white)
         zoomBar.frame=CGRect(x:left + 2*sp,y:by-sp/3-bh,width:ww-7*sp-bw,height:bh)
 

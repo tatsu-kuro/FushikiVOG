@@ -155,14 +155,23 @@ class OKPViewController: UIViewController{
 //            recClarification.isHidden=true
 //        }
 //        let zoomValue=camera.getUserDefaultFloat(str: "zoomValue", ret:0)
-        if cameraType==0{
-        camera.setZoom(level:0.03)// zoomValue)0.0-0.1
-        }else{
-            camera.setZoom(level: 0)
+        
+        camera.setZoom(level:camera.getUserDefaultFloat(str: "zoomValue", ret: 0))
+        camera.setFocus(focus: camera.getUserDefaultFloat(str: "focusValue", ret: 0))
+        if cameraType != 0{
+            camera.setLedLevel(camera.getUserDefaultFloat(str: "ledValue", ret:0))
         }
-//        let focusValue=camera.getUserDefaultFloat(str: "focusValue", ret: 0)
-        camera.setFocus(focus:0)// focusValue)
-        camera.setLedLevel(camera.getUserDefaultFloat(str: "ledValue", ret:0))
+        
+        
+        
+//        if cameraType==0{
+//        camera.setZoom(level:0.03)// zoomValue)0.0-0.1
+//        }else{
+//            camera.setZoom(level: 0)
+//        }
+////        let focusValue=camera.getUserDefaultFloat(str: "focusValue", ret: 0)
+//        camera.setFocus(focus:0)// focusValue)
+//        camera.setLedLevel(camera.getUserDefaultFloat(str: "ledValue", ret:0))
 
         ww=view.bounds.width
         wh=view.bounds.height

@@ -362,7 +362,7 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
         }
     }
     var focusChangeable:Bool=true
-/*    func setFocus(focus:Float) {//focus 0:最接近　0-1.0
+    func setFocus(focus:Float) {//focus 0:最接近　0-1.0
         focusChangeable=false
         if let device = videoDevice{
             if device.isFocusModeSupported(.autoFocus) && device.isFocusPointOfInterestSupported {
@@ -391,8 +391,8 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
 //                }
             }
         }
-    }*/
-    func setFocus(focus:Float){//focus 0:最接近　0-1.0
+    }
+    func setFocus1(focus:Float){//focus 0:最接近　0-1.0
         if !UserDefaults.standard.bool(forKey: "cameraON"){
             return
         }
