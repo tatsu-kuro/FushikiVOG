@@ -5,11 +5,17 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "73H-9L-FUj"; */
 "73H-9L-FUj.text" = "Label";
 
-/* Class = "UIButton"; normalTitle = "default4"; ObjectID = "7PF-TW-04E"; */
+/* Class = "UIButton"; normalTitle = "Default"; ObjectID = "7PF-TW-04E"; */
 "7PF-TW-04E.normalTitle" = "Default";
 
+/* Class = "UIButton"; configuration.title = "ETT"; ObjectID = "7PW-wJ-pYb"; */
+"7PW-wJ-pYb.configuration.title" = "ETT";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "7PW-wJ-pYb"; */
+"7PW-wJ-pYb.normalTitle" = "Button";
+
 /* Class = "UILabel"; text = "(%)  position wave height"; ObjectID = "7SE-Hs-5uN"; */
-"7SE-Hs-5uN.text" = "(%)  位置波形の高さ";
+"7SE-Hs-5uN.text" = "(%)  position wave height";
 
 /* Class = "UISegmentedControl"; 7li-Aa-cfI.segmentTitles[0] = "0"; ObjectID = "7li-Aa-cfI"; */
 "7li-Aa-cfI.segmentTitles[0]" = "0";
@@ -32,29 +38,23 @@
 /* Class = "UIButton"; normalTitle = "EXIT"; ObjectID = "9oI-63-ISV"; */
 "9oI-63-ISV.normalTitle" = "EXIT";
 
-/* Class = "UIButton"; normalTitle = "Parameter"; ObjectID = "CTI-eK-yKu"; */
-/*"CTI-eK-yKu.normalTitle" = "パラメータ";*/
-
 /* Class = "UILabel"; text = "Label"; ObjectID = "Czw-Go-oXf"; */
 "Czw-Go-oXf.text" = "Label";
-
-/* Class = "UIButton"; normalTitle = "default3"; ObjectID = "EVR-bO-bWw"; */
-"EVR-bO-bWw.normalTitle" = "設定3";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "HMX-MG-GP5"; */
 "HMX-MG-GP5.text" = "Label";
 
 /* Class = "UILabel"; text = "zoom"; ObjectID = "IbT-Qc-U1W"; */
-"IbT-Qc-U1W.text" = "ズーム";
+"IbT-Qc-U1W.text" = "zoom";
 
 /* Class = "UIButton"; normalTitle = "Exit"; ObjectID = "JHV-lT-7mi"; */
-"JHV-lT-7mi.normalTitle" = "EXIT";
+"JHV-lT-7mi.normalTitle" = "Exit";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "JNE-pm-V4S"; */
 "JNE-pm-V4S.text" = "Label";
 
-/* Class = "UILabel"; text = "show rects"; ObjectID = "JYq-gJ-daQ"; */
-"JYq-gJ-daQ.text" = "検出画像を表示";
+/* Class = "UILabel"; text = "show imges of matching area"; ObjectID = "JYq-gJ-daQ"; */
+"JYq-gJ-daQ.text" = "show imges of matching area";
 
 /* Class = "UIButton"; normalTitle = "CaloricETT"; ObjectID = "Jef-4N-Mcg"; */
 "Jef-4N-Mcg.normalTitle" = "CaloricETT";
@@ -71,9 +71,11 @@
 /* Class = "UIButton"; normalTitle = "EXIT"; ObjectID = "Nlq-Qa-G8v"; */
 "Nlq-Qa-G8v.normalTitle" = "EXIT";
 
+/* Class = "UILabel"; text = "Range for the detecting the bright image"; ObjectID = "Opw-Lc-peG"; */
+"Opw-Lc-peG.text" = "Range for the detecting the bright image";
 
 /* Class = "UIButton"; normalTitle = "Mail"; ObjectID = "RGj-7J-RhQ"; */
-/*"RGj-7J-RhQ.normalTitle" = "メール";*/
+"RGj-7J-RhQ.normalTitle" = "Mail";
 
 /* Class = "UIButton"; normalTitle = "ETT"; ObjectID = "S68-fh-yHQ"; */
 "S68-fh-yHQ.normalTitle" = "ETT";
@@ -81,28 +83,23 @@
 /* Class = "UIButton"; normalTitle = "CaloricOKN"; ObjectID = "SgL-BM-Dbh"; */
 "SgL-BM-Dbh.normalTitle" = "CaloricOKN";
 
-/* Class = "UIButton"; normalTitle = "Save"; ObjectID = "TY4-cW-kPP"; */
-"TY4-cW-kPP.normalTitle" = "波形保存";
+/* Class = "UIButton"; normalTitle = "SaveWave"; ObjectID = "TY4-cW-kPP"; */
+"TY4-cW-kPP.normalTitle" = "SaveWave";
 
-/* Class = "UILabel"; text = "(point) narrow area width for matching"; ObjectID = "UAG-8Q-itb"; */
-"UAG-8Q-itb.text" = "角膜上の光源画像の幅";
-/* Class = "UILabel"; text = "(point) wide area width for matching"; ObjectID = "Opw-Lc-peG"; */
-"Opw-Lc-peG.text" = "光源画像を探す範囲の幅";
+/* Class = "UILabel"; text = "Width of the bright image on the cornea"; ObjectID = "UAG-8Q-itb"; */
+"UAG-8Q-itb.text" = "Width of the bright image on the cornea";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Umf-QT-HY0"; */
 "Umf-QT-HY0.normalTitle" = "Button";
 
-/* Class = "UILabel"; text = "led"; ObjectID = "X7W-At-DcH"; */
+/* Class = "UILabel"; text = "LED"; ObjectID = "X7W-At-DcH"; */
 "X7W-At-DcH.text" = "LED";
 
 /* Class = "UITextField"; text = "123"; ObjectID = "Yjf-ek-oMJ"; */
 "Yjf-ek-oMJ.text" = "123";
 
-/* Class = "UILabel"; text = "Screen Brightness"; ObjectID = "YmA-od-BNX"; */
-"YmA-od-BNX.text" = "LEDの明るさ";
-
-/* Class = "UIButton"; normalTitle = "default2"; ObjectID = "YqS-zP-FRM"; */
-"YqS-zP-FRM.normalTitle" = "設定2";
+/* Class = "UILabel"; text = "LED Brightness"; ObjectID = "YmA-od-BNX"; */
+"YmA-od-BNX.text" = "LED Brightness";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "anc-4m-txa"; */
 "anc-4m-txa.normalTitle" = "Button";
@@ -111,22 +108,22 @@
 "bvF-vu-c8A.text" = "Label";
 
 /* Class = "UIButton"; normalTitle = "Play"; ObjectID = "cRW-v2-GZO"; */
-/*"cRW-v2-GZO.normalTitle" = "再生";*/
+"cRW-v2-GZO.normalTitle" = "Play";
 
 /* Class = "UIButton"; normalTitle = "OKP"; ObjectID = "cTd-rF-Jk7"; */
 "cTd-rF-Jk7.normalTitle" = "OKP";
 
 /* Class = "UILabel"; text = "Sound at the start of recording"; ObjectID = "d9U-Qr-Rh6"; */
-"d9U-Qr-Rh6.text" = "録画開始時に音を鳴らす";
+"d9U-Qr-Rh6.text" = "Sound at the start of recording";
 
 /* Class = "UIButton"; normalTitle = "HELP"; ObjectID = "deG-Tq-o9U"; */
-"deG-Tq-o9U.normalTitle" = "使い方";
+"deG-Tq-o9U.normalTitle" = "HELP";
 
-/* Class = "UIButton"; normalTitle = "mail"; ObjectID = "e37-qg-MW6"; */
-/*"e37-qg-MW6.normalTitle" = "メール";*/
+/* Class = "UIButton"; normalTitle = "Mail"; ObjectID = "e37-qg-MW6"; */
+"e37-qg-MW6.normalTitle" = "Mail";
 
-/* Class = "UILabel"; text = "Recording"; ObjectID = "eaO-tb-IY3"; */
-"eaO-tb-IY3.text" = "目の動きを録画しない";
+/* Class = "UILabel"; text = "Camera"; ObjectID = "eaO-tb-IY3"; */
+"eaO-tb-IY3.text" = "Camera";
 
 /* Class = "UIButton"; normalTitle = "pad down"; ObjectID = "f2P-e7-0Ay"; */
 "f2P-e7-0Ay.normalTitle" = "pad down";
@@ -135,16 +132,10 @@
 "fCB-dg-Pfm.text" = "Label";
 
 /* Class = "UILabel"; text = "(%)  velocity wave height"; ObjectID = "fW5-cC-8PD"; */
-"fW5-cC-8PD.text" = "(%)  速度波形の高さ";
+"fW5-cC-8PD.text" = "(%)  velocity wave height";
 
-/* Class = "UIButton"; normalTitle = "Parameter"; ObjectID = "fs4-ea-mju"; */
-/*"fs4-ea-mju.normalTitle" = "パラメータ";*/
-
-/* Class = "UIButton"; normalTitle = "Wave"; ObjectID = "gJH-gO-4hU"; */
-"gJH-gO-4hU.normalTitle" = "波形表示";
-
-/* Class = "UIButton"; normalTitle = "default1"; ObjectID = "gSP-oB-McO"; */
-"gSP-oB-McO.normalTitle" = "設定1";
+/* Class = "UIButton"; normalTitle = "ShowWave"; ObjectID = "gJH-gO-4hU"; */
+"gJH-gO-4hU.normalTitle" = "ShowWave";
 
 /* Class = "UISegmentedControl"; grl-Cp-esh.segmentTitles[0] = "0"; ObjectID = "grl-Cp-esh"; */
 "grl-Cp-esh.segmentTitles[0]" = "0";
@@ -159,31 +150,28 @@
 "grl-Cp-esh.segmentTitles[3]" = "3";
 
 /* Class = "UILabel"; text = "use the mark when head is moving"; ObjectID = "h6x-uh-nhk"; */
-"h6x-uh-nhk.text" = "マークを利用（頭部固定が出来ない時）";
+"h6x-uh-nhk.text" = "use the mark when head is moving";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "ixO-Uv-LwA"; */
 "ixO-Uv-LwA.text" = "Label";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "joF-RS-tH3"; */
-"joF-RS-tH3.text" = "円形視標の動きの設定方法 W,a:b:c,a1,b1,c1,...\nW[振幅(0-5)],a[動き方(0-6)],b[速さ(0-5)],c:[時間(秒)]\na) 0:静止 1:横 2:縦 3:横サッケード 4:縦サッケード 5:横ランダム 6:ランダム";
+/* Class = "UILabel"; text = "how to set the movement of the target / w,a:b:c,a1:b1:c1,....\nw[moving width(0-5)],a[moving type(0-6)]:b[speed(0-5)]:c[length(sec)]\na) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random"; ObjectID = "joF-RS-tH3"; */
+"joF-RS-tH3.text" = "how to set the movement of the target / w,a:b:c,a1:b1:c1,....\nw[moving width(0-5)],a[moving type(0-6)]:b[speed(0-5)]:c[length(sec)]\na) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random";
 
 /* Class = "UILabel"; text = "120fps"; ObjectID = "l7C-ol-six"; */
 "l7C-ol-six.text" = "120fps";
 
-/* Class = "UIButton"; normalTitle = "next"; ObjectID = "n7m-sE-d1T"; */
-"n7m-sE-d1T.normalTitle" = "next";
-
 /* Class = "UIButton"; normalTitle = "EXIT"; ObjectID = "qIw-KK-ztU"; */
 "qIw-KK-ztU.normalTitle" = "EXIT";
 
-/* Class = "UIButton"; normalTitle = "Calc"; ObjectID = "ryP-oe-phP"; */
-"ryP-oe-phP.normalTitle" = "波形化";
+/* Class = "UIButton"; normalTitle = "MakeWave"; ObjectID = "ryP-oe-phP"; */
+"ryP-oe-phP.normalTitle" = "MakeGraph";
 
 /* Class = "UITextField"; text = "123"; ObjectID = "tOQ-zk-OCJ"; */
 "tOQ-zk-OCJ.text" = "123";
 
 /* Class = "UILabel"; text = "focus"; ObjectID = "txO-YV-qtb"; */
-"txO-YV-qtb.text" = "焦点";
+"txO-YV-qtb.text" = "focus";
 
 /* Class = "UIButton"; normalTitle = "OKN"; ObjectID = "uQ1-87-BgY"; */
 "uQ1-87-BgY.normalTitle" = "OKN";
@@ -194,7 +182,7 @@
 /* Class = "UIButton"; normalTitle = "EXIT"; ObjectID = "vji-3f-Tqg"; */
 "vji-3f-Tqg.normalTitle" = "EXIT";
 
-/* Class = "UIButton"; normalTitle = "default"; ObjectID = "wIu-wr-ffr"; */
+/* Class = "UIButton"; normalTitle = "Default"; ObjectID = "wIu-wr-ffr"; */
 "wIu-wr-ffr.normalTitle" = "Default";
 
 /* Class = "UISegmentedControl"; wrz-kI-t9y.segmentTitles[0] = "0"; ObjectID = "wrz-kI-t9y"; */
@@ -214,4 +202,3 @@
 
 /* Class = "UIButton"; normalTitle = "EXIT"; ObjectID = "ywL-bW-mgs"; */
 "ywL-bW-mgs.normalTitle" = "EXIT";
-"eaO-tb-IY3.text" = "カメラ"
