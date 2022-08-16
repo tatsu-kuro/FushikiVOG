@@ -253,6 +253,18 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     var lastSec:Int = -1
     var lastRandPoint:CGPoint = CGPoint(x:-200,y:-200)
     func getRandPointX()->CGPoint{
+        let rand = Int.random(in: 0..<3) - 1
+//        if(lastrand==rand){
+//            rand += 1
+//            if(rand > 2){
+//                rand = -2
+//            }
+//        }
+//        lastrand=rand
+        let xd=CGFloat(rand)*ettW
+        return CGPoint(x:centerX+xd, y: centerY)
+    }
+    func getRandPointX_5()->CGPoint{
         var rand = Int.random(in: 0..<5) - 2
         if(lastrand==rand){
             rand += 1
@@ -265,6 +277,36 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         return CGPoint(x:centerX+xd, y: centerY)
     }
     func getRandPointXY()->CGPoint {
+        let repeat2=Int.random(in: 0..<3)
+        var rand = Int.random(in: 0..<9)
+//        if (rand==9){
+//            rand=4
+//        }
+//        if (lastrand==rand){
+//            rand += 1
+//            if(rand==9){
+//                rand=0
+//            }
+//        }
+        if repeat2==1{
+            rand=lastrand
+        }
+        lastrand=rand
+        var xn:Int=0
+        var yn:Int=0
+        if(rand%3==0){xn = -1}
+        else if(rand%3==1){xn=0}
+        else {xn=1}
+        if(rand/3==0){yn = -1}
+        else if(rand/3==1){yn = 0}
+        else {yn=1}
+        let x0=centerX
+        let xd=ettH
+        let y0=centerY
+        let yd=ettH
+        return CGPoint(x:x0 + CGFloat(xn)*xd, y: y0 + CGFloat(yn)*yd)
+    }
+    func getRandPointXY25()->CGPoint {
         var rand = Int.random(in: 0..<10)
         if (rand==9){
             rand=4
