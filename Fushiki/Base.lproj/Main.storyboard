@@ -617,18 +617,18 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                                 <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="SaveWave"/>
+                                <state key="normal" title="SaveGraph"/>
                                 <connections>
                                     <action selector="onSaveButton:" destination="qHa-wQ-wFQ" eventType="touchUpInside" id="gAM-dm-vsh"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gJH-gO-4hU">
-                                <rect key="frame" x="404" y="314" width="71" height="29"/>
+                                <rect key="frame" x="402" y="314" width="75" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="ShowWave"/>
+                                <state key="normal" title="ShowGraph"/>
                                 <connections>
                                     <action selector="onWaveButton:" destination="qHa-wQ-wFQ" eventType="touchUpInside" id="TRY-4V-ckj"/>
                                 </connections>
@@ -644,12 +644,12 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ryP-oe-phP">
-                                <rect key="frame" x="460" y="315" width="69" height="29"/>
+                                <rect key="frame" x="457" y="315" width="75" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="MakeWave"/>
+                                <state key="normal" title="MakeGraph"/>
                                 <connections>
                                     <action selector="onCalcButton:" destination="qHa-wQ-wFQ" eventType="touchUpInside" id="HCd-zd-3Pf"/>
                                 </connections>
