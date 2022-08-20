@@ -192,6 +192,13 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.050000000000000003" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Carolic" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qWh-gc-Kc1">
+                                <rect key="frame" x="784" y="239" width="61" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="53f-q3-sSQ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -204,6 +211,7 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                         <outlet property="cameraButton" destination="dd6-zp-sxW" id="pCm-gY-tMP"/>
                         <outlet property="cameraLabel" destination="eaO-tb-IY3" id="OVt-s6-oUr"/>
                         <outlet property="cameraSwitch" destination="sXa-4n-OHT" id="vyw-A2-a4J"/>
+                        <outlet property="carolicLabel" destination="qWh-gc-Kc1" id="pNQ-3S-svZ"/>
                         <outlet property="defaultButton" destination="wIu-wr-ffr" id="akP-bM-J7O"/>
                         <outlet property="ettExplanationText" destination="joF-RS-tH3" id="TgJ-j0-4KF"/>
                         <outlet property="ettSwitch" destination="7li-Aa-cfI" id="LGU-GW-Qef"/>
@@ -580,7 +588,7 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                                 <rect key="frame" x="228" y="22" width="60" height="55"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="face" translatesAutoresizingMaskIntoConstraints="NO" id="n6l-PN-3ln">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.14999999999999999" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="face" translatesAutoresizingMaskIntoConstraints="NO" id="n6l-PN-3ln">
                                 <rect key="frame" x="228" y="85" width="60" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -600,58 +608,45 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                                 <rect key="frame" x="108" y="85" width="51" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RGj-7J-RhQ">
-                                <rect key="frame" x="318" y="313" width="30" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RGj-7J-RhQ">
+                                <rect key="frame" x="324" y="317" width="21" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Mail"/>
+                                <state key="normal" image="paperplane" catalog="system"/>
                                 <connections>
                                     <action selector="onMailButton:" destination="qHa-wQ-wFQ" eventType="touchUpInside" id="ODb-g2-XAX"/>
                                     <segue destination="3OQ-RC-qrq" kind="show" id="ZNR-9z-hKX"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TY4-cW-kPP">
-                                <rect key="frame" x="366" y="314" width="32" height="29"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TY4-cW-kPP">
+                                <rect key="frame" x="371" y="318" width="23" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="SaveGraph"/>
+                                <state key="normal" image="folder" catalog="system"/>
                                 <connections>
                                     <action selector="onSaveButton:" destination="qHa-wQ-wFQ" eventType="touchUpInside" id="gAM-dm-vsh"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gJH-gO-4hU">
-                                <rect key="frame" x="402" y="314" width="75" height="29"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gJH-gO-4hU">
+                                <rect key="frame" x="426" y="278" width="24" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="ShowGraph"/>
+                                <state key="normal" image="waveform.path.ecg.rectangle" catalog="system"/>
                                 <connections>
                                     <action selector="onWaveButton:" destination="qHa-wQ-wFQ" eventType="touchUpInside" id="TRY-4V-ckj"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cRW-v2-GZO">
-                                <rect key="frame" x="527" y="314" width="28" height="29"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cRW-v2-GZO">
+                                <rect key="frame" x="533" y="318" width="16" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Play"/>
+                                <state key="normal" image="play" catalog="system"/>
                                 <connections>
                                     <action selector="onPlayButton:" destination="qHa-wQ-wFQ" eventType="touchUpInside" id="Ywt-aI-tSn"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ryP-oe-phP">
-                                <rect key="frame" x="457" y="315" width="75" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="MakeGraph"/>
-                                <connections>
-                                    <action selector="onCalcButton:" destination="qHa-wQ-wFQ" eventType="touchUpInside" id="HCd-zd-3Pf"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JHV-lT-7mi">
@@ -674,6 +669,16 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                                 <state key="normal" image="gearshape" catalog="system"/>
                                 <connections>
                                     <segue destination="lpw-bn-NhA" kind="show" id="qxK-X4-tBt"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ryP-oe-phP">
+                                <rect key="frame" x="496" y="282" width="20" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="record.circle" catalog="system"/>
+                                <connections>
+                                    <action selector="onCalcButton:" destination="qHa-wQ-wFQ" eventType="touchUpInside" id="HCd-zd-3Pf"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1261,7 +1266,12 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
         <image name="etthelp" width="1141" height="1330"/>
         <image name="eye" width="212" height="212"/>
         <image name="face" width="212" height="212"/>
+        <image name="folder" catalog="system" width="128" height="97"/>
         <image name="gearshape" catalog="system" width="128" height="121"/>
+        <image name="paperplane" catalog="system" width="128" height="118"/>
+        <image name="play" catalog="system" width="120" height="128"/>
+        <image name="record.circle" catalog="system" width="128" height="121"/>
+        <image name="waveform.path.ecg.rectangle" catalog="system" width="128" height="93"/>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
