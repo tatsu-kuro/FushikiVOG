@@ -10,6 +10,11 @@ import UIKit
 import Photos
 import AVFoundation
 class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegate {
+    var blackLeftFrame0:CGRect=CGRect(x:0,y:0,width:0,height:0)
+    var blackRightFrame0:CGRect=CGRect(x:0,y:0,width:0,height:0)
+    var blackLeftFrame:CGRect=CGRect(x:0,y:0,width:0,height:0)
+    var blackRightFrame:CGRect=CGRect(x:0,y:0,width: 0,height: 0)
+
     let camera = myFunctions()//name:"Fushiki")
     var cirDiameter:CGFloat = 0
 //    var startTime=CFAbsoluteTimeGetCurrent()
@@ -177,10 +182,12 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         
         let ww=view.bounds.width-CGFloat(left+right)
         let wh=view.bounds.height//-CGFloat(top+bottom)
-        blackLeftImageView.frame=CGRect(x:0,y:0,width: view.bounds.width/4,height: view.bounds.height)
-        blackRightImageView.frame=CGRect(x:view.bounds.width*3/4,y:0,width: view.bounds.width/4,height: view.bounds.height)
-        blackLeftImageView.alpha=0
-        blackRightImageView.alpha=0
+        blackLeftFrame0=CGRect(x:0,y:0,width:CGFloat(left),height: view.bounds.height)
+        blackRightFrame0=CGRect(x:view.bounds.width-CGFloat(right),y:0,width:CGFloat(right),height: view.bounds.height)
+        blackLeftFrame=CGRect(x:0,y:0,width: view.bounds.width/4,height: view.bounds.height)
+        blackRightFrame=CGRect(x:view.bounds.width*3/4,y:0,width: view.bounds.width/4,height: view.bounds.height)
+        blackLeftImageView.frame=blackLeftFrame0
+        blackRightImageView.frame=blackRightFrame0
         centerX=ww/2+CGFloat(left)
         centerY=wh/2+CGFloat(top)
         cirDiameter=ww/26
@@ -372,12 +379,12 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         return sumEttSec
     }
     func leftRightSetBlack(amari:CGFloat){
-        if amari<0.1 {
-            blackLeftImageView.alpha=1
-            blackRightImageView.alpha=1
+        if amari<0.03 {
+            blackLeftImageView.frame=blackLeftFrame
+            blackRightImageView.frame=blackRightFrame
         }else{
-            blackLeftImageView.alpha=0
-            blackRightImageView.alpha=0
+            blackLeftImageView.frame=blackLeftFrame0
+            blackRightImageView.frame=blackRightFrame0
         }
     }
     @objc func update() {//pursuit

@@ -1227,8 +1227,8 @@ class PlayViewController: UIViewController {
         let readerOutput = AVAssetReaderTrackOutput(track: videoTrack, outputSettings: readerOutputSettings)
         
         reader.add(readerOutput)
-//        let startTime = CMTime(value: CMTimeValue(currFrameNumber/*CGFloat(24+currFrameNumber)*getFpsZureRate(fps: videoFps)*/), timescale: CMTimeScale(videoFps))
-        let startTime = CMTime(value: CMTimeValue(0), timescale: CMTimeScale(videoFps))
+        let startTime = CMTime(value: CMTimeValue(currFrameNumber/*CGFloat(24+currFrameNumber)*getFpsZureRate(fps: videoFps)*/), timescale: CMTimeScale(videoFps))
+//        let startTime = CMTime(value: CMTimeValue(0), timescale: CMTimeScale(videoFps))
         let timeRange = CMTimeRange(start: startTime, end:CMTime.positiveInfinity)
         reader.timeRange = timeRange //読み込む範囲を`timeRange`で指定
         reader.startReading()
@@ -1303,7 +1303,7 @@ class PlayViewController: UIViewController {
         while reader.status != AVAssetReader.Status.reading {
             sleep(UInt32(0.1))
         }
-        var currNumber=currFrameNumber+1
+//        var currNumber=currFrameNumber+1
         DispatchQueue.global(qos: .default).async { [self] in
             while let sample = readerOutput.copyNextSampleBuffer(), self.calcFlag != false {
                 var eyeX:CGFloat = 0
@@ -1312,16 +1312,16 @@ class PlayViewController: UIViewController {
                 var faceY:CGFloat = 0
                 
                 var x:CGFloat = 50.0
-                currNumber -= 1
-                if currNumber>0{
-                    eyePosXOrig.append(0)
-                    eyePosXFiltered.append(0)
-                    eyePosYOrig.append(0)
-                    eyePosYFiltered.append(0)
-                    eyeVeloXFiltered.append(0)
-                    eyeVeloYFiltered.append(0)
-                    continue
-                }
+//                currNumber -= 1
+//                if currNumber>0{
+//                    eyePosXOrig.append(0)
+//                    eyePosXFiltered.append(0)
+//                    eyePosYOrig.append(0)
+//                    eyePosYFiltered.append(0)
+//                    eyeVeloXFiltered.append(0)
+//                    eyeVeloYFiltered.append(0)
+//                    continue
+//                }
         
                 autoreleasepool{
                     let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample)!
