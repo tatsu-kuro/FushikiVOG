@@ -184,8 +184,8 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         let wh=view.bounds.height//-CGFloat(top+bottom)
         blackLeftFrame0=CGRect(x:0,y:0,width:CGFloat(left),height: view.bounds.height)
         blackRightFrame0=CGRect(x:view.bounds.width-CGFloat(right),y:0,width:CGFloat(right),height: view.bounds.height)
-        blackLeftFrame=CGRect(x:0,y:0,width: view.bounds.width/4,height: view.bounds.height)
-        blackRightFrame=CGRect(x:view.bounds.width*3/4,y:0,width: view.bounds.width/4,height: view.bounds.height)
+        blackLeftFrame=CGRect(x:0,y:0,width: view.bounds.width/6,height: view.bounds.height)
+        blackRightFrame=CGRect(x:view.bounds.width*5/6,y:0,width: view.bounds.width/6,height: view.bounds.height)
         blackLeftImageView.frame=blackLeftFrame0
         blackRightImageView.frame=blackRightFrame0
         centerX=ww/2+CGFloat(left)
@@ -387,11 +387,37 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
             blackRightImageView.frame=blackRightFrame0
         }
     }
-    @objc func update() {//pursuit
+    func leftRightSetBlack(flag:Bool){//120hzのスクリーンでは設定を変更する必要があるかもしれない
+        if flag==true {
+            blackLeftImageView.frame=blackLeftFrame
+            blackRightImageView.frame=blackRightFrame
+        }else{
+            blackLeftImageView.frame=blackLeftFrame0
+            blackRightImageView.frame=blackRightFrame0
+        }
+    }
+    var leftRightBlackImageFlag:Bool=false
+    func leftRightSetBlack(sec:Double,flag:Bool){//120hzのスクリーンでは設定を変更する必要があるかもしれない
+        let amari=sec-Double(Int(sec))//every 10sec
+        if leftRightBlackImageFlag==false && amari<0.02{
+            leftRightBlackImageFlag=true
+        }else{
+            leftRightBlackImageFlag=false
+        }
+        if leftRightBlackImageFlag==true {
+            blackLeftImageView.frame=blackLeftFrame
+            blackRightImageView.frame=blackRightFrame
+        }else{
+            blackLeftImageView.frame=blackLeftFrame0
+            blackRightImageView.frame=blackRightFrame0
+        }
+    }
+     @objc func update() {//pursuit
         view.layer.sublayers?.removeLast()
         //実際に録画が開始した時間を基準にする。(10-20msec程度はずれてしまうと思われる）
         //+0.1(100ms)で縦線と表示の同期が取れるようだ。
         let elapset=CFAbsoluteTimeGetCurrent()-camera.recordStartTime+0.1// recordstartTime
+        
         if elapset<getSumEttSec(num:currentEttNum){
 
             let etttype=ettType[currentEttNum]
@@ -404,11 +430,10 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
             if etttype==0{//静止モードではspeedで位置指定する
                 if ettspeed==0.5{//視標なし
                     drawCircle(cPoint: CGPoint(x:-100,y:-100))//damy
-                }else if ettspeed==1 || ettspeed>5{
+                }else if ettspeed==1 || ettspeed>5{//etttype:0 ettspeed:6 ->
                     drawCircle(cPoint: CGPoint(x:centerX,y:centerY))
                     if ettspeed>5{
-                        let amari=elapset-Double(Int(elapset)/1*1)//every 10sec
-                        leftRightSetBlack(amari:amari)//1秒ごとに100msec画面を縮小表示
+                        leftRightSetBlack(sec:elapset,flag: leftRightBlackImageFlag)//1秒ごとに画面を縮小表示
                     }
                 }else if ettspeed==2{
                     drawCircle(cPoint: CGPoint(x:centerX-ettW,y:centerY))
@@ -421,6 +446,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
                 }
             }else if etttype == 1{//振り子横
                 drawCircle(cPoint:CGPoint(x:centerX + sinV*ettW, y: centerY))
+                
             }else if etttype==2{//振り子縦
                 drawCircle(cPoint:CGPoint(x:centerX , y: centerY + sinV*ettH))
             }else if etttype==3{//衝動横
@@ -433,6 +459,8 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
                         drawCircle(cPoint: CGPoint(x:centerX-ettW,y:centerY))
                     }
                 }
+                leftRightSetBlack(sec:elapset,flag: leftRightBlackImageFlag)//1秒ごとに画面を縮小表示
+
             }else if etttype==4{//衝動縦
                 if ettspeed==0{
                     drawCircle(cPoint: CGPoint(x:centerX,y:centerY))
