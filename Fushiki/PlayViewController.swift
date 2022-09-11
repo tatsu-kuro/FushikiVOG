@@ -47,12 +47,9 @@ class PlayViewController: UIViewController {
     var timer:Timer?
     var timer_vog:Timer?
     var vogImageView:UIImageView?
-//    var vogImageViewFlag:Bool=false
-//    var vogTextView:UIImageView?//vog
     var vogImage:UIImage?
     var vogBoxHeight:CGFloat=0
     var vogBoxYmin:CGFloat=0
-//    var vogBoxView:UIImageView?//vog
     var vogCurPoint:Int=0
     var vogBoxYcenter:CGFloat=0
     var mailWidth:CGFloat=2400//VOG
@@ -200,10 +197,14 @@ class PlayViewController: UIViewController {
 //        let drawPath = UIBezierPath()
         let w=startingImage.size.width
         let h=startingImage.size.height
-        let str1 = calcDate.components(separatedBy: ":")
-        let str2 = "ID:" + idNumber + "  " + str1[0] + ":" + str1[1]
+        let str0 = calcDate.components(separatedBy: ":")
+        let str1 = str0[0] + ":" + str0[1]
+        let str2 = "ID:" + idNumber + "  "
         let str3 = "2sec/scale"
-        
+        str1.draw(at: CGPoint(x: w/2, y: h-100), withAttributes: [
+                    NSAttributedString.Key.foregroundColor : UIColor.black,
+                    NSAttributedString.Key.font : UIFont.monospacedDigitSystemFont(ofSize: 70, weight: UIFont.Weight.regular)])
+
         str2.draw(at: CGPoint(x: 20, y: h-100), withAttributes: [
                     NSAttributedString.Key.foregroundColor : UIColor.black,
                     NSAttributedString.Key.font : UIFont.monospacedDigitSystemFont(ofSize: 70, weight: UIFont.Weight.regular)])
@@ -221,7 +222,6 @@ class PlayViewController: UIViewController {
  
     @IBAction func onPlayButton(_ sender: Any) {
         if vogImageView?.isHidden == false{
-//            vogImageView?.isHidden=true
             return
         }
         if (videoPlayer.rate != 0) && (videoPlayer.error == nil) {//playing
@@ -236,16 +236,13 @@ class PlayViewController: UIViewController {
             }
             videoPlayer.seek(to: CMTimeMakeWithSeconds(Float64(seekBar.value), preferredTimescale: Int32(NSEC_PER_SEC)))
             videoPlayer.play()
-//            if vogImageView?.isHidden == false{
-//                vogImageView?.isHidden=true
-//            }
         }
     }
   
     @IBAction func onExitButton(_ sender: Any) {
         //exitButtonはunWindに紐づいている。
         killTimer()
-        print("playview_exit")
+        print("playview_exit:onexitbutton")
     //以下ではmainViewのviewDidLoadへ戻る。listControllもリセットされる。
 //                let mainView = storyboard?.instantiateViewController(withIdentifier: "MAIN") as! MainViewController
         //    self.present(mainView, animated: false, completion: nil)
@@ -423,9 +420,8 @@ class PlayViewController: UIViewController {
 //        print("clipRect:",cnt,count,clipRect)
         let namedImage = getNamedImage(startingImage: crippedImage)
         let drawImage = namedImage.resize(size: CGSize(width:view.bounds.width, height:view.bounds.height*4/5))
-//        let namedImage =
         vogImageView = UIImageView(image: drawImage)
-        vogImageView?.center =  CGPoint(x:view.bounds.width/2,y:drawImage!.size.height/2/*view.bounds.height/2*/)
+        vogImageView?.center =  CGPoint(x:view.bounds.width/2,y:drawImage!.size.height/2)
         // 画面に表示する
         view.addSubview(vogImageView!)
     }
@@ -496,10 +492,8 @@ class PlayViewController: UIViewController {
         timercnt += 1
         if timercnt == 1{//vogImageの背景の白、縦横線を作る
             vogImage = initVogImage(width:mailWidth*18,height:mailHeight)//枠だけ
-//            vogImageViewFlag=true
             vogCurPoint=0
         }
-//        static ela time = CFAbsoluteTimeGetCurrent() - startTime
         if calcFlag == true{
             elapsedTime=CFAbsoluteTimeGetCurrent()-startTime
         }
@@ -514,11 +508,9 @@ class PlayViewController: UIViewController {
         let cntTemp=eyePosXOrig.count
         vogImage=addVogWave(startingImage: vogImage!, startn: lastArraycount-1, end:cntTemp)
         lastArraycount=cntTemp
-//        drawVogall_new()
         #if DEBUG
 //        print("debug-update",timercnt,calcFlagTemp)
         #endif
-        //            print("veloCount:",eyeVeloOrig.count)
         drawVogOnePage(count: cntTemp)
         //ここでcalcFlagをチェックするとデータを撮り損なうか
         if calcFlagTemp == false{//timer に入るときに終わっていた
@@ -843,14 +835,6 @@ class PlayViewController: UIViewController {
             return
         }
         print("singletap",vogImageView?.isHidden,calcFlag)
-//        print(sender.numberOfTapsRequired)
-//        if vogImageView?.isHidden == false{
-//            let pos = sender.location(in: self.view)
-//            if pos.x<view.bounds.width/4 || pos.x>view.bounds.width*3/4{
-//                vogImageView?.isHidden=true
-//            }
-//            return
-//        }
         if eyeORface == 0{//eye
             eyeORface=1
         }else{
@@ -1427,164 +1411,4 @@ class PlayViewController: UIViewController {
             view.bringSubviewToFront(vogImageView!)
         }
     }
-/*    func drawWakulines(width w:CGFloat,height h:CGFloat) ->UIImage{
-        let size = CGSize(width:w, height:h)
-        // イメージ処理の開始
-        UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
-        // パスの初期化
-        let drawPath = UIBezierPath()
-        
-        //let wI:Int = Int(w)//2400*18
-        let wid:CGFloat=w/90.0
-        for i in 0..<90 {
-            let xp = CGFloat(i)*wid
-            drawPath.move(to: CGPoint(x:xp,y:0))
-            drawPath.addLine(to: CGPoint(x:xp,y:h-120))
-        }
-        drawPath.move(to:CGPoint(x:0,y:0))
-        drawPath.addLine(to: CGPoint(x:w,y:0))
-        drawPath.move(to:CGPoint(x:0,y:h-120))
-        drawPath.addLine(to: CGPoint(x:w,y:h-120))
-        //UIColor.blue.setStroke()
-        drawPath.lineWidth = 2.0//1.0
-        drawPath.stroke()
-        
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        // イメージ処理の終了
-        UIGraphicsEndImageContext()
-        return image!
-    }
- */
-     //longPressでeye(sikaku),face(maru)を探して、そこに枠を近づける。２〜３回繰り返すと良いか。
-//    var faceMarkType:Int = 0
-//    @IBAction func longPress(_ sender: UILongPressGestureRecognizer) {
-//        if sender.state != .began {//.ended .changed etc?
-//            return
-//        }
-//
-//        print("longPress")
-//        if vogImageView?.isHidden==false{
-//            return
-//        }
-//        if eyeORface == 0{//eye
-//            eyeORface=1
-//        }else{
-//            eyeORface=0
-//        }
-//        dispWakus()
-//        showWakuImages()
-//
-//        zoomNum += 2
-//        let zn=CGFloat(zoomNum)
-//        let w=view.bounds.width
-//        let h=view.bounds.height
-//        if zoomNum == 3{
-//            lastTapPoint = sender.location(in: self.view)
-//        }
-//        //            print("longpress",zn)
-//        let x0 = -lastTapPoint.x*zn + w/2
-//        let y0 = -lastTapPoint.y*zn + h/2
-//        if zoomNum==9{
-//            zoomNum=1
-//            videoPlayerLayerRect=CGRect(x:0,y:0,width:0,height:0)
-//
-//        }else{
-//            videoPlayerLayerRect=CGRect(x:x0,y:y0,width:w*zn,height:h*zn)
-//        }
-//        let layerCnt=view.layer.sublayers!.count//?.remove(at: <#T##Int#>)?.last=videoPlayerLayer
-//        view.layer.sublayers?.remove(at: layerCnt-1)
-//        viewDidLoad()
-        
-        
-        
- /*
-        let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
-        let avAsset = AVURLAsset(url: videoURL!, options: options)
-        var reader: AVAssetReader! = nil
-        let backCameraFps=album.getUserDefaultFloat(str: "backCameraFps", ret:240.0)
-        do {
-            reader = try AVAssetReader(asset: avAsset)
-        } catch {
-            #if DEBUG
-            print("could not initialize reader.")
-            #endif
-            return
-        }
-        guard let videoTrack = avAsset.tracks(withMediaType: AVMediaType.video).last else {
-            #if DEBUG
-            print("could not retrieve the video track.")
-            #endif
-            return
-        }
-//        print("preferredtransform:",avAsset. preferredTransform)
-        let readerOutputSettings: [String: Any] = [kCVPixelBufferPixelFormatTypeKey as String : Int(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)]
-        let readerOutput = AVAssetReaderTrackOutput(track: videoTrack, outputSettings: readerOutputSettings)
-        
-        reader.add(readerOutput)
-        let frameRate = videoTrack.nominalFrameRate
-        let startTime = CMTime(value: CMTimeValue(currFrameNumber), timescale: CMTimeScale(frameRate))
-        let timeRange = CMTimeRange(start: startTime, end:CMTime.positiveInfinity)
-        reader.timeRange = timeRange //読み込む範囲を`timeRange`で指定
-        reader.startReading()
-        let context:CIContext = CIContext.init(options: nil)
-        guard let sample = readerOutput.copyNextSampleBuffer() else{
-            print("get sample error")
-            return
-        }
-        let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sample)!
-        var ciImage:CIImage!
-        if videoFps<backCameraFps-10.0{//if frontCamera
-            ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.down)
-        }else{//backCamera
-            ciImage = CIImage(cvPixelBuffer: pixelBuffer).oriented(.up)
-        }
-
-        let eX = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
-        let eY = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
-    
-        var eyeRectOnScreen=getRectFromCenter(center: eyeCenter, len: wakuLength)
-        if eyeORface == 1{//
-            eyeRectOnScreen=getRectFromCenter(center: faceCenter, len: wakuLength)
-        }
-        let eyeborder:CGFloat = CGFloat(eyeBorder)*3
-        let eyeWithBorderRectOnScreen = expandRectWithBorderWide(rect: eyeRectOnScreen, border: eyeborder)
-        let eyeRect = resizeR2(eyeRectOnScreen, viewRect:getVideoRectOnScreen(), image:ciImage)
-        var eyeWithBorderRect = resizeR2(eyeWithBorderRectOnScreen, viewRect:getVideoRectOnScreen(), image:ciImage)
-        
-        var eyeImage=UIImage(named: "sikaku")
-        if eyeORface == 1{
-            if faceMarkType == 0{
-                eyeImage=UIImage(named: "maru")
-            }else{
-                eyeImage=UIImage(named: "cross")
-            }
-        }
-        let osEyeX:CGFloat = (eyeWithBorderRect.size.width - eyeImage!.size.width) / 2.0//上下方向への差
-        let osEyeY:CGFloat = (eyeWithBorderRect.size.height - eyeImage!.size.height) / 2.0//左右方向への差
-
-        var ex:CGFloat = 0
-        var ey:CGFloat = 0
-//        let eyeCGImage = context.createCGImage(ciImage, from: eyeRect)!
-//        let eyeUIImage = UIImage.init(cgImage: eyeCGImage)
-//        UIImageWriteToSavedPhotosAlbum(eyeUIImage, nil, nil, nil)
-        let eyeWithBorderCGImage = context.createCGImage(ciImage, from: eyeWithBorderRect)!
-        let eyeWithBorderUIImage = UIImage.init(cgImage: eyeWithBorderCGImage)
-        let maxEyeV=openCV.matching(eyeWithBorderUIImage,
-                                    narrow: eyeImage,
-                                    x: eX,
-                                    y: eY)
-        ex = CGFloat(eX.pointee) - osEyeX
-        ey = CGFloat(eY.pointee) - osEyeY
-        print(maxEyeV,ex,ey)
-        if eyeORface == 0{
-            eyeCenter.x += ex/3
-            eyeCenter.y += ey/3
-        }else{
-            faceCenter.x += ex/3
-            faceCenter.y += ey/3
-        }
-        dispWakus()
-        showWakuImages()
- */
-//    }
 }
