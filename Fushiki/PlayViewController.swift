@@ -47,6 +47,7 @@ class PlayViewController: UIViewController {
 //    lazy var waveSlideBar = UISlider()
     
     @IBOutlet weak var waveSlideBar: UISlider!
+    @IBOutlet weak var videoSlideBar: UISlider!
     var timer:Timer?
     var timer_vog:Timer?
 //    var vogView:UIImageView?
@@ -230,15 +231,15 @@ class PlayViewController: UIViewController {
         }
         if (videoPlayer.rate != 0) && (videoPlayer.error == nil) {//playing
             videoPlayer.pause()
-            currFrameNumber=Int(waveSlideBar.value*videoFps)
-            videoPlayer.seek(to: CMTimeMakeWithSeconds(Float64(waveSlideBar.value), preferredTimescale: Int32(NSEC_PER_SEC)))
+            currFrameNumber=Int(videoSlideBar.value*videoFps)
+            videoPlayer.seek(to: CMTimeMakeWithSeconds(Float64(videoSlideBar.value), preferredTimescale: Int32(NSEC_PER_SEC)))
             dispWakus()
             showWakuImages()
         }else{//stoped
-            if waveSlideBar.value>waveSlideBar.maximumValue-0.5{
-                waveSlideBar.value=0
+            if videoSlideBar.value>videoSlideBar.maximumValue-0.5{
+                videoSlideBar.value=0
             }
-            videoPlayer.seek(to: CMTimeMakeWithSeconds(Float64(waveSlideBar.value), preferredTimescale: Int32(NSEC_PER_SEC)))
+            videoPlayer.seek(to: CMTimeMakeWithSeconds(Float64(videoSlideBar.value), preferredTimescale: Int32(NSEC_PER_SEC)))
             videoPlayer.play()
         }
     }
@@ -539,7 +540,10 @@ class PlayViewController: UIViewController {
             print("calcend")
             timer_vog!.invalidate()
             setButtons(flag: true)
-            waveSlideBar.thumbTintColor=UIColor.blue
+//            videoSlideBar.thumbTintColor=UIColor.blue
+            videoSlideBar.isHidden=true
+            waveSlideBar.isHidden=false
+            setWaveSlider(eyePosXOrig.count)
             calcButton.setImage(  UIImage(systemName:"play.circle"), for: .normal)
         }
     }
@@ -550,12 +554,17 @@ class PlayViewController: UIViewController {
         }
         if vogImageView.isHidden == false{
             vogImageView.isHidden=true
-            waveSlideBar.thumbTintColor=UIColor.orange
+            videoSlideBar.isHidden=false
+            waveSlideBar.isHidden=true
+//            videoSlideBar.thumbTintColor=UIColor.orange
 //            seekBar.isHidden=false
 //            playButton.isEnabled=true
         }else{
             vogImageView.isHidden=false
-            waveSlideBar.thumbTintColor=UIColor.blue
+            videoSlideBar.isHidden=true
+            waveSlideBar.isHidden=false
+
+//            videoSlideBar.thumbTintColor=UIColor.blue
 
 //            view.bringSubviewToFront(vogView!)
 //            seekBar.isHidden=true
@@ -744,7 +753,7 @@ class PlayViewController: UIViewController {
     var eyeORface:Int = 0//0:eye 1:face 2:outer -1:何も選択されていない
     var startEyeCenter:CGPoint!//tapした時のCenter
     var startFaceCenter:CGPoint!
-    var lastmoveX:Int = 0
+//    var lastmoveX:Int = 0
     @IBAction func panGesture(_ sender: UIPanGestureRecognizer) {
         if calcFlag == true{
             return
@@ -759,27 +768,28 @@ class PlayViewController: UIViewController {
             startFaceCenter=faceCenter
         } else if sender.state == .changed {
             
-            if vogImageView.isHidden == false{//vog波形表示中
-                if fpsXd*eyePosXOrig.count<240*10{//240*10以下なら動けない。
-                    return
-                }
-                let ratio=(view.bounds.height-pos.y)/view.bounds.height
-                let dd = Int(15*ratio)
-                if Int(move.x) > lastmoveX + dd{
-                    vogCurPoint -= dd*10
-                    lastmoveX = Int(move.x)
-                }else if Int(move.x) < lastmoveX - dd{
-                    vogCurPoint += dd*10
-                    lastmoveX = Int(move.x)
-                }
-                if vogCurPoint>eyePosXOrig.count{
-                    vogCurPoint=eyePosXOrig.count
-                }else if fpsXd*vogCurPoint<2400{
-                    vogCurPoint=2400/fpsXd
-                }
-//                print("vogcur",vogCurPoint)
-                drawVogOnePage(count: vogCurPoint)
-            }else{//枠
+//            if vogImageView.isHidden == false{//vog波形表示中
+//                if fpsXd*eyePosXOrig.count<240*10{//240*10以下なら動けない。
+//                    return
+//                }
+//                let ratio=(view.bounds.height-pos.y)/view.bounds.height
+//                let dd = Int(15*ratio)
+//                if Int(move.x) > lastmoveX + dd{
+//                    vogCurPoint -= dd*10
+//                    lastmoveX = Int(move.x)
+//                }else if Int(move.x) < lastmoveX - dd{
+//                    vogCurPoint += dd*10
+//                    lastmoveX = Int(move.x)
+//                }
+//                if vogCurPoint>eyePosXOrig.count{
+//                    vogCurPoint=eyePosXOrig.count
+//                }else if fpsXd*vogCurPoint<2400{
+//                    vogCurPoint=2400/fpsXd
+//                }
+////                print("vogcur",vogCurPoint)
+//                drawVogOnePage(count: vogCurPoint)
+//            }else{//枠
+            if vogImageView.isHidden==true{
                 let ww=view.bounds.width
                 let wh=view.bounds.height
                 
@@ -878,9 +888,9 @@ class PlayViewController: UIViewController {
             currTimeLabel.text=String(format:"%.1f/%.1f", Float(eyePosXOrig.count)/videoFps,elapsedTime)
 //        }
         if !((videoPlayer.rate != 0) && (videoPlayer.error == nil)) {//notplaying
-            if waveSlideBar.value>videoDuration-0.01{
-                waveSlideBar.value=0
-                videoPlayer.seek(to: CMTimeMakeWithSeconds(Float64(waveSlideBar.value), preferredTimescale: Int32(NSEC_PER_SEC)))
+            if videoSlideBar.value>videoDuration-0.01{
+                videoSlideBar.value=0
+                videoPlayer.seek(to: CMTimeMakeWithSeconds(Float64(videoSlideBar.value), preferredTimescale: Int32(NSEC_PER_SEC)))
 //                dispWakus()
 //                showWakuImages()
             }
@@ -971,13 +981,14 @@ class PlayViewController: UIViewController {
         view.layer.addSublayer(videoPlayerLayer)
         
         lastVideoPlayerLayer=videoPlayerLayer
+        videoSlideBar.frame=CGRect(x: left+sp*2, y:seekBarY, width: ww - 4*sp, height: bh)
         waveSlideBar.frame=CGRect(x: left+sp*2, y:seekBarY, width: ww - 4*sp, height: bh)
 
-        waveSlideBar.thumbTintColor=UIColor.orange
-        waveSlideBar.minimumValue = 0
-        waveSlideBar.maximumValue = videoDuration
+//        videoSlideBar.thumbTintColor=UIColor.orange
+        videoSlideBar.minimumValue = 0
+        videoSlideBar.maximumValue = videoDuration
 
-        let interval : Double = Double(0.5 * waveSlideBar.maximumValue) / Double(waveSlideBar.bounds.maxX)
+        let interval : Double = Double(0.5 * videoSlideBar.maximumValue) / Double(videoSlideBar.bounds.maxX)
         // ConvertCMTime
         let time : CMTime = CMTimeMakeWithSeconds(interval, preferredTimescale: Int32(NSEC_PER_SEC))
         // Observer
@@ -985,8 +996,8 @@ class PlayViewController: UIViewController {
             // Change SeekBar Position
             let duration = CMTimeGetSeconds(self.videoPlayer.currentItem!.duration)
             let time = CMTimeGetSeconds(self.videoPlayer.currentTime())
-            let value = Float(self.waveSlideBar.maximumValue - self.waveSlideBar.minimumValue) * Float(time) / Float(duration) + Float(self.waveSlideBar.minimumValue)
-            self.waveSlideBar.value = value
+            let value = Float(self.videoSlideBar.maximumValue - self.videoSlideBar.minimumValue) * Float(time) / Float(duration) + Float(self.videoSlideBar.minimumValue)
+            self.videoSlideBar.value = value
         })
         // Create Movie Start Button
         mailButton.frame = CGRect(x:left+sp*2+bw*0,y:by,width:bw,height:bh)
@@ -1038,6 +1049,9 @@ class PlayViewController: UIViewController {
         fpsXd=Int((240.0/videoFps).rounded())
         view.bringSubviewToFront(vogImageView)
         view.bringSubviewToFront(waveSlideBar)
+        view.bringSubviewToFront(videoSlideBar)
+        waveSlideBar.isHidden=true
+        vogImageView.isHidden=true
     }
     func resizeVideoPlayer(rect:CGRect){
         let videoPlayerLayer = AVPlayerLayer()
@@ -1073,27 +1087,40 @@ class PlayViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
+    func setWaveSlider(_ cnt:Int){
+        waveSlideBar.minimumValue = 0
+        //count==0の時もエラーにならないのでそのまま
+        waveSlideBar.maximumValue = Float(cnt-2400/fpsXd)
+        waveSlideBar.value=0
 
-    
+    }
+
     @IBAction func onWaveSlideChanged(_ sender: UISlider) {
+        vogCurPoint = Int(waveSlideBar.value)+2400/fpsXd
+        drawVogOnePage(count:vogCurPoint)
+//        print("vogCurpoint:",vogCurpoint,eyePosXOrig.count,waveSlideBar.value)
+    }
+    
+    
+    @IBAction func onVideoSlideChanged(_ sender: UISlider) {
         videoPlayer.pause()
-        let newTime = CMTime(seconds: Double(waveSlideBar.value), preferredTimescale: 600)
+        let newTime = CMTime(seconds: Double(videoSlideBar.value), preferredTimescale: 600)
         videoPlayer.seek(to: newTime, toleranceBefore: .zero, toleranceAfter: .zero)
-        currFrameNumber=Int(waveSlideBar.value*videoFps)
+        currFrameNumber=Int(videoSlideBar.value*videoFps)
         dispWakus()
         showWakuImages()
         
     }
-    // SeekBar Value Changed
-    @objc func onSliderValueChange(){
-        videoPlayer.pause()
-        let newTime = CMTime(seconds: Double(waveSlideBar.value), preferredTimescale: 600)
-        videoPlayer.seek(to: newTime, toleranceBefore: .zero, toleranceAfter: .zero)
-        currFrameNumber=Int(waveSlideBar.value*videoFps)
-        dispWakus()
-        showWakuImages()
-//        print("curr/slider:",currFrameNumber)
-    }
+//    // SeekBar Value Changed
+//    @objc func onSliderValueChange(){
+//        videoPlayer.pause()
+//        let newTime = CMTime(seconds: Double(videoSlideBar.value), preferredTimescale: 600)
+//        videoPlayer.seek(to: newTime, toleranceBefore: .zero, toleranceAfter: .zero)
+//        currFrameNumber=Int(videoSlideBar.value*videoFps)
+//        dispWakus()
+//        showWakuImages()
+////        print("curr/slider:",currFrameNumber)
+//    }
     
     var kalVs:[[CGFloat]]=[[0.0001,0.001,0,1,2],[0.0001,0.001,3,4,5],[0.0001,0.001,6,7,8],[0.0001,0.001,10,11,12],[0.0001,0.001,13,14,15]]
     func KalmanS(Q:CGFloat,R:CGFloat,num:Int){
@@ -1207,14 +1234,19 @@ class PlayViewController: UIViewController {
             calcFlag=false
             setButtons(flag: true)
             calcButton.setImage(  UIImage(systemName:"play.circle"), for: .normal)
-
+            videoSlideBar.isHidden=true
+            waveSlideBar.isHidden=false
             UIApplication.shared.isIdleTimerDisabled = false//sleepする
             return
         }
 //start calc
         
         calcButton.setImage(  UIImage(systemName:"stop.circle"), for: .normal)
-        waveSlideBar.thumbTintColor=UIColor.orange
+        videoSlideBar.isHidden=true
+        waveSlideBar.isHidden=true
+
+        
+//        videoSlideBar.thumbTintColor=UIColor.orange
         startTime=CFAbsoluteTimeGetCurrent()
         setButtons(flag: false)
         setUserDefaults()//eyeCenter,faceCenter

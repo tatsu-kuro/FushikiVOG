@@ -689,8 +689,19 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="jhb-g9-T3Q">
                                 <rect key="frame" x="546" y="118" width="118" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="minimumTrackTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="thumbTintColor" systemColor="systemOrangeColor"/>
                                 <connections>
-                                    <action selector="onWaveSlideChanged:" destination="qHa-wQ-wFQ" eventType="valueChanged" id="fd8-Ep-OoA"/>
+                                    <action selector="onVideoSlideChanged:" destination="qHa-wQ-wFQ" eventType="valueChanged" id="KPm-nQ-fza"/>
+                                </connections>
+                            </slider>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Gjn-WE-W9i">
+                                <rect key="frame" x="507" y="85" width="118" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="minimumTrackTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="thumbTintColor" systemColor="systemBlueColor"/>
+                                <connections>
+                                    <action selector="onWaveSlideChanged:" destination="qHa-wQ-wFQ" eventType="valueChanged" id="eaA-2l-Wob"/>
                                 </connections>
                             </slider>
                         </subviews>
@@ -718,9 +729,10 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                         <outlet property="playButton" destination="cRW-v2-GZO" id="ebW-y0-HkO"/>
                         <outlet property="saveButton" destination="TY4-cW-kPP" id="TK8-Dz-jyl"/>
                         <outlet property="setteiButton" destination="fs4-ea-mju" id="XXw-fH-KFh"/>
+                        <outlet property="videoSlideBar" destination="jhb-g9-T3Q" id="5de-IW-A6q"/>
                         <outlet property="vogImageView" destination="mdY-rc-2vn" id="wx9-95-ILl"/>
                         <outlet property="waveButton" destination="gJH-gO-4hU" id="2lZ-WW-cvN"/>
-                        <outlet property="waveSlideBar" destination="jhb-g9-T3Q" id="5de-IW-A6q"/>
+                        <outlet property="waveSlideBar" destination="Gjn-WE-W9i" id="6Vy-DM-TtC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MFk-2w-uR5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1291,6 +1303,9 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray5Color">
             <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
