@@ -672,20 +672,27 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                                     <segue destination="lpw-bn-NhA" kind="show" id="qxK-X4-tBt"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ryP-oe-phP">
+                            <button opaque="NO" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ryP-oe-phP">
                                 <rect key="frame" x="496" y="282" width="20" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="record.circle" catalog="system"/>
+                                <state key="normal" image="play.circle" catalog="system"/>
                                 <connections>
                                     <action selector="onCalcButton:" destination="qHa-wQ-wFQ" eventType="touchUpInside" id="HCd-zd-3Pf"/>
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mdY-rc-2vn">
-                                <rect key="frame" x="356" y="85" width="240" height="128"/>
+                                <rect key="frame" x="353" y="207" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="jhb-g9-T3Q">
+                                <rect key="frame" x="546" y="118" width="118" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="onWaveSlideChanged:" destination="qHa-wQ-wFQ" eventType="valueChanged" id="fd8-Ep-OoA"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="k2J-6C-QeK"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -713,6 +720,7 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                         <outlet property="setteiButton" destination="fs4-ea-mju" id="XXw-fH-KFh"/>
                         <outlet property="vogImageView" destination="mdY-rc-2vn" id="wx9-95-ILl"/>
                         <outlet property="waveButton" destination="gJH-gO-4hU" id="2lZ-WW-cvN"/>
+                        <outlet property="waveSlideBar" destination="jhb-g9-T3Q" id="5de-IW-A6q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MFk-2w-uR5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1276,7 +1284,7 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
         <image name="gearshape" catalog="system" width="128" height="123"/>
         <image name="paperplane" catalog="system" width="128" height="119"/>
         <image name="play" catalog="system" width="117" height="128"/>
-        <image name="record.circle" catalog="system" width="128" height="123"/>
+        <image name="play.circle" catalog="system" width="128" height="123"/>
         <image name="waveform.path.ecg.rectangle" catalog="system" width="128" height="93"/>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
