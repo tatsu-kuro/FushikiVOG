@@ -549,16 +549,13 @@ class PlayViewController: UIViewController {
     }
 
     @IBAction func onWaveButton(_ sender: Any) {//saveresult record-unwind の２箇所
-        if eyePosXOrig.count <  5{
-            return
-        }
+//        if eyePosXOrig.count <  5{
+//            return
+//        }
         if vogImageView.isHidden == false{
             vogImageView.isHidden=true
             videoSlideBar.isHidden=false
             waveSlideBar.isHidden=true
-//            videoSlideBar.thumbTintColor=UIColor.orange
-//            seekBar.isHidden=false
-//            playButton.isEnabled=true
         }else{
             vogImageView.isHidden=false
             videoSlideBar.isHidden=true
@@ -696,17 +693,10 @@ class PlayViewController: UIViewController {
     }
     
     func dispWakus(){
-//        let left=CGFloat( UserDefaults.standard.float(forKey: "left"))
-//        let right=CGFloat( UserDefaults.standard.float(forKey: "right"))
-//        let ww=view.bounds.width-left-right
-//        let sp=ww/120//間隙
-//        let bw=(ww-sp*10)/7//ボタン幅
         let d=(wakuLength+20)/2//matchingArea(center,wakuLength)
         if faceMark == false{
             eyeORface=0
         }
-//        eyeWaku_image.frame=CGRect(x:left+sp*2,y:20,width:bw*0.6,height:bw*0.6)
-//        faceWaku_image.frame=CGRect(x:left+sp*3+bw*0.6,y:20,width:bw*0.6,height:bw*0.6)
 
         eyeWaku_image.frame=CGRect(x:eyeCenter.x-d,y:eyeCenter.y-d,width:2*d,height:2*d)
         faceWaku_image.frame=CGRect(x:faceCenter.x-d,y:faceCenter.y-d,width:2*d,height:2*d)
@@ -723,9 +713,7 @@ class PlayViewController: UIViewController {
             eyeWaku_image.layer.borderWidth = 1
             faceWaku_image.layer.borderWidth = 2
         }
-//        view.bringSubviewToFront(faceWaku_image)
-//        view.bringSubviewToFront(eyeWaku_image)
-        faceWaku_image.isHidden=false
+
         eyeWaku_image.isHidden=false
         if faceMark == false{
             faceWaku_image.isHidden=true
@@ -983,11 +971,9 @@ class PlayViewController: UIViewController {
         lastVideoPlayerLayer=videoPlayerLayer
         videoSlideBar.frame=CGRect(x: left+sp*2, y:seekBarY, width: ww - 4*sp, height: bh)
         waveSlideBar.frame=CGRect(x: left+sp*2, y:seekBarY, width: ww - 4*sp, height: bh)
-
-//        videoSlideBar.thumbTintColor=UIColor.orange
         videoSlideBar.minimumValue = 0
         videoSlideBar.maximumValue = videoDuration
-
+        videoSlideBar.value=0
         let interval : Double = Double(0.5 * videoSlideBar.maximumValue) / Double(videoSlideBar.bounds.maxX)
         // ConvertCMTime
         let time : CMTime = CMTimeMakeWithSeconds(interval, preferredTimescale: Int32(NSEC_PER_SEC))
@@ -1052,6 +1038,7 @@ class PlayViewController: UIViewController {
         view.bringSubviewToFront(videoSlideBar)
         waveSlideBar.isHidden=true
         vogImageView.isHidden=true
+        hideWakusImages()
     }
     func resizeVideoPlayer(rect:CGRect){
         let videoPlayerLayer = AVPlayerLayer()
@@ -1478,7 +1465,19 @@ class PlayViewController: UIViewController {
             calcFlag = false
         }
     }
- 
+    func hideWakusImages(){
+        if  UserDefaults.standard.integer(forKey: "showRect") == 0{
+            debugFaceWaku_image.isHidden=true
+            debugEyeWaku_imge.isHidden=true
+        }else{
+            debugEyeWaku_imge.isHidden=false
+            if UserDefaults.standard.bool(forKey: "faceMark")==false{
+                debugFaceWaku_image.isHidden=true
+            }else{
+                debugFaceWaku_image.isHidden=false
+            }
+        }
+    }
     @IBAction func unwindPlay(segue: UIStoryboardSegue) {
         UIApplication.shared.isIdleTimerDisabled = false//スリープする
         print("unwindPlay")
@@ -1487,11 +1486,10 @@ class PlayViewController: UIViewController {
         wakuLength=CGFloat(UserDefaults.standard.integer(forKey:"wakuLength"))
         eyeBorder=UserDefaults.standard.integer(forKey:"eyeBorder")
         faceMark = UserDefaults.standard.bool(forKey: "faceMark")
+        hideWakusImages()
+ 
         dispWakus()
         showWakuImages()
-        vogImageView.isHidden=false
-//        if vogImageView.isHidden == false{//wakuimageなどの前に持ってくる
-//        view.bringSubviewToFront(vogImageView)
-//        }
+
     }
 }
