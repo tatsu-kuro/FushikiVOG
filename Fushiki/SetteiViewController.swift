@@ -34,7 +34,7 @@ class SetteiViewController: UIViewController {
     var speakerOnOff:Int!
     var cameraON:Bool!
     
-    @IBOutlet weak var carolicLabel: UILabel!
+    @IBOutlet weak var caloricLabel: UILabel!
     @IBOutlet weak var cameraLabel: UILabel!
 //    @IBOutlet weak var cameraSwitch_old: UISwitch!
 //    @IBOutlet weak var cameraSwitch: UISegmentedControl!
@@ -61,6 +61,7 @@ class SetteiViewController: UIViewController {
         dispTexts()
         UserDefaults.standard.set(cameraON, forKey: "cameraON")
     }
+
     @IBOutlet weak var speakerSwitch: UISwitch!
 //    @IBAction func onCameraSwitch(_ sender: UISwitch) {
 //         if sender.isOn==true{
@@ -131,18 +132,21 @@ class SetteiViewController: UIViewController {
         let x=sender.location(in: view).x
         let y=sender.location(in: view).y
 //        print("doubletap",x,y)x
-        let y0=exitButton.frame.minY-20
-        if x>exitButton.frame.minX && y<y0 && y>y0-exitButton.frame.width{
+//        let y0=exitButton.frame.minY-20
+        
+        if x>caloricLabel.frame.minX && y<caloricLabel.frame.maxY && y>caloricLabel.frame.minY{
 //            soundOnce()
             //左下あたりをdoubleTapするとcaloricEtt,Oknボタンが現れる、消すことも可能。
             let flag=UserDefaults.standard.bool(forKey: "caloricEttOknFlag")
-            print("flag",flag)
+//            print("flag",flag)
             if flag==true{
-                carolicLabel.isHidden=true
+                caloricLabel.alpha=0.02
                 UserDefaults.standard.set(false, forKey: "caloricEttOknFlag")
+                print("to caloric off")
             }else{
-                carolicLabel.isHidden=false
+                caloricLabel.alpha=0.1
                 UserDefaults.standard.set(true, forKey: "caloricEttOknFlag")
+                print("to caloric on")
             }
             return
         }
@@ -343,7 +347,12 @@ class SetteiViewController: UIViewController {
         speakerOnOff=UserDefaults.standard.integer(forKey: "speakerOnOff")
         cameraType=UserDefaults.standard.integer(forKey: "cameraType")
         cameraON=UserDefaults.standard.bool(forKey: "cameraON")
-        carolicLabel.isHidden=true//mazuha kakusu
+        if camera.getUserDefaultBool(str: "caloricEttOknFlag", ret: false)==false{
+            caloricLabel.alpha=0.02
+        }else{
+            caloricLabel.alpha=0.1
+        }
+//        caloricLabel.isHidden=true//mazuha kakusu
         ledValue = camera.getUserDefaultFloat(str: "ledValue", ret: 0)
         ledText.isHidden=true
         ledSlider.isHidden=true
@@ -565,13 +574,15 @@ class SetteiViewController: UIViewController {
         let by=wh-bh-sp
         camera.setButtonProperty(defaultButton,x:left+bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(exitButton,x:left+bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
-        carolicLabel.frame=CGRect(x:left+bw*6+sp*8,y:by-sp-bw,width:bw,height:bw)
+        caloricLabel.frame=CGRect(x:left+bw*6+sp*8,y:by-sp-bw,width:bw,height:bw)
 //        cameraButton.isHidden=true
 //        camera.setButtonProperty(cameraButton,x:left+bw*4+sp*6,y:by,w:bw,h:bh,UIColor.orange)
 //           cameraButton.layer.borderColor = UIColor.orange.cgColor
 //           cameraButton.layer.borderWidth = 1.0
 //           cameraButton.layer.cornerRadius = 5
     }
+    
+    
     @IBAction func unwindPlayPara(segue: UIStoryboardSegue) {
     }
 }

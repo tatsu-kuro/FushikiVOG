@@ -15,12 +15,13 @@ extension UIImage {
         let widthRatio = _size.width / size.width
         let heightRatio = _size.height / size.height
         let ratio = widthRatio < heightRatio ? widthRatio : heightRatio
-        
+//        print("_size,size",_size.width,size.width)
         let resizedSize = CGSize(width: size.width * ratio, height: size.height * ratio)
         
         UIGraphicsBeginImageContextWithOptions(resizedSize, false, 0.0) // 変更
         draw(in: CGRect(origin: .zero, size: resizedSize))
         let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+//        print("resized:",_size,size,resizedImage?.size)
         UIGraphicsEndImageContext()
         return resizedImage
     }
@@ -46,12 +47,13 @@ class PlayViewController: UIViewController {
     lazy var seekBar = UISlider()
     var timer:Timer?
     var timer_vog:Timer?
-    var vogImageView:UIImageView?
-    var vogImage:UIImage?
-    var vogBoxHeight:CGFloat=0
-    var vogBoxYmin:CGFloat=0
+//    var vogView:UIImageView?
+    @IBOutlet weak var vogImageView: UIImageView!
+    var vogImage180sec:UIImage?//mailWidth*18,mailHeight 180secのVOGデータ画像
+//    var vogBoxHeight:CGFloat=0
+//    var vogBoxYmin:CGFloat=0
     var vogCurPoint:Int=0
-    var vogBoxYcenter:CGFloat=0
+//    var vogBoxYcenter:CGFloat=0
     var mailWidth:CGFloat=2400//VOG
     var mailHeight:CGFloat=1600//VOG
     var videoWidth:CGFloat!
@@ -147,7 +149,7 @@ class PlayViewController: UIViewController {
     }
     @IBAction func onSaveButton(_ sender: Any) {
         
-        if calcFlag == true || vogImageView?.isHidden == true || vogImageView == nil{
+        if calcFlag == true || vogImageView.isHidden == true {
             return
         }
         
@@ -221,7 +223,7 @@ class PlayViewController: UIViewController {
     }
  
     @IBAction func onPlayButton(_ sender: Any) {
-        if vogImageView?.isHidden == false{
+        if vogImageView.isHidden == false{
             return
         }
         if (videoPlayer.rate != 0) && (videoPlayer.error == nil) {//playing
@@ -395,35 +397,50 @@ class PlayViewController: UIViewController {
         return image!
     }
    
-    func getVogOnePage(count:Int)->UIImage{
-        var cnt=count*fpsXd-240*10
-        if cnt<0{
-            cnt=0
+//    func getVogOnePage(count:Int)->UIImage{
+//        var cnt=count*fpsXd-240*10
+//        if cnt<0{
+//            cnt=0
+//        }
+//        let clipRect = CGRect(x:CGFloat(cnt) , y: 0, width: mailWidth, height: mailHeight)
+//        let cripImageRef = vogImage180sec?.cgImage!.cropping(to: clipRect)
+//        let crippedImage = UIImage(cgImage: cripImageRef!)
+//        let crippedNamedImage = getNamedImage(startingImage: crippedImage)
+//        return crippedNamedImage
+//    }
+    var initDrawVogImadeViewFlag:Bool=true
+    func drawVogImageView(_ image:UIImage){
+        if initDrawVogImadeViewFlag==true{
+            initDrawVogImadeViewFlag=false
+        }else{
+            vogImageView.layer.sublayers?.removeLast()
         }
-        let clipRect = CGRect(x:CGFloat(cnt) , y: 0, width: mailWidth, height: mailHeight)
-        let cripImageRef = vogImage?.cgImage!.cropping(to: clipRect)
-        let crippedImage = UIImage(cgImage: cripImageRef!)
-        let crippedNamedImage = getNamedImage(startingImage: crippedImage)
-        return crippedNamedImage
+        vogImageView.addSubview(UIImageView(image: image))
     }
-    func drawVogOnePage(count:Int){//countまでの波を表示
-        if vogImageView != nil{
-            vogImageView?.removeFromSuperview()
-        }
+    func getVogOnePage(count:Int)->UIImage{//countまでの波を表示
         var cnt=count*fpsXd - 2400
         if cnt<0{
             cnt=0
         }
         let clipRect = CGRect(x:CGFloat(cnt) , y: 0, width: mailWidth, height: mailHeight)
-        let cripImageRef = vogImage?.cgImage!.cropping(to: clipRect)
+        let cripImageRef = vogImage180sec?.cgImage!.cropping(to: clipRect)
         let crippedImage = UIImage(cgImage: cripImageRef!)
-//        print("clipRect:",cnt,count,clipRect)
         let namedImage = getNamedImage(startingImage: crippedImage)
-        let drawImage = namedImage.resize(size: CGSize(width:view.bounds.width, height:view.bounds.height*4/5))
-        vogImageView = UIImageView(image: drawImage)
-        vogImageView?.center =  CGPoint(x:view.bounds.width/2,y:drawImage!.size.height/2)
-        // 画面に表示する
-        view.addSubview(vogImageView!)
+        return namedImage
+//        let drawImage = namedImage.resize(size:vogImageView.frame.size)
+//        drawVogImageView(drawImage!)
+    }
+    func drawVogOnePage(count:Int){//countまでの波を表示
+        var cnt=count*fpsXd - 2400
+        if cnt<0{
+            cnt=0
+        }
+        let clipRect = CGRect(x:CGFloat(cnt) , y: 0, width: mailWidth, height: mailHeight)
+        let cripImageRef = vogImage180sec?.cgImage!.cropping(to: clipRect)
+        let crippedImage = UIImage(cgImage: cripImageRef!)
+        let namedImage = getNamedImage(startingImage: crippedImage)
+        let drawImage = namedImage.resize(size:vogImageView.frame.size)
+        drawVogImageView(drawImage!)
     }
     func getFpsZureRate(fps:Float)->CGFloat{//実際のFPSと想定したFPSの比率
         var tempRate=CGFloat(fps)/240
@@ -491,7 +508,7 @@ class PlayViewController: UIViewController {
     @objc func update_vog(tm: Timer) {
         timercnt += 1
         if timercnt == 1{//vogImageの背景の白、縦横線を作る
-            vogImage = initVogImage(width:mailWidth*18,height:mailHeight)//枠だけ
+            vogImage180sec = initVogImage(width:mailWidth*18,height:mailHeight)//枠だけ
             vogCurPoint=0
         }
         if calcFlag == true{
@@ -506,7 +523,8 @@ class PlayViewController: UIViewController {
             calcFlagTemp=false
         }
         let cntTemp=eyePosXOrig.count
-        vogImage=addVogWave(startingImage: vogImage!, startn: lastArraycount-1, end:cntTemp)
+        vogImage180sec=addVogWave(startingImage: vogImage180sec!, startn: lastArraycount-1, end:cntTemp)
+        
         lastArraycount=cntTemp
         #if DEBUG
 //        print("debug-update",timercnt,calcFlagTemp)
@@ -523,16 +541,16 @@ class PlayViewController: UIViewController {
     }
 
     @IBAction func onWaveButton(_ sender: Any) {//saveresult record-unwind の２箇所
-        if vogImageView == nil{
-            return
-        }
-        if vogImageView!.isHidden == false{
-            vogImageView?.isHidden=true
+//        if vogView == nil{
+//            return
+//        }
+        if vogImageView.isHidden == false{
+            vogImageView.isHidden=true
             seekBar.isHidden=false
 //            playButton.isEnabled=true
         }else{
-            vogImageView?.isHidden=false
-            view.bringSubviewToFront(vogImageView!)
+            vogImageView.isHidden=false
+//            view.bringSubviewToFront(vogView!)
             seekBar.isHidden=true
 //            playButton.isEnabled=false
         }
@@ -732,7 +750,7 @@ class PlayViewController: UIViewController {
             startFaceCenter=faceCenter
         } else if sender.state == .changed {
             
-            if vogImageView?.isHidden == false{//vog波形表示中
+            if vogImageView.isHidden == false{//vog波形表示中
                 if fpsXd*eyePosXOrig.count<240*10{//240*10以下なら動けない。
                     return
                 }
@@ -773,7 +791,7 @@ class PlayViewController: UIViewController {
     var zoomNum:Int=1
     var lastTapPoint:CGPoint=CGPoint(x:0,y:0)
      @IBAction func doubleTapGesture(_ sender: UITapGestureRecognizer) {
-        if vogImageView?.isHidden==false{
+        if vogImageView.isHidden==false{
             return
         }
         if sender.location(in: view).y>buttonsY{
@@ -831,10 +849,10 @@ class PlayViewController: UIViewController {
          }
     }
     @IBAction func singleTapGesture(_ sender: UITapGestureRecognizer) {
-        if vogImageView?.isHidden==false || zoomNum != 1{
+        if vogImageView.isHidden==false || zoomNum != 1{
             return
         }
-        print("singletap",vogImageView?.isHidden,calcFlag)
+        print("singletap",vogImageView.isHidden,calcFlag)
         if eyeORface == 0{//eye
             eyeORface=1
         }else{
@@ -998,10 +1016,14 @@ class PlayViewController: UIViewController {
         currTimeLabel!.font=UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .medium)
         view.bringSubviewToFront(currTimeLabel)
 
-        vogBoxHeight=ww*16/25
-        vogBoxYmin=0//wh/2-vogBoxHeight/2
-        vogBoxYcenter=wh/2
+//        vogBoxHeight=ww*16/25
+//        vogBoxYmin=0//wh/2-vogBoxHeight/2
+//        vogBoxYcenter=wh/2
+        let vogHeight=by-2*sp-bh*0.6
+        let vogWidth=vogHeight*mailWidth/mailHeight
+        vogImageView.frame=CGRect(x:view.bounds.width/2-vogWidth/2,y:bh*0.6+sp,width: vogWidth,height:vogHeight)
         fpsXd=Int((240.0/videoFps).rounded())
+        view.bringSubviewToFront(vogImageView)
     }
     func resizeVideoPlayer(rect:CGRect){
         let videoPlayerLayer = AVPlayerLayer()
@@ -1407,8 +1429,9 @@ class PlayViewController: UIViewController {
         faceMark = UserDefaults.standard.bool(forKey: "faceMark")
         dispWakus()
         showWakuImages()
-        if vogImageView?.isHidden == false{//wakuimageなどの前に持ってくる
-            view.bringSubviewToFront(vogImageView!)
-        }
+        vogImageView.isHidden=false
+//        if vogImageView.isHidden == false{//wakuimageなどの前に持ってくる
+        view.bringSubviewToFront(vogImageView)
+//        }
     }
 }
