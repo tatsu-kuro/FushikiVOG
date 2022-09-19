@@ -35,7 +35,7 @@ class OKPViewController: UIViewController{
 
     var startX:CGFloat?
     var startSpeed:Int?
-    
+    var leftPadding:CGFloat=0
     @IBAction func panGes(_ sender: UIPanGestureRecognizer) {
 
         if sender.state == .began {
@@ -149,6 +149,8 @@ class OKPViewController: UIViewController{
         UIScreen.main.brightness = 1.0
         UIScreen.main.brightness = CGFloat(1)//camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
         camera.makeAlbum()
+        leftPadding=CGFloat(UserDefaults.standard.float(forKey: "left")) + view.bounds.width/10
+
         let cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
         camera.initSession(camera: Int(cameraType), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
 //        if cameraType == 2{
@@ -233,7 +235,14 @@ class OKPViewController: UIViewController{
         rectLayer.path = UIBezierPath(rect:rectB).cgPath
         self.view.layer.addSublayer(rectLayer)
     }
-    
+    func drawWhiteBand(rectB: CGRect) {
+        let rectLayer = CAShapeLayer.init()
+        rectLayer.strokeColor = UIColor.white.cgColor
+        rectLayer.fillColor = UIColor.white.cgColor
+        rectLayer.lineWidth = 0
+        rectLayer.path = UIBezierPath(rect:rectB).cgPath
+        self.view.layer.addSublayer(rectLayer)
+    }
     var initf:Bool=false
     var lastx:CGFloat=0
     var currentSpeed:Double = 0
@@ -292,6 +301,7 @@ class OKPViewController: UIViewController{
             drawBand(rectB:CGRect(x:CGFloat(i-1)*x0+x,y:0,width:ww/10,height:wh))
         }
         lastx=x
+        drawWhiteBand(rectB: CGRect(x:0,y:0,width:leftPadding,height: view.bounds.height))
     }
 
 }

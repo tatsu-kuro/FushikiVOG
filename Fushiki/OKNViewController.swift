@@ -12,7 +12,8 @@ import Photos
 import AVFoundation
 class OKNViewController: UIViewController{
     let camera = myFunctions()//name:"Fushiki")
-//    var mainBrightness:CGFloat!
+
+    //    var mainBrightness:CGFloat!
     var startTime=CFAbsoluteTimeGetCurrent()
     var lastTime=CFAbsoluteTimeGetCurrent()
     var cnt:Int = 0
@@ -26,6 +27,7 @@ class OKNViewController: UIViewController{
     var displayLink:CADisplayLink?
     var displayLinkF:Bool=false
     var timerREC:Timer?
+    var leftPadding:CGFloat=0
     
     @IBOutlet weak var recClarification: UIImageView!
     @IBOutlet weak var speedLabel: UILabel!
@@ -202,6 +204,14 @@ class OKNViewController: UIViewController{
         rectLayer.path = UIBezierPath(rect:rectB).cgPath
         self.view.layer.addSublayer(rectLayer)
     }
+    func drawWhiteBand(rectB: CGRect) {
+        let rectLayer = CAShapeLayer.init()
+        rectLayer.strokeColor = UIColor.white.cgColor
+        rectLayer.fillColor = UIColor.white.cgColor
+        rectLayer.lineWidth = 0
+        rectLayer.path = UIBezierPath(rect:rectB).cgPath
+        self.view.layer.addSublayer(rectLayer)
+    }
 //    @available(iOS 11, *)
 //    override var prefersHomeIndicatorAutoHidden: Bool {
 //        get {
@@ -265,7 +275,10 @@ class OKNViewController: UIViewController{
             drawBand(rectB:CGRect(x:CGFloat(i-1)*x0+x,y:0,width:ww/10,height:wh))
         }
         lastx=x
-        
+//        if left==0{
+            drawWhiteBand(rectB: CGRect(x:0,y:0,width:leftPadding,height: view.bounds.height))
+//        }
+//        view.bringSubviewToFront(leftWhiteImage)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -304,7 +317,8 @@ class OKNViewController: UIViewController{
 //        camera.setLedLevel(level:0.1)//camera.getUserDefaultFloat(str: "ledValue", ret:0))
 
 //        camera.initSession(fps: 120)
-        
+        leftPadding=CGFloat(UserDefaults.standard.float(forKey: "left")) + view.bounds.width/10
+
         camera.setZoom(level:camera.getUserDefaultFloat(str: "zoomValue", ret: 0))
         camera.setFocus(focus: camera.getUserDefaultFloat(str: "focusValue", ret: 0))
         if cameraType != 0{
@@ -335,6 +349,8 @@ class OKNViewController: UIViewController{
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
 //         prefersHomeIndicatorAutoHidden()
+//        let leftPadding=UserDefaults.standard.float(forKey: "left")
+    
     }
     override var prefersHomeIndicatorAutoHidden: Bool {
         return true
