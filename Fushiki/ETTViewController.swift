@@ -459,7 +459,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
                         drawCircle(cPoint: CGPoint(x:centerX-ettW,y:centerY))
                     }
                 }
-                leftRightSetBlack(sec:elapset,flag: leftRightBlackImageFlag)//1秒ごとに画面を縮小表示
+//                leftRightSetBlack(sec:elapset,flag: leftRightBlackImageFlag)//1秒ごとに画面を縮小表示
 
             }else if etttype==4{//衝動縦
                 if ettspeed==0{
