@@ -50,7 +50,8 @@ class HelpViewController: UIViewController {
     func setHelpImage(){
         let left=CGFloat(UserDefaults.standard.float(forKey: "left"))
         let right=CGFloat(UserDefaults.standard.float(forKey: "right"))
-
+        let top=CGFloat(UserDefaults.standard.float(forKey: "top"))
+        let bottom=CGFloat(UserDefaults.standard.float(forKey: "bottom"))
         helpView.image = UIImage(named:helpImageName)!
         let image:UIImage = UIImage(named:helpImageName)!
         // 画像の縦横サイズを取得
@@ -58,8 +59,9 @@ class HelpViewController: UIViewController {
         let imgHeight:CGFloat = image.size.height
         // 画像サイズをスクリーン幅に合わせる
         let scale:CGFloat = imgHeight / imgWidth
-        helpView.frame=CGRect(x:left,y:0,width:view.bounds.width-left-right,height: view.bounds.width*scale)
-        helpHlimit=(view.bounds.width-left-right)*scale-view.bounds.height+50
+        let helpWidth=view.bounds.width-left-right
+        helpView.frame=CGRect(x:left,y:top,width:helpWidth,height: helpWidth*scale)
+//        helpHlimit=(view.bounds.width-left-right)*scale-view.bounds.height+50
     }
     
     func setHelpImageName(){//helpimagenameをセット
@@ -157,6 +159,7 @@ class HelpViewController: UIViewController {
             }else if helpView.frame.origin.y < -height+exitY{
                 helpView.frame.origin.y = -height+exitY//view.bounds.height-exitY
             }
+            print("helpview:",helpView.frame.origin.y,move.y)
         }else if sender.state == .ended{
         }
     }
