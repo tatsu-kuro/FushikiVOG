@@ -1083,6 +1083,9 @@ class PlayViewController: UIViewController {
     }
 
     @IBAction func onWaveSlideChanged(_ sender: UISlider) {
+        if eyePosXOrig.count<5{
+            return
+        }
         vogCurPoint = Int(waveSlideBar.value)+2400/fpsXd
         drawVogOnePage(count:vogCurPoint)
 //        print("vogCurpoint:",vogCurpoint,eyePosXOrig.count,waveSlideBar.value)
@@ -1220,7 +1223,9 @@ class PlayViewController: UIViewController {
         if calcFlag == true{
             calcFlag=false
             setButtons(flag: true)
+            
             calcButton.setImage(  UIImage(systemName:"play.circle"), for: .normal)
+          
             videoSlideBar.isHidden=true
             waveSlideBar.isHidden=false
             UIApplication.shared.isIdleTimerDisabled = false//sleepする

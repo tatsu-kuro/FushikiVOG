@@ -145,14 +145,17 @@ class HelpViewController: UIViewController {
     }
  
     @IBAction func panGesture(_ sender: UIPanGestureRecognizer) {
+        let move:CGPoint = sender.translation(in: self.view)
+        let height=helpView.frame.size.height
+        let exitY=exitButton.frame.minY
         if sender.state == .began {
-            posYlast=sender.location(in: self.view).y
+            posYlast=helpView.frame.origin.y
         }else if sender.state == .changed {
-            let posY = sender.location(in: self.view).y
-            let h=helpView.frame.origin.y - posYlast + posY
-            if h < 0 && h > -helpHlimit-80{
-                helpView.frame.origin.y -= posYlast-posY
-                posYlast=posY
+            helpView.frame.origin.y = posYlast + move.y
+            if helpView.frame.origin.y > 0{
+                helpView.frame.origin.y=0
+            }else if helpView.frame.origin.y < -height+exitY{
+                helpView.frame.origin.y = -height+exitY//view.bounds.height-exitY
             }
         }else if sender.state == .ended{
         }
@@ -185,6 +188,7 @@ class HelpViewController: UIViewController {
         let bh=bw*170/440
         let by=wh-bh-sp
         camera.setButtonProperty(exitButton,x:left+bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
+        
 //        camera.setButtonProperty(nextButton,x:left+2*sp,y:by,w:bw,h:bh,UIColor.darkGray)
         helpView.frame=CGRect(x:left+2*sp,y:2*sp,width: ww-4*sp,height: wh-bh-3*sp)
         if UIApplication.shared.isIdleTimerDisabled == true{
