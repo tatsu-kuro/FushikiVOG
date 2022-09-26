@@ -159,30 +159,16 @@ class SetteiViewController: UIViewController {
         mainView.targetMode=targetMode
         performSegue(withIdentifier: "fromSettei", sender: self)
     }
-//    func changeCameraMode(n:Int){
-//        if n==0{
-//            cameraON=false
-//            cameraButton.alpha=0.5
-//            cameraButton.isEnabled=false
-//            cameraSwitchold.selectedSegmentIndex=0
-//        }else if n==1{
-//            cameraButton.alpha=1
-//            cameraButton.isEnabled=true
-//            cameraON=true
-//            cameraSwitchold.selectedSegmentIndex=1
-//
-//        }
-//        UserDefaults.standard.set(cameraON,forKey:"cameraON")
-//    }
+
     @IBAction func onCameraSwitch(_ sender: UISwitch) {
         if sender.isOn == false {
             cameraON=false
-            cameraButton.alpha=0.5
-            cameraButton.isEnabled=false
+            cameraButton.isHidden=true
+//            cameraButton.isEnabled=false
 //            cameraSwitchold.selectedSegmentIndex=0
         }else{
-            cameraButton.alpha=1
-            cameraButton.isEnabled=true
+            cameraButton.isHidden=false
+//            cameraButton.isEnabled=true
             cameraON=true
 //            cameraSwitchold.selectedSegmentIndex=1
             
@@ -328,11 +314,6 @@ class SetteiViewController: UIViewController {
         setOknMode()
         setettMode()
         
-//        if cameraON{
-//            cameraButton.isHidden=false
-//        }else{
-//            cameraButton.isHidden=true
-//        }
         okpPauseTimeText.text="OKP-PAUSE:" + String(Int(okpTime)) + "sec"
         oknTimeText.text="OKN-TIME:" + String(Int(oknTime)) + "sec"
         setUserDefaults()
@@ -358,12 +339,14 @@ class SetteiViewController: UIViewController {
         ledSlider.isHidden=true
         if cameraON==false{
             cameraSwitch.isOn=false
-            cameraButton.isEnabled=false
-            cameraButton.alpha=0.5
+            cameraButton.isHidden=true
+//            cameraButton.isEnabled=false
+//            cameraButton.alpha=0.5
         }else{
             cameraSwitch.isOn=true
-            cameraButton.isEnabled=true
-            cameraButton.alpha=1.0
+//            cameraButton.isEnabled=true
+//            cameraButton.alpha=1.0
+            cameraButton.isHidden=false
 
 //            changeCameraMode(n: 1)
          }
@@ -539,7 +522,7 @@ class SetteiViewController: UIViewController {
 //        let b8y=b7y+bh+sp
         let ettTextWidth=view.bounds.width-right-x1-sp*2
         ettSwitch.frame  = CGRect(x:x0,   y: b0y ,width: bw,height:bh)
-        camera.setLabelProperty(ettText, x: x1, y: b0y-2, w: ettTextWidth, h: wh/15+4, UIColor.systemGray5)
+        camera.setLabelProperty(ettText, x: x0, y: b0y-2, w: ettTextWidth, h: wh/15+4, UIColor.systemGray5)
         ettText.layer.cornerRadius=3
 
         ettExplanationText.frame  = CGRect(x:x0,   y: b1y ,width: bw*7,height:bh*3)
@@ -560,8 +543,8 @@ class SetteiViewController: UIViewController {
 
         speakerText.frame = CGRect(x:x3,   y: b6y+dy3,width: bw*5,height:bh)
         cameraSwitch.frame = CGRect(x:x0,y:b7y,width:bw,height: bh)
-        cameraButton.frame = CGRect(x:x3,y:b7y+dy3,width:bh*1.5,height: bh)
-        cameraLabel.frame = CGRect(x:x3+bh*1.5+sp,y:b7y+dy3,width:bw*5,height:bh)
+        cameraButton.frame = CGRect(x:x3+bw*3/4,y:b7y+dy3,width:bw*3/4,height: bh)
+        cameraLabel.frame = CGRect(x:x3,y:b7y+dy3,width:bw*5,height:bh)
 //        speakerImage.isHidden=true
 //        cameraSwitchold.isHidden=true
 //        speakerImage.frame = CGRect(x:x0+50,   y: b6y ,width: 30,height:30)
@@ -575,11 +558,6 @@ class SetteiViewController: UIViewController {
         camera.setButtonProperty(defaultButton,x:left+bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(exitButton,x:left+bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
         caloricLabel.frame=CGRect(x:left+bw*6+sp*8,y:by-sp-bw,width:bw,height:bw)
-//        cameraButton.isHidden=true
-//        camera.setButtonProperty(cameraButton,x:left+bw*4+sp*6,y:by,w:bw,h:bh,UIColor.orange)
-//           cameraButton.layer.borderColor = UIColor.orange.cgColor
-//           cameraButton.layer.borderWidth = 1.0
-//           cameraButton.layer.cornerRadius = 5
     }
     
     
