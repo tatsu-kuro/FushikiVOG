@@ -164,10 +164,12 @@ class SetteiViewController: UIViewController {
         if sender.isOn == false {
             cameraON=false
             cameraButton.isHidden=true
+            speakerSwitch.isEnabled=false
 //            cameraButton.isEnabled=false
 //            cameraSwitchold.selectedSegmentIndex=0
         }else{
             cameraButton.isHidden=false
+            speakerSwitch.isEnabled=true
 //            cameraButton.isEnabled=true
             cameraON=true
 //            cameraSwitchold.selectedSegmentIndex=1
@@ -340,6 +342,7 @@ class SetteiViewController: UIViewController {
         if cameraON==false{
             cameraSwitch.isOn=false
             cameraButton.isHidden=true
+            speakerSwitch.isEnabled=false
 //            cameraButton.isEnabled=false
 //            cameraButton.alpha=0.5
         }else{
@@ -347,6 +350,7 @@ class SetteiViewController: UIViewController {
 //            cameraButton.isEnabled=true
 //            cameraButton.alpha=1.0
             cameraButton.isHidden=false
+            speakerSwitch.isEnabled=true
 
 //            changeCameraMode(n: 1)
          }
