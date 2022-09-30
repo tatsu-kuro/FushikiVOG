@@ -163,14 +163,17 @@ class SetteiViewController: UIViewController {
     @IBAction func onCameraSwitch(_ sender: UISwitch) {
         if sender.isOn == false {
             cameraON=false
-            cameraButton.isHidden=true
+//            cameraButton.isHidden=true
             speakerSwitch.isEnabled=false
-//            cameraButton.isEnabled=false
+            cameraButton.alpha=0.5
+            cameraButton.isEnabled=false
 //            cameraSwitchold.selectedSegmentIndex=0
         }else{
-            cameraButton.isHidden=false
+//            cameraButton.isHidden=false
             speakerSwitch.isEnabled=true
-//            cameraButton.isEnabled=true
+            cameraButton.isEnabled=true
+            cameraButton.alpha=1.0
+
             cameraON=true
 //            cameraSwitchold.selectedSegmentIndex=1
             
@@ -341,15 +344,15 @@ class SetteiViewController: UIViewController {
         ledSlider.isHidden=true
         if cameraON==false{
             cameraSwitch.isOn=false
-            cameraButton.isHidden=true
+//            cameraButton.isHidden=true
             speakerSwitch.isEnabled=false
-//            cameraButton.isEnabled=false
-//            cameraButton.alpha=0.5
+            cameraButton.isEnabled=false
+            cameraButton.alpha=0.5
         }else{
             cameraSwitch.isOn=true
-//            cameraButton.isEnabled=true
-//            cameraButton.alpha=1.0
-            cameraButton.isHidden=false
+            cameraButton.isEnabled=true
+            cameraButton.alpha=1.0
+//            cameraButton.isHidden=false
             speakerSwitch.isEnabled=true
 
 //            changeCameraMode(n: 1)
@@ -541,16 +544,17 @@ class SetteiViewController: UIViewController {
         speakerSwitch.frame = CGRect(x:x0,   y: b6y ,width: bw,height:bh)
         let switchHeight=speakerSwitch.frame.height
         let switchWidth=speakerSwitch.frame.width
-        let x3=x0+2*sp+switchWidth
+        let x3=x0+sp+switchWidth
         let dy3=(switchHeight-bh)/2
         let b7y=b6y+switchHeight+sp*2
 
         speakerText.frame = CGRect(x:x3,   y: b6y+dy3,width: bw*5,height:bh)
-        cameraSwitch.frame = CGRect(x:x0,y:b7y,width:bw,height: bh)
+        cameraSwitch.frame = CGRect(x:x0+bw*3/4+sp,y:b7y,width:bw,height: bh)
         let y0=cameraSwitch.frame.minY
         let height=cameraSwitch.frame.height
-        camera.setButtonProperty(cameraButton, x: x3+bw*3/4, y: y0, w: bw*3/4, h: height, UIColor.systemOrange,0)
-        cameraLabel.frame = CGRect(x:x3,y:b7y+dy3,width:bw*5,height:bh)
+        camera.setButtonProperty(cameraButton, x: x0, y: y0, w: bw*3/4, h: height, UIColor.systemOrange,0)
+        cameraLabel.frame = CGRect(x:cameraSwitch.frame.maxX+sp,y:b7y+dy3,width:bw*5,height:bh)
+        
         sp=ww/120//間隙
         bw=(ww-sp*10)/7//ボタン幅
         bh=bw*170/440
