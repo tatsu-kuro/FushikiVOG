@@ -671,6 +671,10 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
             sleep(UInt32(0.1))
         }
     }
+    func firstLang() -> String {
+        let prefLang = Locale.preferredLanguages.first
+        return prefLang!
+    }
     func setLabelProperty(_ label:UILabel,x:CGFloat,y:CGFloat,w:CGFloat,h:CGFloat,_ color:UIColor){
         label.frame = CGRect(x:x, y:y, width: w, height: h)
         label.layer.borderColor = UIColor.black.cgColor
@@ -679,7 +683,13 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
         label.layer.cornerRadius = 5
         label.backgroundColor = color
     }
- 
+    func setButtonProperty(_ button:UIButton,x:CGFloat,y:CGFloat,w:CGFloat,h:CGFloat,_ color:UIColor,_ border:CGFloat){
+        button.frame   = CGRect(x:x, y:y, width: w, height: h)
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = border
+        button.layer.cornerRadius = 5
+        button.backgroundColor = color
+    }
     func setButtonProperty(_ button:UIButton,x:CGFloat,y:CGFloat,w:CGFloat,h:CGFloat,_ color:UIColor){
         button.frame   = CGRect(x:x, y:y, width: w, height: h)
         button.layer.borderColor = UIColor.black.cgColor

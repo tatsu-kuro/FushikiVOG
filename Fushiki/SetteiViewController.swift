@@ -547,14 +547,10 @@ class SetteiViewController: UIViewController {
 
         speakerText.frame = CGRect(x:x3,   y: b6y+dy3,width: bw*5,height:bh)
         cameraSwitch.frame = CGRect(x:x0,y:b7y,width:bw,height: bh)
-        cameraButton.frame = CGRect(x:x3+bw*3/4,y:b7y+dy3,width:bw*3/4,height: bh)
+        let y0=cameraSwitch.frame.minY
+        let height=cameraSwitch.frame.height
+        camera.setButtonProperty(cameraButton, x: x3+bw*3/4, y: y0, w: bw*3/4, h: height, UIColor.systemOrange,0)
         cameraLabel.frame = CGRect(x:x3,y:b7y+dy3,width:bw*5,height:bh)
-//        speakerImage.isHidden=true
-//        cameraSwitchold.isHidden=true
-//        speakerImage.frame = CGRect(x:x0+50,   y: b6y ,width: 30,height:30)
-//        speakerImage.isHidden=true//ない方がスッキリか？
-//        ledSlider.frame  = CGRect(x:x0,   y: b8y ,width: bw,height:bh)
-//        ledText.frame = CGRect(x:x1,y:b8y,width:bw*5,height: bh)
         sp=ww/120//間隙
         bw=(ww-sp*10)/7//ボタン幅
         bh=bw*170/440
@@ -562,6 +558,9 @@ class SetteiViewController: UIViewController {
         camera.setButtonProperty(defaultButton,x:left+bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(exitButton,x:left+bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
         caloricLabel.frame=CGRect(x:left+bw*6+sp*8,y:by-sp-bw,width:bw,height:bw)
+        if camera.firstLang().contains("ja"){
+            cameraButton.setTitle("設定", for:.normal)
+        }
     }
     
     
