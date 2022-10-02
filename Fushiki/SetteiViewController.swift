@@ -36,12 +36,8 @@ class SetteiViewController: UIViewController {
     
     @IBOutlet weak var caloricLabel: UILabel!
     @IBOutlet weak var cameraLabel: UILabel!
-//    @IBOutlet weak var cameraSwitch_old: UISwitch!
-//    @IBOutlet weak var cameraSwitch: UISegmentedControl!
     @IBOutlet weak var cameraSwitch: UISwitch!
-//    @IBOutlet weak var cameraSwitchold: UISegmentedControl!
     @IBOutlet weak var speakerText: UILabel!
-//    @IBOutlet weak var speakerImage: UIImageView!
     @IBAction func onSpeakerSwitch(_ sender: UISwitch) {
         if sender.isOn==true{
             speakerOnOff=1
@@ -51,28 +47,13 @@ class SetteiViewController: UIViewController {
         UserDefaults.standard.set(speakerOnOff, forKey: "speakerOnOff")
     }
     func setCameraMode(){
-//        if cameraMode==0 {
-            //           frontCameraLabel.text="Adjust the zoom of the front camera"
-//        }else{
-//            cameraMode=2
-            //           frontCameraLabel.text="Record with the front camera"
-//        }
         cameraLabel.text="Recording"
         dispTexts()
         UserDefaults.standard.set(cameraON, forKey: "cameraON")
     }
 
     @IBOutlet weak var speakerSwitch: UISwitch!
-//    @IBAction func onCameraSwitch(_ sender: UISwitch) {
-//         if sender.isOn==true{
-//           cameraON=true
-//         }else{
-//            cameraON=false
-//         }
-//        UserDefaults.standard.set(cameraON, forKey: "cameraON")
-//        dispTexts()
-////        setCameraMode()
-//    }
+
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var okpSwitch: UISegmentedControl!
     @IBOutlet weak var okpPauseTimeSlider: UISlider!
@@ -132,7 +113,6 @@ class SetteiViewController: UIViewController {
         let x=sender.location(in: view).x
         let y=sender.location(in: view).y
 //        print("doubletap",x,y)x
-//        let y0=exitButton.frame.minY-20
         
         if x>caloricLabel.frame.minX && y<caloricLabel.frame.maxY && y>caloricLabel.frame.minY{
 //            soundOnce()
@@ -163,28 +143,20 @@ class SetteiViewController: UIViewController {
     @IBAction func onCameraSwitch(_ sender: UISwitch) {
         if sender.isOn == false {
             cameraON=false
-//            cameraButton.isHidden=true
             speakerSwitch.isEnabled=false
+            speakerText.alpha=0.5
             cameraButton.alpha=0.5
             cameraButton.isEnabled=false
-//            cameraSwitchold.selectedSegmentIndex=0
         }else{
-//            cameraButton.isHidden=false
             speakerSwitch.isEnabled=true
             cameraButton.isEnabled=true
+            speakerText.alpha=1.0
             cameraButton.alpha=1.0
-
             cameraON=true
-//            cameraSwitchold.selectedSegmentIndex=1
-            
         }
         UserDefaults.standard.set(cameraON,forKey:"cameraON")
     }
 
-    @IBAction func onCameraSwitchold(_ sender: UISegmentedControl) {
-//        print("cameraswitch:",sender.selectedSegmentIndex)
-//        changeCameraMode(n: sender.selectedSegmentIndex)
-    }
     @IBAction func onOkpModeSwitch(_ sender: UISegmentedControl) {
           okpMode=sender.selectedSegmentIndex
           dispTexts()
@@ -233,11 +205,6 @@ class SetteiViewController: UIViewController {
         UserDefaults.standard.set(ettModeText2, forKey: "ettModeText2")
         UserDefaults.standard.set(ettModeText3, forKey: "ettModeText3")
     }
-//
-//    @IBAction func onLedSlider(_ sender: UISlider) {
-//        ledBrightness=sender.value
-//        setUserDefaults()
-//    }
     
     @IBAction func onDefaultButton(_ sender: Any) {
         print("ondefault")
@@ -258,20 +225,7 @@ class SetteiViewController: UIViewController {
         oknSwitch.selectedSegmentIndex=oknMode%4
         oknTimeSlider.value=Float(oknTime)/100.0
         ettSwitch.selectedSegmentIndex=ettMode%4
-//        if cameraON==false{
-//            cameraSwitchold.selectedSegmentIndex=0
-//        }else if cameraType==0{
-//            cameraSwitch.selectedSegmentIndex=1
-//        }else{
-//            cameraSwitchold.selectedSegmentIndex=1
-//        }
-//        ledSlider.value=camera.getUserDefaultFloat(str: "ledValue", ret: 0)
-//        if cameraON{//camera
-//            cameraSwitch_old.isOn=true
-//        }else{//don't use camera
-//            cameraSwitch_old.isOn=false
-//        }
-//        setCameraMode()
+
         if speakerOnOff==0{//front camera
             speakerSwitch.isOn=false
         }else{//don't use camera
@@ -338,24 +292,22 @@ class SetteiViewController: UIViewController {
         }else{
             caloricLabel.alpha=0.1
         }
-//        caloricLabel.isHidden=true//mazuha kakusu
         ledValue = camera.getUserDefaultFloat(str: "ledValue", ret: 0)
         ledText.isHidden=true
         ledSlider.isHidden=true
         if cameraON==false{
             cameraSwitch.isOn=false
-//            cameraButton.isHidden=true
             speakerSwitch.isEnabled=false
             cameraButton.isEnabled=false
             cameraButton.alpha=0.5
+            speakerText.alpha=0.5
+
         }else{
             cameraSwitch.isOn=true
             cameraButton.isEnabled=true
             cameraButton.alpha=1.0
-//            cameraButton.isHidden=false
+            speakerText.alpha=1.0
             speakerSwitch.isEnabled=true
-
-//            changeCameraMode(n: 1)
          }
  
         ettMode = camera.getUserDefaultInt(str:"ettMode",ret:0)
@@ -364,15 +316,9 @@ class SetteiViewController: UIViewController {
         ettModeText2=camera.getUserDefaultString(str: "ettModeText2", ret: "2")
         ettModeText3=camera.getUserDefaultString(str: "ettModeText3", ret: "3")
 
-//        ettExplanationText.text="円形視標の動作の設定方法  w,a:b:c,a1:b1:c1,....\n"
-//        ettExplanationText.text! += "w[横振幅(0-5)],a[視標の動き方(1-6)]:b[速さ(0-3)]:c[時間(秒)]\n"
-//        ettExplanationText.text! += "a) 1=振子横 2=同縦 3=衝動横 4=同縦 5=不規則横 6=同縦横"
-            
         setScreen()
         dispTexts()
         setControlState()
-//        ledText.isHidden=true
-//        ledSlider.isHidden=true
     }
     
       override var prefersStatusBarHidden: Bool {
@@ -381,23 +327,7 @@ class SetteiViewController: UIViewController {
       override var prefersHomeIndicatorAutoHidden: Bool {
           return true
       }
-//    func checkEttString(ettStr:String)->Bool{
-//        let ettTxtComponents = ettStr.components(separatedBy: ",")
-//        let widthCnt = ettTxtComponents[0].components(separatedBy: ":").count
-//        var paramCnt = 3
-//        for i in 1...ettTxtComponents.count-1{//3個以外の時はその数値をセット
-//            let str = ettTxtComponents[i].components(separatedBy: ":")
-//            if str.count != 3{
-//                paramCnt = str.count
-//            }
-//        }
-//        
-//        if widthCnt == 1 && paramCnt == 3 && ettStr.isAlphanumeric(){
-//            return true
-//        }else{
-//            return false
-//        }
-//    }
+
     @IBAction func tapOnEttText(_ sender: Any) {
         print("tap")
         let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
@@ -405,19 +335,8 @@ class SetteiViewController: UIViewController {
             // 入力したテキストをコンソールに表示
             let textField = alert.textFields![0] as UITextField
             let ettString:String = textField.text!
-//            let ettTxtComponents = ettString.components(separatedBy: ",")
-//            let widthCnt = ettTxtComponents[0].components(separatedBy: ":").count
-//            var paramCnt = 3
-//            for i in 1...ettTxtComponents.count-1{//3個以外の時はその数値をセット
-//                let str = ettTxtComponents[i].components(separatedBy: ":")
-//                if str.count != 3{
-//                    paramCnt = str.count
-//                }
-//            }
-//
-//            if widthCnt == 1 && paramCnt == 3 && ettString.isAlphanumeric(){
+
             if camera.checkEttString(ettStr: ettString){
-//            if ettString.isAlphanumeric(){//} isOnly(structuredBy: "0123456789:,") == true
                 if ettMode==0{
                     ettModeText0=ettString
                 }else if ettMode==1{
@@ -460,52 +379,15 @@ class SetteiViewController: UIViewController {
         present(alert, animated: true, completion: nil)
         
     }
-//    func getSetValueAlert(text:UILabel) {
-//        print("tap")
-//        let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
-//        alert.textFields![0].text!=text.text!
-//        let saveAction = UIAlertAction(title: "OK", style: .default) { [self] (action:UIAlertAction!) -> Void in
-//            // 入力したテキストをコンソールに表示
-//            let textField = alert.textFields![0] as UITextField
-//            let ettString:String = textField.text!
-//            if ettString.isAlphanumeric(){//} isOnly(structuredBy: "0123456789:,") == true
-//                text.text=ettString
-//            }else{
-//                let dialog = UIAlertController(title: "", message: "0123456789,: だけです.", preferredStyle: .alert)
-//                //ボタンのタイトル
-//                dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//                //実際に表示させる
-//                self.present(dialog, animated: true, completion: nil)
-////                print(",:0123456789以外は受け付けません")
-//            }
-////            print("\(String(describing: textField.text))")
-//        }
-//        
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (action:UIAlertAction!) -> Void in
-//        }
-//        // UIAlertControllerにtextFieldを追加
-//        alert.addTextField { (textField:UITextField!) -> Void in
-//            textField.keyboardType = UIKeyboardType.default//.numberPad
-//            textField.text=text.text
-//        }
-//        alert.addAction(cancelAction)//この行と下の行の並びを変えるとCancelとOKの左右が入れ替わる。
-//        alert.addAction(saveAction)
-//        present(alert, animated: true, completion: nil)
-//        
-//    }
+
     
     @IBAction func onLedSlider(_ sender: UISlider) {
         ledValue=sender.value
         camera.setLedLevel(ledValue)
         setUserDefaults()
     }
-    
-//    @objc func onLedValueChange(){
-//        camera.setLedLevel(level:ledBar.value)
-//        UserDefaults.standard.set(ledBar.value, forKey: "ledValue")
-//    }
+ 
     func setScreen(){
-        
         let top=CGFloat(UserDefaults.standard.float(forKey: "top"))
         let bottom=CGFloat( UserDefaults.standard.float(forKey: "bottom"))
         let left=CGFloat( UserDefaults.standard.float(forKey: "left"))
@@ -513,8 +395,8 @@ class SetteiViewController: UIViewController {
         print("top",top,bottom,left,right)
         let ww=view.bounds.width-(left+right)
         let wh=view.bounds.height-(top+bottom)
-          var bw=ww/4.5
-        var sp=ww/120
+        var bw=ww/4.5
+        let sp=ww/120
         let x0=sp*2+left
         let x1=x0+bw+sp*2
         var bh=wh/15
@@ -525,11 +407,9 @@ class SetteiViewController: UIViewController {
         let b4y=b3y+bh+sp*3
         let b5y=b4y+bh+sp
         let b6y=b5y+bh+sp*2
-//        let b7y=b6y+bh+sp*2
-//        let b8y=b7y+bh+sp
         let ettTextWidth=view.bounds.width-right-x1-sp*2
         ettSwitch.frame  = CGRect(x:x0,   y: b0y ,width: bw,height:bh)
-        camera.setLabelProperty(ettText, x: x0, y: b0y-2, w: ettTextWidth, h: wh/15+4, UIColor.systemGray5)
+        camera.setLabelProperty(ettText, x: x1, y: b0y-2, w: ettTextWidth, h: wh/15+4, UIColor.systemGray5)
         ettText.layer.cornerRadius=3
 
         ettExplanationText.frame  = CGRect(x:x0,   y: b1y ,width: bw*7,height:bh*3)
@@ -541,21 +421,16 @@ class SetteiViewController: UIViewController {
         oknText.frame  = CGRect(x:x1,   y: b4y ,width: bw*5, height: bh)
         oknTimeSlider.frame  = CGRect(x:x0,   y: b5y ,width: bw,height:bh)
         oknTimeText.frame  = CGRect(x:x1,   y: b5y ,width: bw*5,height:bh)
-        speakerSwitch.frame = CGRect(x:x0,   y: b6y ,width: bw,height:bh)
-        let switchHeight=speakerSwitch.frame.height
-        let switchWidth=speakerSwitch.frame.width
-        let x3=x0+sp+switchWidth
+        cameraSwitch.frame = CGRect(x:x0+bw*3/4+sp,   y: b6y ,width: bw,height:bh)
+        let switchHeight=cameraSwitch.frame.height
+        let switchWidth=cameraSwitch.frame.width
+//        let x3=x0+sp+switchWidth
         let dy3=(switchHeight-bh)/2
         let b7y=b6y+switchHeight+sp*2
-
-        speakerText.frame = CGRect(x:x3,   y: b6y+dy3,width: bw*5,height:bh)
-        cameraSwitch.frame = CGRect(x:x0+bw*3/4+sp,y:b7y,width:bw,height: bh)
-        let y0=cameraSwitch.frame.minY
-        let height=cameraSwitch.frame.height
-        camera.setButtonProperty(cameraButton, x: x0, y: y0, w: bw*3/4, h: height, UIColor.systemOrange,0)
-        cameraLabel.frame = CGRect(x:cameraSwitch.frame.maxX+sp,y:b7y+dy3,width:bw*5,height:bh)
-        
-        sp=ww/120//間隙
+        camera.setButtonProperty(cameraButton, x: x0, y: b6y, w: bw*3/4, h: switchHeight, UIColor.systemOrange,0)
+        cameraLabel.frame = CGRect(x:cameraSwitch.frame.maxX+sp,y:b6y+dy3,width:bw*5,height:bh)
+        speakerText.frame = CGRect(x:x0+switchWidth+sp,   y: b7y+dy3,width: bw*5,height:bh)
+        speakerSwitch.frame = CGRect(x:x0,y:b7y,width:bw,height: bh)
         bw=(ww-sp*10)/7//ボタン幅
         bh=bw*170/440
         let by=wh-bh-sp

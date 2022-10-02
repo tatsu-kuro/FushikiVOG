@@ -301,7 +301,7 @@ class OKPViewController: UIViewController{
             drawBand(rectB:CGRect(x:CGFloat(i-1)*x0+x,y:0,width:ww/10,height:wh))
         }
         lastx=x
-        drawWhiteBand(rectB: CGRect(x:0,y:0,width:leftPadding,height: view.bounds.height))
+//        drawWhiteBand(rectB: CGRect(x:0,y:0,width:leftPadding,height: view.bounds.height))
     }
 
 }

@@ -276,7 +276,7 @@ class OKNViewController: UIViewController{
         }
         lastx=x
 //        if left==0{
-            drawWhiteBand(rectB: CGRect(x:0,y:0,width:leftPadding,height: view.bounds.height))
+//            drawWhiteBand(rectB: CGRect(x:0,y:0,width:leftPadding,height: view.bounds.height))
 //        }
 //        view.bringSubviewToFront(leftWhiteImage)
     }
