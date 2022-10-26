@@ -69,90 +69,18 @@ class CameraViewController: UIViewController {
     override var prefersHomeIndicatorAutoHidden: Bool {
         return true
     }
-/*
-     @IBAction func onCameraChangeButton(_ sender: Any) {
-        cameraType=UserDefaults.standard.integer(forKey:"cameraType")
-         
-       if cameraType==0{
-             cameraType=1
-         }else if cameraType==1{
-             if telephotoCamera == true{
-                 cameraType=2//telephoto
-             }else if ultrawideCamera == true{
-                 cameraType=3
-             }else{
-                 cameraType=0
-             }
-         }else if cameraType==2{
-             if ultrawideCamera==true{
-                 cameraType=3//ultraWide
-             }else{
-                 cameraType=0
-             }
-         }else{
-             cameraType=0//wideAngle
-         }
-         print("camera:",cameraType)
-         UserDefaults.standard.set(cameraType, forKey: "cameraType")
-         
-         camera.stopRunning()
-         camera.initSession(camera: cameraType, bounds:view.bounds, cameraView: cameraView)
 
-//         onLedValueChange()
-//         onZoomValueChange()
-//         onFocusValueChange()
-         if cameraType==0{
-//             zoomBar.value=UserDefaults.standard.float(forKey: "zoomValue")
-//             LEDBar.alpha=0.3// isHidden=true
-//             LEDBar.isEnabled=false
-//             LEDLabel.alpha=0.3// isHidden=true
-         }else{
-//             zoomBar.value=UserDefaults.standard.float(forKey:"zoomValue1")
-             ledBar.alpha=1// isHidden=false
-             ledBar.isEnabled=true
-             ledBarLabel.alpha=1//isHidden=false
-         }
-         camera.setZoom(level: zoomBar.value)
-         if camera.focusChangeable==false{
-             focusBar.isEnabled=false
-             focusBar.alpha=0.2
-             focusBarLabel.alpha=0.2
-         }else{
-             focusBar.isEnabled=true
-             focusBar.alpha=1.0
-             focusBarLabel.alpha=1.0
-         }
-//         if cameraType==0{
-//             UIScreen.main.brightness = 1//CGFloat(UserDefaults.standard.float(forKey: "mainBrightness"))
-//         }else{
-//             UIScreen.main.brightness = CGFloat(UserDefaults.standard.float(forKey: "mainBrightness"))
-//
-//         }
-//         onExposeValueChange()
-         setButtons()
-
-     }
- */
-    
-    
     @IBAction func onCameraChangeButton(_ sender: Any) {
         cameraType=camera.getUserDefaultInt(str: "cameraType", ret: 0)
         changeCameraMode()
-//        if cameraMode == 0{
-//            cameraMode=1
-//        }else{
-//            cameraMode=0
-//        }
+
         UserDefaults.standard.set(cameraType, forKey: "cameraType")
         camera.stopRunning()
         camera.initSession(camera: cameraType, bounds:view.bounds, cameraView: cameraView)
         print("camera:",cameraType,cameraTypeStrings[cameraType])
-//        let cameraStr=cameraModeStrings[cameraMode]
-//        fpsLabel.text = String(format:"%s fps:%d %dx%d" ,cameraStr,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
+
         cameraFpsLabel.text = String(format:"fps:%d %dx%d" ,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
         cameraTypeLabel.text = cameraTypeStrings[cameraType]
-
-//        fpsLabel.text = String(format:"fps:%d %dx%d" ,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)
         camera.setLedLevel(camera.getUserDefaultFloat(str: "ledValue", ret:0))
         if cameraType > 0{
             UserDefaults.standard.set(camera.fpsCurrent, forKey: "backCameraFps")
@@ -161,15 +89,12 @@ class CameraViewController: UIViewController {
         camera.setLedLevel(ledBar.value)
         camera.setZoom(level:zoomBar.value)
 
-//        onLedValueChange()
-//        onZoomValueChange()
-//        onFocusValueChange()
         setButtons()
      }
     var wideAngleCamera:Bool=false//最低これはついている
     var ultrawideCamera:Bool=false
     var telephotoCamera:Bool=false
-//    var cameraType:Int = 0
+
     func getCameras(){
         if AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) != nil{
             wideAngleCamera=true
@@ -277,7 +202,6 @@ class CameraViewController: UIViewController {
 //     Frontcamera zoom
 //     wideAngle zoom led focus
 //     Ultra zoom led
-    
-     
+  
 }
 
