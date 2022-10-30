@@ -88,9 +88,11 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 tapStr = "1"
                 print(tapStr)
                 if checkTaps(0,50){
-                    tapStr += "2"
-                    print(tapStr)
-                    stopMotion()
+                    if checkTaps(51, 93)==false{//95,0-50でタップがあり51-93でタップがない時
+                        tapStr += "2"
+                        print(tapStr)
+                        stopMotion()
+                    }
                 }
             }
         }
