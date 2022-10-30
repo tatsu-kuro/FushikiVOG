@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import CoreMotion
 import Photos
 @available(iOS 11.0, *)
 extension UIImage {
@@ -80,7 +81,59 @@ class PlayViewController: UIViewController {
     
     @IBOutlet weak var currTimeLabel: UILabel!
     @IBOutlet weak var fpsLabel: UILabel!
-    
+/*
+    var tapStr:String=""
+    var isStarted:Bool=false
+    var accel = Array<Int>()
+    let motionManager = CMMotionManager()
+    func start() {
+        accel.removeAll()
+        tapStr=""
+        // start monitoring sensor data
+        if motionManager.isDeviceMotionAvailable {
+            motionManager.deviceMotionUpdateInterval = 0.01
+            motionManager.startDeviceMotionUpdates(to: OperationQueue.current!, withHandler: {(motion:CMDeviceMotion?, error:Error?) in
+                self.updateMotionData(deviceMotion: motion!)
+            })
+        }
+        isStarted = true
+    }
+    func stop() {
+        tapStr=""
+        isStarted = false
+        motionManager.stopDeviceMotionUpdates()
+    }
+    func checkTap(cnt:Int)->Bool{
+        if accel[cnt]>accel[cnt+1]+10 && accel[cnt+1]<accel[cnt+2]-10 && accel[cnt+3]<3 && accel[cnt+4]<3{
+            accel[cnt+3]=10
+            return true
+        }else{
+            return false
+        }
+    }
+    func checkTaps(_ n1:Int,_ n2:Int)->Bool{
+        for i in n1...n2{
+            if checkTap(cnt: i){
+                return true
+            }
+        }
+        return false
+    }
+    private func updateMotionData(deviceMotion:CMDeviceMotion) {
+        let z=deviceMotion.userAcceleration.z
+        accel.insert(Int(z*100),at: 0)
+        if accel.count>100{
+            accel.removeLast()
+            if checkTap(cnt: 95){
+                tapStr = "1"
+                if checkTaps(0,50){
+                    tapStr += "2"
+                }
+            }
+        }
+           print(tapStr)
+    }
+  */
     @IBAction func onMailButton(_ sender: Any) {
     }
     
