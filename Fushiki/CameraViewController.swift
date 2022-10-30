@@ -205,16 +205,23 @@ class CameraViewController: UIViewController {
         camera.setButtonProperty(cameraChangeButton, x: left+bw*5+sp*7, y: by, w: bw, h: bh,UIColor.orange)
         focusBar.isHidden=true
         focusBarLabel.isHidden=true
+        focusValueLabel.isHidden=true
         ledBar.isHidden=true
         ledBarLabel.isHidden=true
+        ledValueLabel.isHidden=true
         if cameraType==1 {
             focusBar.isHidden=false
             focusBarLabel.isHidden=false
+            focusValueLabel.isHidden=false
+
             ledBar.isHidden=false
             ledBarLabel.isHidden=false
+            ledValueLabel.isHidden=false
+
         }else if cameraType==2{
             ledBar.isHidden=false
             ledBarLabel.isHidden=false
+            ledValueLabel.isHidden=false
         }
         print("setButtonsCameraType:",cameraType)
 
