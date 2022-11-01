@@ -38,7 +38,96 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var ettModeText3:String = ""
     var cameraON:Bool!
 //motion sensor
-    var tapStr:String=""
+    //motion sensor*************************
+    let motionManager = CMMotionManager()
+    var isStarted = false
+    var accel = Array<Int>()
+    var rotatez = Array<Int>()
+    var rotatex = Array<Int>()
+    var tapLeft:Bool=false
+
+    func checkTap(cnt:Int)->Bool{
+        for i in 0...39{
+            if rotatex[cnt+i] > 9 || rotatex[cnt+i] < -9{
+                return false
+            }
+        }
+        let a0=accel[cnt]
+        let a1=accel[cnt+1]
+        let a2=accel[cnt+2]
+        let a3=accel[cnt+3]
+        let a4=accel[cnt+4]
+        let rz0=rotatez[cnt]
+        let rz1=rotatez[cnt+1]
+        let rz2=rotatez[cnt+2]
+        let rz3=rotatez[cnt+3]
+        let rz4=rotatez[cnt+4]
+        if a0 > -1 && a1 > -1 && a2<1 && a3<1 && a4<1{
+            if a0+a1>6 && a2+a3+a4 < -6{
+                if rz0+rz1>rz2+rz3+rz4{
+                    tapLeft=true
+                }else{
+                    tapLeft=false
+                }
+                return true
+            }
+        }
+        return false
+    }
+    func checkTaps(_ n1:Int,_ n2:Int)->Bool{
+        for i in n1...n2{
+            if checkTap(cnt: i){
+                return true
+            }
+        }
+        return false
+    }
+
+    func stopMotion() {
+        isStarted = false
+        motionManager.stopDeviceMotionUpdates()
+    }
+
+    private func updateMotionData(deviceMotion:CMDeviceMotion) {
+        let ax=deviceMotion.userAcceleration.x
+        rotatex.append(Int(deviceMotion.rotationRate.x*50))
+        rotatez.append(Int(deviceMotion.rotationRate.z*50))
+        accel.append(Int(ax*50))
+        if accel.count>100{
+//            print("updateMotion")
+            accel.remove(at: 0)
+            rotatez.remove(at: 0)
+            rotatex.remove(at: 0)
+            if checkTap(cnt: 0){
+                print("oneTap")
+                if checkTaps(30,60){
+                    print("doubleTap")
+                    stopMotion()
+                    onStartHideButton(0)
+                }
+            }
+        }
+    }
+    func startMotion(){
+        accel.removeAll()
+        rotatez.removeAll()
+        rotatex.removeAll()
+
+        // start monitoring sensor data
+        if motionManager.isDeviceMotionAvailable {
+            motionManager.deviceMotionUpdateInterval = 0.01
+            motionManager.startDeviceMotionUpdates(to: OperationQueue.current!, withHandler: {(motion:CMDeviceMotion?, error:Error?) in
+                self.updateMotionData(deviceMotion: motion!)
+            })
+        }
+        isStarted = true
+    }
+    
+    
+    
+    
+    
+/*    var tapStr:String=""
     var isStarted:Bool=false
     var accel = Array<Int>()
     let motionManager = CMMotionManager()
@@ -98,6 +187,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
 //        print(tapStr)
     }
+ */
 //motion sensor
     
     @IBAction func onStartHideButton(_ sender: Any) {
@@ -184,6 +274,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         doModes_sub(mode: 6)
     }
     func doModes(){
+        stopMotion()
         let storyboard: UIStoryboard = self.storyboard!
         if targetMode>=0 && targetMode<=4{
             let mainBrightness=UIScreen.main.brightness//明るさを保持
@@ -213,6 +304,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 nextView.targetMode = targetMode
                 self.present(nextView, animated: true, completion: nil)
             }else{
+                startMotion()
                 if camera.getUserDefaultBool(str: "cameraON", ret: true){
                     return
                 }else{
@@ -228,6 +320,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
             }else{
+                startMotion()
                 if !camera.getUserDefaultBool(str: "cameraON", ret: true){
                     return
                 }else{
@@ -616,7 +709,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             UIScreen.main.brightness = CGFloat(UserDefaults.standard.float(forKey: "mainBrightness"))
             print("mainScreenBrightness-unwind restored****8r")
         }
-         UIApplication.shared.isIdleTimerDisabled = false//スリープする.監視する
+        UIApplication.shared.isIdleTimerDisabled = false//スリープする.監視する
         camera.setLedLevel(0)
         startMotion()
     }
