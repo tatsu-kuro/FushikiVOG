@@ -581,6 +581,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let bw=(ww-sp*10)/7//ボタン幅
         let bh=bw*170/440
         let by=wh-bh-sp
+        let hideButtonY=topPadding+(wh-bh-bw)/2
         tableView.frame=CGRect(x:leftPadding,y:0,width:ww,height: by)
  
         camera.setButtonProperty(ettButton,x:sp*2+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
@@ -590,7 +591,8 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         camera.setButtonProperty(caloricOknButton,x:bw*4+sp*6+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(helpButton,x:bw*5+sp*7+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(setteiButton,x:bw*6+sp*8+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
-        camera.setButtonProperty(startHideButton, x: bw*5+sp*7+leftPadding, y: by/10, w: bw, h: by*4/5, UIColor.darkGray)
+//        camera.setButtonProperty(startHideButton, x: bw*5+sp*7+leftPadding, y: by/10, w: bw, h: by*4/5, UIColor.darkGray)
+        camera.setButtonProperty(startHideButton, x: bw*5+sp*7+leftPadding, y: hideButtonY, w: bw, h: bw, UIColor.darkGray)
 //        if ww/2 > by{
 //            titleImage.frame.origin.y = sp+topPadding
 //            titleImage.frame.size.width = by*2
