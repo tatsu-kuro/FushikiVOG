@@ -544,7 +544,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         camera.setButtonProperty(helpButton,x:bw*5+sp*7+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(setteiButton,x:bw*6+sp*8+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
 //        camera.setButtonProperty(startHideButton, x: bw*5+sp*7+leftPadding, y: by/10, w: bw, h: by*4/5, UIColor.darkGray)
-        camera.setButtonProperty(startHideButton, x: bw*5+sp*7+leftPadding, y: hideButtonY, w: bw, h: bw, UIColor.darkGray)
+        camera.setButtonProperty(startHideButton, x: bw*6+sp*8+leftPadding, y: hideButtonY, w: bw, h: bw, UIColor.darkGray)
 //        if ww/2 > by{
 //            titleImage.frame.origin.y = sp+topPadding
 //            titleImage.frame.size.width = by*2
