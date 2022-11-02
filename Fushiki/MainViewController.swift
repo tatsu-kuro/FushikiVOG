@@ -45,13 +45,16 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var rotatez = Array<Int>()
     var rotatex = Array<Int>()
     var tapLeft:Bool=false
-
-    func checkTap(cnt:Int)->Bool{
-        for i in 0...39{
+    func checkNotMove(cnt:Int)->Bool{
+        for i in 0...50{
             if rotatex[cnt+i] > 9 || rotatex[cnt+i] < -9{
                 return false
             }
         }
+        return true
+    }
+    func checkTap(cnt:Int)->Bool{
+
         let a0=accel[cnt]
         let a1=accel[cnt+1]
         let a2=accel[cnt+2]
@@ -63,7 +66,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let rz3=rotatez[cnt+3]
         let rz4=rotatez[cnt+4]
         if a0 > -1 && a1 > -1 && a2<1 && a3<1 && a4<1{
-            if a0+a1>6 && a2+a3+a4 < -6{
+            if a0+a1>3 && a2+a3+a4 < -3{
                 if rz0+rz1>rz2+rz3+rz4{
                     tapLeft=true
                 }else{
@@ -98,9 +101,9 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             accel.remove(at: 0)
             rotatez.remove(at: 0)
             rotatex.remove(at: 0)
-            if checkTap(cnt: 0){
+            if checkTap(cnt: 0)&&checkNotMove(cnt: 0){
                 print("oneTap")
-                if checkTaps(30,60){
+                if checkTaps(20,70){
                     print("doubleTap")
                     stopMotion()
                     onStartHideButton(0)
@@ -122,72 +125,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         isStarted = true
     }
-    
-    
-    
-    
-    
-/*    var tapStr:String=""
-    var isStarted:Bool=false
-    var accel = Array<Int>()
-    let motionManager = CMMotionManager()
-    func startMotion() {
-        if isStarted{
-            return
-        }
-        accel.removeAll()
-        tapStr=""
-        // start monitoring sensor data
-        if motionManager.isDeviceMotionAvailable {
-            motionManager.deviceMotionUpdateInterval = 0.01
-            motionManager.startDeviceMotionUpdates(to: OperationQueue.current!, withHandler: {(motion:CMDeviceMotion?, error:Error?) in
-                self.updateMotionData(deviceMotion: motion!)
-            })
-        }
-        isStarted = true
-    }
-    func stopMotion() {
-        tapStr=""
-        isStarted = false
-        motionManager.stopDeviceMotionUpdates()
-        onStartHideButton(0)
-    }
-    func checkTap(cnt:Int)->Bool{
-        if accel[cnt]>accel[cnt+1]+10 && accel[cnt+1]<accel[cnt+2]-10 && accel[cnt+3]<3 && accel[cnt+4]<3{
-            accel[cnt+3]=10
-            return true
-        }else{
-            return false
-        }
-    }
-    func checkTaps(_ n1:Int,_ n2:Int)->Bool{
-        for i in n1...n2{
-            if checkTap(cnt: i){
-                return true
-            }
-        }
-        return false
-    }
-    private func updateMotionData(deviceMotion:CMDeviceMotion) {
-        let z=deviceMotion.userAcceleration.z
-        accel.insert(Int(z*100),at: 0)
-        if accel.count>100{
-            accel.removeLast()
-            if checkTap(cnt: 95){
-                tapStr = "1"
-                print(tapStr)
-                if checkTaps(0,50){
-                    if checkTaps(51, 93)==false{//95,0-50でタップがあり51-93でタップがない時
-                        tapStr += "2"
-                        print(tapStr)
-                        stopMotion()
-                    }
-                }
-            }
-        }
-//        print(tapStr)
-    }
- */
+
 //motion sensor
     
     @IBAction func onStartHideButton(_ sender: Any) {
@@ -436,6 +374,16 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         UIApplication.shared.beginReceivingRemoteControlEvents()
         self.becomeFirstResponder()
         fromUnwindFlag=false
+        UIApplication.shared.isIdleTimerDisabled = false//スリープする
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(foreground(notification:)),
+                                               name: UIApplication.willEnterForegroundNotification,
+                                               object: nil
+        )
+    }
+    @objc func foreground(notification: Notification) {
+        print("フォアグラウンド")
+        startMotion()
     }
     override func viewDidAppear(_ animated: Bool) {
         if UIApplication.shared.isIdleTimerDisabled == true{
