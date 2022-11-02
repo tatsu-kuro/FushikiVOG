@@ -14,23 +14,23 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     var blackRightFrame0:CGRect=CGRect(x:0,y:0,width:0,height:0)
     var blackLeftFrame:CGRect=CGRect(x:0,y:0,width:0,height:0)
     var blackRightFrame:CGRect=CGRect(x:0,y:0,width: 0,height: 0)
-
+    
     let camera = myFunctions()//name:"Fushiki")
     var cirDiameter:CGFloat = 0
-//    var startTime=CFAbsoluteTimeGetCurrent()
+    //    var startTime=CFAbsoluteTimeGetCurrent()
     var lastTime=CFAbsoluteTimeGetCurrent()
     var timerREC:Timer?
     @IBOutlet weak var recClarification: UIImageView!
     var displayLinkF:Bool=false
     var displayLink:CADisplayLink?
-//    var tcount: Int = 0
+    //    var tcount: Int = 0
     var ettWidth:Int = 50
     var ettMode:Int = 0
     var targetMode:Int = 0
     var ettW:CGFloat = 0
     var ettH:CGFloat = 0
     var recordedF:Bool = false
-
+    
     @IBOutlet weak var blackRightImageView: UIImageView!
     @IBOutlet weak var blackLeftImageView: UIImageView!
     var tapInterval=CFAbsoluteTimeGetCurrent()
@@ -79,14 +79,14 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
                     doubleTap(0)
                 }
                 tapInterval=CFAbsoluteTimeGetCurrent()
-//            case .remoteControlNextTrack:
-//                ettWidth = 2
-//                setETTwidth(width: 2)
-//                tcount=1
-//            case .remoteControlPreviousTrack:
-//                ettWidth = 1
-//                setETTwidth(width: 1)
-//                tcount=1
+                //            case .remoteControlNextTrack:
+                //                ettWidth = 2
+                //                setETTwidth(width: 2)
+                //                tcount=1
+                //            case .remoteControlPreviousTrack:
+                //                ettWidth = 1
+                //                setETTwidth(width: 1)
+                //                tcount=1
             default:
                 print("Others")
             }
@@ -99,9 +99,9 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         return true
     }
     override func viewDidAppear(_ animated: Bool) {
-
+        
     }
- 
+    
     var cntREC:Int=0
     @objc func updateRecClarification(tm: Timer) {//録画していることを明確に示す必要がある 0.02
         cntREC += 1
@@ -122,7 +122,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     var centerX:CGFloat=0
     var centerY:CGFloat=0
     var soundIdx:SystemSoundID = 0
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -132,13 +132,13 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         
         let cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
         camera.initSession(camera: Int(cameraType), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
-      
-//        if cameraType==0{
-//        camera.setZoom(level:0.03)
-//        }else{
-//            camera.setZoom(level: 0)
-//        }
-//focudは最短
+        
+        //        if cameraType==0{
+        //        camera.setZoom(level:0.03)
+        //        }else{
+        //            camera.setZoom(level: 0)
+        //        }
+        //focudは最短
         camera.setZoom(level:camera.getUserDefaultFloat(str: "zoomValue", ret: 0))
         camera.setFocus(focus: camera.getUserDefaultFloat(str: "focusValue", ret: 0))
         if cameraType != 0{
@@ -150,7 +150,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         ettSpeed.removeAll()
         ettSec.removeAll()
         currentEttNum=0
-
+        
         var ettTxt:String = ""
         if ettMode==0{
             ettTxt = UserDefaults.standard.string(forKey: "ettModeText0")!
@@ -162,7 +162,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
             ettTxt = UserDefaults.standard.string(forKey: "ettModeText3")!
         }
         let ettTxtComponents = ettTxt.components(separatedBy: ",")
-
+        
         var ettWidthX = Int(ettTxtComponents[0])!//横幅:1-5
         for i in 1...ettTxtComponents.count-1{
             let str = ettTxtComponents[i].components(separatedBy: ":")
@@ -178,7 +178,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         let bottom=UserDefaults.standard.float(forKey: "bottom")
         let left=UserDefaults.standard.float(forKey: "left")
         let right=UserDefaults.standard.float(forKey: "right")
-//    print("top,bottom,left,right",top,bottom,left,right)
+        //    print("top,bottom,left,right",top,bottom,left,right)
         
         let ww=view.bounds.width-CGFloat(left+right)
         let wh=view.bounds.height//-CGFloat(top+bottom)
@@ -191,7 +191,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         centerX=ww/2+CGFloat(left)
         centerY=wh/2+CGFloat(top)
         cirDiameter=ww/26
-
+        
         ettW = (ww/2)-cirDiameter// *CGFloat(ettWidth)/100.0
         ettH = (wh/2)-cirDiameter// *CGFloat(ettWidth)/100.0
         if ettWidthX>5{
@@ -202,35 +202,35 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         ettW=ettH+(ettW-ettH)*CGFloat(ettWidthX)/5
         displayLink = CADisplayLink(target: self, selector: #selector(self.update))
         displayLink!.preferredFramesPerSecond = 120
-         //まず見えないところに円を表示
+        //まず見えないところに円を表示
         drawCircle(cPoint: CGPoint(x:-100,y:-100))//damy
-  
+        
         if UserDefaults.standard.bool(forKey: "cameraON")==false{
             //非録画モードなら、ここでdisplayLinkスタート
             displayLink?.add(to: RunLoop.main, forMode: .common)
             displayLinkF=true
         }else{
             //録画モードでは、timerRecで録画スタートさせて、実際に録画が始まるところをチェックしてdisplayLinkをスタート
-//            if let soundUrl = URL(string:
-//                                    "/System/Library/Audio/UISounds/end_record.caf"/*photoShutter.caf*/){
-//                let speakerOnOff=UserDefaults.standard.integer(forKey: "speakerOnOff")
-//                if speakerOnOff==1{
-//
-//                AudioServicesCreateSystemSoundID(soundUrl as CFURL, &soundIdx)
-//                AudioServicesPlaySystemSound(soundIdx)
-//                }
-//            }
+            //            if let soundUrl = URL(string:
+            //                                    "/System/Library/Audio/UISounds/end_record.caf"/*photoShutter.caf*/){
+            //                let speakerOnOff=UserDefaults.standard.integer(forKey: "speakerOnOff")
+            //                if speakerOnOff==1{
+            //
+            //                AudioServicesCreateSystemSoundID(soundUrl as CFURL, &soundIdx)
+            //                AudioServicesPlaySystemSound(soundIdx)
+            //                }
+            //            }
             camera.recordStartTime=0
         }
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
         }
-    
+        
         UIApplication.shared.beginReceivingRemoteControlEvents()
         self.becomeFirstResponder()
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
-
+        
         if !UserDefaults.standard.bool(forKey: "cameraON"){
             recClarification.isHidden=true
         }else{
@@ -238,7 +238,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
             recClarification.frame=camera.getRecClarificationRct(width:view.bounds.width,height:view.bounds.height)
             //録画モードでは、timerRecで録画スタートさせて、実際に録画が始まる時間を取得
         }
-       
+        
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
         }
@@ -246,22 +246,23 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         // ファーストレスポンダにする（その結果、キーボードが表示される）
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
-      
+        
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         stopDisplaylink()
     }
-//    override func prefersHomeIndicatorAutoHidden() -> Bool {
-//        return true
-//    }
-    var lastrand:Int=1
-    var lastRandPoint:CGPoint = CGPoint(x:-200,y:-200)
+    //    override func prefersHomeIndicatorAutoHidden() -> Bool {
+    //        return true
+    //    }
     var lastSec:Int = -1
-    var lastRepeat:Int=1
+    var lastRandPoint:CGPoint = CGPoint(x:-200,y:-200)
+    /*
+    var lastrand:Int=1
+     var lastRepeat:Int=1
     var lastX:Int=1
     var lastXY:Int=1
-    func getRandPointX()->CGPoint{
+    func getRandPointX2()->CGPoint{
         if lastRepeat==1{
             let x = getLastRandom(last: lastX)
             lastRepeat=Int.random(in: 1..<4)
@@ -270,15 +271,54 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
             lastRepeat -= 1
         }
         return CGPoint(x:centerX+CGFloat(lastX-2)*ettW,y:centerY)
+    }*/
+    /*   func getRandPointXY()->CGPoint {
+     let xy=getRandom9()
+     let x=xy/3
+     let y=xy%3
+     print("xy,x,y:",xy,x,y)
+     return CGPoint(x:centerX+CGFloat(x-1)*ettW,y:centerY+CGFloat(y-1)*ettH)
+ }*/
+    func getRandPointX()->CGPoint{
+        let x=getRandom3()%3
+        return CGPoint(x:centerX+CGFloat(x-1)*ettW,y:centerY)
     }
+    /*
     func getLastRandom(last:Int)->Int{
         var rand=Int.random(in: 1..<3)+last
         if rand>3{
             rand -= 3
         }
         return rand
+    }*/
+    let piStr="314159265358979323846264"
+    let pi3Str="12123121231323123131321"
+    var randCnt:Int=0
+    func getRandom3()->Int{
+        let cnt=randCnt%21+1
+        let sub1 = String(pi3Str.prefix(cnt))
+        let sub2 = String(sub1.suffix(1))
+        randCnt += 1
+//        print("cnt:",cnt,sub1,sub2)
+        return Int(sub2)! - 1
+    }
+    func getRandom9()->Int{
+        let cnt=randCnt%20+1
+        let sub1 = String(piStr.prefix(cnt))
+        let sub2 = String(sub1.suffix(1))
+        randCnt += 1
+//        print("cnt:",cnt,sub1,sub2)
+        return Int(sub2)! - 1
     }
     func getRandPointXY()->CGPoint {
+        let xy=getRandom9()
+        let x=xy/3
+        let y=xy%3
+        print("xy,x,y:",xy,x,y)
+        return CGPoint(x:centerX+CGFloat(x-1)*ettW,y:centerY+CGFloat(y-1)*ettH)
+    }
+    /*
+    func getRandPointXY1()->CGPoint {
         if lastRepeat==1{
             let xy = getLastRandom8(last: lastXY)
             lastRepeat=Int.random(in: 1..<4)
@@ -310,41 +350,42 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         let xd=CGFloat(rand)*ettW/2
         return CGPoint(x:centerX+xd, y: centerY)
     }
- 
-    func getRandPointXY1()->CGPoint {
+    
+    func getRandPointXY2()->CGPoint {
         var xyPoint=getRandPointX()
         let randY=Int.random(in: -1..<2)
         xyPoint.y=centerY+ettH*CGFloat(randY)
         return xyPoint
-    }
+    }*/
     //        var rand = Int.random(in: 0..<9)
-//        if (rand==9){
-//            rand=4
-//        }
-//        if (lastrand==rand){
-//            rand += 1
-//            if(rand==9){
-//                rand=0
-//            }
-//        }
-//        if repeat2==1{
-//            rand=lastrand
-//        }
-//        lastrand=rand
-//        var xn:Int=0
-//        var yn:Int=0
-//        if(rand%3==0){xn = -1}
-//        else if(rand%3==1){xn=0}
-//        else {xn=1}
-//        if(rand/3==0){yn = -1}
-//        else if(rand/3==1){yn = 0}
-//        else {yn=1}
-//        let x0=centerX
-//        let xd=ettH
-//        let y0=centerY
-//        let yd=ettH
-//        return CGPoint(x:x0 + CGFloat(xn)*xd, y: y0 + CGFloat(yn)*yd)
-//    }
+    //        if (rand==9){
+    //            rand=4
+    //        }
+    //        if (lastrand==rand){
+    //            rand += 1
+    //            if(rand==9){
+    //                rand=0
+    //            }
+    //        }
+    //        if repeat2==1{
+    //            rand=lastrand
+    //        }
+    //        lastrand=rand
+    //        var xn:Int=0
+    //        var yn:Int=0
+    //        if(rand%3==0){xn = -1}
+    //        else if(rand%3==1){xn=0}
+    //        else {xn=1}
+    //        if(rand/3==0){yn = -1}
+    //        else if(rand/3==1){yn = 0}
+    //        else {yn=1}
+    //        let x0=centerX
+    //        let xd=ettH
+    //        let y0=centerY
+    //        let yd=ettH
+    //        return CGPoint(x:x0 + CGFloat(xn)*xd, y: y0 + CGFloat(yn)*yd)
+    //    }
+    /*
     func getRandPointXY25()->CGPoint {
         var rand = Int.random(in: 0..<10)
         if (rand==9){
@@ -370,7 +411,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         let y0=centerY
         let yd=ettH
         return CGPoint(x:x0 + CGFloat(xn)*xd, y: y0 + CGFloat(yn)*yd)
-    }
+    }*/
     func getSumEttSec(num:Int)->Double{
         var sumEttSec:Double=0
         for i in 0...num{
@@ -419,7 +460,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         let elapset=CFAbsoluteTimeGetCurrent()-camera.recordStartTime+0.1// recordstartTime
         
         if elapset<getSumEttSec(num:currentEttNum){
-
+            
             let etttype=ettType[currentEttNum]
             var ettspeed=CGFloat(ettSpeed[currentEttNum])
             if ettspeed==0{//静止モードは別に作ったので、0の時は１の半分のスピードとした。
@@ -459,8 +500,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
                         drawCircle(cPoint: CGPoint(x:centerX-ettW,y:centerY))
                     }
                 }
-//                leftRightSetBlack(sec:elapset,flag: leftRightBlackImageFlag)//1秒ごとに画面を縮小表示
-
+                //                leftRightSetBlack(sec:elapset,flag: leftRightBlackImageFlag)//1秒ごとに画面を縮小表示
             }else if etttype==4{//衝動縦
                 if ettspeed==0{
                     drawCircle(cPoint: CGPoint(x:centerX,y:centerY))
@@ -488,16 +528,16 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
             currentEttNum += 1
             if ettType.count-1<currentEttNum{
                 doubleTap(0)
-//            }else{
-//                camera.recordStartTime=CFAbsoluteTimeGetCurrent()
+                //            }else{
+                //                camera.recordStartTime=CFAbsoluteTimeGetCurrent()
             }
             drawCircle(cPoint: CGPoint(x:-200,y:-200))
             //damy
         }
     }
- 
+    
     var initf:Bool=false
-  
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
