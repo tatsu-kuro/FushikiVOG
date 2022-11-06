@@ -9,6 +9,7 @@
 import UIKit
 import Photos
 import AVFoundation
+import CoreMotion
 class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegate {
     var blackLeftFrame0:CGRect=CGRect(x:0,y:0,width:0,height:0)
     var blackRightFrame0:CGRect=CGRect(x:0,y:0,width:0,height:0)
@@ -30,7 +31,101 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     var ettW:CGFloat = 0
     var ettH:CGFloat = 0
     var recordedF:Bool = false
+    //motionsensor*******
     
+    let motionManager = CMMotionManager()
+    var isStarted = false
+    var tapLeft:Bool=false
+    var accelx = Array<Int>()
+    var accely = Array<Int>()
+    var accelz = Array<Int>()
+    func checkNotMove(cnt:Int)->Bool{
+        var sum:Int=0
+        for i in 15...25{
+            sum += abs(accelx[cnt+i])
+            sum += abs(accely[cnt+i])
+            sum += abs(accelz[cnt+i])
+        }
+        print("sum:",sum)
+        if sum < 2{//動かなすぎ
+            return false
+        }else if sum > 60{//動き過ぎ
+            return false
+        }
+        return true
+    }
+
+    func checkTap(cnt:Int)->Bool{
+        let a0=accely[cnt]
+        let a1=accely[cnt+1]
+        let a2=accely[cnt+2]
+        let a3=accely[cnt+3]
+        let a6=accely[cnt+6]
+        if a0+a1<6 && a2+a3>14 && a6 < 8{
+            tapLeft=true
+            return true
+        }else if a0+a1<6 && a2+a3 < -14 && a6 > -8{
+            tapLeft=false
+            return true
+        }
+        return false
+    }
+
+    
+    func checkTaps(_ n1:Int,_ n2:Int)->Bool{
+        for i in n1...n2{
+            if checkTap(cnt: i){
+                return true
+            }
+        }
+        return false
+    }
+    
+    func stopMotion() {
+        isStarted = false
+        motionManager.stopDeviceMotionUpdates()
+    }
+ 
+    private func updateMotionData(deviceMotion:CMDeviceMotion) {
+        let ay=deviceMotion.userAcceleration.y
+        let ax=deviceMotion.userAcceleration.x// rotationRate.x
+        let az=deviceMotion.userAcceleration.z// rotationRate.z
+        accely.append(Int(ay*100))
+        accelx.append(Int(ax*100))
+        accelz.append(Int(az*100))
+ 
+        if accelx.count>200{
+            accely.remove(at: 0)
+            accelz.remove(at: 0)
+            accelx.remove(at: 0)
+
+            if checkTap(cnt: 140) && checkTaps(170,190) && checkNotMove(cnt: 140){
+                stopMotion()
+//                onStartHideButton(0)
+                doubleTap(0)
+//                if tapLeft{
+//                    onAutoRecordButton(0)
+//                }else{
+//                    onPositioningRecordButton(0)
+//                }
+            }
+        }
+    }
+    func startMotion(){
+        accelx.removeAll()
+        accely.removeAll()
+        accelz.removeAll()
+        // start monitoring sensor data
+        if motionManager.isDeviceMotionAvailable {
+            motionManager.deviceMotionUpdateInterval = 0.01
+            motionManager.startDeviceMotionUpdates(to: OperationQueue.current!, withHandler: {(motion:CMDeviceMotion?, error:Error?) in
+                self.updateMotionData(deviceMotion: motion!)
+            })
+        }
+        isStarted = true
+    }
+    
+    //motionsensor******
     @IBOutlet weak var blackRightImageView: UIImageView!
     @IBOutlet weak var blackLeftImageView: UIImageView!
     var tapInterval=CFAbsoluteTimeGetCurrent()
@@ -246,7 +341,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         // ファーストレスポンダにする（その結果、キーボードが表示される）
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
-        
+        startMotion()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
