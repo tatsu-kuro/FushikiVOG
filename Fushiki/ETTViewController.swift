@@ -70,11 +70,25 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         }
         return false
     }
-  
+    func checkTapOnly(cnt:Int)->Bool{
+        let a0=accely[cnt]
+        let a1=accely[cnt+1]
+        let a2=accely[cnt+2]
+        let a3=accely[cnt+3]
+        let a6=accely[cnt+6]
+        if a0+a1<6 && a2+a3>14 && a6 < 8{
+                tapLeft=true
+                return true
+        }else if a0+a1<6 && a2+a3 < -14 && a6 > -8{
+                tapLeft=false
+                return true
+        }
+        return false
+    }
     
     func checkTaps(_ n1:Int,_ n2:Int)->Bool{
         for i in n1...n2{
-            if checkTap(cnt: i){
+            if checkTapOnly(cnt: i){
                 return true
             }
         }
@@ -94,12 +108,12 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         accelx.append(Int(ax*100))
         accelz.append(Int(az*100))
  
-        if accelx.count>216{
+        if accelx.count>225{
             accely.remove(at: 0)
             accelz.remove(at: 0)
             accelx.remove(at: 0)
 
-            if checkTap(cnt: 140) && checkTaps(155,185){
+            if checkTap(cnt: 140) && checkTaps(155,185) && checkTaps(185,215){
                 stopMotion()
 //                onStartHideButton(0)
                 doubleTap(0)
