@@ -51,7 +51,7 @@ class CameraViewController: UIViewController {
         zoomBar.minimumValue = 0
         zoomBar.maximumValue = 0.1
         zoomBar.addTarget(self, action: #selector(onZoomValueChange), for: UIControl.Event.valueChanged)
-        zoomBar.value=camera.getUserDefaultFloat(str: "zoomValue", ret:0)
+        zoomBar.value=camera.getUserDefaultFloat(str: "zoomValue", ret:0.02)
         camera.setZoom(level: zoomBar.value)
         zoomValueLabel.text=(Int(zoomBar.value*1000)).description
 
