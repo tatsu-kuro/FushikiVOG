@@ -213,7 +213,7 @@ class SetteiViewController: UIViewController {
         oknMode=0
         oknTime=60
         ettMode=0        
-        UserDefaults.standard.set(0, forKey: "zoomValue")
+        UserDefaults.standard.set(0.02, forKey: "zoomValue")
         ettModeText0 = "3,0:1:2,1:2:10,3:2:10,0:1:2,2:2:10,4:2:10,6:2:12"
         ettModeText1 = "3,0:1:2,1:2:10,0:6:3,3:2:10,0:1:2,2:2:10,0:6:3,4:2:10,0:1:2,6:2:12"
         setUserDefaults()
