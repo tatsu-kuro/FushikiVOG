@@ -191,7 +191,7 @@ class CarolicETTViewController: UIViewController{
 //        
 //        camera.setLedLevel(camera.getUserDefaultFloat(str: "ledValue", ret:0))
 //
-        camera.setZoom(level:camera.getUserDefaultFloat(str: "zoomValue", ret: 0))
+        camera.setZoom(level:camera.getUserDefaultFloat(str: "zoomValue", ret: 0.01))
         camera.setFocus(focus: camera.getUserDefaultFloat(str: "focusValue", ret: 0))
         if cameraType != 0{
             camera.setLedLevel(camera.getUserDefaultFloat(str: "ledValue", ret:0))

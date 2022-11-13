@@ -453,14 +453,14 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         /*     ettModeText0 = "3,0:1:2,1:2:10,3:2:10,0:1:2,2:2:10,4:2:10,6:2:12"
          ettModeText1 = "3,0:1:2,1:2:10,0:6:3,3:2:10,0:1:2,2:2:10,0:6:3,4:2:10,0:1:2,6:2:12"
 */
-        ettModeText0 = camera.getUserDefaultString(str: "ettModeText0", ret: "3,0:1:2,1:2:10,3:2:10,0:1:2,2:2:10,4:2:10,6:2:12")
+        ettModeText0 = camera.getUserDefaultString(str: "ettModeText0", ret: "3,0:1:2,1:2:10,3:2:10,0:1:2,6:2:12")
         if camera.checkEttString(ettStr: ettModeText0)==false{//パラメータ並びをチェック
-            UserDefaults.standard.set("3,0:1:2,1:2:10,3:2:10,0:1:2,2:2:10,4:2:10,6:2:12",forKey:"ettModeText0")
+            UserDefaults.standard.set("3,0:1:2,1:2:10,3:2:10,0:1:2,6:2:12",forKey:"ettModeText0")
         }
         ettModeText1 = camera.getUserDefaultString(str: "ettModeText1", ret:
-                                                    "3,0:1:2,1:2:10,0:6:3,3:2:10,0:1:2,2:2:10,0:6:3,4:2:10,0:1:2,6:2:12")
+                                                    "3,0:1:2,2:2:10,4:2:10,0:1:2,6:2:12")
         if camera.checkEttString(ettStr: ettModeText1)==false{
-            UserDefaults.standard.set("3,0:1:2,1:2:10,0:6:3,3:2:10,0:1:2,2:2:10,0:6:3,4:2:10,0:1:2,6:2:12",forKey:"ettModeText1")
+            UserDefaults.standard.set("3,0:1:2,2:2:10,4:2:10,0:1:2,6:2:12",forKey:"ettModeText1")
         }
         ettModeText2 = camera.getUserDefaultString(str: "ettModeText2", ret: "3,0:1:2,1:2:12,3:2:12")
         if camera.checkEttString(ettStr: ettModeText2)==false{
