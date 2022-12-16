@@ -232,11 +232,11 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     func doModes(){
         stopMotion()
         let storyboard: UIStoryboard = self.storyboard!
-        if targetMode>=0 && targetMode<=4{
-            let mainBrightness=UIScreen.main.brightness//明るさを保持
-            UserDefaults.standard.set(mainBrightness, forKey: "mainBrightness")
-            print("mainBrightness saved****")
-        }
+//        if targetMode>=0 && targetMode<=4{
+//            let mainBrightness=UIScreen.main.brightness//明るさを保持
+//            UserDefaults.standard.set(mainBrightness, forKey: "mainBrightness")
+//            print("mainBrightness saved****")
+//        }
         if targetMode<3 && tableView.visibleCells.count>5{//録画の時tableviewをトップに戻す
             
             tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
@@ -678,8 +678,8 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             DispatchQueue.main.async { [self] in
                 self.tableView.contentOffset.y=0
             }
-            UIScreen.main.brightness = CGFloat(UserDefaults.standard.float(forKey: "mainBrightness"))
-            print("mainScreenBrightness-unwind restored****8r")
+//            UIScreen.main.brightness = CGFloat(UserDefaults.standard.float(forKey: "mainBrightness"))
+//            print("mainScreenBrightness-unwind restored****8r")
         }
         UIApplication.shared.isIdleTimerDisabled = false//スリープする.監視する
         camera.setLedLevel(0)

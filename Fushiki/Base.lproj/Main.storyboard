@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="landscape" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -293,6 +293,7 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                             <outletCollection property="gestureRecognizers" destination="u8Q-Hr-VUf" appends="YES" id="wDM-jF-fBb"/>
                             <outletCollection property="gestureRecognizers" destination="zcQ-ry-kcN" appends="YES" id="gzs-70-QUV"/>
                             <outletCollection property="gestureRecognizers" destination="dgP-ma-pTe" appends="YES" id="3I1-vL-FSU"/>
+                            <outletCollection property="gestureRecognizers" destination="mQk-pX-Rff" appends="YES" id="Qu0-ng-Vhf"/>
                         </connections>
                     </view>
                     <connections>
@@ -319,6 +320,11 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                         <action selector="panGes:" destination="fl3-2K-fNm" id="i9y-I0-Qos"/>
                     </connections>
                 </panGestureRecognizer>
+                <pinchGestureRecognizer id="mQk-pX-Rff">
+                    <connections>
+                        <action selector="onPinchGesture:" destination="fl3-2K-fNm" id="FWH-Av-hU5"/>
+                    </connections>
+                </pinchGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-876.5625" y="-2282.608695652174"/>
         </scene>

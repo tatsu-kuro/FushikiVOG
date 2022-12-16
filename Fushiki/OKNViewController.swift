@@ -224,6 +224,7 @@ class OKNViewController: UIViewController{
     var initf:Bool=false
     @objc func update() {
 //        cnt += 1
+        
         let x0=ww/5
         if initf {
             for _ in 0..<6{
@@ -272,7 +273,7 @@ class OKNViewController: UIViewController{
             x += x0
         }
         for i in 0..<6 {
-            drawBand(rectB:CGRect(x:CGFloat(i-1)*x0+x,y:0,width:ww/10,height:wh))
+            drawBand(rectB:CGRect(x:CGFloat(i-1)*x0+x,y:0,width:bandWidth,height:wh))
         }
         lastx=x
 //        if left==0{
@@ -292,14 +293,41 @@ class OKNViewController: UIViewController{
             camera.recordStart()//ここだと暗くならない
         }
     }
+    var bandWidth:CGFloat=0
+    var bandWidthStart:CGFloat=0
+    @IBAction func onPinchGesture(_ sender: UIPinchGestureRecognizer) {
+        if(sender.state == UIGestureRecognizer.State.began){
+            //ピンチ開始時のアフィン変換をクラス変数に保持する。
+            bandWidth = CGFloat(camera.getUserDefaultFloat(str: "bandWidth", ret: Float(view.bounds.width/10)))
+            bandWidthStart=bandWidth
+        }
+        let maxW=view.bounds.width/5
+        if sender.scale>1{
+            var temp=bandWidthStart+10*sender.scale
+            if temp>maxW-1{
+                temp=maxW-1
+            }
+            bandWidth=temp
+        }else{
+            var temp=bandWidthStart-10/sender.scale
+            if temp<1{
+                temp=1
+            }
+            bandWidth=temp
+        }
+        UserDefaults.standard.set(bandWidth, forKey:"bandWidth")
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 //        mainBrightness = UIScreen.main.brightness
-        UIScreen.main.brightness=CGFloat(camera.getUserDefaultFloat(str: "screenBrightness",ret:1.0))
+//        UIScreen.main.brightness=CGFloat(camera.getUserDefaultFloat(str: "screenBrightness",ret:1.0))
 //        UIScreen.main.brightness = CGFloat(camera.getUserDefaultFloat(str: "screenBrightness", ret:0.5))
         camera.makeAlbum()
 //        camera.initSession(camera: 0, bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
 //
+        bandWidth = CGFloat(camera.getUserDefaultFloat(str: "bandWidth", ret: Float(view.bounds.width/10)))
         let cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
         camera.initSession(camera: Int(cameraType), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
 //        if cameraType == 2{

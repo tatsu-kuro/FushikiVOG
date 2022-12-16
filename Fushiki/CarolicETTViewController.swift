@@ -173,7 +173,7 @@ class CarolicETTViewController: UIViewController{
         ettW=ettH+(ettW-ettH)*CGFloat(ettWidthX)/5//１番パラメータの横振幅を使います。
 //        mainBrightness = UIScreen.main.brightness
         
-        UIScreen.main.brightness = CGFloat(camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
+//        UIScreen.main.brightness = CGFloat(camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
         
          let cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
         camera.initSession(camera: Int(cameraType), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)

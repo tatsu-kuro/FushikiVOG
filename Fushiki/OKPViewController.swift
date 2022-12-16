@@ -146,8 +146,8 @@ class OKPViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
 //        mainBrightness = UIScreen.main.brightness
-        UIScreen.main.brightness = 1.0
-        UIScreen.main.brightness = CGFloat(1)//camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
+//        UIScreen.main.brightness = 1.0
+//        UIScreen.main.brightness = CGFloat(1)//camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
         camera.makeAlbum()
         leftPadding=CGFloat(UserDefaults.standard.float(forKey: "left")) + view.bounds.width/10
 

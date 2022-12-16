@@ -235,8 +235,8 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         super.viewDidLoad()
         
         camera.makeAlbum()
-        print(UIScreen.main.brightness)
-        UIScreen.main.brightness = CGFloat(1)//camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
+//        print(UIScreen.main.brightness)
+//        UIScreen.main.brightness = CGFloat(1)//camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
         
         let cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
         camera.initSession(camera: Int(cameraType), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
