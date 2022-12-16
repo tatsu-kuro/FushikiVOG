@@ -300,22 +300,27 @@ class OKNViewController: UIViewController{
             //ピンチ開始時のアフィン変換をクラス変数に保持する。
             bandWidth = CGFloat(camera.getUserDefaultFloat(str: "bandWidth", ret: Float(view.bounds.width/10)))
             bandWidthStart=bandWidth
-        }
-        let maxW=view.bounds.width/5
-        if sender.scale>1{
-            var temp=bandWidthStart+10*sender.scale
-            if temp>maxW-1{
-                temp=maxW-1
+            speedLabel.isHidden=false
+        }else if sender.state == .changed{
+            let maxW=view.bounds.width/5
+            if sender.scale>1{
+                var temp=bandWidthStart+10*sender.scale
+                if temp>maxW-1{
+                    temp=maxW-1
+                }
+                bandWidth=temp
+            }else{
+                var temp=bandWidthStart-10/sender.scale
+                if temp<1{
+                    temp=1
+                }
+                bandWidth=temp
             }
-            bandWidth=temp
-        }else{
-            var temp=bandWidthStart-10/sender.scale
-            if temp<1{
-                temp=1
-            }
-            bandWidth=temp
+            speedLabel.text="bandWidth:" + String(Int(bandWidth)) + "/" + String(Int(view.bounds.width/5))
+            UserDefaults.standard.set(bandWidth, forKey:"bandWidth")
+        }else if sender.state == .ended{
+            speedLabel.isHidden=true
         }
-        UserDefaults.standard.set(bandWidth, forKey:"bandWidth")
     }
     
     
