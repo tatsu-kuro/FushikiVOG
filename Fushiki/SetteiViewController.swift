@@ -145,13 +145,11 @@ class SetteiViewController: UIViewController {
             cameraON=false
             speakerSwitch.isEnabled=false
             speakerText.alpha=0.5
-            cameraButton.alpha=0.5
-            cameraButton.isEnabled=false
+            cameraButton.isHidden=true
         }else{
             speakerSwitch.isEnabled=true
-            cameraButton.isEnabled=true
+            cameraButton.isHidden=false
             speakerText.alpha=1.0
-            cameraButton.alpha=1.0
             cameraON=true
         }
         UserDefaults.standard.set(cameraON,forKey:"cameraON")
@@ -426,24 +424,24 @@ class SetteiViewController: UIViewController {
         oknText.frame  = CGRect(x:x1,   y: b4y ,width: bw*5, height: bh)
         oknTimeSlider.frame  = CGRect(x:x0,   y: b5y ,width: bw,height:bh)
         oknTimeText.frame  = CGRect(x:x1,   y: b5y ,width: bw*5,height:bh)
-        cameraSwitch.frame = CGRect(x:x0+bw*3/4+sp,   y: b6y ,width: bw,height:bh)
-        let switchHeight=cameraSwitch.frame.height
-        let switchWidth=cameraSwitch.frame.width
+        cameraSwitch.frame = CGRect(x:x0,   y: b6y ,width: bw,height:bh)
+ //       let switchHeight=cameraSwitch.frame.height
+   //     let switchWidth=cameraSwitch.frame.width
 //        let x3=x0+sp+switchWidth
-        let dy3=(switchHeight-bh)/2
-        let b7y=b6y+switchHeight+sp*2
-        camera.setButtonProperty(cameraButton, x: x0, y: b6y, w: bw*3/4, h: switchHeight, UIColor.systemOrange,0)
-        cameraLabel.frame = CGRect(x:cameraSwitch.frame.maxX+sp,y:b6y+dy3,width:bw*5,height:bh)
-        speakerText.frame = CGRect(x:x0+switchWidth+sp,   y: b7y+dy3,width: bw*5,height:bh)
+     //   let dy3=(switchHeight-bh)/2
+        let b7y=b6y+cameraSwitch.frame.height+sp
+        camera.setButtonProperty(cameraButton, x:cameraSwitch.frame.maxX+sp, y: b6y, w: bw*3/4, h:cameraSwitch.frame.height, UIColor.systemOrange,0)
+        cameraLabel.frame = CGRect(x:cameraSwitch.frame.maxX+sp,y:b6y,width:bw*5,height:cameraSwitch.frame.height)
         speakerSwitch.frame = CGRect(x:x0,y:b7y,width:bw,height: bh)
-        bw=(ww-sp*10)/7//ボタン幅
+        speakerText.frame = CGRect(x:speakerSwitch.frame.maxX+sp,   y: b7y,width: bw*5,height:speakerSwitch.frame.height)
+          bw=(ww-sp*10)/7//ボタン幅
         bh=bw*170/440
         let by=wh-bh-sp
         camera.setButtonProperty(defaultButton,x:left+bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(exitButton,x:left+bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
         caloricLabel.frame=CGRect(x:left+bw*6+sp*8,y:by-sp-bw,width:bw,height:bw)
         if camera.firstLang().contains("ja"){
-            cameraButton.setTitle("設定", for:.normal)
+            cameraButton.setTitle(" 設定", for:.normal)
         }
     }
     
