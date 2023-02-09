@@ -11,10 +11,10 @@
 		6938C23C24C103370066CD69 /* SetteiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6938C23B24C103370066CD69 /* SetteiViewController.swift */; };
 		693DBADA25B31F3E00E9B534 /* PlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693DBAD925B31F3E00E9B534 /* PlayViewController.swift */; };
 		6959E1C025CEDF4D00617C64 /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6959E1BF25CEDF4D00617C64 /* ImagePickerController.swift */; };
+		69B3DDC7299517AB00C797CF /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69DB2C3025C3C510001EC81F /* opencv2.framework */; };
 		69C7640925C2EA55008AECAD /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69DB12C023AEF297000C733A /* GameController.framework */; };
 		69CEA65225D3AEE900B34871 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CEA65125D3AEE900B34871 /* CameraViewController.swift */; };
 		69D0D83225AAFC3B00658D61 /* myFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D0D83125AAFC3B00658D61 /* myFunctions.swift */; };
-		69DB2C3125C3C510001EC81F /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69DB2C3025C3C510001EC81F /* opencv2.framework */; };
 		69DB2C4325C3C8F0001EC81F /* OpenCVWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 69DB2C4225C3C8F0001EC81F /* OpenCVWrapper.mm */; };
 		8E2604122134237D00714C67 /* OKNViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2604112134237D00714C67 /* OKNViewController.swift */; };
 		8E3BD05F22C839A300454D93 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3BD05E22C839A300454D93 /* HelpViewController.swift */; };
@@ -62,7 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69DB2C3125C3C510001EC81F /* opencv2.framework in Frameworks */,
+				69B3DDC7299517AB00C797CF /* opencv2.framework in Frameworks */,
 				69C7640925C2EA55008AECAD /* GameController.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -365,7 +365,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.7.5;
+				CURRENT_PROJECT_VERSION = 2.7.9;
 				DEVELOPMENT_TEAM = YKSHGZ7H3T;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -380,6 +380,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kuroda33.FushikiETTopenCV;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Fushiki-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -393,7 +396,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.7.5;
+				CURRENT_PROJECT_VERSION = 2.7.9;
 				DEVELOPMENT_TEAM = YKSHGZ7H3T;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -408,6 +411,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kuroda33.FushikiETTopenCV;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Fushiki-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

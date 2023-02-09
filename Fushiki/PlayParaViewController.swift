@@ -189,12 +189,13 @@ class PlayParaViewController: UIViewController {
         para3.frame=CGRect(x:head,y:sp*3+bh*2,width:bw,height: bh)
         para4.frame=CGRect(x:head,y:sp*4+bh*3,width:bw,height: bh)
         faceMarkSwitch.frame=CGRect(x:head,y:sp*5+bh*4,width:bw,height: bh)
-        showRectSwitch.frame=CGRect(x:head,y:sp*6+bh*5,width:bw,height: bh)
+        let switchH=faceMarkSwitch.frame.height
+        showRectSwitch.frame=CGRect(x:head,y:faceMarkSwitch.frame.maxY+sp,width:bw,height:bh)
         paraText1.frame=CGRect(x:head+bw+3*sp,y:sp,width:lw,height: bh)
         paraText2.frame=CGRect(x:head+bw+3*sp,y:sp*2+bh,width:lw,height: bh)
         paraText3.frame=CGRect(x:head+bw+3*sp,y:sp*3+bh*2,width:lw,height: bh)
         paraText4.frame=CGRect(x:head+bw+3*sp,y:sp*4+bh*3,width:lw,height: bh)
-        paraText5.frame=CGRect(x:head+bw+3*sp,y:sp*5+bh*4,width:lw,height: bh)
-        paraText6.frame=CGRect(x:head+bw+3*sp,y:sp*6+bh*5,width:lw,height: bh)
+        paraText5.frame=CGRect(x:head+bw+3*sp,y:sp*5+bh*4,width:lw,height: switchH)
+        paraText6.frame=CGRect(x:head+bw+3*sp,y:showRectSwitch.frame.minY,width:lw,height:switchH)
      }
 }

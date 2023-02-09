@@ -445,7 +445,6 @@ class SetteiViewController: UIViewController {
         }
     }
     
-    
     @IBAction func unwindPlayPara(segue: UIStoryboardSegue) {
     }
 }
