@@ -140,19 +140,26 @@ class SetteiViewController: UIViewController {
         performSegue(withIdentifier: "fromSettei", sender: self)
     }
 
+    func cameraOnOff(){
+        if cameraON==false{
+            cameraSwitch.isOn=false
+            speakerSwitch.isEnabled=false
+            cameraButton.isHidden=true
+        }else{
+            cameraSwitch.isOn=true
+            speakerSwitch.isEnabled=true
+            cameraButton.isHidden=false
+          }
+    }
+    
     @IBAction func onCameraSwitch(_ sender: UISwitch) {
         if sender.isOn == false {
             cameraON=false
-            speakerSwitch.isEnabled=false
-            speakerText.alpha=0.5
-            cameraButton.isHidden=true
         }else{
-            speakerSwitch.isEnabled=true
-            cameraButton.isHidden=false
-            speakerText.alpha=1.0
             cameraON=true
-        }
+         }
         UserDefaults.standard.set(cameraON,forKey:"cameraON")
+        cameraOnOff()
     }
 
     @IBAction func onOkpModeSwitch(_ sender: UISegmentedControl) {
@@ -290,6 +297,7 @@ class SetteiViewController: UIViewController {
         speakerOnOff=UserDefaults.standard.integer(forKey: "speakerOnOff")
         cameraType=UserDefaults.standard.integer(forKey: "cameraType")
         cameraON=UserDefaults.standard.bool(forKey: "cameraON")
+        cameraOnOff()
         if camera.getUserDefaultBool(str: "caloricEttOknFlag", ret: false)==false{
             caloricLabel.alpha=0.02
         }else{
@@ -297,22 +305,7 @@ class SetteiViewController: UIViewController {
         }
         ledValue = camera.getUserDefaultFloat(str: "ledValue", ret: 0)
         ledText.isHidden=true
-        ledSlider.isHidden=true
-        if cameraON==false{
-            cameraSwitch.isOn=false
-            speakerSwitch.isEnabled=false
-            cameraButton.isEnabled=false
-            cameraButton.alpha=0.5
-            speakerText.alpha=0.5
-
-        }else{
-            cameraSwitch.isOn=true
-            cameraButton.isEnabled=true
-            cameraButton.alpha=1.0
-            speakerText.alpha=1.0
-            speakerSwitch.isEnabled=true
-         }
- 
+        ledSlider.isHidden=true 
         ettMode = camera.getUserDefaultInt(str:"ettMode",ret:0)
         ettModeText0=camera.getUserDefaultString(str: "ettModeText0", ret: "0")
         ettModeText1=camera.getUserDefaultString(str: "ettModeText1", ret: "1")
