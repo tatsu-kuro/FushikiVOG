@@ -27,9 +27,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>This app takes a nystagmus image and put it in the album( Fushiki).</string>
+	<string>眼振映像を録画し、アルバムFushikiの中に保存します。</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app creates an album "Fushiki" and put a nystagmus image in it.</string>
+	<string>アルバムFushikiを作成し、その中に眼振動画を保存します。</string>
 	<key>UIBackgroundModes</key>
 	<array/>
 	<key>UIFileSharingEnabled</key>

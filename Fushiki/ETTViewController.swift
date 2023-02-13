@@ -214,6 +214,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     @objc func updateRecClarification(tm: Timer) {//録画していることを明確に示す必要がある 0.02
         cntREC += 1
         recClarification.alpha=camera.updateRecClarification(tm: cntREC)
+//        print(recClarification.alpha)
         if cntREC==150{//ここはカメラOFF時は通らない 3sec待って録画開始
             camera.recordStart()//ここだと暗くならない
             //実際に録画スタートした時にcamera.recordStartTimeが設定される
