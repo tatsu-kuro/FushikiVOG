@@ -499,7 +499,7 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
         captureSession.stopRunning()
     }
 
-    func initSession(camera:Int,bounds:CGRect,cameraView:UIImageView) {
+    func initSession(camera:Int,bounds:CGRect){//},cameraView:UIImageView) {
         // セッション生成
         cameraMode=camera
         if !UserDefaults.standard.bool(forKey: "cameraON"){
@@ -545,7 +545,7 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
             videoLayer.frame = bounds
             videoLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill//無くても同じ
             videoLayer.connection!.videoOrientation = .landscapeRight//　orientation
-            cameraView.layer.addSublayer(videoLayer)
+ //           cameraView.layer.addSublayer(videoLayer)
         }
         // セッションを開始する (録画開始とは別)
         captureSession.startRunning()

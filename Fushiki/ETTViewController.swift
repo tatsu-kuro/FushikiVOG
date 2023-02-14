@@ -213,7 +213,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     var cntREC:Int=0
     @objc func updateRecClarification(tm: Timer) {//録画していることを明確に示す必要がある 0.02
         cntREC += 1
-        recClarification.alpha=camera.updateRecClarification(tm: cntREC)
+//        recClarification.alpha=camera.updateRecClarification(tm: cntREC)
 //        print(recClarification.alpha)
         if cntREC==150{//ここはカメラOFF時は通らない 3sec待って録画開始
             camera.recordStart()//ここだと暗くならない
@@ -240,7 +240,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
 //        UIScreen.main.brightness = CGFloat(1)//camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
         
         let cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
-        camera.initSession(camera: Int(cameraType), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
+        camera.initSession(camera: Int(cameraType), bounds:CGRect(x:0,y:0,width:0,height: 0))//, cameraView: recClarification)
         
         //        if cameraType==0{
         //        camera.setZoom(level:0.03)
@@ -341,10 +341,10 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         self.setNeedsStatusBarAppearanceUpdate()
         
         if !UserDefaults.standard.bool(forKey: "cameraON"){
-            recClarification.isHidden=true
+//            recClarification.isHidden=true
         }else{
             timerREC = Timer.scheduledTimer(timeInterval: 0.02, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: true)
-            recClarification.frame=camera.getRecClarificationRct(width:view.bounds.width,height:view.bounds.height)
+//            recClarification.frame=camera.getRecClarificationRct(width:view.bounds.width,height:view.bounds.height)
             //録画モードでは、timerRecで録画スタートさせて、実際に録画が始まる時間を取得
         }
         

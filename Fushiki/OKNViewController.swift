@@ -288,7 +288,7 @@ class OKNViewController: UIViewController{
     var cntREC:Int=0
     @objc func updateRecClarification(tm: Timer) {
         cntREC += 1
-        recClarification.alpha=camera.updateRecClarification(tm: cntREC)
+//        recClarification.alpha=camera.updateRecClarification(tm: cntREC)
         if cntREC==20{
             camera.recordStart()//ここだと暗くならない
         }
@@ -334,7 +334,7 @@ class OKNViewController: UIViewController{
 //
         bandWidth = CGFloat(camera.getUserDefaultFloat(str: "bandWidth", ret: Float(view.bounds.width/10)))
         let cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
-        camera.initSession(camera: Int(cameraType), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
+        camera.initSession(camera: Int(cameraType), bounds:CGRect(x:0,y:0,width:0,height: 0))//, cameraView: recClarification)
 //        if cameraType == 2{
 //            recClarification.isHidden=true
 //        }
@@ -369,10 +369,10 @@ class OKNViewController: UIViewController{
       //  singleRec.require(toFail: doubleRec)
         
         if !UserDefaults.standard.bool(forKey: "cameraON"){
-            recClarification.isHidden=true
+//            recClarification.isHidden=true
         }else{
             timerREC = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: true)
-            recClarification.frame=camera.getRecClarificationRct(width:view.bounds.width,height:view.bounds.height)
+ //           recClarification.frame=camera.getRecClarificationRct(width:view.bounds.width,height:view.bounds.height)
         }
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない

@@ -136,7 +136,7 @@ class CarolicETTViewController: UIViewController{
     var cntREC:Int=0
     @objc func updateRecClarification(tm: Timer) {
         cntREC += 1
-        recClarification.alpha=camera.updateRecClarification(tm: cntREC)
+//        recClarification.alpha=camera.updateRecClarification(tm: cntREC)
         if cntREC==20{
             camera.recordStart()//ここだと暗くならない
         }
@@ -176,7 +176,7 @@ class CarolicETTViewController: UIViewController{
 //        UIScreen.main.brightness = CGFloat(camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
         
          let cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
-        camera.initSession(camera: Int(cameraType), bounds:CGRect(x:0,y:0,width:0,height: 0), cameraView: recClarification)
+        camera.initSession(camera: Int(cameraType), bounds:CGRect(x:0,y:0,width:0,height: 0))//, cameraView: recClarification)
 //        if cameraType == 2{
 //            recClarification.isHidden=true
 //        }
@@ -209,10 +209,10 @@ class CarolicETTViewController: UIViewController{
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         
         if !UserDefaults.standard.bool(forKey: "cameraON"){
-            recClarification.isHidden=true
+//            recClarification.isHidden=true
         }else{
             timerREC = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: true)
-            recClarification.frame=camera.getRecClarificationRct(width: view.bounds.width, height: view.bounds.height)
+//            recClarification.frame=camera.getRecClarificationRct(width: view.bounds.width, height: view.bounds.height)
         }
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
@@ -221,7 +221,7 @@ class CarolicETTViewController: UIViewController{
         self.becomeFirstResponder()
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
-        view.bringSubviewToFront(recClarification)
+    //    view.bringSubviewToFront(recClarification)
     }
 
     override var prefersHomeIndicatorAutoHidden: Bool {
