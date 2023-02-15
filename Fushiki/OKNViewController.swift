@@ -29,7 +29,7 @@ class OKNViewController: UIViewController{
     var timerREC:Timer?
     var leftPadding:CGFloat=0
     
-    @IBOutlet weak var recClarification: UIImageView!
+    @IBOutlet weak var dummyImage: UIImageView!
     @IBOutlet weak var speedLabel: UILabel!
     //    @IBOutlet weak var timerPara: UILabel!
     var startX:CGFloat?
@@ -285,13 +285,13 @@ class OKNViewController: UIViewController{
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    var cntREC:Int=0
-    @objc func updateRecClarification(tm: Timer) {
-        cntREC += 1
+//    var cntREC:Int=0
+    @objc func updateRecStart(tm: Timer) {
+//        cntREC += 1
 //        recClarification.alpha=camera.updateRecClarification(tm: cntREC)
-        if cntREC==20{
+ //       if cntREC==20{
             camera.recordStart()//ここだと暗くならない
-        }
+ //       }
     }
     var bandWidth:CGFloat=0
     var bandWidthStart:CGFloat=0
@@ -334,7 +334,7 @@ class OKNViewController: UIViewController{
 //
         bandWidth = CGFloat(camera.getUserDefaultFloat(str: "bandWidth", ret: Float(view.bounds.width/10)))
         let cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
-        camera.initSession(camera: Int(cameraType), bounds:CGRect(x:0,y:0,width:0,height: 0))//, cameraView: recClarification)
+        camera.initSession(camera: Int(cameraType),dummyImage)
 //        if cameraType == 2{
 //            recClarification.isHidden=true
 //        }
@@ -371,7 +371,7 @@ class OKNViewController: UIViewController{
         if !UserDefaults.standard.bool(forKey: "cameraON"){
 //            recClarification.isHidden=true
         }else{
-            timerREC = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: true)
+            timerREC = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateRecStart), userInfo: nil, repeats: false)
  //           recClarification.frame=camera.getRecClarificationRct(width:view.bounds.width,height:view.bounds.height)
         }
         if UIApplication.shared.isIdleTimerDisabled == false{

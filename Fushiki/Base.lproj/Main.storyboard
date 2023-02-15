@@ -274,20 +274,25 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                                     <segue destination="tER-u6-nBQ" kind="unwind" identifier="fromOKN" unwindAction="unwindActionWithSegue:" id="djx-bO-FDI"/>
                                 </connections>
                             </button>
-                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="moQ-7Z-vCW">
-                                <rect key="frame" x="789" y="333" width="97" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="moQ-7Z-vCW">
+                                <rect key="frame" x="836" y="344" width="50" height="49"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="XzO-BP-hSK"/>
+                                    <constraint firstAttribute="width" constant="50" id="Zgo-tn-5Ps"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="gvg-Wd-BnG"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="moQ-7Z-vCW" secondAttribute="bottom" constant="20.5" id="JQh-go-CQm"/>
                             <constraint firstAttribute="trailing" secondItem="9I0-D2-09s" secondAttribute="trailing" constant="10" id="MIW-Qh-onD"/>
                             <constraint firstItem="9I0-D2-09s" firstAttribute="top" secondItem="gvg-Wd-BnG" secondAttribute="top" constant="20" id="WlZ-JS-bFw"/>
                             <constraint firstItem="9I0-D2-09s" firstAttribute="leading" secondItem="gvg-Wd-BnG" secondAttribute="leading" constant="10" id="ktq-ST-cr9"/>
+                            <constraint firstItem="gvg-Wd-BnG" firstAttribute="trailing" secondItem="moQ-7Z-vCW" secondAttribute="trailing" constant="10" id="rWB-sB-QgG"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="u8Q-Hr-VUf" appends="YES" id="wDM-jF-fBb"/>
@@ -298,7 +303,7 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                     </view>
                     <connections>
                         <outlet property="doubleRec" destination="u8Q-Hr-VUf" id="dEP-qj-p85"/>
-                        <outlet property="recClarification" destination="moQ-7Z-vCW" id="KIR-bc-OMC"/>
+                        <outlet property="dummyImage" destination="moQ-7Z-vCW" id="KIR-bc-OMC"/>
                         <outlet property="singleRec" destination="zcQ-ry-kcN" id="lGe-JD-yCE"/>
                         <outlet property="speedLabel" destination="9I0-D2-09s" id="hVs-CR-7Uf"/>
                     </connections>
@@ -344,23 +349,30 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                                     <segue destination="bVQ-8A-Iyu" kind="unwind" identifier="fromCarolicETT" unwindAction="unwindActionWithSegue:" id="oVQ-nR-TZg"/>
                                 </connections>
                             </button>
-                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="69I-5a-YhC">
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="69I-5a-YhC">
                                 <rect key="frame" x="731" y="315" width="105" height="78"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="105" id="KVv-eD-hO1"/>
+                                    <constraint firstAttribute="height" constant="79" id="Qay-9l-GR0"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="TeQ-fF-YWK"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="69I-5a-YhC" secondAttribute="bottom" constant="20.5" id="WEj-7a-TDo"/>
+                            <constraint firstItem="TeQ-fF-YWK" firstAttribute="trailing" secondItem="69I-5a-YhC" secondAttribute="trailing" constant="60" id="sEj-bI-9Qu"/>
+                        </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="HbH-SX-RR2" appends="YES" id="qzi-ZC-69q"/>
                             <outletCollection property="gestureRecognizers" destination="xI7-KX-hjs" appends="YES" id="PHR-SH-TRI"/>
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="recClarification" destination="69I-5a-YhC" id="ZsP-5V-g3b"/>
+                        <outlet property="dummyImage" destination="69I-5a-YhC" id="ZsP-5V-g3b"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yJD-y9-4Av" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -457,16 +469,23 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
-                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="feB-Pl-rYU">
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="feB-Pl-rYU">
                                 <rect key="frame" x="804" y="353" width="73" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="41" id="19z-yA-Dve"/>
+                                    <constraint firstAttribute="width" constant="73" id="dWb-jE-do7"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bqo-QN-y3H"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="Bqo-QN-y3H" firstAttribute="trailing" secondItem="feB-Pl-rYU" secondAttribute="trailing" constant="19" id="Scc-F0-tbR"/>
+                            <constraint firstAttribute="bottom" secondItem="feB-Pl-rYU" secondAttribute="bottom" constant="20.5" id="wJJ-9J-Mko"/>
+                        </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Ocd-pN-Xxi" appends="YES" id="w72-uP-jWJ"/>
                         </connections>
@@ -474,7 +493,7 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                     <connections>
                         <outlet property="blackLeftImageView" destination="1Tg-VU-gSK" id="8lL-8z-9NE"/>
                         <outlet property="blackRightImageView" destination="Ldd-R5-zB7" id="I5c-f4-la5"/>
-                        <outlet property="recClarification" destination="feB-Pl-rYU" id="to7-i5-ooQ"/>
+                        <outlet property="dummyImage" destination="feB-Pl-rYU" id="to7-i5-ooQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GgU-ck-e0b" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -513,11 +532,14 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                                     <segue destination="Np6-aW-TAw" kind="unwind" identifier="fromOKP" unwindAction="unwindActionWithSegue:" id="4hT-5D-Fjk"/>
                                 </connections>
                             </button>
-                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="W2e-Ry-PpH">
-                                <rect key="frame" x="776" y="342" width="88" height="51"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="W2e-Ry-PpH">
+                                <rect key="frame" x="836" y="354.5" width="50" height="49"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="cau-V0-NG5"/>
+                                    <constraint firstAttribute="height" constant="50" id="yVa-0N-JSA"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="wGH-Xk-fDT"/>
@@ -525,6 +547,8 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Czw-Go-oXf" firstAttribute="leading" secondItem="wGH-Xk-fDT" secondAttribute="leading" constant="10" id="QRA-jN-7sY"/>
+                            <constraint firstAttribute="bottom" secondItem="W2e-Ry-PpH" secondAttribute="bottom" constant="10" id="p0w-3p-Rmd"/>
+                            <constraint firstItem="wGH-Xk-fDT" firstAttribute="trailing" secondItem="W2e-Ry-PpH" secondAttribute="trailing" constant="10" id="pOA-n8-zmN"/>
                             <constraint firstItem="wGH-Xk-fDT" firstAttribute="trailing" secondItem="Czw-Go-oXf" secondAttribute="trailing" constant="10" id="q4d-Pl-HaP"/>
                             <constraint firstItem="Czw-Go-oXf" firstAttribute="top" secondItem="wGH-Xk-fDT" secondAttribute="top" constant="20" id="t8n-V9-a4J"/>
                         </constraints>
@@ -536,7 +560,7 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                     </view>
                     <connections>
                         <outlet property="doubleRec" destination="Ndv-7n-u4N" id="K7U-bU-6NW"/>
-                        <outlet property="recClarification" destination="W2e-Ry-PpH" id="cMN-6F-tYV"/>
+                        <outlet property="dummyImage" destination="W2e-Ry-PpH" id="cMN-6F-tYV"/>
                         <outlet property="singleRec" destination="tbD-An-HEh" id="YsW-Eu-M9U"/>
                         <outlet property="speedLabel" destination="Czw-Go-oXf" id="ars-jw-x0T"/>
                     </connections>
@@ -1133,8 +1157,9 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oPE-nE-3TS">
-                                <rect key="frame" x="0.0" y="48" width="896" height="366"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oPE-nE-3TS">
+                                <rect key="frame" x="74" y="0.0" width="758" height="414"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9oI-63-ISV">
                                 <rect key="frame" x="716" y="353" width="116" height="40"/>
@@ -1238,12 +1263,6 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="OtL-Et-enG"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="oPE-nE-3TS" secondAttribute="trailing" id="XVq-xi-Ebu"/>
-                            <constraint firstItem="oPE-nE-3TS" firstAttribute="leading" secondItem="3to-29-k6Y" secondAttribute="leading" id="fta-PB-NJI"/>
-                            <constraint firstItem="oPE-nE-3TS" firstAttribute="top" secondItem="OtL-Et-enG" secondAttribute="top" id="vuV-Os-yjM"/>
-                            <constraint firstAttribute="bottom" secondItem="oPE-nE-3TS" secondAttribute="bottom" id="yc5-gW-XuA"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Dwi-dG-ECm"/>
                     <connections>
@@ -1284,23 +1303,30 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                                     <segue destination="nlX-Y6-F6Q" kind="unwind" identifier="fromCarolicOKN" unwindAction="unwindActionWithSegue:" id="5Lm-oi-iQf"/>
                                 </connections>
                             </button>
-                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="RyR-5k-fZx">
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="RyR-5k-fZx">
                                 <rect key="frame" x="783" y="347" width="95" height="46"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="95" id="Kdu-7h-rsw"/>
+                                    <constraint firstAttribute="height" constant="47" id="O9R-b6-USd"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xFK-TN-9vp"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="RyR-5k-fZx" secondAttribute="bottom" constant="20.5" id="42i-kB-g8M"/>
+                            <constraint firstItem="xFK-TN-9vp" firstAttribute="trailing" secondItem="RyR-5k-fZx" secondAttribute="trailing" constant="18" id="mbP-cc-O2K"/>
+                        </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="nZg-VO-jx0" appends="YES" id="3ne-sW-EkM"/>
                             <outletCollection property="gestureRecognizers" destination="gQA-Nk-WZ6" appends="YES" id="qef-6p-S6B"/>
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="recClarification" destination="RyR-5k-fZx" id="vAx-l4-bYa"/>
+                        <outlet property="dummyImage" destination="RyR-5k-fZx" id="vAx-l4-bYa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m9l-v2-IBH" userLabel="First Responder" sceneMemberID="firstResponder"/>

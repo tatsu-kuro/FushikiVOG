@@ -22,7 +22,7 @@ class CarolicOKNViewController: UIViewController{
     var startTime=CFAbsoluteTimeGetCurrent()
      var lastTime=CFAbsoluteTimeGetCurrent()
 
-    @IBOutlet weak var recClarification: UIImageView!
+    @IBOutlet weak var dummyImage: UIImageView!
     //    var tcount: Int = 0
     var displayLink:CADisplayLink?
     var displayLinkF:Bool=false
@@ -157,13 +157,13 @@ class CarolicOKNViewController: UIViewController{
 //         let boximage  = makeBox(width: self.view.bounds.width, height:self.view.bounds.height,color:c)
 //         cameraView.image=boximage
 //     }
-    var cntREC:Int=0
-    @objc func updateRecClarification(tm: Timer) {
-        cntREC += 1
+//    var cntREC:Int=0
+    @objc func updateRecStart(tm: Timer) {
+  //      cntREC += 1
 //        recClarification.alpha=camera.updateRecClarification(tm: cntREC)
-        if cntREC==20{
+    //    if cntREC==20{
             camera.recordStart()//ここだと暗くならない
-        }
+      //  }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -173,7 +173,7 @@ class CarolicOKNViewController: UIViewController{
 //        UIScreen.main.brightness = CGFloat(camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
  
         let cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
-        camera.initSession(camera: Int(cameraType), bounds:CGRect(x:0,y:0,width:0,height: 0))//, cameraView: recClarification)
+        camera.initSession(camera: Int(cameraType), dummyImage)
 //        if cameraType == 2{
 //            recClarification.isHidden=true
 //        }
@@ -217,7 +217,7 @@ class CarolicOKNViewController: UIViewController{
         if !UserDefaults.standard.bool(forKey: "cameraON"){
   //          recClarification.isHidden=true
         }else{
-            tierREC = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: true)
+            tierREC = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateRecStart), userInfo: nil, repeats: false)
   //          recClarification.frame=camera.getRecClarificationRct(width: view.bounds.width, height: view.bounds.height)
         }
          

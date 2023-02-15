@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 import AVFoundation
-import CoreMotion
+//import CoreMotion
 class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegate {
     var blackLeftFrame0:CGRect=CGRect(x:0,y:0,width:0,height:0)
     var blackRightFrame0:CGRect=CGRect(x:0,y:0,width:0,height:0)
@@ -21,7 +21,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     //    var startTime=CFAbsoluteTimeGetCurrent()
     var lastTime=CFAbsoluteTimeGetCurrent()
     var timerREC:Timer?
-    @IBOutlet weak var recClarification: UIImageView!
+    @IBOutlet weak var dummyImage: UIImageView!
     var displayLinkF:Bool=false
     var displayLink:CADisplayLink?
     //    var tcount: Int = 0
@@ -33,7 +33,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     var recordedF:Bool = false
     //motionsensor*******
     //motion sensor*************************
-
+/*
     var motionInterval=CFAbsoluteTimeGetCurrent()
     var lastTapLeft:Bool=false
     var tapLeft:Bool=false
@@ -137,7 +137,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         }
         isStarted = true
     }
-
+*/
     //motionsensor******
     @IBOutlet weak var blackRightImageView: UIImageView!
     @IBOutlet weak var blackLeftImageView: UIImageView!
@@ -211,18 +211,29 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     }
     
     var cntREC:Int=0
-    @objc func updateRecClarification(tm: Timer) {//録画していることを明確に示す必要がある 0.02
+    @objc func updateRecStart(tm: Timer) {// 0.2
         cntREC += 1
-//        recClarification.alpha=camera.updateRecClarification(tm: cntREC)
-//        print(recClarification.alpha)
-        if cntREC==150{//ここはカメラOFF時は通らない 3sec待って録画開始
+        if cntREC==15{//ここはカメラOFF時は通らない 3sec待って録画開始
             camera.recordStart()//ここだと暗くならない
             //実際に録画スタートした時にcamera.recordStartTimeが設定される
         }
+ //       print("records:",camera.recordStartTime,camera.recordStartTime>0)
+
         if camera.recordStartTime>0 && displayLinkF==false{//実際に録画がスタートしたら視標表示を開始
             displayLink?.add(to: RunLoop.main, forMode: .common)
             displayLinkF=true
         }
+    }
+    
+    @objc func updateRecClarification_(tm: Timer) {//動かない？
+        camera.recordStart()//ここだと暗くならない
+        Thread.sleep(forTimeInterval: 0.1)
+        while !(camera.recordStartTime>0){//実際に録画がスタートしたら視標表示を開始
+            Thread.sleep(forTimeInterval: 0.1)
+            print("records:",camera.recordStartTime)
+        }
+        displayLink?.add(to: RunLoop.main, forMode: .common)
+        displayLinkF=true
     }
     var ettType = Array<Int>()
     var ettSpeed = Array<Int>()
@@ -240,7 +251,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
 //        UIScreen.main.brightness = CGFloat(1)//camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
         
         let cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
-        camera.initSession(camera: Int(cameraType), bounds:CGRect(x:0,y:0,width:0,height: 0))//, cameraView: recClarification)
+        camera.initSession(camera: Int(cameraType),dummyImage)
         
         //        if cameraType==0{
         //        camera.setZoom(level:0.03)
@@ -343,7 +354,8 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         if !UserDefaults.standard.bool(forKey: "cameraON"){
 //            recClarification.isHidden=true
         }else{
-            timerREC = Timer.scheduledTimer(timeInterval: 0.02, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: true)
+//            timerREC = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: false)
+            timerREC = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(self.updateRecStart), userInfo: nil, repeats: true)
 //            recClarification.frame=camera.getRecClarificationRct(width:view.bounds.width,height:view.bounds.height)
             //録画モードでは、timerRecで録画スタートさせて、実際に録画が始まる時間を取得
         }
@@ -355,7 +367,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         // ファーストレスポンダにする（その結果、キーボードが表示される）
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
-        startMotion()
+   //     startMotion()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)

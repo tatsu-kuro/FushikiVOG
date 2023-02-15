@@ -38,8 +38,9 @@ class CameraViewController: UIViewController {
         getCameras()
         cameraType = Int(camera.getUserDefaultInt(str: "cameraType", ret: 0))
         setButtons()
+        cameraView.frame=self.view.frame
 //        print("camerwType:",cameraModeStrings[cameraMode])
-        camera.initSession(camera: cameraType, bounds:view.bounds)//, cameraView: cameraView)
+        camera.initSession(camera: cameraType, cameraView)
 //        print("camera:",cameraModeStrings[cameraMode])
 //        print("camera:",cameraMode,cameraModeStrings[cameraMode])
 //        let cameraStr=cameraModeStrings[cameraMode]
@@ -83,7 +84,7 @@ class CameraViewController: UIViewController {
 
         UserDefaults.standard.set(cameraType, forKey: "cameraType")
         camera.stopRunning()
-        camera.initSession(camera: cameraType, bounds:view.bounds)//, cameraView: cameraView)
+        camera.initSession(camera: cameraType,cameraView)
         print("camera:",cameraType,cameraTypeStrings[cameraType])
 
         cameraFpsLabel.text = String(format:"fps:%d %dx%d" ,camera.fpsCurrent,camera.widthCurrent,camera.heightCurrent)

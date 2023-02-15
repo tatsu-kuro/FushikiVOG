@@ -35,28 +35,28 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
 //        self.albumName = "Fushiki"//name
 //    }
     //ジワーッと文字を表示するため
-    func updateRecClarification(tm: Int)->CGFloat {
-        var cnt=tm%40
-        if cnt>19{
-            cnt = 40 - cnt
-        }
-        var alpha=CGFloat(cnt)*0.9/20.0//少し目立たなくなる
-        alpha += 0.05
-        return alpha
-    }
-    func getRecClarificationRct(width:CGFloat,height:CGFloat)->CGRect{
-        let w=width/100
-        let left=CGFloat( UserDefaults.standard.float(forKey: "left"))
-        if left==0{
-            return CGRect(x:width-w,y:height-w,width:w,height:w)
-        }else{
-            return CGRect(x:left/6,y:height-height/5.5,width:w,height:w)
-        }
-//        let imgH=height/30//415*177 2.34  383*114 3.36 257*112 2.3
-//        let imgW=imgH*2.3
-//        let space=imgW*0.1
-//        return CGRect(x:width-imgW-space,y:height-imgH-space,width: imgW,height:imgH)
-    }
+//    func updateRecClarification(tm: Int)->CGFloat {
+//        var cnt=tm%40
+//        if cnt>19{
+//            cnt = 40 - cnt
+//        }
+//        var alpha=CGFloat(cnt)*0.9/20.0//少し目立たなくなる
+//        alpha += 0.05
+//        return alpha
+//    }
+//    func getRecClarificationRct(width:CGFloat,height:CGFloat)->CGRect{
+//        let w=width/100
+//        let left=CGFloat( UserDefaults.standard.float(forKey: "left"))
+//        if left==0{
+//            return CGRect(x:width-w,y:height-w,width:w,height:w)
+//        }else{
+//            return CGRect(x:left/6,y:height-height/5.5,width:w,height:w)
+//        }
+////        let imgH=height/30//415*177 2.34  383*114 3.36 257*112 2.3
+////        let imgW=imgH*2.3
+////        let space=imgW*0.1
+////        return CGRect(x:width-imgW-space,y:height-imgH-space,width: imgW,height:imgH)
+//    }
     func checkEttString(ettStr:String)->Bool{//ettTextがちゃんと並んでいるか like as 1,2:3:20,3:2:20
         let ettTxtComponents = ettStr.components(separatedBy: ",")
         let widthCnt = ettTxtComponents[0].components(separatedBy: ":").count
@@ -499,7 +499,7 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
         captureSession.stopRunning()
     }
 
-    func initSession(camera:Int,bounds:CGRect){//},cameraView:UIImageView) {
+    func initSession(camera:Int,_ cameraView:UIImageView) {
         // セッション生成
         cameraMode=camera
         if !UserDefaults.standard.bool(forKey: "cameraON"){
@@ -540,12 +540,12 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
         captureSession.addOutput(fileOutput)
         let videoDataOuputConnection = fileOutput.connection(with: .video)
         videoDataOuputConnection!.videoOrientation = AVCaptureVideoOrientation(rawValue: AVCaptureVideoOrientation.landscapeRight.rawValue)!
-        if bounds.width != 0{//previewしない時は、bounds.width==0とする
+        if cameraView.frame.width>50 {//previewしない時は、damyの小さいcameraViewを送る
             let videoLayer : AVCaptureVideoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-            videoLayer.frame = bounds
+            videoLayer.frame = cameraView.frame
             videoLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill//無くても同じ
             videoLayer.connection!.videoOrientation = .landscapeRight//　orientation
- //           cameraView.layer.addSublayer(videoLayer)
+            cameraView.layer.addSublayer(videoLayer)
         }
         // セッションを開始する (録画開始とは別)
         captureSession.startRunning()

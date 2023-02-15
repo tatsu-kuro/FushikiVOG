@@ -20,7 +20,7 @@ class CarolicETTViewController: UIViewController{
     var epTim = Array<Int>()
     var tcount: Int = 0
     var startTime=CFAbsoluteTimeGetCurrent()
-    @IBOutlet weak var recClarification: UIImageView!
+    @IBOutlet weak var dummyImage: UIImageView!
     
     var tapInterval=CFAbsoluteTimeGetCurrent()
     
@@ -133,13 +133,13 @@ class CarolicETTViewController: UIViewController{
         rectLayer.path = UIBezierPath(rect:rect1).cgPath
         self.view.layer.addSublayer(rectLayer)
     }
-    var cntREC:Int=0
-    @objc func updateRecClarification(tm: Timer) {
-        cntREC += 1
+//    var cntREC:Int=0
+    @objc func updateRecStart(tm: Timer) {
+ //       cntREC += 1
 //        recClarification.alpha=camera.updateRecClarification(tm: cntREC)
-        if cntREC==20{
+ //       if cntREC==20{
             camera.recordStart()//ここだと暗くならない
-        }
+//        }
     }
     var centerX:CGFloat=0
     var centerY:CGFloat=0
@@ -176,7 +176,7 @@ class CarolicETTViewController: UIViewController{
 //        UIScreen.main.brightness = CGFloat(camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
         
          let cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
-        camera.initSession(camera: Int(cameraType), bounds:CGRect(x:0,y:0,width:0,height: 0))//, cameraView: recClarification)
+        camera.initSession(camera: Int(cameraType), dummyImage)
 //        if cameraType == 2{
 //            recClarification.isHidden=true
 //        }
@@ -211,7 +211,7 @@ class CarolicETTViewController: UIViewController{
         if !UserDefaults.standard.bool(forKey: "cameraON"){
 //            recClarification.isHidden=true
         }else{
-            timerREC = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: true)
+            timerREC = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateRecStart), userInfo: nil, repeats: false)
 //            recClarification.frame=camera.getRecClarificationRct(width: view.bounds.width, height: view.bounds.height)
         }
         if UIApplication.shared.isIdleTimerDisabled == false{
