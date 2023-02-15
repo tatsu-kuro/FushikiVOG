@@ -466,9 +466,9 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         if camera.checkEttString(ettStr: ettModeText2)==false{
             UserDefaults.standard.set("3,0:1:2,1:2:12,3:2:12",forKey:"ettModeText2")
         }
-        ettModeText3 = camera.getUserDefaultString(str: "ettModeText3", ret: "1,0:6:3,6:2:10")
+        ettModeText3 = camera.getUserDefaultString(str: "ettModeText3", ret: "1,0:6:6,6:2:10")
         if camera.checkEttString(ettStr: ettModeText3)==false{
-            UserDefaults.standard.set("1,0:6:3,6:2:10",forKey:"ettModeText3")
+            UserDefaults.standard.set("1,0:6:6,6:2:10",forKey:"ettModeText3")
         }
         _=camera.getUserDefaultInt(str:"posRatio",ret:80)
         _=camera.getUserDefaultInt(str:"veloRatio",ret:60)

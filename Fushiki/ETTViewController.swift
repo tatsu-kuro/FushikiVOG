@@ -10,12 +10,14 @@ import UIKit
 import Photos
 import AVFoundation
 //import CoreMotion
+
 class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegate {
     var blackLeftFrame0:CGRect=CGRect(x:0,y:0,width:0,height:0)
     var blackRightFrame0:CGRect=CGRect(x:0,y:0,width:0,height:0)
     var blackLeftFrame:CGRect=CGRect(x:0,y:0,width:0,height:0)
     var blackRightFrame:CGRect=CGRect(x:0,y:0,width: 0,height: 0)
-    
+    var cameraON:Bool=false
+
     let camera = myFunctions()//name:"Fushiki")
     var cirDiameter:CGFloat = 0
     //    var startTime=CFAbsoluteTimeGetCurrent()
@@ -213,6 +215,8 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     var cntREC:Int=0
     @objc func updateRecStart(tm: Timer) {// 0.2
         cntREC += 1
+//        view.layer.sublayers?.removeLast()
+//        drawSCircle(dummyImage)
         if cntREC==15{//ここはカメラOFF時は通らない 3sec待って録画開始
             camera.recordStart()//ここだと暗くならない
             //実際に録画スタートした時にcamera.recordStartTimeが設定される
@@ -245,7 +249,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        cameraON=UserDefaults.standard.bool(forKey: "cameraON")
         camera.makeAlbum()
 //        print(UIScreen.main.brightness)
 //        UIScreen.main.brightness = CGFloat(1)//camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
@@ -323,24 +327,17 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         displayLink = CADisplayLink(target: self, selector: #selector(self.update))
         displayLink!.preferredFramesPerSecond = 120
         //まず見えないところに円を表示
-        drawCircle(cPoint: CGPoint(x:-100,y:-100))//damy
-        
-        if UserDefaults.standard.bool(forKey: "cameraON")==false{
+        drawCircle(cPoint: CGPoint(x:-100,y:-100),cirDiameter)//dummy
+        drawCircle(cPoint: CGPoint(x:-100,y:-100),cirDiameter)//dummy
+        dummyImage.frame=camera.getRecClarificationRct(view.bounds.width,view.bounds.height)
+        if cameraON{
+            //録画モードでは、timerRecで録画スタートさせて、実際に録画が始まるところをチェックしてdisplayLinkをスタート
+            camera.recordStartTime=0
+            drawSCircle(dummyImage)
+        }else{
             //非録画モードなら、ここでdisplayLinkスタート
             displayLink?.add(to: RunLoop.main, forMode: .common)
             displayLinkF=true
-        }else{
-            //録画モードでは、timerRecで録画スタートさせて、実際に録画が始まるところをチェックしてdisplayLinkをスタート
-            //            if let soundUrl = URL(string:
-            //                                    "/System/Library/Audio/UISounds/end_record.caf"/*photoShutter.caf*/){
-            //                let speakerOnOff=UserDefaults.standard.integer(forKey: "speakerOnOff")
-            //                if speakerOnOff==1{
-            //
-            //                AudioServicesCreateSystemSoundID(soundUrl as CFURL, &soundIdx)
-            //                AudioServicesPlaySystemSound(soundIdx)
-            //                }
-            //            }
-            camera.recordStartTime=0
         }
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
@@ -351,13 +348,8 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         tapInterval=CFAbsoluteTimeGetCurrent()-1
         self.setNeedsStatusBarAppearanceUpdate()
         
-        if !UserDefaults.standard.bool(forKey: "cameraON"){
-//            recClarification.isHidden=true
-        }else{
-//            timerREC = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: false)
-            timerREC = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(self.updateRecStart), userInfo: nil, repeats: true)
-//            recClarification.frame=camera.getRecClarificationRct(width:view.bounds.width,height:view.bounds.height)
-            //録画モードでは、timerRecで録画スタートさせて、実際に録画が始まる時間を取得
+        if UserDefaults.standard.bool(forKey: "cameraON"){
+                timerREC = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(self.updateRecStart), userInfo: nil, repeats: true)
         }
         
         if UIApplication.shared.isIdleTimerDisabled == false{
@@ -575,7 +567,8 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         }
     }
      @objc func update() {//pursuit
-        view.layer.sublayers?.removeLast()
+         view.layer.sublayers?.removeLast()
+         view.layer.sublayers?.removeLast()
         //実際に録画が開始した時間を基準にする。(10-20msec程度はずれてしまうと思われる）
         //+0.1(100ms)で縦線と表示の同期が取れるようだ。
         let elapset=CFAbsoluteTimeGetCurrent()-camera.recordStartTime+0.1// recordstartTime
@@ -591,45 +584,44 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
             let sinV=sin(CGFloat(elapset)*3.1415*0.3*ettspeed)
             if etttype==0{//静止モードではspeedで位置指定する
                 if ettspeed==0.5{//視標なし
-                    drawCircle(cPoint: CGPoint(x:-100,y:-100))//damy
+                    drawCircle(cPoint: CGPoint(x:-100,y:-100),cirDiameter)//dummy
                 }else if ettspeed==1 || ettspeed>5{//etttype:0 ettspeed:6 ->
-                    drawCircle(cPoint: CGPoint(x:centerX,y:centerY))
+                    drawCircle(cPoint: CGPoint(x:centerX,y:centerY),cirDiameter)
                     if ettspeed>5{
                         leftRightSetBlack(sec:elapset,flag: leftRightBlackImageFlag)//1秒ごとに画面を縮小表示
                     }
                 }else if ettspeed==2{
-                    drawCircle(cPoint: CGPoint(x:centerX-ettW,y:centerY))
+                    drawCircle(cPoint: CGPoint(x:centerX-ettW,y:centerY),cirDiameter)
                 }else if ettspeed==3{
-                    drawCircle(cPoint: CGPoint(x:centerX+ettW,y:centerY))
+                    drawCircle(cPoint: CGPoint(x:centerX+ettW,y:centerY),cirDiameter)
                 }else if ettspeed==4{
-                    drawCircle(cPoint: CGPoint(x:centerX,y:centerY-ettH))
+                    drawCircle(cPoint: CGPoint(x:centerX,y:centerY-ettH),cirDiameter)
                 }else if ettspeed==5{
-                    drawCircle(cPoint: CGPoint(x:centerX,y:centerY+ettH))
+                    drawCircle(cPoint: CGPoint(x:centerX,y:centerY+ettH),cirDiameter)
                 }
             }else if etttype == 1{//振り子横
-                drawCircle(cPoint:CGPoint(x:centerX + sinV*ettW, y: centerY))
-                
+                drawCircle(cPoint:CGPoint(x:centerX + sinV*ettW, y: centerY),cirDiameter)
             }else if etttype==2{//振り子縦
-                drawCircle(cPoint:CGPoint(x:centerX , y: centerY + sinV*ettH))
+                drawCircle(cPoint:CGPoint(x:centerX , y: centerY + sinV*ettH),cirDiameter)
             }else if etttype==3{//衝動横
                 if ettspeed==0{
-                    drawCircle(cPoint: CGPoint(x:centerX,y:centerY))
+                    drawCircle(cPoint: CGPoint(x:centerX,y:centerY),cirDiameter)
                 }else{
                     if sec%2==0{
-                        drawCircle(cPoint:CGPoint(x:centerX+ettW,y:centerY))
+                        drawCircle(cPoint:CGPoint(x:centerX+ettW,y:centerY),cirDiameter)
                     }else{
-                        drawCircle(cPoint: CGPoint(x:centerX-ettW,y:centerY))
+                        drawCircle(cPoint: CGPoint(x:centerX-ettW,y:centerY),cirDiameter)
                     }
                 }
                 //                leftRightSetBlack(sec:elapset,flag: leftRightBlackImageFlag)//1秒ごとに画面を縮小表示
             }else if etttype==4{//衝動縦
                 if ettspeed==0{
-                    drawCircle(cPoint: CGPoint(x:centerX,y:centerY))
+                    drawCircle(cPoint: CGPoint(x:centerX,y:centerY),cirDiameter)
                 }else{
                     if sec%2==0{
-                        drawCircle(cPoint: CGPoint(x:centerX,y:centerY+ettH))
+                        drawCircle(cPoint: CGPoint(x:centerX,y:centerY+ettH),cirDiameter)
                     }else{
-                        drawCircle(cPoint: CGPoint(x:centerX,y:centerY-ettH))
+                        drawCircle(cPoint: CGPoint(x:centerX,y:centerY-ettH),cirDiameter)
                     }
                 }
             }else{
@@ -641,7 +633,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
                     }
                     print("time:",elapset)
                 }
-                drawCircle(cPoint: lastRandPoint)
+                drawCircle(cPoint: lastRandPoint,cirDiameter)
                 lastSec=sec
             }
             
@@ -652,9 +644,10 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
                 //            }else{
                 //                camera.recordStartTime=CFAbsoluteTimeGetCurrent()
             }
-            drawCircle(cPoint: CGPoint(x:-200,y:-200))
-            //damy
+            drawCircle(cPoint: CGPoint(x:-200,y:-200),cirDiameter)
+            //dummy
         }
+         drawSCircle(dummyImage)
     }
     
     var initf:Bool=false
@@ -663,7 +656,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func drawCircle(cPoint:CGPoint){
+    func drawCircle(cPoint:CGPoint,_ cirDiameter:CGFloat){
         /* --- 円を描画 --- */
         let circleLayer = CAShapeLayer.init()
         let circleFrame = CGRect.init(x:cPoint.x-cirDiameter/2,y:cPoint.y-cirDiameter/2,width:cirDiameter,height:cirDiameter)
@@ -676,6 +669,26 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         circleLayer.lineWidth = 0.5
         // 円形を描画
         circleLayer.path = UIBezierPath.init(ovalIn: CGRect.init(x: 0, y: 0, width: circleFrame.size.width, height: circleFrame.size.height)).cgPath
+        self.view.layer.addSublayer(circleLayer)
+    }
+    func drawSCircle(_ img:UIImageView){
+        /* --- 円を描画 --- */
+        var circleFrame:CGRect?
+        let circleLayer = CAShapeLayer.init()
+        if cameraON{
+            circleFrame = CGRect.init(x:img.frame.minX,y:img.frame.minY,width:img.frame.width,height: img.frame.height)
+        }else{
+            circleFrame = CGRect.init(x:img.frame.minX,y:img.frame.minY,width:0,height: 0)
+        }
+          circleLayer.frame = circleFrame!
+        // 輪郭の色
+        circleLayer.strokeColor = UIColor.white.cgColor
+        // 円の中の色
+        circleLayer.fillColor = UIColor.red.cgColor
+        // 輪郭の太さ
+        circleLayer.lineWidth = 0
+        // 円形を描画
+        circleLayer.path = UIBezierPath.init(ovalIn: CGRect.init(x: 0, y: 0, width: circleFrame!.size.width, height: circleFrame!.size.height)).cgPath
         self.view.layer.addSublayer(circleLayer)
     }
     func appOrientation() -> UIInterfaceOrientation {

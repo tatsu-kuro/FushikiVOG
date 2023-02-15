@@ -11,6 +11,7 @@ import AVFoundation
 import Photos
 class OKPViewController: UIViewController{
     let camera = myFunctions()//name:"Fushiki")
+    var cameraON:Bool=false
 //    var mainBrightness:CGFloat!
     @IBOutlet weak var speedLabel: UILabel!
     
@@ -134,7 +135,26 @@ class OKPViewController: UIViewController{
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
     }
-    
+    func drawSCircle(_ img:UIImageView){
+        /* --- 円を描画 --- */
+        var circleFrame:CGRect?
+        let circleLayer = CAShapeLayer.init()
+        if cameraON{
+            circleFrame = CGRect.init(x:img.frame.minX,y:img.frame.minY,width:img.frame.width,height: img.frame.height)
+        }else{
+            circleFrame = CGRect.init(x:img.frame.minX,y:img.frame.minY,width:0,height: 0)
+        }
+          circleLayer.frame = circleFrame!
+        // 輪郭の色
+        circleLayer.strokeColor = UIColor.white.cgColor
+        // 円の中の色
+        circleLayer.fillColor = UIColor.red.cgColor
+        // 輪郭の太さ
+        circleLayer.lineWidth = 0
+        // 円形を描画
+        circleLayer.path = UIBezierPath.init(ovalIn: CGRect.init(x: 0, y: 0, width: circleFrame!.size.width, height: circleFrame!.size.height)).cgPath
+        self.view.layer.addSublayer(circleLayer)
+    }
 //    var cntREC:Int=0
     @objc func updateRecStart(tm: Timer) {
 //        cntREC += 1
@@ -145,36 +165,19 @@ class OKPViewController: UIViewController{
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-//        mainBrightness = UIScreen.main.brightness
-//        UIScreen.main.brightness = 1.0
-//        UIScreen.main.brightness = CGFloat(1)//camera.getUserDefaultFloat(str: "screenBrightness", ret:1.0))
         camera.makeAlbum()
+        cameraON=UserDefaults.standard.bool(forKey: "cameraON")
         leftPadding=CGFloat(UserDefaults.standard.float(forKey: "left")) + view.bounds.width/10
 
         let cameraType = camera.getUserDefaultInt(str: "cameraType", ret: 0)
         camera.initSession(camera: Int(cameraType),dummyImage)//, cameraView: recClarification)
-//        if cameraType == 2{
-//            recClarification.isHidden=true
-//        }
-//        let zoomValue=camera.getUserDefaultFloat(str: "zoomValue", ret:0)
         
         camera.setZoom(level:camera.getUserDefaultFloat(str: "zoomValue", ret: 0.01))
         camera.setFocus(focus: camera.getUserDefaultFloat(str: "focusValue", ret: 0))
         if cameraType != 0{
             camera.setLedLevel(camera.getUserDefaultFloat(str: "ledValue", ret:0))
         }
-        
-        
-        
-//        if cameraType==0{
-//        camera.setZoom(level:0.03)// zoomValue)0.0-0.1
-//        }else{
-//            camera.setZoom(level: 0)
-//        }
-////        let focusValue=camera.getUserDefaultFloat(str: "focusValue", ret: 0)
-//        camera.setFocus(focus:0)// focusValue)
-//        camera.setLedLevel(camera.getUserDefaultFloat(str: "ledValue", ret:0))
-
+ 
         ww=view.bounds.width
         wh=view.bounds.height
         okpSpeed = UserDefaults.standard.integer(forKey: "okpSpeed")
@@ -192,13 +195,10 @@ class OKPViewController: UIViewController{
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
         }
-        
-        if !UserDefaults.standard.bool(forKey: "cameraON"){
-//            recClarification.isHidden=true
-        }else{
+
+        dummyImage.frame=camera.getRecClarificationRct(view.bounds.width,view.bounds.height)
+        if cameraON{
             timerREC = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateRecStart), userInfo: nil, repeats: false)
-//            timerREC = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateRecClarification), userInfo: nil, repeats: true)
-//            recClarification.frame=camera.getRecClarificationRct(width:view.bounds.width,height:view.bounds.height)
         }
         // Do any additional setup after loading the view.
         UIApplication.shared.beginReceivingRemoteControlEvents()
@@ -251,7 +251,7 @@ class OKPViewController: UIViewController{
     @objc func update(tm: Timer) {
         let x0=ww/5
         if initf {
-            for _ in 0..<6{
+            for _ in 0..<7{
                 view.layer.sublayers?.removeLast()
             }
         }
@@ -304,6 +304,7 @@ class OKPViewController: UIViewController{
         lastx=x
 //        drawWhiteBand(rectB: CGRect(x:0,y:0,width:leftPadding,height: view.bounds.height))
 //        self.view.bringSubviewToFront(recClarification)
+        drawSCircle(dummyImage)
     }
 
 }

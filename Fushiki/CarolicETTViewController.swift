@@ -212,7 +212,7 @@ class CarolicETTViewController: UIViewController{
 //            recClarification.isHidden=true
         }else{
             timerREC = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateRecStart), userInfo: nil, repeats: false)
-//            recClarification.frame=camera.getRecClarificationRct(width: view.bounds.width, height: view.bounds.height)
+            dummyImage.frame=camera.getRecClarificationRct(view.bounds.width, view.bounds.height)
         }
         if UIApplication.shared.isIdleTimerDisabled == false{
             UIApplication.shared.isIdleTimerDisabled = true//スリープしない
@@ -223,7 +223,26 @@ class CarolicETTViewController: UIViewController{
         self.setNeedsStatusBarAppearanceUpdate()
     //    view.bringSubviewToFront(recClarification)
     }
-
+/*    func drawSCircle(_ img:UIImageView){
+        /* --- 円を描画 --- */
+        var circleFrame:CGRect?
+        let circleLayer = CAShapeLayer.init()
+        if cameraON{
+            circleFrame = CGRect.init(x:img.frame.minX,y:img.frame.minY,width:img.frame.width,height: img.frame.height)
+        }else{
+            circleFrame = CGRect.init(x:img.frame.minX,y:img.frame.minY,width:0,height: 0)
+        }
+          circleLayer.frame = circleFrame!
+        // 輪郭の色
+        circleLayer.strokeColor = UIColor.white.cgColor
+        // 円の中の色
+        circleLayer.fillColor = UIColor.red.cgColor
+        // 輪郭の太さ
+        circleLayer.lineWidth = 0
+        // 円形を描画
+        circleLayer.path = UIBezierPath.init(ovalIn: CGRect.init(x: 0, y: 0, width: circleFrame!.size.width, height: circleFrame!.size.height)).cgPath
+        self.view.layer.addSublayer(circleLayer)
+    }*/
     override var prefersHomeIndicatorAutoHidden: Bool {
         return true
     }
