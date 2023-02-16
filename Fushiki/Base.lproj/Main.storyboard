@@ -201,6 +201,23 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dfM-pg-qXZ">
+                                <rect key="frame" x="544" y="11" width="97" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cYu-GV-hkC">
+                                <rect key="frame" x="727" y="5" width="65" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Enter"/>
+                                <connections>
+                                    <action selector="onEnterButton:" destination="gOS-fU-nK5" eventType="touchUpInside" id="w7K-wd-ahY"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="53f-q3-sSQ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -215,10 +232,12 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                         <outlet property="cameraLabel" destination="eaO-tb-IY3" id="OVt-s6-oUr"/>
                         <outlet property="cameraSwitch" destination="sXa-4n-OHT" id="vyw-A2-a4J"/>
                         <outlet property="defaultButton" destination="wIu-wr-ffr" id="akP-bM-J7O"/>
+                        <outlet property="enterButton" destination="cYu-GV-hkC" id="Mmk-sq-h71"/>
                         <outlet property="ettExplanationText" destination="joF-RS-tH3" id="TgJ-j0-4KF"/>
                         <outlet property="ettSwitch" destination="7li-Aa-cfI" id="LGU-GW-Qef"/>
                         <outlet property="ettText" destination="ixO-Uv-LwA" id="5bk-rJ-YmM"/>
                         <outlet property="exitButton" destination="vji-3f-Tqg" id="4tC-Qb-6z9"/>
+                        <outlet property="inputField" destination="dfM-pg-qXZ" id="y7w-Co-xrk"/>
                         <outlet property="ledSlider" destination="rqo-3h-wbp" id="hf7-IT-zFx"/>
                         <outlet property="ledText" destination="YmA-od-BNX" id="Mls-lt-SYT"/>
                         <outlet property="oknSwitch" destination="wrz-kI-t9y" id="BP5-nK-RW9"/>

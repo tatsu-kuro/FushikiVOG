@@ -34,6 +34,11 @@ class SetteiViewController: UIViewController {
     var speakerOnOff:Int!
     var cameraON:Bool!
     
+    @IBAction func onEnterButton(_ sender: Any) {
+        inputField.endEditing(true)
+    }
+    @IBOutlet weak var enterButton: UIButton!
+    @IBOutlet weak var inputField: UITextField!
     @IBOutlet weak var caloricLabel: UILabel!
     @IBOutlet weak var cameraLabel: UILabel!
     @IBOutlet weak var cameraSwitch: UISwitch!
@@ -184,12 +189,16 @@ class SetteiViewController: UIViewController {
     @IBAction func onEttModeSwitch(_ sender: UISegmentedControl) {
         ettMode=sender.selectedSegmentIndex
         if ettMode==0{
+            inputField.text=ettModeText0
             ettText.text=ettModeText0
         }else if ettMode==1{
+            inputField.text=ettModeText1
             ettText.text=ettModeText1
         }else if ettMode==2{
+            inputField.text=ettModeText2
             ettText.text=ettModeText2
         }else if ettMode==3{
+            inputField.text=ettModeText3
             ettText.text=ettModeText3
         }
         setUserDefaults()
@@ -269,13 +278,17 @@ class SetteiViewController: UIViewController {
     }
     func setettMode(){
         if ettMode == 0{
+            inputField.text=ettModeText0
             ettText.text! = ettModeText0
         }else if ettMode == 1{
-            ettText.text! = ettModeText1
+            inputField.text=ettModeText1
+         ettText.text! = ettModeText1
         }else if ettMode == 2{
-            ettText.text! = ettModeText2
+            inputField.text=ettModeText2
+          ettText.text! = ettModeText2
         }else{
-            ettText.text! = ettModeText3
+            inputField.text=ettModeText3
+          ettText.text! = ettModeText3
         }
     }
 
@@ -406,9 +419,14 @@ class SetteiViewController: UIViewController {
         let b6y=b5y+bh+sp*2
         let ettTextWidth=view.bounds.width-right-x1-sp*2
         ettSwitch.frame  = CGRect(x:x0,   y: b0y ,width: bw,height:bh)
+        ettText.isHidden=true
         camera.setLabelProperty(ettText, x: x1, y: b0y-2, w: ettTextWidth, h: wh/15+4, UIColor.systemGray5)
-        ettText.layer.cornerRadius=3
-
+//        camera.setButtonProperty(enterButton,x:left+bw*6+sp*8,y:b0y-2,w:bw,h:wh/15+4,UIColor.darkGray)
+//        inputField.frame=CGRect( x: x1, y: b0y-2, width: enterButton.frame.minX-x1-2*sp, height:wh/15+4)
+//        ettText.layer.cornerRadius=3
+//        inputField.layer.borderWidth = 1.0
+//        inputField.layer.cornerRadius=5
+//        inputField.layer.masksToBounds = true
         ettExplanationText.frame  = CGRect(x:x0,   y: b1y ,width: bw*7,height:bh*3)
         okpSwitch.frame  = CGRect(x:x0,   y: b2y ,width: bw, height: bh)
         okpText.frame  = CGRect(x:x1,   y: b2y ,width: bw*5, height: bh)
@@ -428,12 +446,18 @@ class SetteiViewController: UIViewController {
         cameraLabel.frame = CGRect(x:cameraSwitch.frame.maxX+sp,y:b6y,width:bw*5,height:cameraSwitch.frame.height)
         speakerSwitch.frame = CGRect(x:x0,y:b7y,width:bw,height: bh)
         speakerText.frame = CGRect(x:speakerSwitch.frame.maxX+sp,   y: b7y,width: bw*5,height:speakerSwitch.frame.height)
-          bw=(ww-sp*10)/7//ボタン幅
+        bw=(ww-sp*10)/7//ボタン幅
         bh=bw*170/440
         let by=wh-bh-sp
         camera.setButtonProperty(defaultButton,x:left+bw*5+sp*7,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(exitButton,x:left+bw*6+sp*8,y:by,w:bw,h:bh,UIColor.darkGray)
         caloricLabel.frame=CGRect(x:left+bw*6+sp*8,y:by-sp-bw,width:bw,height:bw)
+        camera.setButtonProperty(enterButton,x:left+bw*6+sp*8,y:b0y-2,w:bw,h:wh/15+4,UIColor.darkGray)
+        inputField.frame=CGRect( x: x1, y: b0y-2, width: enterButton.frame.minX-x1-sp, height:wh/15+4)
+        ettText.layer.cornerRadius=3
+        inputField.layer.borderWidth = 1.0
+        inputField.layer.cornerRadius=5
+        inputField.layer.masksToBounds = true
         if camera.firstLang().contains("ja"){
             cameraButton.setTitle(" 設定", for:.normal)
         }
