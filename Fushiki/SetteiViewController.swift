@@ -225,7 +225,7 @@ class SetteiViewController: UIViewController {
         ettModeText0 = "3,0:1:2,1:2:10,3:2:10,0:1:2,6:2:12"
         ettModeText1 = "3,0:1:2,2:2:10,4:2:10,0:1:2,6:2:12"
 //        ettModeText2 = "3,0:1:2,1:2:12,3:2:12"
-        
+        UserDefaults.standard.set(Float(view.bounds.width/10), forKey:"bandWidth")
         setUserDefaults()
         setControlState()
         dispTexts()
