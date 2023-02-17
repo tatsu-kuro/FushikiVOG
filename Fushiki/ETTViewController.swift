@@ -285,7 +285,7 @@ class ETTViewController: UIViewController{// AVCaptureFileOutputRecordingDelegat
         }else{
             ettTxt = UserDefaults.standard.string(forKey: "ettModeText3")!
         }
-        let ettTxtComponents = ettTxt.components(separatedBy: ",")
+        let ettTxtComponents = ettTxt.components(separatedBy: "/")
         
         var ettWidthX = Int(ettTxtComponents[0])!//横幅:1-5
         for i in 1...ettTxtComponents.count-1{

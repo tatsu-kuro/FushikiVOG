@@ -12,7 +12,7 @@ extension String {
     // 半角数字の判定
     func isAlphanumeric() -> Bool {
 //        return self.range(of: "[^0-9]+", options: .regularExpression) == nil && self != ""
-        return self.range(of: "[^,:0123456789]", options: .regularExpression) == nil && self != ""
+        return self.range(of: "[^/:0123456789]", options: .regularExpression) == nil && self != ""
     }
 }
 
@@ -35,6 +35,29 @@ class SetteiViewController: UIViewController {
     var cameraON:Bool!
     
     @IBAction func onEnterButton(_ sender: Any) {
+//        let textField = alert.textFields![0] as UITextField
+        let ettString:String = inputField.text!
+
+        if camera.checkEttString(ettStr: ettString){
+            if ettMode==0{
+                ettModeText0=ettString
+            }else if ettMode==1{
+                ettModeText1=ettString
+            }else if ettMode==2{
+                ettModeText2=ettString
+            }else{
+                ettModeText3=ettString
+            }
+            setUserDefaults()
+//            ettText.text=ettString
+        }else{
+            let dialog = UIAlertController(title: "", message: "\"0123456789/:\" are available.\nlike as 3/1:2:15/2:2:15", preferredStyle: .alert)
+            //ボタンのタイトル
+            dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            //実際に表示させる
+            self.present(dialog, animated: true, completion: nil)
+//                print(",:0123456789以外は受け付けません")
+        }
         inputField.endEditing(true)
     }
     @IBOutlet weak var enterButton: UIButton!
@@ -72,7 +95,7 @@ class SetteiViewController: UIViewController {
     @IBOutlet weak var okpPauseTimeText: UILabel!
     @IBOutlet weak var oknText: UILabel!
     @IBOutlet weak var oknTimeText: UILabel!
-    @IBOutlet weak var ettText: UILabel!
+//    @IBOutlet weak var ettText: UILabel!
     @IBOutlet weak var ettExplanationText: UILabel!
     
     @IBOutlet weak var ledText: UILabel!
@@ -190,16 +213,16 @@ class SetteiViewController: UIViewController {
         ettMode=sender.selectedSegmentIndex
         if ettMode==0{
             inputField.text=ettModeText0
-            ettText.text=ettModeText0
+//            ettText.text=ettModeText0
         }else if ettMode==1{
             inputField.text=ettModeText1
-            ettText.text=ettModeText1
+//            ettText.text=ettModeText1
         }else if ettMode==2{
             inputField.text=ettModeText2
-            ettText.text=ettModeText2
+//            ettText.text=ettModeText2
         }else if ettMode==3{
             inputField.text=ettModeText3
-            ettText.text=ettModeText3
+//            ettText.text=ettModeText3
         }
         setUserDefaults()
     }
@@ -231,8 +254,8 @@ class SetteiViewController: UIViewController {
                 
 //        ettModeText0 = "3,0:1:2,1:2:10,3:2:10,0:1:2,2:2:10,4:2:10,6:2:12"
 //        ettModeText1 = "3,0:1:2,1:2:10,0:6:3,3:2:10,0:1:2,2:2:10,0:6:3,4:2:10,0:1:2,6:2:12"
-        ettModeText0 = "3,0:1:2,1:2:10,3:2:10,0:1:2,6:2:12"
-        ettModeText1 = "3,0:1:2,2:2:10,4:2:10,0:1:2,6:2:12"
+        ettModeText0 = "3/0:1:2/1:2:10/3:2:10/0:1:2/6:2:12"
+        ettModeText1 = "3/0:1:2/2:2:10/4:2:10/0:1:2/6:2:12"
 //        ettModeText2 = "3,0:1:2,1:2:12,3:2:12"
         UserDefaults.standard.set(Float(view.bounds.width/10), forKey:"bandWidth")
         setUserDefaults()
@@ -279,16 +302,17 @@ class SetteiViewController: UIViewController {
     func setettMode(){
         if ettMode == 0{
             inputField.text=ettModeText0
-            ettText.text! = ettModeText0
+//            ettText.text! = ettModeText0
         }else if ettMode == 1{
             inputField.text=ettModeText1
-         ettText.text! = ettModeText1
+//            inputField.text=ettModeText1
+//         ettText.text! = ettModeText1
         }else if ettMode == 2{
             inputField.text=ettModeText2
-          ettText.text! = ettModeText2
+//          ettText.text! = ettModeText2
         }else{
             inputField.text=ettModeText3
-          ettText.text! = ettModeText3
+//          ettText.text! = ettModeText3
         }
     }
 
@@ -329,6 +353,7 @@ class SetteiViewController: UIViewController {
         setScreen()
         dispTexts()
         setControlState()
+        inputField.keyboardType = UIKeyboardType.numbersAndPunctuation//phonePad//decimalPad//asciiCapableNumberPad
     }
     
       override var prefersStatusBarHidden: Bool {
@@ -338,7 +363,7 @@ class SetteiViewController: UIViewController {
           return true
       }
 
-    @IBAction func tapOnEttText(_ sender: Any) {
+/*    @IBAction func tapOnEttText(_ sender: Any) {
         print("tap")
         let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
         let saveAction = UIAlertAction(title: "OK", style: .default) { [self] (action:UIAlertAction!) -> Void in
@@ -357,7 +382,7 @@ class SetteiViewController: UIViewController {
                     ettModeText3=ettString
                 }
                 setUserDefaults()
-                ettText.text=ettString
+//                ettText.text=ettString
             }else{
                 let dialog = UIAlertController(title: "", message: "0123456789,: are available.\nlike as 1,1:2:15,2:2:15", preferredStyle: .alert)
                 //ボタンのタイトル
@@ -390,7 +415,7 @@ class SetteiViewController: UIViewController {
         
     }
 
-    
+    */
     @IBAction func onLedSlider(_ sender: UISlider) {
         ledValue=sender.value
         camera.setLedLevel(ledValue)
@@ -419,8 +444,8 @@ class SetteiViewController: UIViewController {
         let b6y=b5y+bh+sp*2
         let ettTextWidth=view.bounds.width-right-x1-sp*2
         ettSwitch.frame  = CGRect(x:x0,   y: b0y ,width: bw,height:bh)
-        ettText.isHidden=true
-        camera.setLabelProperty(ettText, x: x1, y: b0y-2, w: ettTextWidth, h: wh/15+4, UIColor.systemGray5)
+//        ettText.isHidden=true
+//        camera.setLabelProperty(ettText, x: x1, y: b0y-2, w: ettTextWidth, h: wh/15+4, UIColor.systemGray5)
 //        camera.setButtonProperty(enterButton,x:left+bw*6+sp*8,y:b0y-2,w:bw,h:wh/15+4,UIColor.darkGray)
 //        inputField.frame=CGRect( x: x1, y: b0y-2, width: enterButton.frame.minX-x1-2*sp, height:wh/15+4)
 //        ettText.layer.cornerRadius=3
@@ -454,7 +479,7 @@ class SetteiViewController: UIViewController {
         caloricLabel.frame=CGRect(x:left+bw*6+sp*8,y:by-sp-bw,width:bw,height:bw)
         camera.setButtonProperty(enterButton,x:left+bw*6+sp*8,y:b0y-2,w:bw,h:wh/15+4,UIColor.darkGray)
         inputField.frame=CGRect( x: x1, y: b0y-2, width: enterButton.frame.minX-x1-sp, height:wh/15+4)
-        ettText.layer.cornerRadius=3
+//        ettText.layer.cornerRadius=3
         inputField.layer.borderWidth = 1.0
         inputField.layer.cornerRadius=5
         inputField.layer.masksToBounds = true

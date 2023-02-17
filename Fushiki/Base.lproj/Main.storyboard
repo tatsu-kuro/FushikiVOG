@@ -127,17 +127,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ixO-Uv-LwA">
-                                <rect key="frame" x="259" y="20" width="256" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <gestureRecognizers/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="v3Y-jM-4m8" appends="YES" id="pvG-14-1mc"/>
-                                </connections>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LED Brightness" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YmA-od-BNX">
                                 <rect key="frame" x="259" y="284" width="117" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -162,8 +151,8 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="joF-RS-tH3">
                                 <rect key="frame" x="81" y="46" width="599" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <string key="text">how to set the movement of the target / w,a:b:c,a1:b1:c1,....
-w[moving width(0-5)],a[moving type(0-6)]:b[speed(0-5)]:c[length(sec)]
+                                <string key="text">how to set the movement of the target  h/a:b:c/a1:b1:c1/a2:b2:c2/....
+h[horizontal width(0-5)]/a[moving type(0-6)]:b[speed(0-5)]:c[length(sec)]
 a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -235,7 +224,6 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                         <outlet property="enterButton" destination="cYu-GV-hkC" id="Mmk-sq-h71"/>
                         <outlet property="ettExplanationText" destination="joF-RS-tH3" id="TgJ-j0-4KF"/>
                         <outlet property="ettSwitch" destination="7li-Aa-cfI" id="LGU-GW-Qef"/>
-                        <outlet property="ettText" destination="ixO-Uv-LwA" id="5bk-rJ-YmM"/>
                         <outlet property="exitButton" destination="vji-3f-Tqg" id="4tC-Qb-6z9"/>
                         <outlet property="inputField" destination="dfM-pg-qXZ" id="y7w-Co-xrk"/>
                         <outlet property="ledSlider" destination="rqo-3h-wbp" id="hf7-IT-zFx"/>
@@ -259,13 +247,8 @@ a) 0:still 1:hori. 2:vert. 3:hori.saccade 4:vert.saccade 5:vert.random 6:random<
                         <action selector="doubleTapGesture:" destination="gOS-fU-nK5" id="BXo-3Q-w5h"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="v3Y-jM-4m8">
-                    <connections>
-                        <action selector="tapOnEttText:" destination="gOS-fU-nK5" id="qkh-b8-ZG5"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-824.33035714285711" y="-3143.4782608695655"/>
+            <point key="canvasLocation" x="-796" y="-4312"/>
         </scene>
         <!--OKN View Controller-->
         <scene sceneID="g5B-W1-Ehd">
