@@ -622,7 +622,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let fps1=Float(fps!)
         let fps2=fps1.rounded()
         let fps3=Int(fps2)
-        cell.textLabel!.text = number + camera.videoDate[indexPath.row] + "(fps:" + fps3.description + ")"
+        cell.textLabel!.text = number + camera.videoDate[indexPath.row] + " , fps:" + fps3.description + ")"
 //        cell.textLabel!.text = number + camera.videoDate[indexPath.row] + " (" + phasset.pixelWidth.description + "x" + phasset.pixelHeight.description + ")"
         return cell
     }
