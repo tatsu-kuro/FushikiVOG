@@ -467,7 +467,7 @@ class SetteiViewController: UIViewController {
 //        let x3=x0+sp+switchWidth
      //   let dy3=(switchHeight-bh)/2
         let b7y=b6y+cameraSwitch.frame.height+sp
-        camera.setButtonProperty(cameraButton, x:cameraSwitch.frame.maxX+sp, y: b6y, w: bw*3/4, h:cameraSwitch.frame.height, UIColor.systemOrange,0)
+        camera.setButtonProperty(cameraButton, x:cameraSwitch.frame.maxX+sp, y: b6y, w: bw, h:cameraSwitch.frame.height, UIColor.systemOrange,0)
         cameraLabel.frame = CGRect(x:cameraSwitch.frame.maxX+sp,y:b6y,width:bw*5,height:cameraSwitch.frame.height)
         speakerSwitch.frame = CGRect(x:x0,y:b7y,width:bw,height: bh)
         speakerText.frame = CGRect(x:speakerSwitch.frame.maxX+sp,   y: b7y,width: bw*5,height:speakerSwitch.frame.height)
@@ -484,7 +484,7 @@ class SetteiViewController: UIViewController {
         inputField.layer.cornerRadius=5
         inputField.layer.masksToBounds = true
         if camera.firstLang().contains("ja"){
-            cameraButton.setTitle(" 設定", for:.normal)
+            cameraButton.setTitle("カメラ設定", for:.normal)
         }
     }
     
