@@ -617,7 +617,13 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier:"cell",for :indexPath)
         let number = (indexPath.row+1).description + ") "
         let phasset = camera.videoPHAsset[indexPath.row]
-        cell.textLabel!.text = number + camera.videoDate[indexPath.row] + " (" + phasset.pixelWidth.description + "x" + phasset.pixelHeight.description + ")"
+        let avasset = camera.requestAVAsset(asset: phasset)
+        let fps=avasset?.tracks.first!.nominalFrameRate
+        let fps1=Float(fps!)
+        let fps2=fps1.rounded()
+        let fps3=Int(fps2)
+        cell.textLabel!.text = number + camera.videoDate[indexPath.row] + "(fps:" + fps3.description + ")"
+//        cell.textLabel!.text = number + camera.videoDate[indexPath.row] + " (" + phasset.pixelWidth.description + "x" + phasset.pixelHeight.description + ")"
         return cell
     }
 

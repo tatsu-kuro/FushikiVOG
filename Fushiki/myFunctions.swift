@@ -241,6 +241,7 @@ class myFunctions: NSObject, AVCaptureFileOutputRecordingDelegate{
                     let date_sub = asset.creationDate
                     let date = formatter.string(from: date_sub!)
                     let duration = String(format:"%.1fs",asset.duration)
+                    
                     videoDate.insert(date + "(" + duration + ")",at:0)
 //                    asset.video
 //                    videoDura.append(duration)
