@@ -553,7 +553,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let by=wh-bh-sp
         let hideButtonY=topPadding+(wh-bh-bw)/2
         tableView.frame=CGRect(x:leftPadding,y:0,width:ww,height: by)
- 
+//        tableView.dequeueReusableCell(withIdentifier: "cell")!. = UIFont(name: "Caveat-Bold", size: 20)
         camera.setButtonProperty(ettButton,x:sp*2+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(okpButton,x:bw*1+sp*3+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(oknButton,x:bw*2+sp*4+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
@@ -622,7 +622,9 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let fps1=Float(fps!)
         let fps2=fps1.rounded()
         let fps3=Int(fps2)
-        cell.textLabel!.text = number + camera.videoDate[indexPath.row] + " , fps:" + fps3.description + ")"
+//        cell.textLabel!.font = UIFont(name:"Courier New",size:20)
+        cell.textLabel!.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: .medium)
+        cell.textLabel!.text = number + camera.videoDate[indexPath.row] + ", fps:" + fps3.description + ")"
 //        cell.textLabel!.text = number + camera.videoDate[indexPath.row] + " (" + phasset.pixelWidth.description + "x" + phasset.pixelHeight.description + ")"
         return cell
     }
