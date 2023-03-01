@@ -236,7 +236,7 @@ class OKNViewController: UIViewController{
         let currentTime=CFAbsoluteTimeGetCurrent()
         let dTime = currentTime - lastTime
         lastTime = currentTime
-        if currentTime - startTime>120{
+        if currentTime - startTime>300{
             if UIApplication.shared.isIdleTimerDisabled == true{
                 UIApplication.shared.isIdleTimerDisabled = false//スリープする
             }
@@ -383,6 +383,7 @@ class OKNViewController: UIViewController{
         //       timerPara.isHidden=true
         oknSpeed = UserDefaults.standard.integer(forKey:"oknSpeed")
         oknTime = UserDefaults.standard.integer(forKey:"oknTime")
+        print("oknTime:",oknTime)
         oknMode = UserDefaults.standard.integer(forKey:"oknMode")
         print("oknSpeed,time,mode:",oknSpeed,oknTime,oknMode)
         speed = oknSpeed*15

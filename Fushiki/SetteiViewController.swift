@@ -206,7 +206,7 @@ class SetteiViewController: UIViewController {
        }
      
      @IBAction func onOknTimeSlider(_ sender: UISlider) {
-         oknTime=Int(sender.value*100)
+         oknTime=Int(sender.value*120)
          dispTexts()
      }
     @IBAction func onEttModeSwitch(_ sender: UISegmentedControl) {
@@ -266,7 +266,7 @@ class SetteiViewController: UIViewController {
         okpSwitch.selectedSegmentIndex=okpMode%4
         okpPauseTimeSlider.value=Float(okpTime)/50.0
         oknSwitch.selectedSegmentIndex=oknMode%4
-        oknTimeSlider.value=Float(oknTime)/100.0
+        oknTimeSlider.value=Float(oknTime)/120.0
         ettSwitch.selectedSegmentIndex=ettMode%4
 
         if speakerOnOff==0{//front camera
