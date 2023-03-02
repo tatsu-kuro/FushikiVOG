@@ -202,6 +202,7 @@ class SetteiViewController: UIViewController {
      }
       @IBAction func onOknModeSwitch(_ sender: UISegmentedControl) {
            oknMode=sender.selectedSegmentIndex
+          
            dispTexts()
        }
      
@@ -267,6 +268,7 @@ class SetteiViewController: UIViewController {
         okpPauseTimeSlider.value=Float(okpTime)/50.0
         oknSwitch.selectedSegmentIndex=oknMode%4
         oknTimeSlider.value=Float(oknTime)/120.0
+//        print("oknMode%4:",oknMode,oknMode%4)
         ettSwitch.selectedSegmentIndex=ettMode%4
 
         if speakerOnOff==0{//front camera
@@ -323,9 +325,20 @@ class SetteiViewController: UIViewController {
         
         okpPauseTimeText.text="OKP-PAUSE:" + String(Int(okpTime)) + "sec"
         oknTimeText.text="OKN-TIME:" + String(Int(oknTime)) + "sec"
+        if oknMode<2{
+            oknTimeText.isEnabled=true
+            oknTimeSlider.isEnabled=true
+//            oknTimeSlider.alpha=1.0
+            oknTimeSlider.tintColor=UIColor.systemBlue
+
+        }else{
+            oknTimeText.isEnabled=false
+            oknTimeSlider.isEnabled=false
+            oknTimeSlider.tintColor=UIColor.gray
+        }
         setUserDefaults()
     }
-
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         okpMode = UserDefaults.standard.integer(forKey: "okpMode")
