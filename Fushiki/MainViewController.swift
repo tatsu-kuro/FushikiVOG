@@ -391,7 +391,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         UIApplication.shared.isIdleTimerDisabled = false//スリープする。監視する
         UIApplication.shared.beginReceivingRemoteControlEvents()
         self.becomeFirstResponder()
-        fromUnwindFlag=false
+        recordedFlag=false
         UIApplication.shared.isIdleTimerDisabled = false//スリープする
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(foreground(notification:)),
@@ -411,14 +411,14 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         setButtons()
         setButtonsAlpha()
         print("MainViewDidAppear*****")
-        if fromUnwindFlag==true{
+        if recordedFlag==true{
             if camera.videoDate.count<5{
-                camera.getAlbumAssets()
+                camera.getAlbumAssets()//全部登録
             }else{
-                camera.getAlbumAssets_last()
+                camera.getAlbumAssets_last()//最後だけ追加
             }
         }
-        fromUnwindFlag=false
+        recordedFlag=false
         print(camera.videoPHAsset.count,camera.videoDate.count)
         let contentOffsetY = CGFloat(camera.getUserDefaultFloat(str:"contentOffsetY",ret:0))
         DispatchQueue.main.async { [self] in
@@ -674,26 +674,16 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
     }
    
-    var fromUnwindFlag:Bool=false//ここではgetAlbumAssetsできないので,viewDidAppearで行う。
+    var recordedFlag:Bool=false//ここではgetAlbumAssetsできないので,viewDidAppearで行う。
     //didappearでチェックしてgetAlbumAssetsする
     @IBAction func unwindAction(segue: UIStoryboardSegue) {
-//        if segue.source is SetteiViewController || segue.source is HelpViewController || segue.source is PlayViewController || segue.source is ImagePickerController || segue.source is PlayParaViewController{
-//            print("main-unwind:HelpView or SetteiView")
-//        }else
-        fromUnwindFlag=false
+        recordedFlag=false
         if segue.source is OKPViewController||segue.source is ETTViewController||segue.source is OKNViewController||segue.source is CarolicETTViewController||segue.source is CarolicOKNViewController{
             if cameraON{
-                fromUnwindFlag=true//録画から帰ったときだけ
+                recordedFlag=true//録画から帰ったときだけ
                 UserDefaults.standard.set(0,forKey: "contentOffsetY")
             }
         }
-//            print("Main-unwind:getAlbumAssets",camera.videoDate.count)
-//            fromUnwindFlag=true
-//            UserDefaults.standard.set(0,forKey: "contentOffsetY")
-//            DispatchQueue.main.async { [self] in
-//                self.tableView.contentOffset.y=0
-//            }
-//         }
         UIApplication.shared.isIdleTimerDisabled = false//スリープする.監視する
         camera.setLedLevel(0)
 //        startMotion()
