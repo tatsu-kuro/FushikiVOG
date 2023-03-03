@@ -8,7 +8,7 @@
 
 import UIKit
 import AVFoundation
-import CoreMotion
+//import CoreMotion
 import Photos
 @available(iOS 11.0, *)
 extension UIImage {

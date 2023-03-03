@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import MediaPlayer
 import Photos
-import CoreMotion
+//import CoreMotion
 
 class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
@@ -39,7 +39,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var cameraON:Bool!
 
     //motion sensor*************************
-
+/*
     var motionInterval=CFAbsoluteTimeGetCurrent()
     var lastTapLeft:Bool=false
     var tapLeft:Bool=false
@@ -143,7 +143,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         isStarted = true
     }
-
+*/
 //motion sensor*************
     
     @IBAction func onStartHideButton(_ sender: Any) {
@@ -230,14 +230,14 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         doModes_sub(mode: 6)
     }
     func doModes(){
-        stopMotion()
+//        stopMotion()
         let storyboard: UIStoryboard = self.storyboard!
 //        if targetMode>=0 && targetMode<=4{
 //            let mainBrightness=UIScreen.main.brightness//明るさを保持
 //            UserDefaults.standard.set(mainBrightness, forKey: "mainBrightness")
 //            print("mainBrightness saved****")
 //        }
-        if targetMode<3 && tableView.visibleCells.count>5{//録画の時tableviewをトップに戻す
+        if targetMode<3 && tableView.visibleCells.count>5 && cameraON{//録画の時tableviewをトップに戻す
             
             tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
         }
@@ -260,7 +260,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 nextView.targetMode = targetMode
                 self.present(nextView, animated: true, completion: nil)
             }else{
-                startMotion()
+//                startMotion()
                 if camera.getUserDefaultBool(str: "cameraON", ret: true){
                     return
                 }else{
@@ -276,7 +276,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             nextView.targetMode = targetMode
             self.present(nextView, animated: true, completion: nil)
             }else{
-                startMotion()
+//                startMotion()
                 if !camera.getUserDefaultBool(str: "cameraON", ret: true){
                     return
                 }else{
@@ -369,7 +369,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         super.viewDidLoad()
         getUserDefaultAll()
         print("MainViewDidLoad*****")
-        startMotion()
+//        startMotion()
 //        sound(snd:"silence")//リモコンの操作権を貰う
 //        let mainBrightness=UIScreen.main.brightness//明るさを保持
 //        UserDefaults.standard.set(mainBrightness, forKey: "mainBrightness")
@@ -398,10 +398,10 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                                                name: UIApplication.willEnterForegroundNotification,
                                                object: nil
         )
-    }
+     }
     @objc func foreground(notification: Notification) {
         print("フォアグラウンド")
-        startMotion()
+//        startMotion()
     }
     override func viewDidAppear(_ animated: Bool) {
         if UIApplication.shared.isIdleTimerDisabled == true{
@@ -425,7 +425,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             self.tableView.contentOffset.y=contentOffsetY
             self.tableView.reloadData()
         }
-    }
+      }
  
     func setTopPage()
     {
@@ -674,24 +674,29 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
     }
    
-    var fromUnwindFlag:Bool=false//ここではgetAlbumAssetsできないので
+    var fromUnwindFlag:Bool=false//ここではgetAlbumAssetsできないので,viewDidAppearで行う。
     //didappearでチェックしてgetAlbumAssetsする
     @IBAction func unwindAction(segue: UIStoryboardSegue) {
-        if segue.source is SetteiViewController || segue.source is HelpViewController || segue.source is PlayViewController || segue.source is ImagePickerController || segue.source is PlayParaViewController{
-            print("main-unwind:HelpView or SetteiView")
-        }else{
-            print("Main-unwind:getAlbumAssets",camera.videoDate.count)
-            fromUnwindFlag=true
-            UserDefaults.standard.set(0,forKey: "contentOffsetY")
-            DispatchQueue.main.async { [self] in
-                self.tableView.contentOffset.y=0
+//        if segue.source is SetteiViewController || segue.source is HelpViewController || segue.source is PlayViewController || segue.source is ImagePickerController || segue.source is PlayParaViewController{
+//            print("main-unwind:HelpView or SetteiView")
+//        }else
+        fromUnwindFlag=false
+        if segue.source is OKPViewController||segue.source is ETTViewController||segue.source is OKNViewController||segue.source is CarolicETTViewController||segue.source is CarolicOKNViewController{
+            if cameraON{
+                fromUnwindFlag=true//録画から帰ったときだけ
+                UserDefaults.standard.set(0,forKey: "contentOffsetY")
             }
-//            UIScreen.main.brightness = CGFloat(UserDefaults.standard.float(forKey: "mainBrightness"))
-//            print("mainScreenBrightness-unwind restored****8r")
         }
+//            print("Main-unwind:getAlbumAssets",camera.videoDate.count)
+//            fromUnwindFlag=true
+//            UserDefaults.standard.set(0,forKey: "contentOffsetY")
+//            DispatchQueue.main.async { [self] in
+//                self.tableView.contentOffset.y=0
+//            }
+//         }
         UIApplication.shared.isIdleTimerDisabled = false//スリープする.監視する
         camera.setLedLevel(0)
-        startMotion()
+//        startMotion()
     }
 }
 
