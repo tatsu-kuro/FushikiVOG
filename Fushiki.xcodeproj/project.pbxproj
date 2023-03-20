@@ -10,6 +10,7 @@
 		691613B625C9F328009AAB64 /* PlayParaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691613B525C9F328009AAB64 /* PlayParaViewController.swift */; };
 		6938C23C24C103370066CD69 /* SetteiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6938C23B24C103370066CD69 /* SetteiViewController.swift */; };
 		693DBADA25B31F3E00E9B534 /* PlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693DBAD925B31F3E00E9B534 /* PlayViewController.swift */; };
+		695959C129C88F210044BF40 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 695959C329C88F210044BF40 /* InfoPlist.strings */; };
 		6959E1C025CEDF4D00617C64 /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6959E1BF25CEDF4D00617C64 /* ImagePickerController.swift */; };
 		69B3DDC7299517AB00C797CF /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69DB2C3025C3C510001EC81F /* opencv2.framework */; };
 		69C7640925C2EA55008AECAD /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69DB12C023AEF297000C733A /* GameController.framework */; };
@@ -33,6 +34,7 @@
 		691613B525C9F328009AAB64 /* PlayParaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayParaViewController.swift; sourceTree = "<group>"; };
 		6938C23B24C103370066CD69 /* SetteiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetteiViewController.swift; sourceTree = "<group>"; };
 		693DBAD925B31F3E00E9B534 /* PlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewController.swift; sourceTree = "<group>"; };
+		695959C429C88F2C0044BF40 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6959E1BF25CEDF4D00617C64 /* ImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
 		69AF1D5F28AC517700077FD6 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		69C7640B25C2EAEB008AECAD /* Fushiki-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Fushiki-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 				693DBAD925B31F3E00E9B534 /* PlayViewController.swift */,
 				8EE77ECC20EF742E00517DEC /* Assets.xcassets */,
 				8EE77ECE20EF742E00517DEC /* LaunchScreen.storyboard */,
+				695959C329C88F210044BF40 /* InfoPlist.strings */,
 				8EE77ED120EF742E00517DEC /* Info.plist */,
 				69DB2C4225C3C8F0001EC81F /* OpenCVWrapper.mm */,
 				69DB2C4125C3C8F0001EC81F /* OpenCVWrapper.h */,
@@ -190,6 +193,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8EE77ED020EF742E00517DEC /* LaunchScreen.storyboard in Resources */,
+				695959C129C88F210044BF40 /* InfoPlist.strings in Resources */,
 				8EE77ECD20EF742E00517DEC /* Assets.xcassets in Resources */,
 				8EE77ECB20EF742C00517DEC /* Main.storyboard in Resources */,
 			);
@@ -223,6 +227,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		695959C329C88F210044BF40 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				695959C429C88F2C0044BF40 /* ja */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		8EE77EC920EF742C00517DEC /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -377,7 +389,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kuroda33.FushikiETTopenCV;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -408,7 +420,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kuroda33.FushikiETTopenCV;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

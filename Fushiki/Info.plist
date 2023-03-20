@@ -27,9 +27,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>眼振映像を録画し、アルバムFushikiの中に保存します。</string>
+	<string>Take a video of the eye movement and save it in an album (Fushiki).</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>アルバムFushikiを作成し、その中に眼振動画を保存します。</string>
+	<string>Create an album (Fushiki) and save the eye movement graph in it.</string>
 	<key>UIBackgroundModes</key>
 	<array/>
 	<key>UIFileSharingEnabled</key>
