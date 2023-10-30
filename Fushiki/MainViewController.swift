@@ -7,17 +7,23 @@
 //
 
 import UIKit
+import MultipeerConnectivity
 import AVFoundation
 import MediaPlayer
 import Photos
 //import CoreMotion
-
 class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
-
+    
+    @IBOutlet weak var receiveLabel: UILabel!
     let camera = myFunctions()//name:"Fushiki")
     var controllerF:Bool=false
-//    @IBOutlet weak var titleImage: UIImageView!
-//    @IBOutlet weak var logoImage: UIImageView!
+    //    @IBOutlet weak var titleImage: UIImageView!
+    //    @IBOutlet weak var logoImage: UIImageView!
+    private let serviceType = "FushikiVOG"
+    private var session: MCSession!
+    private var advertiser: MCNearbyServiceAdvertiser!
+    private var browser: MCNearbyServiceBrowser!
+    
     var caloricEttOknFlag = false//falseでは、caloricEtt,Okn buttonがカメラオンオフボタンとなる。
     var videoArrayCount:Int = 0
     var oknSpeed:Int = 50
@@ -37,114 +43,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var ettModeText2:String = ""
     var ettModeText3:String = ""
     var cameraON:Bool!
-
-    //motion sensor*************************
-/*
-    var motionInterval=CFAbsoluteTimeGetCurrent()
-    var lastTapLeft:Bool=false
-    var tapLeft:Bool=false
-    let motionManager = CMMotionManager()
-    var isStarted = false
-
-    var deltay = Array<Int>()
-
-    var kalmandata = Array<CGFloat>()
-    var kalVs:[CGFloat]=[0.0001 ,0.001 ,0,0,0]
-    func KalmanS(Q:CGFloat,R:CGFloat){
-        kalVs[4] = (kalVs[3] + Q) / (kalVs[3] + Q + R)
-        kalVs[3] = R * (kalVs[3] + Q) / (R + kalVs[3] + Q)
-    }
-    func Kalman(value:CGFloat)->CGFloat{
-        KalmanS(Q:kalVs[0],R:kalVs[1])
-        let result = kalVs[2] + (value - kalVs[2]) * kalVs[4]
-        kalVs[2] = result
-        return result
-    }
-    func KalmanInit(){
-            kalVs[2]=0
-            kalVs[3]=0
-            kalVs[4]=0
-    }
-    func checkDelta(cnt:Int)->Int{//
-        var ret:Int=0
-        if deltay[cnt]==0 && deltay[cnt+1]==0 && deltay[cnt+2]<0 && deltay[cnt+3]>0{
-            ret=deltay[cnt+2]-deltay[cnt+3]
-        }
-        if deltay[cnt]==0 && deltay[cnt+1]==0 && deltay[cnt+2]<0 && deltay[cnt+3]<0 && deltay[cnt+4]>0{
-            ret=deltay[cnt+2]+deltay[cnt+3]-deltay[cnt+4]
-        }
-        if deltay[cnt]==0 && deltay[cnt+1]==0 && deltay[cnt+2]<0 && deltay[cnt+3]==0 && deltay[cnt+4]>0{
-            ret=deltay[cnt+2]-deltay[cnt+4]
-        }
-        if deltay[cnt]==0 && deltay[cnt+1]==0 && deltay[cnt+2]>0 && deltay[cnt+3]<0{
-            ret=deltay[cnt+2]-deltay[cnt+3]
-        }
-        if deltay[cnt]==0 && deltay[cnt+1]==0 && deltay[cnt+2]>0 && deltay[cnt+3]>0 && deltay[cnt+4]<0{
-            ret=deltay[cnt+2]+deltay[cnt+3]-deltay[cnt+4]
-        }
-        if deltay[cnt]==0 && deltay[cnt+1]==0 && deltay[cnt+2]>0 && deltay[cnt+3]==0 && deltay[cnt+4]<0{
-            ret=deltay[cnt+2]-deltay[cnt+4]
-        }
-        return ret
-    }
-  
     
-    func checkTap(cnt:Int)->Bool{
-        let ave=checkDelta(cnt: cnt)
-        if ave>3{
-            tapLeft=false
-            return true
-        }else if ave < -3{
-            tapLeft=true
-            return true
-        }
-        return false
-    }
-    var cnt:Int=0
-    private func updateMotionData(deviceMotion:CMDeviceMotion) {
-        let ay=deviceMotion.userAcceleration.y
-        kalmandata.append(Kalman(value: ay*25))
-        let arrayCnt=kalmandata.count
-        if arrayCnt>5{
-            deltay.append(Int(kalmandata[arrayCnt-2]-kalmandata[arrayCnt-1]))
-        }else{
-            deltay.append(0)
-        }
-        if deltay.count>10{
-            cnt += 1
-            deltay.remove(at: 0)
-            kalmandata.remove(at: 0)
-            
-            if checkTap(cnt: 0){
-                if (CFAbsoluteTimeGetCurrent()-motionInterval)>0.3 && (CFAbsoluteTimeGetCurrent()-motionInterval)<0.5{
-                    onStartHideButton(0)
-                }
-                motionInterval=CFAbsoluteTimeGetCurrent()
-                lastTapLeft=tapLeft
-            }
-        }
-    }
-    
-    func stopMotion() {
-        isStarted = false
-        motionManager.stopDeviceMotionUpdates()
-    }
-    func startMotion(){
-        KalmanInit()
-        deltay.removeAll()
-        kalmandata.removeAll()
-        cnt=0
-        // start monitoring sensor data
-        if motionManager.isDeviceMotionAvailable {
-            motionManager.deviceMotionUpdateInterval = 0.01
-            motionManager.startDeviceMotionUpdates(to: OperationQueue.current!, withHandler: {(motion:CMDeviceMotion?, error:Error?) in
-                self.updateMotionData(deviceMotion: motion!)
-            })
-        }
-        isStarted = true
-    }
-*/
-//motion sensor*************
     
     @IBAction func onStartHideButton(_ sender: Any) {
         let text=startHideButton.title(for: .normal)
@@ -198,26 +97,30 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         sound(snd: "silence")
         doModes()
     }
- 
+    
     @IBAction func onEttButton(_ sender: Any) {
-        startHideButton.setTitle("ETT", for: .normal)
-        doModes_sub(mode: 0)
+        //       startPeer()
+        sendPeer(com: 5)
+        //        startHideButton.setTitle("ETT", for: .normal)
+        //        doModes_sub(mode: 0)
+        //        sendPeer(com: targetMode)
+        
     }
-
+    
     @IBAction func onOkpButton(_ sender: Any) {
         startHideButton.setTitle("OKP", for: .normal)
         doModes_sub(mode: 1)
     }
-
+    
     @IBAction func onOknButton(_ sender: Any) {
         startHideButton.setTitle("OKN", for: .normal)
         doModes_sub(mode: 2)
     }
-
+    
     @IBAction func onCaloricEttButton(_ sender: Any) {
         doModes_sub(mode: 3)
     }
-
+    
     @IBAction func onCaloricOknButton(_ sender: Any) {
         doModes_sub(mode: 4)
     }
@@ -230,17 +133,19 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         doModes_sub(mode: 6)
     }
     func doModes(){
-//        stopMotion()
+        //        stopMotion()
         let storyboard: UIStoryboard = self.storyboard!
-//        if targetMode>=0 && targetMode<=4{
-//            let mainBrightness=UIScreen.main.brightness//明るさを保持
-//            UserDefaults.standard.set(mainBrightness, forKey: "mainBrightness")
-//            print("mainBrightness saved****")
-//        }
+        //        if targetMode>=0 && targetMode<=4{
+        //            let mainBrightness=UIScreen.main.brightness//明るさを保持
+        //            UserDefaults.standard.set(mainBrightness, forKey: "mainBrightness")
+        //            print("mainBrightness saved****")
+        //        }
         if targetMode<3 && tableView.visibleCells.count>5 && cameraON{//録画の時tableviewをトップに戻す
             
             tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
         }
+        //      sendPeer(com: targetMode)
+        
         UserDefaults.standard.set(targetMode, forKey:"targetMode")
         if targetMode==0{//ETT
             let nextView = storyboard.instantiateViewController(withIdentifier: "ETT") as! ETTViewController
@@ -260,7 +165,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 nextView.targetMode = targetMode
                 self.present(nextView, animated: true, completion: nil)
             }else{
-//                startMotion()
+                //                startMotion()
                 if camera.getUserDefaultBool(str: "cameraON", ret: true){
                     return
                 }else{
@@ -268,15 +173,15 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     setButtonsAlpha()
                     setCameraOnOffbuttons()
                 }
-                return                
+                return
             }
         }else if targetMode==4{//carolicOKN
             if camera.getUserDefaultBool(str: "caloricEttOknFlag", ret: false){
-            let nextView = storyboard.instantiateViewController(withIdentifier: "CarolicOKN") as! CarolicOKNViewController
-            nextView.targetMode = targetMode
-            self.present(nextView, animated: true, completion: nil)
+                let nextView = storyboard.instantiateViewController(withIdentifier: "CarolicOKN") as! CarolicOKNViewController
+                nextView.targetMode = targetMode
+                self.present(nextView, animated: true, completion: nil)
             }else{
-//                startMotion()
+                //                startMotion()
                 if !camera.getUserDefaultBool(str: "cameraON", ret: true){
                     return
                 }else{
@@ -332,8 +237,8 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 print("Play")
                 doModes()
             case .remoteControlTogglePlayPause:
-               print("TogglePlayPause")
-               doModes()
+                print("TogglePlayPause")
+                doModes()
             case .remoteControlNextTrack:
                 setButtons()
                 if(targetMode == -1){
@@ -367,22 +272,23 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       // startPeer()
         getUserDefaultAll()
         print("MainViewDidLoad*****")
-//        startMotion()
-//        sound(snd:"silence")//リモコンの操作権を貰う
-//        let mainBrightness=UIScreen.main.brightness//明るさを保持
-//        UserDefaults.standard.set(mainBrightness, forKey: "mainBrightness")
+        //        startMotion()
+        //        sound(snd:"silence")//リモコンの操作権を貰う
+        //        let mainBrightness=UIScreen.main.brightness//明るさを保持
+        //        UserDefaults.standard.set(mainBrightness, forKey: "mainBrightness")
         if PHPhotoLibrary.authorizationStatus() != .authorized {
             PHPhotoLibrary.requestAuthorization { status in
                 if status == .authorized {
-//                    self.checkLibraryAuthrizedFlag=1
+                    //                    self.checkLibraryAuthrizedFlag=1
                     print("authorized")
                 } else if status == .denied {
-//                    self.checkLibraryAuthrizedFlag = -1
+                    //                    self.checkLibraryAuthrizedFlag = -1
                     print("denied")
                 }else{
-//                    self.checkLibraryAuthrizedFlag = -1
+                    //                    self.checkLibraryAuthrizedFlag = -1
                 }
             }
         }else{
@@ -398,10 +304,24 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                                                name: UIApplication.willEnterForegroundNotification,
                                                object: nil
         )
-     }
+        let peerID = MCPeerID(displayName: UIDevice.current.name)
+        session = MCSession(peer: peerID)
+        session.delegate = self
+        
+        advertiser = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: serviceType)
+        advertiser.delegate = self
+        advertiser.startAdvertisingPeer()
+        
+        browser = MCNearbyServiceBrowser(peer: peerID, serviceType: serviceType)
+        browser.delegate = self
+        browser.startBrowsingForPeers()
+        let vc = MCBrowserViewController(serviceType: serviceType, session: session)
+        // 接続端末を１台に制限
+        vc.maximumNumberOfPeers = 2
+    }
     @objc func foreground(notification: Notification) {
         print("フォアグラウンド")
-//        startMotion()
+        //        startMotion()
     }
     override func viewDidAppear(_ animated: Bool) {
         if UIApplication.shared.isIdleTimerDisabled == true{
@@ -425,8 +345,9 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             self.tableView.contentOffset.y=contentOffsetY
             self.tableView.reloadData()
         }
-      }
- 
+        
+    }
+    
     func setTopPage()
     {
         if camera.videoDate.count==0{
@@ -452,7 +373,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         cameraON = camera.getUserDefaultBool(str: "cameraON", ret: true)
         /*     ettModeText0 = "3,0:1:2,1:2:10,3:2:10,0:1:2,2:2:10,4:2:10,6:2:12"
          ettModeText1 = "3,0:1:2,1:2:10,0:6:3,3:2:10,0:1:2,2:2:10,0:6:3,4:2:10,0:1:2,6:2:12"
-*/
+         */
         ettModeText0 = camera.getUserDefaultString(str: "ettModeText0", ret: "3/0:1:2/1:2:10/3:2:10/0:1:2/6:2:12")
         if camera.checkEttString(ettStr: ettModeText0)==false{//パラメータ並びをチェック
             UserDefaults.standard.set("3/0:1:2/1:2:10/3:2:10/0:1:2/6:2:12",forKey:"ettModeText0")
@@ -476,7 +397,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         _=camera.getUserDefaultInt(str:"eyeBorder",ret:20)
         _=camera.getUserDefaultInt(str:"faceMark",ret:0)
         _=camera.getUserDefaultInt(str:"showRect",ret:0)
-     }
+    }
     var checkLibraryAuthrizedFlag:Int=0
     func checkLibraryAuthorized(){
         //iOS14に対応
@@ -518,7 +439,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }
         }
     }
-  
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -533,7 +454,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             alongsideTransition: nil,
             completion: {(UIViewControllerTransitionCoordinatorContext) in
                 self.setButtons()
-        }
+            }
         )
     }
     @IBOutlet weak var setteiButton: UIButton!
@@ -543,7 +464,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var okpButton: UIButton!
     @IBOutlet weak var ettButton: UIButton!
     @IBOutlet weak var oknButton: UIButton!
-
+    
     func setButtons(){
         let ww:CGFloat=view.bounds.width-leftPadding-rightPadding
         let wh:CGFloat=view.bounds.height-topPadding-bottomPadding
@@ -553,7 +474,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let by=wh-bh-sp
         let hideButtonY=topPadding+(wh-bh-bw)/2
         tableView.frame=CGRect(x:leftPadding,y:0,width:ww,height: by)
-//        tableView.dequeueReusableCell(withIdentifier: "cell")!. = UIFont(name: "Caveat-Bold", size: 20)
+        //        tableView.dequeueReusableCell(withIdentifier: "cell")!. = UIFont(name: "Caveat-Bold", size: 20)
         camera.setButtonProperty(ettButton,x:sp*2+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(okpButton,x:bw*1+sp*3+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(oknButton,x:bw*2+sp*4+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
@@ -561,21 +482,21 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         camera.setButtonProperty(caloricOknButton,x:bw*4+sp*6+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(helpButton,x:bw*5+sp*7+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
         camera.setButtonProperty(setteiButton,x:bw*6+sp*8+leftPadding,y:by,w:bw,h:bh,UIColor.darkGray)
-//        camera.setButtonProperty(startHideButton, x: bw*5+sp*7+leftPadding, y: by/10, w: bw, h: by*4/5, UIColor.darkGray)
+        //        camera.setButtonProperty(startHideButton, x: bw*5+sp*7+leftPadding, y: by/10, w: bw, h: by*4/5, UIColor.darkGray)
         camera.setButtonProperty(startHideButton, x: bw*6+sp*8+leftPadding, y: hideButtonY, w: bw, h: bw, UIColor.darkGray)
-//        if ww/2 > by{
-//            titleImage.frame.origin.y = sp+topPadding
-//            titleImage.frame.size.width = by*2
-//            titleImage.frame.size.height = by
-//            titleImage.frame.origin.x = (ww - titleImage.frame.size.width)/2+leftPadding
-//        }else{
-//            titleImage.frame.origin.x = leftPadding
-//            titleImage.frame.size.width = ww
-//            titleImage.frame.origin.y = (by - ww/2)/2
-//            titleImage.frame.size.height = ww/2
-//        }
-//        logoImage.frame = CGRect(x: leftPadding, y: topPadding, width:ww, height:wh/10)
-//        logoImage.isHidden=true
+        //        if ww/2 > by{
+        //            titleImage.frame.origin.y = sp+topPadding
+        //            titleImage.frame.size.width = by*2
+        //            titleImage.frame.size.height = by
+        //            titleImage.frame.origin.x = (ww - titleImage.frame.size.width)/2+leftPadding
+        //        }else{
+        //            titleImage.frame.origin.x = leftPadding
+        //            titleImage.frame.size.width = ww
+        //            titleImage.frame.origin.y = (by - ww/2)/2
+        //            titleImage.frame.size.height = ww/2
+        //        }
+        //        logoImage.frame = CGRect(x: leftPadding, y: topPadding, width:ww, height:wh/10)
+        //        logoImage.isHidden=true
         setCameraOnOffbuttons()
     }
     func setCameraOnOffbuttons(){
@@ -593,6 +514,60 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             caloricEttButton.setTitle("CaloricETT", for: .normal)
             caloricOknButton.setTitle("CaloricOKN", for: .normal)
         }
+    }
+    func sendPeer(com:Int){
+        let str = "send2"
+        do{
+            try session.send(str.data(using: .utf8)!,toPeers: session.connectedPeers,with: .reliable)
+            //   print(str)
+            
+        }catch let error{
+            print(error.localizedDescription)
+        }
+        /*
+         
+         //     print("sendCommand*********:")
+         let str = String(format: "command:%d", com)
+         //        do{
+         //            try session.send(str.data(using: .utf8)!,toPeers: session.connectedPeers,with: .reliable)
+         //            print(str)
+         //
+         //        }catch let error{
+         //            print(error.localizedDescription)
+         //        }
+         //
+         //
+         //        let str = "kuroda"//String(format: "%.2f,%.2f,%.2f", x,y,z)
+         do{
+         try session.send(str.data(using: .utf8)!,toPeers: session.connectedPeers,with: .reliable)
+         //    self.testLabel.text=str
+         //                 print(str)
+         
+         }catch let error{
+         print(error.localizedDescription)
+         }*/
+    }
+    
+    func startPeer(){
+        let peerID = MCPeerID(displayName: UIDevice.current.name)
+        session = MCSession(peer: peerID)
+        session.delegate = self
+        
+        advertiser = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: serviceType)
+        advertiser.delegate = self
+        advertiser.startAdvertisingPeer()
+        
+        browser = MCNearbyServiceBrowser(peer: peerID, serviceType: serviceType)
+        browser.delegate = self
+        browser.startBrowsingForPeers()
+        let vc = MCBrowserViewController(serviceType: serviceType, session: session)
+        // 接続端末を１台に制限
+        vc.maximumNumberOfPeers = 2
+    }
+    func stopPeer(){
+        browser.stopBrowsingForPeers()
+        advertiser.stopAdvertisingPeer()
+        session.disconnect()
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -622,13 +597,13 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let fps1=Float(fps!)
         let fps2=fps1.rounded()
         let fps3=Int(fps2)
-//        cell.textLabel!.font = UIFont(name:"Courier New",size:20)
+        //        cell.textLabel!.font = UIFont(name:"Courier New",size:20)
         cell.textLabel!.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: .medium)
         cell.textLabel!.text = number + camera.videoDate[indexPath.row] + ", fps:" + fps3.description + ")"
-//        cell.textLabel!.text = number + camera.videoDate[indexPath.row] + " (" + phasset.pixelWidth.description + "x" + phasset.pixelHeight.description + ")"
+        //        cell.textLabel!.text = number + camera.videoDate[indexPath.row] + " (" + phasset.pixelWidth.description + "x" + phasset.pixelHeight.description + ")"
         return cell
     }
-
+    
     //play item
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard: UIStoryboard = self.storyboard!
@@ -673,7 +648,7 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }
         }
     }
-   
+    
     var recordedFlag:Bool=false//ここではgetAlbumAssetsできないので,viewDidAppearで行う。
     //didappearでチェックしてgetAlbumAssetsする
     @IBAction func unwindAction(segue: UIStoryboardSegue) {
@@ -686,7 +661,67 @@ class MainViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         UIApplication.shared.isIdleTimerDisabled = false//スリープする.監視する
         camera.setLedLevel(0)
-//        startMotion()
+        //        startMotion()
+    }
+}
+
+extension MainViewController: MCSessionDelegate {
+    func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
+        let message: String
+        switch state {
+        case .connected:
+            message = "\(peerID.displayName) / connected."
+        case .connecting:
+            message = "\(peerID.displayName) / connecting."
+        case .notConnected:
+            message = "\(peerID.displayName) / notConnected."
+        @unknown default:
+            message = "\(peerID.displayName) / default."
+        }
+        DispatchQueue.main.async { [self] in
+            //      didChangeLabel.text = message
+            receiveLabel.text = message
+        }
+    }
+    
+    func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
+        guard let message = String(data: data, encoding: .utf8) else {
+            return
+        }
+        DispatchQueue.main.async {
+            self.receiveLabel.text=message
+            // .settitle(print(String(format: "command:%s", message))
+        }
+    }
+    
+    func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
+        assertionFailure("assertionFailure")
+    }
+    
+    func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {
+        assertionFailure("assertionFailure")
+    }
+    
+    func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {
+        assertionFailure("assertionFailure")
+    }
+}
+
+extension MainViewController: MCNearbyServiceAdvertiserDelegate {
+    
+    func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
+        invitationHandler(true, session)
+    }
+}
+
+extension MainViewController: MCNearbyServiceBrowserDelegate {
+    func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
+        guard let session = session else {
+            return
+        }
+        browser.invitePeer(peerID, to: session, withContext: nil, timeout: 0)
+    }
+    func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
     }
 }
 
